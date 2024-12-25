@@ -24,8 +24,17 @@ const SignIn = () => {
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/login', formData);
 
+     
       localStorage.setItem('token', response.data.token);
-      navigate('/profile');
+
+    
+      if (response.data.role === 'admin') {
+        navigate('/dashboard'); 
+      } else if (response.data.role === 'employee') {
+        navigate('/profile'); 
+      } else {
+        setError('Invalid role');
+      }
     } catch (error) {
       if (error.response) {
         setError(error.response.data.error);
