@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->date('attendance_date');
-            $table->boolean('is_present')->default(true); // example field for attendance
+            $table->boolean('is_present')->default(true); 
             $table->timestamps();
         });
     }
