@@ -2,106 +2,95 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    // Apply JWT authentication middleware to all methods except 'login' and 'register'
-    public function __construct()
+    // Get all users
+    public function index()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $users = User::all(); 
+        return response()->json($users);
     }
 
-    /**
-     * Register a new user.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function register(Request $request)
+    // Get user by ID
+    public function show($id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        return response()->json($user);
+    }
+
+    // Create a new user
+    public function store(Request $request)
     {
         // Validation
-        $validator = Validator::make($request->all(), [
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
-        }
-
-        // Create user
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
         ]);
 
-        // Generate JWT token for the user
-        $token = JWTAuth::fromUser($user);
-
-        // Return response with the token
-        return response()->json(compact('user', 'token'), 201);
+        return response()->json($user, 201);
     }
 
-    /**
-     * Login an existing user.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function login(Request $request)
+    // Update an existing user by ID
+    public function update(Request $request, $id)
     {
-        // Validation
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email|max:255',
-            'password' => 'required|string|min:6',
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        // Validation 
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'password' => 'nullable|string|min:8|confirmed',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
+        if ($request->has('name')) {
+            $user->name = $validatedData['name'];
         }
 
-        // Attempt to verify the credentials and create a token
-        if (!$token = JWTAuth::attempt($request->only('email', 'password'))) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        if ($request->has('email')) {
+            $user->email = $validatedData['email'];
         }
 
-        // Return token
-        return response()->json(compact('token'));
+        if ($request->has('password')) {
+            $user->password = Hash::make($validatedData['password']);
+        }
+
+        $user->save();
+
+        return response()->json($user);
     }
 
-    /**
-     * Get the authenticated user.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function user(Request $request)
+    // Delete user by ID
+    public function destroy($id)
     {
-        // Get the currently authenticated user
-        $user = $request->user();
+        $user = User::find($id);
 
-        // Return user data
-        return response()->json(compact('user'));
-    }
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
 
-    /**
-     * Log out a user (invalidate token).
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function logout()
-    {
-        // Invalidate the token
-        JWTAuth::invalidate(JWTAuth::getToken());
+        $user->delete();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'User deleted successfully']);
     }
 }
