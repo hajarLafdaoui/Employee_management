@@ -61,48 +61,39 @@ class UserController extends Controller
     }
 
     public function update(Request $request, $id)
-{
-    $user = User::find($id);
-
-    if (!$user) {
-        return response()->json(['message' => 'User not found'], 404);
-    }
-
-    $validatedData = $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users,email,' . $id,
-        'password' => 'nullable|string|min:8|confirmed', 
-        'role' => 'required|string', 
-        'department_id' => 'nullable|integer' 
-    ]);
-
-    if ($request->has('name')) {
+    {
+        $user = User::find($id);
+    
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+    
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'password' => 'nullable|string|min:8|confirmed', 
+            'role' => 'required|string', 
+            'department_id' => 'nullable|integer' 
+        ]);
+    
         $user->name = $validatedData['name'];
-    }
-
-    if ($request->has('email')) {
         $user->email = $validatedData['email'];
-    }
-
-    if ($request->has('password')) {
-        $user->password = Hash::make($validatedData['password']);
-    }
-
-    if ($request->has('role')) {
+    
+        if (isset($validatedData['password'])) {
+            $user->password = Hash::make($validatedData['password']);
+        }
+    
         $user->role = $validatedData['role'];
+        $user->department_id = $validatedData['department_id'] ?? $user->department_id;
+    
+        $user->save();
+    
+        return response()->json([
+            'message' => 'User updated successfully',
+            'user' => $user
+        ], 200);
     }
-
-    if ($request->has('department_id')) {
-        $user->department_id = $validatedData['department_id'];
-    }
-
-    $user->save();
-
-    return response()->json([
-        'message' => 'User updated successfully',
-        'user' => $user
-    ], 200);
-}
+    
 
 
     // Delete user by ID
