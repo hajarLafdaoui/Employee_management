@@ -1,28 +1,40 @@
 <?php
+
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
 {
+    // Login function
     public function login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+{
+    $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($request->only('email', 'password'))) {
-            $user = Auth::user();
-
-            return response()->json([
-                'message' => 'Login successful',
-                'user' => $user,
-                'token' => $user->createToken('API Token')->plainTextToken,
-            ]);
+    try {
+        // Attempt to get the token
+        if (!$token = JWTAuth::attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
-
-        return response()->json(['message' => 'Invalid credentials'], 401);
+    } catch (JWTException $e) {
+        return response()->json(['error' => 'Could not create token'], 500);
     }
+
+    // Get the authenticated user
+    $user = JWTAuth::user();
+
+    // Return the token along with user data (name, email, role)
+    return response()->json([
+        'token' => $token,
+        'user' => [
+            'name' => $user->name,
+            'email' => $user->email,
+            'role' => $user->role // Include the role here
+        ]
+    ]);
+}
+
 }
