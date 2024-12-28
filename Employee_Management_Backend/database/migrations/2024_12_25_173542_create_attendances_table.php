@@ -1,30 +1,29 @@
 <?php
+use App\Models\Attendance;
+use Illuminate\Http\Request;
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-
-return new class extends Migration
+class AttendanceController extends Controller
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function store(Request $request)
     {
-        Schema::create('attendances', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->date('attendance_date');
-            $table->boolean('is_present')->default(true); 
-            $table->timestamps();
-        });
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'attendance_date' => 'required|date',
+            'is_present' => 'required|in:present,absent,leave',
+        ]);
+
+        $attendance = Attendance::create([
+            'user_id' => $request->user_id,
+            'attendance_date' => $request->attendance_date,
+             'is_present' => $request->status,
+        ]);
+
+        return response()->json($attendance, 201);
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function index()
     {
-        Schema::dropIfExists('attendances');
+        $attendances = Attendance::all();
+        return response()->json($attendances);
     }
-};
+}
