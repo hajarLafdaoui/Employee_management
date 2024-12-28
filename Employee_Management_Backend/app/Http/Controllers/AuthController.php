@@ -32,7 +32,15 @@ class AuthController extends Controller
         'user' => [
             'name' => $user->name,
             'email' => $user->email,
-            'role' => $user->role // Include the role here
+            'role' => $user->role,
+            'username' => $user->username,           // Add username
+            'phone' => $user->phone,                
+            'profile_picture' => $user->profile_picture, 
+            'job_title' => $user->job_title,        
+            'company' => $user->company,            
+            'department' => $user->department,       
+            'status' => $user->status,             
+            'last_login' => $user->last_login       
         ]
     ]);
 }

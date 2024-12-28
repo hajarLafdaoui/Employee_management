@@ -1,5 +1,4 @@
 <?php
-
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -23,19 +22,30 @@ class AttendanceSeeder extends Seeder
             DB::table('attendances')->insert([
                 [
                     'user_id' => $userId,
-                    'attendance_date' => Carbon::today()->subDays(rand(0, 30)), 
-                    'is_present' => rand(0, 1) === 1, 
+                    'attendance_date' => Carbon::today()->subDays(rand(0, 30)),
+                    'status' => $this->randomStatus(),  // Use the new status column
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],
                 [
                     'user_id' => $userId,
-                    'attendance_date' => Carbon::today()->subDays(rand(0, 30)), 
-                    'is_present' => rand(0, 1) === 1, 
+                    'attendance_date' => Carbon::today()->subDays(rand(0, 30)),
+                    'status' => $this->randomStatus(),  // Use the new status column
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],
             ]);
         }
+    }
+
+    /**
+     * Get a random status for attendance.
+     *
+     * @return string
+     */
+    private function randomStatus()
+    {
+        $statuses = ['present', 'absent', 'late', 'excused'];
+        return $statuses[array_rand($statuses)];
     }
 }
