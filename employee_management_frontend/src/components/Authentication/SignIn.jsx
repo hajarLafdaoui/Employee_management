@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 
 const SignIn = ({ onLogin }) => {
-  const [email, setEmail] = useState('alice.johnson@example.com');
-  const [password, setPassword] = useState('12345678');
+  const [email, setEmail] = useState('bob.brown@example.com');
+  const [password, setPassword] = useState('password123');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -23,13 +23,13 @@ const SignIn = ({ onLogin }) => {
         localStorage.setItem('user', JSON.stringify(response.data.user)); // Store user data
         // Check if 'user' object is in the response and contains 'role'
         if (response.data.user && response.data.user.role) {
-          const role = response.data.user.role; // Get role from the 'user' object
-  
+          const role = response.data.user.role.trim().toLowerCase();
+
           // Redirect based on the role
           if (role === 'employee') {
-            navigate('/profile'); // Redirect to profile for employees
+            navigate('/profile');
           } else if (role === 'admin') {
-            navigate('/dashboard'); // Redirect to dashboard for admins
+            navigate('/dashboard');
           } else {
             setError('Unknown role');
           }
