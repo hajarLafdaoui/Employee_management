@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axiosInstance from '../axiosSetup'; 
+import axiosInstance from '../axiosSetup';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -13,17 +13,17 @@ const SignIn = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-   
+
       const response = await axiosInstance.post('/login', { email, password });
       console.log('Response:', response); // Log the entire response to check its structure
-  
+
       if (response.data.token) {
         localStorage.setItem('token', response.data.token); // Store token
         localStorage.setItem('user', JSON.stringify(response.data.user)); // Store user data
         // Check if 'user' object is in the response and contains 'role'
         if (response.data.user && response.data.user.role) {
           const role = response.data.user.role; // Get role from the 'user' object
-  
+
           // Redirect based on the role
           if (role === 'employee') {
             navigate('/profile'); // Redirect to profile for employees
@@ -43,10 +43,10 @@ const SignIn = () => {
       setError('Invalid credentials or network issue');
     }
   };
-  
-    
-    
-  
+
+
+
+
 
   return (
     <div>

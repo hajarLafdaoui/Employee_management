@@ -1,0 +1,158 @@
+import axiosInstance from "../axiosSetup";
+
+import React, { useState, useEffect } from "react";
+const Marking = () => {
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [employees, setEmployees] = useState([]);
+    const [search, setSearch] = useState('');
+    const [departments, setDepartments] = useState([]);
+    const [selectedDepartment, setSelectedDepartment] = useState('');
+    const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]); 
+    const [attendance, setAttendance] = useState({});
+
+    // Fetching employees, departments
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [employeesData, departmentsData] = await Promise.all([
+                    axiosInstance.get("/users"),
+                    axiosInstance.get("/departments")
+                ]);
+                setEmployees(employeesData.data);
+                setDepartments(departmentsData.data);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, []);
+
+    // Handling
+    const handleSearch = (e) => setSearch(e.target.value);
+    const handleSelect = (e) => setSelectedDepartment(e.target.value);
+    const handleDateChange = (e) => setSelectedDate(e.target.value);
+
+    // Filtering employees (Search, Department)
+    const filteredEmployees = employees.filter(employee => {
+        const matchesSearch = employee.name.toLowerCase().includes(search.toLowerCase());
+        const matchesDepartment = !selectedDepartment || String(employee.department_id) === String(selectedDepartment);
+        return matchesSearch && matchesDepartment;
+    });
+
+    // Date
+    const isFutureDate = new Date(selectedDate) > new Date();
+
+    // Attendance
+    const handleAttendanceChange = (employeeId, status) => {
+        setAttendance(prev => ({ ...prev, [employeeId]: status }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        const attendanceRecords = Object.entries(attendance).map(([employeeId, status]) => ({
+            user_id: employeeId,
+            attendance_date: selectedDate,
+            status,
+        }));
+    
+        try {
+            await axiosInstance.post("/attendance", { records: attendanceRecords });
+            alert("Attendance saved successfully!");
+            setAttendance({});
+        } catch (error) {
+            console.error(error);  // Log error details
+            alert("Error saving attendance. Please try again.");
+        }
+    };
+    
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
+
+    return (
+        <>
+            <input
+                type="text"
+                value={search}
+                onChange={handleSearch}
+                placeholder="Search by name"
+            />
+
+            <select onChange={handleSelect} value={selectedDepartment}>
+                <option value="">All Departments</option>
+                {departments.map(dept => (
+                    <option key={dept.id} value={dept.id}>{dept.name}</option>
+                ))}
+            </select>
+
+            <input
+                type="date"
+                value={selectedDate}
+                onChange={handleDateChange}
+                max={new Date().toISOString().split('T')[0]} 
+            />
+
+            <form onSubmit={handleSubmit}>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Employee ID</th>
+                            <th>Employee Name</th>
+                            <th>Department</th>
+                            <th>Attendance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredEmployees.map(employee => {
+                            const department = departments.find(dept => dept.id === employee.department_id);
+                            const departmentName = department ? department.name : "Unknown";
+
+                            return (
+                                <tr key={employee.id}>
+                                    <td>{employee.id}</td>
+                                    <td>{employee.name}</td>
+                                    <td>{departmentName}</td>
+                                    <td>
+                                        <input
+                                            type="radio"
+                                            name={`attendance-${employee.id}`}
+                                            value="present"
+                                            disabled={isFutureDate}
+                                            onChange={() => handleAttendanceChange(employee.id, "present")}
+                                        />
+                                        Present
+                                        <input
+                                            type="radio"
+                                            name={`attendance-${employee.id}`}
+                                            value="absent"
+                                            disabled={isFutureDate}
+                                            onChange={() => handleAttendanceChange(employee.id, "absent")}
+                                        />
+                                        Absent
+                                        <input
+                                            type="radio"
+                                            name={`attendance-${employee.id}`}
+                                            value="leave"
+                                            disabled={isFutureDate}
+                                            onChange={() => handleAttendanceChange(employee.id, "leave")}
+                                        />
+                                        Leave
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
+                <button type="submit" disabled={isFutureDate}>Save Attendance</button>
+            </form>
+        </>
+    );
+};
+
+
+
+export default Marking;

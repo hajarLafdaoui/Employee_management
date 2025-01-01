@@ -1,94 +1,102 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Carbon\Carbon;
 
 class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
-        // Disable foreign key checks to allow truncating the table
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        // Fetch all departments and map them by name
+        $departments = DB::table('departments')->pluck('id', 'name')->toArray();
 
-        // Clear the users table before seeding
-        DB::table('users')->truncate();
-
-        // Enable foreign key checks back
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
-        // Fetching department IDs to associate with users
-        $departments = DB::table('departments')->pluck('id');
-
-        // Seeding user data with associated department_id and additional fields
-        DB::table('users')->insert([
+        // Users to be inserted
+        $users = [
             [
+                'department_name' => 'IT Department',
+                'role' => 'employee',
                 'name' => 'John Doe',
                 'email' => 'john.doe@example.com',
-                'password' => Hash::make('password123'),
-                'role' => 'employee',
-                'username' => 'johndoe',
-                'phone' => '123-456-7890',
-                'profile_picture' => asset('uploads/profile1.jpg'),
-                'job_title' => 'Software Engineer',
-                'company' => 'Tech Solutions',
-                'department' => 'IT',
-                'status' => 'active',
-                'last_login' => Carbon::now()->subDays(1),
-                'department_id' => $departments->random(),
+                'password' => 'password',  // Plain text password for testing
+                'username' => 'john.doe',
+                'phone' => '1234567890',
+                'profile_picture' => null,
             ],
             [
+                'department_name' => 'HR Department',
+                'role' => 'admin',
                 'name' => 'Jane Smith',
                 'email' => 'jane.smith@example.com',
-                'password' => Hash::make('password123'),
-                'role' => 'admin',
-                'username' => 'janesmith',
-                'phone' => '987-654-3210',
-                'profile_picture' => asset('uploads/profile2.jpg'),
-                'job_title' => 'HR Manager',
-                'company' => 'Business Corp',
-                'department' => 'Human Resources',
-                'status' => 'active',
-                'last_login' => Carbon::now()->subDays(2),
-                'department_id' => $departments->random(),
+                'password' => 'password',  // Plain text password for testing
+                'username' => 'jane.smith',
+                'phone' => '0987654321',
+                'profile_picture' => null,
             ],
             [
+                'department_name' => 'IT Department',
+                'role' => 'employee',
                 'name' => 'Alice Johnson',
                 'email' => 'alice.johnson@example.com',
-                'password' => Hash::make('password123'),
-                'role' => 'employee',
-                'username' => 'alicejohnson',
-                'phone' => '555-123-4567',
-                'profile_picture' => asset('uploads/profile3.jpg'),
-                'job_title' => 'Marketing Specialist',
-                'company' => 'Ad Ventures',
-                'department' => 'Marketing',
-                'status' => 'inactive',
-                'last_login' => Carbon::now()->subDays(3),
-                'department_id' => $departments->random(),
+                'password' => 'password',  // Plain text password for testing
+                'username' => 'alice.johnson',
+                'phone' => '1122334455',
+                'profile_picture' => null,
             ],
             [
-                'name' => 'Bob Brown',
-                'email' => 'bob.brown@example.com',
-                'role' => 'admin',
-                'password' => Hash::make('password123'),
-                'username' => 'bobbrown',
-                'phone' => '333-444-5555',
-                'profile_picture' => asset('uploads/profile4.jpg'),
-                'job_title' => 'Sales Director',
-                'company' => 'Global Sales Inc.',
-                'department' => 'Sales',
-                'status' => 'active',
-                'last_login' => Carbon::now()->subDays(5),
-                'department_id' => $departments->random(),
+                'department_name' => 'Finance Department',
+                'role' => 'employee',
+                'name' => 'Bob Lee',
+                'email' => 'bob.lee@example.com',
+                'password' => 'password',  // Plain text password for testing
+                'username' => 'bob.lee',
+                'phone' => '2233445566',
+                'profile_picture' => null,
             ],
-        ]);
+            [
+                'department_name' => 'HR Department',
+                'role' => 'employee',
+                'name' => 'Sarah Williams',
+                'email' => 'sarah.williams@example.com',
+                'password' => 'password',  // Plain text password for testing
+                'username' => 'sarah.williams',
+                'phone' => '3344556677',
+                'profile_picture' => null,
+            ],
+            [
+                'department_name' => 'Finance Department',
+                'role' => 'employee',
+                'name' => 'David Miller',
+                'email' => 'david.miller@example.com',
+                'password' => 'password',  // Plain text password for testing
+                'username' => 'david.miller',
+                'phone' => '4455667788',
+                'profile_picture' => null,
+            ],
+        ];
+
+        // Insert users with correct department IDs
+        foreach ($users as $user) {
+            $departmentId = $departments[$user['department_name']] ?? null;
+
+            if ($departmentId) {
+                DB::table('users')->insert([
+                    'department_id' => $departmentId,
+                    'role' => $user['role'],
+                    'name' => $user['name'],
+                    'email' => $user['email'],
+                    'password' => bcrypt($user['password']), // Hashing the password for security
+                    'username' => $user['username'],
+                    'phone' => $user['phone'],
+                    'profile_picture' => $user['profile_picture'],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
     }
 }
