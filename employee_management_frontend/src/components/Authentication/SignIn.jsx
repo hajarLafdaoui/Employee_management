@@ -3,9 +3,9 @@ import axiosInstance from '../axiosSetup'; // Import the axios setup
 import { useNavigate } from 'react-router-dom';
 
 
-const SignIn = () => {
-  const [email, setEmail] = useState('jane.smith@example.com');
-  const [password, setPassword] = useState('password123');
+const SignIn = ({ onLogin }) => {
+  const [email, setEmail] = useState('alice.johnson@example.com');
+  const [password, setPassword] = useState('12345678');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -16,7 +16,8 @@ const SignIn = () => {
    
       const response = await axiosInstance.post('/login', { email, password });
       console.log('Response:', response); // Log the entire response to check its structure
-  
+      onLogin(); // Update the authentication state
+
       if (response.data.token) {
         localStorage.setItem('token', response.data.token); // Store token
   
