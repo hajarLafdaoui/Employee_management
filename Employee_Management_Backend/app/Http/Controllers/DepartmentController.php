@@ -7,10 +7,9 @@ use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
-    public function index()
-    {
-        $users = Department::all(); 
-        return response()->json($users);
+    public function index(){
+        $departments  = Department::all();
+        return response()->json($departments);
     }
 
 }

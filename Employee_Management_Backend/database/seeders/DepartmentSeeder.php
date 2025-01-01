@@ -1,24 +1,22 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\Department;
 
 class DepartmentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
-        DB::table('departments')->insert([
-            ['name' => 'Human Resources'],
-            ['name' => 'Marketing'],
-            ['name' => 'Sales'],
-            ['name' => 'IT'],
-            ['name' => 'Finance'],
+        Department::insert([
+            ['name' => 'IT Department', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'HR Department', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Finance Department', 'created_at' => now(), 'updated_at' => now()],
+
         ]);
     }
 }

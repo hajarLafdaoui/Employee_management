@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react';
 import SignIn from './components/Authentication/SignIn';
 import Profile from './components/Profile';
 import Dashboard from './components/Dashboard';
+// Attendance
+import Marking from './components/attendance/Marking';
+
 import UpdateUser from './components/UpdateUser';
 import CreateUser from './components/CreateUser';
 import DetailUser from './components/DetailUser';
@@ -28,8 +31,17 @@ function App() {
     setIsAuthenticated(false);
   };
 
-  return (
-    <Router>
+  return (    <>
+     <Router>
+    <Routes>
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/login" element={<SignIn />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/Marking" element={<Marking />} />
+    </Routes>
+  </Router>
+  {/* <Employees/> */}
+  <Router>
       <Routes>
         <Route
           path="/login"
@@ -41,8 +53,7 @@ function App() {
             )
           }
         />
-
-        <Route
+         <Route
           path="/profile"
           element={
             isAuthenticated ? <Profile /> : <Navigate to="/login" replace />
@@ -77,6 +88,9 @@ function App() {
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </Router>
+    </>
+   
+
   );
 }
 
