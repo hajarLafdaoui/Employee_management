@@ -38,10 +38,14 @@ function App() {
       <Route path="/login" element={<SignIn />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/Marking" element={<Marking />} />
+      <Route path="/update-user/:userId" element={<UpdateUser />} />
+      <Route path="/create-user" element={<CreateUser />} />
+      <Route   path="/user-details/:userId" element={<DetailUser />} />
+
     </Routes>
   </Router>
   {/* <Employees/> */}
-  <Router>
+  {/* <Router>
       <Routes>
         <Route
           path="/login"
@@ -87,7 +91,7 @@ function App() {
 />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
-    </Router>
+    </Router> */}
     </>
    
 

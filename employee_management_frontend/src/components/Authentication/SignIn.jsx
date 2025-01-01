@@ -3,7 +3,7 @@ import axiosInstance from '../axiosSetup';
 import { useNavigate } from 'react-router-dom';
 
 
-const SignIn = ({ onLogin }) => {
+const SignIn = () => {
   const [email, setEmail] = useState('bob.brown@example.com');
   const [password, setPassword] = useState('password123');
   const [error, setError] = useState('');
@@ -17,7 +17,7 @@ const SignIn = ({ onLogin }) => {
       const response = await axiosInstance.post('/login', { email, password });
       console.log('Response:', response); // Log the entire response to check its structure
 
-      onLogin(); // Update the authentication state
+      // onLogin(); // Update the authentication state
 
 
       if (response.data.token) {
