@@ -20,7 +20,7 @@ const SignIn = ({ onLogin }) => {
 
       if (response.data.token) {
         localStorage.setItem('token', response.data.token); // Store token
-  
+        localStorage.setItem('user', JSON.stringify(response.data.user)); // Store user data
         // Check if 'user' object is in the response and contains 'role'
         if (response.data.user && response.data.user.role) {
           const role = response.data.user.role; // Get role from the 'user' object
