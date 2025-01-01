@@ -32,3 +32,4 @@ Route::get('/departments', [DepartmentController::class, 'index']);
 
 // Attendance
 Route::post('/attendance', [AttendanceController::class, 'store']);
+
