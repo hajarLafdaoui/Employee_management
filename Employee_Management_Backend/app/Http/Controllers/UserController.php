@@ -30,35 +30,51 @@ class UserController extends Controller
 
     // Create a new user
     public function store(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-            'role' => 'required|string|max:50',
-            'department_id' => 'required|exists:departments,id',
-        ]);
-    
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Validation failed',
-                'errors' => $validator->errors(),
-            ], 422);
-        }
-    
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $request->role,
-            'department_id' => $request->department_id,
-        ]);
-    
+{
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users', 
+        'password' => 'required|string|min:8',
+        'role' => 'required|string|max:50',
+        'department_id' => 'required|exists:departments,id',
+        'username' => 'required|string|max:255|unique:users', 
+        'phone' => 'nullable|string|max:255',
+        'profile_picture' => 'nullable|string|max:255',
+        'job_title' => 'nullable|string|max:255',
+        'company' => 'nullable|string|max:255',
+        'status' => 'required|in:active,inactive',
+        'last_login' => 'nullable|date',
+    ]);
+
+    if ($validator->fails()) {
         return response()->json([
-            'message' => 'User created successfully!',
-            'user' => $user,
-        ], 201);
+            'message' => 'Validation failed',
+            'errors' => $validator->errors(),
+        ], 422);
     }
+
+    // Create the new user
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'role' => $request->role,
+        'department_id' => $request->department_id,
+        'username' => $request->username,
+        'phone' => $request->phone,
+        'profile_picture' => $request->profile_picture,
+        'job_title' => $request->job_title,
+        'company' => $request->company,
+        'status' => $request->status,
+        'last_login' => $request->last_login,
+    ]);
+
+    return response()->json([
+        'message' => 'User created successfully!',
+        'user' => $user,
+    ], 201);
+}
+
 
     public function update(Request $request, $id)
     {
@@ -69,11 +85,18 @@ class UserController extends Controller
         }
     
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
-            'password' => 'nullable|string|min:8|confirmed', 
-            'role' => 'required|string', 
-            'department_id' => 'nullable|integer' 
+            'name' => 'nullable|string|max:255',
+            'email' => 'nullable|string|email|max:255|unique:users,email,' . $id,
+            'password' => 'nullable|string|min:8', 
+            'role' => 'nullable|string', 
+            'department_id' => 'nullable|integer',
+            'username' => 'nullable|string|max:255|unique:users,username,' . $id,
+            'phone' => 'nullable|string|max:255',
+            'profile_picture' => 'nullable|string|max:255',
+            'job_title' => 'nullable|string|max:255',
+            'company' => 'nullable|string|max:255',
+            'status' => 'nullable|in:active,inactive',
+            'last_login' => 'nullable|date',
         ]);
     
         $user->name = $validatedData['name'];
@@ -85,6 +108,13 @@ class UserController extends Controller
     
         $user->role = $validatedData['role'];
         $user->department_id = $validatedData['department_id'] ?? $user->department_id;
+        $user->username = $validatedData['username'] ?? $user->username;
+        $user->phone = $validatedData['phone'] ?? $user->phone;
+        $user->profile_picture = $validatedData['profile_picture'] ?? $user->profile_picture;
+        $user->job_title = $validatedData['job_title'] ?? $user->job_title;
+        $user->company = $validatedData['company'] ?? $user->company;
+        $user->status = $validatedData['status'] ?? $user->status;
+        $user->last_login = $validatedData['last_login'] ?? $user->last_login;
     
         $user->save();
     
@@ -93,8 +123,6 @@ class UserController extends Controller
             'user' => $user
         ], 200);
     }
-    
-
 
     // Delete user by ID
     public function destroy($id)

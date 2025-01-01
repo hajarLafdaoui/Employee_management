@@ -11,4 +11,5 @@ class DepartmentController extends Controller
         $departments  = Department::all();
         return response()->json($departments);
     }
+
 }

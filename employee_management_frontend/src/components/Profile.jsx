@@ -2,18 +2,15 @@ import React, { useEffect, useState } from 'react';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
-
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
   }, []);
-
   if (!user) {
     return <p>Loading profile...</p>;
   }
-
   return (
     <div>
       <h1>Profile</h1>
@@ -30,7 +27,8 @@ const Profile = () => {
         <p><strong>Profile Picture:</strong> <img src={user.profile_picture} alt="Profile" style={{ width: '100px', height: '100px' }} /></p>
       </div>
     </div>
-  );
+  )
+  
 }
 
-export default Profile;
+export default Profile

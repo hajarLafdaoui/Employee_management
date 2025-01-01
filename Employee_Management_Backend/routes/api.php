@@ -1,6 +1,5 @@
 <?php
 
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -28,6 +27,8 @@ Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
 // Departments
 Route::get('/departments', [DepartmentController::class, 'index']);
+
+
 
 // Attendance
 Route::post('/attendance', [AttendanceController::class, 'store']);
