@@ -8,6 +8,34 @@ use Illuminate\Http\Request;
 class AttendanceController extends Controller
 
 {
+    public function destroy($id){
+        $attendance = Attendance::find($id);
+        $attendance->delete();
+        return response()->json(['message' => 'attendance deleted successfully']);
+
+    }
+    
+    public function update(Request $request, $id)
+    {
+        try {
+            $attendance = Attendance::findOrFail($id); 
+            $validated = $request->validate([
+                'status' => 'required|in:present,absent,leave',
+                'attendance_date' => 'nullable|date',
+            ]);
+    
+            $attendance->update([
+                'status' => $validated['status'],
+                'attendance_date' => $validated['attendance_date'] ?? $attendance->attendance_date,
+            ]);
+    
+            return response()->json(['message' => 'Attendance updated successfully'], 200);
+        } catch (\Exception $e) {
+            \Log::error('Error updating attendance: ', ['error' => $e->getMessage()]);
+            return response()->json(['message' => 'Error updating attendance'], 500);
+        }
+    }
+    
         
     public function index(){
         // $attendances = Attendance::all();
