@@ -20,6 +20,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 // CRUD operations for users
 Route::get('/users', [UserController::class, 'index']);
+Route::get('/employees', [UserController::class, 'fetchEmployees']);
 Route::get('/users/{id}', [UserController::class, 'show']);
 Route::post('/users', [UserController::class, 'store']);
 Route::put('/users/{id}', [UserController::class, 'update']);
@@ -32,4 +33,5 @@ Route::get('/departments', [DepartmentController::class, 'index']);
 
 // Attendance
 Route::post('/attendance', [AttendanceController::class, 'store']);
+Route::get('/attendance', [AttendanceController::class, 'index']);
 

@@ -6,6 +6,7 @@ import Profile from './components/Profile';
 import Dashboard from './components/Dashboard';
 // Attendance
 import Marking from './components/attendance/Marking';
+import Attendance from './components/attendance/Attendance';
 
 import UpdateUser from './components/UpdateUser';
 import CreateUser from './components/CreateUser';
@@ -38,6 +39,7 @@ function App() {
       <Route path="/login" element={<SignIn />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/Marking" element={<Marking />} />
+      <Route path="/Attendance" element={<Attendance />} />
     </Routes>
   </Router>
   {/* <Employees/> */}

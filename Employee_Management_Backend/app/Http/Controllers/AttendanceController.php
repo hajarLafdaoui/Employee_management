@@ -6,7 +6,17 @@ use App\Models\Attendance;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
-{public function store(Request $request)
+
+{
+        
+    public function index(){
+        // $attendances = Attendance::all();
+        $attendances = Attendance::with('user.department')->get();
+        return response()->json($attendances);   
+                                                                    
+    }
+    
+    public function store(Request $request)
     {
         try {
             $validated = $request->validate([
