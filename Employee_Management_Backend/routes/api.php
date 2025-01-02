@@ -4,9 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\DepartmentController;
 use Tymon\JWTAuth\Http\Middleware\Authenticate;
+use App\Http\Controllers\LeaveRequestController;
 
 
 Route::get('/user', function (Request $request) {
@@ -33,3 +34,9 @@ Route::get('/departments', [DepartmentController::class, 'index']);
 // Attendance
 Route::post('/attendance', [AttendanceController::class, 'store']);
 
+// Routes pour les demandes de congé
+
+Route::post('/leave-request', [LeaveRequestController::class, 'submitRequest']);
+Route::get('/leave-requests', [LeaveRequestController::class, 'getAllRequests']);
+Route::put('/leave-request/{id}/approve', [LeaveRequestController::class, 'approveRequest']);
+Route::put('/leave-request/{id}/reject', [LeaveRequestController::class, 'rejectRequest']);

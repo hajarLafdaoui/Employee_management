@@ -10,6 +10,8 @@ import Marking from './components/attendance/Marking';
 import UpdateUser from './components/UpdateUser';
 import CreateUser from './components/CreateUser';
 import DetailUser from './components/DetailUser';
+import AdminLeaveRequests from './components/leave-request/AdminLeaveRequests';
+import LeaveRequestForm from './components/leave-request/LeaveRequestForm';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -38,10 +40,12 @@ function App() {
       <Route path="/login" element={<SignIn />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/Marking" element={<Marking />} />
+      <Route path="/demandleave" element={<LeaveRequestForm />} />
+      <Route path="/leaverequest" element={<AdminLeaveRequests />} />
     </Routes>
   </Router>
   {/* <Employees/> */}
-  <Router>
+  {/* <Router>
       <Routes>
         <Route
           path="/login"
@@ -87,7 +91,7 @@ function App() {
 />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
-    </Router>
+    </Router> */}
     </>
    
 
