@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from './axiosSetup';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const CreateUser = () => {
   const [name, setName] = useState('');
@@ -14,7 +14,7 @@ const CreateUser = () => {
   const [departmentId, setDepartmentId] = useState('');
   const [departments, setDepartments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
+ const navigate=useNavigate()
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -51,6 +51,7 @@ const CreateUser = () => {
       setPhone('');
       setProfilePicture(null);
       setDepartmentId('');
+      navigate("/dashboard")
     } catch (error) {
       console.error('Error creating user:', error);
       setMessage(error.response?.data?.message || 'Error creating user');
