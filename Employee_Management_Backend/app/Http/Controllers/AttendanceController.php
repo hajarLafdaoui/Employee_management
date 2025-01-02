@@ -8,6 +8,41 @@ use Illuminate\Http\Request;
 class AttendanceController extends Controller
 
 {
+   public function index(){
+    $attendances = Attendance::with('user.department')->get();
+    return response()->json($attendances);   
+                                                                
+}
+public function show($id)
+{
+    $attendance = Attendance::with('user.department')->find($id); 
+    if (!$attendance) {
+        return response()->json(['message' => 'Attendance not found'], 404);
+    }
+    return response()->json($attendance);
+}
+
+public function update(Request $request, $id)
+{
+    try {
+        $attendance = Attendance::findOrFail($id);
+
+        $validated = $request->validate([
+            'status' => 'required|in:present,absent,leave',
+        ]);
+
+        $attendance->update([
+            'status' => $validated['status'],
+        ]);
+
+        return response()->json(['message' => 'Attendance updated successfully'], 200);
+    } catch (\Exception $e) {
+        \Log::error('Error updating attendance: ', ['error' => $e->getMessage()]);
+        return response()->json(['message' => 'Error updating attendance'], 500);
+    }
+}
+
+
     public function destroy($id){
         $attendance = Attendance::find($id);
         $attendance->delete();
@@ -15,35 +50,7 @@ class AttendanceController extends Controller
 
     }
     
-    public function update(Request $request, $id)
-    {
-        try {
-            $attendance = Attendance::findOrFail($id); 
-            $validated = $request->validate([
-                'status' => 'required|in:present,absent,leave',
-                'attendance_date' => 'nullable|date',
-            ]);
-    
-            $attendance->update([
-                'status' => $validated['status'],
-                'attendance_date' => $validated['attendance_date'] ?? $attendance->attendance_date,
-            ]);
-    
-            return response()->json(['message' => 'Attendance updated successfully'], 200);
-        } catch (\Exception $e) {
-            \Log::error('Error updating attendance: ', ['error' => $e->getMessage()]);
-            return response()->json(['message' => 'Error updating attendance'], 500);
-        }
-    }
-    
-        
-    public function index(){
-        // $attendances = Attendance::all();
-        $attendances = Attendance::with('user.department')->get();
-        return response()->json($attendances);   
-                                                                    
-    }
-    
+
     public function store(Request $request)
     {
         try {

@@ -34,5 +34,6 @@ Route::get('/departments', [DepartmentController::class, 'index']);
 // Attendance
 Route::post('/attendance', [AttendanceController::class, 'store']);
 Route::get('/attendance', [AttendanceController::class, 'index']);
+Route::get('/attendance/{id}', [AttendanceController::class, 'show']);
 Route::put('/attendance/{id}', [AttendanceController::class, 'update']);
 Route::delete('/attendance/{id}', [AttendanceController::class, 'destroy']);

@@ -70,6 +70,7 @@ const Attendance = () => {
                                     Update
                                 </button>
                             </Link>
+                            
 
                             <Link to={`/delete-attendance/${entry.id}`}>
                                 <button >
