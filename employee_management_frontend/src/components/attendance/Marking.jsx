@@ -1,6 +1,6 @@
 import axiosInstance from "../axiosSetup";
-
 import React, { useState, useEffect } from "react";
+
 const Marking = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -8,7 +8,6 @@ const Marking = () => {
     const [search, setSearch] = useState('');
     const [departments, setDepartments] = useState([]);
     const [selectedDepartment, setSelectedDepartment] = useState('');
-    const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]); 
     const [attendance, setAttendance] = useState({});
 
     // Fetching employees, departments
@@ -30,10 +29,9 @@ const Marking = () => {
         fetchData();
     }, []);
 
-    // Handling
+    // Handling search and department selection
     const handleSearch = (e) => setSearch(e.target.value);
     const handleSelect = (e) => setSelectedDepartment(e.target.value);
-    const handleDateChange = (e) => setSelectedDate(e.target.value);
 
     // Filtering employees (Search, Department)
     const filteredEmployees = employees.filter(employee => {
@@ -42,9 +40,6 @@ const Marking = () => {
         return matchesSearch && matchesDepartment;
     });
 
-    // Date
-    const isFutureDate = new Date(selectedDate) > new Date();
-
     // Attendance
     const handleAttendanceChange = (employeeId, status) => {
         setAttendance(prev => ({ ...prev, [employeeId]: status }));
@@ -52,13 +47,13 @@ const Marking = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         const attendanceRecords = Object.entries(attendance).map(([employeeId, status]) => ({
             user_id: employeeId,
-            attendance_date: selectedDate,
+            attendance_date: new Date().toISOString().split('T')[0], // Today's date
             status,
         }));
-    
+
         try {
             await axiosInstance.post("/attendance", { records: attendanceRecords });
             alert("Attendance saved successfully!");
@@ -68,13 +63,14 @@ const Marking = () => {
             alert("Error saving attendance. Please try again.");
         }
     };
-    
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
     return (
         <>
+            <p>Date: {new Date().toISOString().split('T')[0]}</p> {/* Display today's date */}
+
             <input
                 type="text"
                 value={search}
@@ -88,13 +84,6 @@ const Marking = () => {
                     <option key={dept.id} value={dept.id}>{dept.name}</option>
                 ))}
             </select>
-
-            <input
-                type="date"
-                value={selectedDate}
-                onChange={handleDateChange}
-                max={new Date().toISOString().split('T')[0]} 
-            />
 
             <form onSubmit={handleSubmit}>
                 <table>
@@ -121,7 +110,6 @@ const Marking = () => {
                                             type="radio"
                                             name={`attendance-${employee.id}`}
                                             value="present"
-                                            disabled={isFutureDate}
                                             onChange={() => handleAttendanceChange(employee.id, "present")}
                                         />
                                         Present
@@ -129,7 +117,6 @@ const Marking = () => {
                                             type="radio"
                                             name={`attendance-${employee.id}`}
                                             value="absent"
-                                            disabled={isFutureDate}
                                             onChange={() => handleAttendanceChange(employee.id, "absent")}
                                         />
                                         Absent
@@ -137,7 +124,6 @@ const Marking = () => {
                                             type="radio"
                                             name={`attendance-${employee.id}`}
                                             value="leave"
-                                            disabled={isFutureDate}
                                             onChange={() => handleAttendanceChange(employee.id, "leave")}
                                         />
                                         Leave
@@ -147,12 +133,10 @@ const Marking = () => {
                         })}
                     </tbody>
                 </table>
-                <button type="submit" disabled={isFutureDate}>Save Attendance</button>
+                <button type="submit">Save Attendance</button>
             </form>
         </>
     );
 };
-
-
 
 export default Marking;
