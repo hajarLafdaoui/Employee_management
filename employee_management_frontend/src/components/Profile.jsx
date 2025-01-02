@@ -34,11 +34,7 @@ const Profile = ({onLogout}) => {
         <p><strong>Username:</strong> {user.username}</p>
         <p><strong>Phone:</strong> {user.phone}</p>
         <p><strong>Job Title:</strong> {user.job_title}</p>
-        <p><strong>Company:</strong> {user.company}</p>
-        <p><strong>Department:</strong> {user.department}</p>
-        <p><strong>Status:</strong> {user.status}</p>
-        <p><strong>Last Login:</strong> {new Date(user.last_login).toLocaleString()}</p>
-      
+     
       </div>
       <button onClick={onLogout}>Logout</button>
 
