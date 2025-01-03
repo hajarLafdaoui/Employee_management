@@ -6,14 +6,13 @@ const DeleteAttendance = () => {
     const { entryId } = useParams();
 
     const [error, setError] = useState(null);
-    const navigate = useNavigate();  // Use useNavigate hook
+    const navigate = useNavigate();
 
     useEffect(() => {
         const deleteAttendance = async () => {
             try {
                 await axiosInstance.delete(`/attendance/${entryId}`);
-                // Redirect to the attendance list after successful deletion
-                navigate('/attendance');  // Correctly redirect using navigate
+                navigate('/attendance');  
             } catch (err) {
                 console.error(err.response);
                 setError("Failed to delete attendance.");

@@ -2,7 +2,6 @@ import axiosInstance from "../axiosSetup";
 import React, { useState, useEffect } from "react";
 
 const Marking = () => {
-    // State declarations 
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [employees, setEmployees] = useState([]);
@@ -55,7 +54,6 @@ const Marking = () => {
             await axiosInstance.post("/attendance", { records: attendanceRecords });
             alert("Attendance saved successfully!");
 
-            // Filter out employees whose attendance has been saved
             const updatedEmployees = employees.filter(
                 employee => !attendance[employee.id]
             );
