@@ -52,12 +52,28 @@ const Attendance = () => {
 
         return filterByEmployee && filterByDepartment && filterByStatus;
     });
+    
+    // the counts for present, absent, and leave    
+    const presentCount = filteredAttendance.filter(
+        (entry) => entry.status === "present"
+    ).length;
+    const absentCount = filteredAttendance.filter(
+        (entry) => entry.status === "absent"
+    ).length;
+    const leaveCount = filteredAttendance.filter(
+        (entry) => entry.status === "leave"
+    ).length;
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
 
     return (
         <div>
+            <div>
+            <p>Number of Present: {presentCount}</p>
+                <p>Number of Absent: {absentCount}</p>
+                <p>Number of Leave: {leaveCount}</p>
+            </div>
             <h1>Attendance</h1>
             <input
                 type="text"

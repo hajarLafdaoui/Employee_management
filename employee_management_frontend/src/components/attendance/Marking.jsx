@@ -66,11 +66,13 @@ const Marking = () => {
         }
     };
 
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
     return (
         <>
+
             <p>Date: {new Date().toISOString().split('T')[0]}</p>
 
             <input
@@ -93,6 +95,7 @@ const Marking = () => {
                         <tr>
                             <th>Employee ID</th>
                             <th>Employee Name</th>
+                            <th>Profile Picture</th>
                             <th>Department</th>
                             <th>Attendance</th>
                         </tr>
@@ -105,7 +108,18 @@ const Marking = () => {
                             return (
                                 <tr key={employee.id}>
                                     <td>{employee.id}</td>
-                                    <td>{employee.name}</td>
+                                    <td>{employee.name}--{employee.email}</td>
+                                    <td style={{ textAlign: "center" }}>
+                                {employee.profile_picture ? (
+                                    <img
+                                        src={`http://localhost:8000/storage/${employee.profile_picture}`}
+                                        alt="Profile"
+                                        style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+                                    />
+                                ) : (
+                                    'No Picture'
+                                )}
+                            </td>
                                     <td>{departmentName}</td>
                                     <td>
                                         <input
