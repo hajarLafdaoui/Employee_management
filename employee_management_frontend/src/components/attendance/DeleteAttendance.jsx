@@ -12,7 +12,7 @@ const DeleteAttendance = () => {
         const deleteAttendance = async () => {
             try {
                 await axiosInstance.delete(`/attendance/${entryId}`);
-                navigate('/attendance');  
+                navigate('/AttendanceHeader');  
             } catch (err) {
                 console.error(err.response);
                 setError("Failed to delete attendance.");

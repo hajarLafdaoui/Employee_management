@@ -1,30 +1,14 @@
-import axiosInstance from "../axiosSetup";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
+import axiosInstance from "../axiosSetup";
 
-const Attendance = () => {
-    const [attendance, setAttendance] = useState([]);
+const Attendance = ({ attendance, currentDate }) => {
     const [departments, setDepartments] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
     const [search, setSearch] = useState("");
     const [selectedDepartment, setSelectedDepartment] = useState("");
     const [status, setStatus] = useState("");
-
-    const fetchAttendance = async () => {
-        try {
-          const resp = await axiosInstance.get("/attendance");
-          console.log(resp.data); // Debugging line to inspect the data
-          setAttendance(resp.data);
-        } catch (err) {
-          console.error(err);
-          setError("Failed to fetch attendance data.");
-        } finally {
-          setLoading(false);
-        }
-      };
-      
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const fetchDepartments = async () => {
         try {
@@ -37,43 +21,24 @@ const Attendance = () => {
     };
 
     useEffect(() => {
-        fetchAttendance();
         fetchDepartments();
     }, []);
 
     const filteredAttendance = attendance.filter((attend) => {
-        const filterByEmployee = attend.user.name
-            .toLowerCase()
-            .includes(search.toLowerCase());
+        const filterByDate =
+            new Date(attend.attendance_date).toDateString() === currentDate.toDateString();
+        const filterByEmployee = attend.user.name.toLowerCase().includes(search.toLowerCase());
         const filterByDepartment =
-            !selectedDepartment ||
-            String(attend.user.department_id) === String(selectedDepartment);
+            !selectedDepartment || String(attend.user.department_id) === String(selectedDepartment);
         const filterByStatus = !status || String(attend.status) === String(status);
 
-        return filterByEmployee && filterByDepartment && filterByStatus;
+        return filterByDate && filterByEmployee && filterByDepartment && filterByStatus;
     });
-    
-    // the counts for present, absent, and leave    
-    const presentCount = filteredAttendance.filter(
-        (entry) => entry.status === "present"
-    ).length;
-    const absentCount = filteredAttendance.filter(
-        (entry) => entry.status === "absent"
-    ).length;
-    const leaveCount = filteredAttendance.filter(
-        (entry) => entry.status === "leave"
-    ).length;
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>{error}</div>;
+    if (!attendance.length) return <div>Loading...</div>;
 
     return (
         <div>
-            <div>
-            <p>Number of Present: {presentCount}</p>
-                <p>Number of Absent: {absentCount}</p>
-                <p>Number of Leave: {leaveCount}</p>
-            </div>
             <h1>Attendance</h1>
             <input
                 type="text"
@@ -81,7 +46,6 @@ const Attendance = () => {
                 placeholder="Search by employee name"
                 onChange={(e) => setSearch(e.target.value)}
             />
-
             <select
                 value={selectedDepartment}
                 onChange={(e) => setSelectedDepartment(e.target.value)}
@@ -117,7 +81,6 @@ const Attendance = () => {
                 </thead>
                 <tbody>
                     {filteredAttendance.map((entry) => (
-
                         <tr key={entry.id}>
                             <td>{entry.user_id}</td>
                             <td>
@@ -135,8 +98,6 @@ const Attendance = () => {
                                 ) : (
                                     'No Picture'
                                 )}
-
-
                             </td>
                             <td>{entry.attendance_date}</td>
                             <td>{entry.status}</td>
@@ -149,12 +110,10 @@ const Attendance = () => {
                                 </Link>
                             </td>
                         </tr>
-
                     ))}
                 </tbody>
             </table>
         </div>
-
     );
 };
 

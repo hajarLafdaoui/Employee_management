@@ -36,7 +36,7 @@ const UpdateAttendance = () => {
         try {
             await axiosInstance.put(`/attendance/${entryId}`, { status });
             alert("Attendance updated successfully!");
-            navigate("/attendance");
+            navigate("/AttendanceHeader");
         } catch (err) {
             setError("Failed to update attendance.");
         }

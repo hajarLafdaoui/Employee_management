@@ -56,16 +56,18 @@ public function update(Request $request, $id)
         try {
             $validated = $request->validate([
                 'records' => 'required|array',
-                'records.*.user_id' => 'required|exists:users,id',
-                'attendance_date' => 'nullable|date',
+                'records.*.user_id' => 'required|exists:users,id',  // Make sure the user_id exists in the users table
+                'records.*.attendance_date' => 'required|date',
                 'records.*.status' => 'required|in:present,absent,leave',
             ]);
+            \Log::info('Validated Data:', $validated);
+            
     
             foreach ($validated['records'] as $record) {
                 Attendance::create([
                     'user_id' => $record['user_id'],
-                    'attendance_date' => $validated['attendance_date'] ?? now()->toDateString(),
-                    'status' => $record['status'],
+                    'attendance_date' => $record['attendance_date'], // Use $record['attendance_date']
+                                    'status' => $record['status'],
                 ]);
             }
     
