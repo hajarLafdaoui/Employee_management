@@ -25,7 +25,10 @@ Route::get('/employees', [UserController::class, 'fetchEmployees']);
 Route::get('/users/{id}', [UserController::class, 'show']);
 Route::post('/users', [UserController::class, 'store']);
 Route::put('/users/{id}', [UserController::class, 'update']);
-Route::delete('/users/{id}', [UserController::class, 'destroy']);
+Route::put('/users/{id}/toggle', [UserController::class, 'toggleStatus']);
+
+// Route::delete('/users/{id}', [UserController::class, 'destroy']);
+
 
 // Departments
 Route::get('/departments', [DepartmentController::class, 'index']);

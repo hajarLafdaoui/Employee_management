@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';  
+import { Link, useNavigate } from 'react-router-dom';  
 import axiosInstance from './axiosSetup';
 
 const Dashboard = ({ onLogout }) => {
   const [users, setUsers] = useState([]);
 const [attestations, setAttestations]=useState([])
-  
+  const navigate=useNavigate()
 
 useEffect(() => {
 
@@ -35,24 +35,40 @@ fetchAttestations()
     fetchUsers();
   }, []);
 
-  const handleDeleteSuccess = (deletedUserId) => {
-    setUsers(users.filter(user => user.id !== deletedUserId)); 
-  };
 
-  const handleDelete = async (userId) => {
-    const isConfirmed = window.confirm('Are you sure you want to delete this user?'); 
-    if (!isConfirmed) {
-      return; 
-    }
+  // disabled users
+  const handeleToggleStatus= async (e,userId,currentStatus)=>{
+e.preventDefault()
+    const isConfirmed=window.confirm(`Are you sure you want to change`)
+    if (!isConfirmed) return;
+    try{
+const resp=await axiosInstance.put(`users/${userId}/toggle`)
+console.log(resp.data.message)
+setUsers(users.map(user=>
+  user.id===userId?{...user,status:currentStatus==='enabled'?'disabled':'enabled'}:user
+))}catch(error){
+console.error(error)
+}
+  }
 
-    try {
-      const response = await axiosInstance.delete(`/users/${userId}`);
-      console.log(response.data.message); 
-      handleDeleteSuccess(userId); 
-    } catch (error) {
-      console.error('Error deleting user:', error);
-    }
-  };
+  // const handleDeleteSuccess = (deletedUserId) => {
+  //   setUsers(users.filter(user => user.id !== deletedUserId)); 
+  // };
+
+  // const handleDelete = async (userId) => {
+  //   const isConfirmed = window.confirm('Are you sure you want to delete this user?'); 
+  //   if (!isConfirmed) {
+  //     return; 
+  //   }
+
+  //   try {
+  //     const response = await axiosInstance.delete(`/users/${userId}`);
+  //     console.log(response.data.message); 
+  //     handleDeleteSuccess(userId); 
+  //   } catch (error) {
+  //     console.error('Error deleting user:', error);
+  //   }
+  // };
 
 
   //delete  demande d'attestations
@@ -90,6 +106,13 @@ fetchAttestations()
       alert('Failed to update status. Please try again.');
     }
   };
+
+
+//print attestation
+
+  const printAttestation = (user) => {
+    navigate('/print-attestation', { state: { user } });
+  };
   return (
     <div>
       <h2>User List</h2>
@@ -117,9 +140,12 @@ fetchAttestations()
             const profilePictureUrl = user.profile_picture
               ? `http://localhost:8000/storage/${user.profile_picture}` 
               : null;
-
+              const isDisabled = user.status === 'disabled';
             return (
-              <tr key={user.id}>
+              <tr
+  key={user.id}
+ 
+>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>{user.username}</td>
@@ -134,21 +160,30 @@ fetchAttestations()
                 <td>{user.role}</td>
                 <td>
                   <Link to={`/user-details/${user.id}`}>
-                    <button style={{ backgroundColor: 'purple', color: 'white', marginRight: '10px' }}>
+                    <button style={{ backgroundColor: 'purple', color: 'white', marginRight: '10px' }} disabled={isDisabled}>
                       View Details
                     </button>
                   </Link>
                   <Link to={`/update-user/${user.id}`}>
-                    <button style={{ backgroundColor: 'blue', color: 'white', marginRight: '10px' }}>
+                    <button style={{ backgroundColor: 'blue', color: 'white', marginRight: '10px' }} disabled={isDisabled}>
                       Update
                     </button>
                   </Link>
 
-                  <button 
+                  {/* <button 
                     onClick={() => handleDelete(user.id)} 
                     style={{ backgroundColor: 'red', color: 'white' }}>
                     Delete
-                  </button>
+                  </button> */}
+<button
+  onClick={(e) => handeleToggleStatus(e, user.id, user.status)} 
+  disabled={user.status === 'disabled'}  
+  style={{ backgroundColor: 'orange', color: 'white', marginRight: '10px' }}
+>
+  {user.status === 'enabled' ? 'Disable' : 'Enable'}
+</button>
+
+
                 </td>
               </tr>
             );
@@ -174,14 +209,12 @@ fetchAttestations()
               <td>
                 <button
                   onClick={() => handleStatusChange(attestation.id, 'Approved')}
-                  disabled={attestation.status === 'Approved'}
                   style={{ marginRight: '10px' }}
                 >
                   Approve
                 </button>
                 <button
                   onClick={() => handleStatusChange(attestation.id, 'Printed')}
-                  disabled={attestation.status === 'Printed'}
                   style={{ marginRight: '10px' }}
                 >
                   Print
@@ -191,6 +224,13 @@ fetchAttestations()
                   style={{ backgroundColor: 'red', color: 'white' }}
                 >
                   Delete
+                </button>
+
+                <button
+                  onClick={() => printAttestation(attestation.user)}
+                  style={{ backgroundColor: 'green', color: 'white' }}
+                >
+                  Print Attestation
                 </button>
               </td>
             </tr>

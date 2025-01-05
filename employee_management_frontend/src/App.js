@@ -11,6 +11,7 @@ import UpdateAttendance from './components/attendance/UpdateAttendance';
 import DeleteAttendance from './components/attendance/DeleteAttendance';
 import AttendanceHeader from './components/attendance/AttendanceHeader';
 
+import PrintAttestation from './components/PrintAttestation';
 
 import UpdateUser from './components/UpdateUser';
 import CreateUser from './components/CreateUser';
@@ -50,9 +51,14 @@ function App() {
       <Route path="/AttendanceHeader" element={<AttendanceHeader />} />
 
 
+
+
+
       <Route path="/update-user/:userId" element={<UpdateUser />} />
       <Route path="/create-user" element={<CreateUser />} />
       <Route   path="/user-details/:userId" element={<DetailUser />} />
+
+      <Route path="/print-attestation" element={<PrintAttestation />} />
 
 
     </Routes>
