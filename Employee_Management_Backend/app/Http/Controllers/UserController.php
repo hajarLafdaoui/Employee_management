@@ -16,6 +16,12 @@ class UserController extends Controller
         $users = User::all(); 
         return response()->json($users);
     }
+    // get all employees 
+    public function fetchEmployees()
+    {
+        $employees = User::where('role', 'employee')->get(); 
+        return response()->json($employees);                                                                    
+    }
 
     // Get user by ID
     public function show($id)

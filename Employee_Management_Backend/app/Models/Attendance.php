@@ -1,21 +1,19 @@
 <?php
-
 namespace App\Models;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Attendance extends Model
 {
-    //
     protected $fillable = [
-        'user_id',  
-        'attendance_date',    
-        'status',   
+        'user_id',
+        'attendance_date',
+        'status',
     ];
-    public function users()
+
+    // Relations
+    public function user()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class); // Attendance belongs to a single user
     }
-   
 }
