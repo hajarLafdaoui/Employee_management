@@ -4,14 +4,16 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const UpdateUser = () => {
   const { userId } = useParams();
-  const [name, setName] = useState('');
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [role, setRole] = useState('employee');
-  const [phone, setPhone] = useState('');
-  const [profilePicture, setProfilePicture] = useState(null);
-  const [departmentId, setDepartmentId] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    username: '',
+    email: '',
+    password: '',
+    role: 'employee',
+    phone: '',
+    profilePicture: null,
+    departmentId: '',
+  });
   const [departments, setDepartments] = useState([]);
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
@@ -22,12 +24,16 @@ const UpdateUser = () => {
       try {
         const response = await axiosInstance.get(`/users/${userId}`);
         const user = response.data;
-        setName(user.name);
-        setUsername(user.username);
-        setEmail(user.email);
-        setPhone(user.phone);
-        setRole(user.role);
-        setDepartmentId(user.department_id);
+        setFormData({
+          name: user.name,
+          username: user.username,
+          email: user.email,
+          phone: user.phone,
+          role: user.role,
+          departmentId: user.department_id,
+          password: '',
+          profilePicture: null, 
+        });
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -50,60 +56,47 @@ const UpdateUser = () => {
     fetchDepartments();
   }, []);
 
-  // Handle file change for profile picture
-  const handleFileChange = (e) => {
-    setProfilePicture(e.target.files[0]);
+  // Handle form field changes in a single handler
+  const handleChange = (e) => {
+    const { name, value, type, files } = e.target;
+    if (type === 'file') {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: files[0],
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate required fields
-    if (!name || !email || !role || !phone || !departmentId) {
-      setMessage('Please fill out all required fields');
-      return;
+    const formToSend = new FormData();
+    for (const key in formData) {
+      if (formData[key]) {
+        formToSend.append(key, formData[key]);
+      }
     }
 
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('email', email);
-    if (password) formData.append('password', password); 
-    formData.append('role', role);
-    formData.append('phone', phone);
-    formData.append('department_id', departmentId);
-    formData.append('username', username);
-    if (profilePicture) formData.append('profile_picture', profilePicture);
-
-    
-
     try {
-      const response = await axiosInstance.put(`/users/${userId}`, formData, {
+      const response = await axiosInstance.put(`/users/${userId}`, formToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-    
-      console.log('Response from backend:', response.data);
-    
-      // Check the updated user data in the response
-      const updatedUser = response.data.user;
-      if (updatedUser) {
-        setName(updatedUser.name);
-        setEmail(updatedUser.email);
-        setUsername(updatedUser.username);
-        setPhone(updatedUser.phone);
-        setRole(updatedUser.role);
-        setDepartmentId(updatedUser.department_id);
-      }
-    
-      setMessage(response.data.message || 'User updated successfully');
-      navigate("/dashboard"); // Redirect after successful update
+      setMessage(response.data.message);
+
+      // Optionally navigate or reset fields
+      navigate('/dashboard');
     } catch (error) {
       console.error('Error updating user:', error);
-      setMessage('Error updating user');
+      setMessage(error.response?.data?.message || 'Error updating user');
     }
-    
   };
 
   return (
@@ -113,47 +106,55 @@ const UpdateUser = () => {
         <input
           type="text"
           placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
         />
         <input
           type="text"
           placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          name="username"
+          value={formData.username}
+          onChange={handleChange}
         />
         <input
           type="email"
           placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
         />
         <input
           type="password"
           placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
         />
         <input
           type="tel"
           placeholder="Phone"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          name="phone"
+          value={formData.phone}
+          onChange={handleChange}
         />
         <input
           type="file"
-          onChange={handleFileChange}
+          name="profilePicture"
+          onChange={handleChange}
         />
         <select
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
+          name="role"
+          value={formData.role}
+          onChange={handleChange}
         >
           <option value="employee">Employee</option>
           <option value="admin">Admin</option>
         </select>
         <select
-          value={departmentId}
-          onChange={(e) => setDepartmentId(e.target.value)}
+          name="departmentId"
+          value={formData.departmentId}
+          onChange={handleChange}
         >
           <option value="">Select Department</option>
           {departments.map((department) => (
@@ -167,10 +168,10 @@ const UpdateUser = () => {
       {message && <p>{message}</p>}
 
       <Link to="/dashboard">
-            <button style={{ backgroundColor: 'gray', color: 'white' }}>
-              Back to Dashboard
-            </button>
-          </Link>
+        <button style={{ backgroundColor: 'gray', color: 'white' }}>
+          Back to Dashboard
+        </button>
+      </Link>
     </div>
   );
 };

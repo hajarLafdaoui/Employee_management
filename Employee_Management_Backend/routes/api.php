@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttestationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -32,4 +33,11 @@ Route::get('/departments', [DepartmentController::class, 'index']);
 
 // Attendance
 Route::post('/attendance', [AttendanceController::class, 'store']);
+
+// Attestations
+Route::get('/attestations',[AttestationController::class,'index']);
+Route::post('/attestations', [AttestationController::class, 'store']);
+Route::put('/attestations/{id}',[AttestationController::class,'updateStatus']);
+Route::delete('/attestations/{id}',[AttestationController::class,'destroy']);
+
 
