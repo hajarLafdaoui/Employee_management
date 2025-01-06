@@ -1,28 +1,59 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import axiosInstance from '../axiosSetup';
 
 const LeaveRequestForm = () => {
     const [leaveType, setLeaveType] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [reason, setReason] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [user, setUser] = useState(null);
+
+    // Fetch user data on mount
+    useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+        const userParsed = JSON.parse(storedUser);
+        console.log('User from localStorage:', userParsed);
+        setUser(userParsed);
+    }
+}, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setLoading(true);
+        setError(null);
+    
+        if (!user || !user.id) {
+            setError('User not found. Please log in again.');
+            setLoading(false);
+            return;
+        }
+    
         try {
-            const response = await axios.post('/api/leave-request', {
+            await axiosInstance.post('/leave-request', {
+                user_id: user.id,
                 leave_type: leaveType,
                 start_date: startDate,
                 end_date: endDate,
                 reason: reason,
             });
-
+    
             alert('Leave request sent successfully');
+            setLeaveType('');
+            setStartDate('');
+            setEndDate('');
+            setReason('');
         } catch (error) {
-            alert('Error submitting the request');
+            console.error('Error submitting the request:', error.response?.data || error);
+            setError(error.response?.data?.message || 'Failed to submit leave request. Please try again.');
+        } finally {
+            setLoading(false);
         }
     };
+    
+    
 
     return (
         <form onSubmit={handleSubmit}>
@@ -66,7 +97,10 @@ const LeaveRequestForm = () => {
                     required
                 />
             </div>
-            <button type="submit">Submit Request</button>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+            <button type="submit" disabled={loading}>
+                {loading ? 'Submitting...' : 'Submit Request'}
+            </button>
         </form>
     );
 };

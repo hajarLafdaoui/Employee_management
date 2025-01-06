@@ -40,8 +40,12 @@ function App() {
       <Route path="/login" element={<SignIn />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/Marking" element={<Marking />} />
-      <Route path="/demandleave" element={<LeaveRequestForm />} />
-      <Route path="/leaverequest" element={<AdminLeaveRequests />} />
+      <Route path="/leaverequest" element={<LeaveRequestForm />} />
+      <Route path="/leaverequests" element={<AdminLeaveRequests />} />
+      <Route path="/update-user/:userId" element={<UpdateUser />} />
+      <Route path="/create-user" element={<CreateUser />} />
+      <Route path="/user-details/:userId" element={<DetailUser />} />
+
     </Routes>
   </Router>
   {/* <Employees/> */}

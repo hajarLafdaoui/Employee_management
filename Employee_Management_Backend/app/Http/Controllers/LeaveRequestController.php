@@ -3,43 +3,35 @@ namespace App\Http\Controllers;
 
 use App\Models\LeaveRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class LeaveRequestController extends Controller
 {
     // Soumettre une demande de congé
     public function submitRequest(Request $request)
     {
-        // Vérifier si l'utilisateur est authentifié
-        if (!Auth::check()) {
-            return response()->json(['error' => 'Non autorisé'], 401);
-        }
-
         $request->validate([
+            // 'user_id' => 'required|exists:users,id',  // Ensure user_id is passed and exists
             'leave_type' => 'required|string',
             'start_date' => 'required|date',
-            'end_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
             'reason' => 'required|string',
         ]);
 
         $leaveRequest = LeaveRequest::create([
-            'user_id' => Auth::id(),  // Utilisez Auth::id() pour récupérer l'ID de l'utilisateur authentifié
+            'user_id' => $request->user_id,  // Get user_id from request
             'leave_type' => $request->leave_type,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'reason' => $request->reason,
+            'status' => 'pending',  // Default status
         ]);
 
         return response()->json($leaveRequest);
     }
 
     // Approuver une demande de congé
-    public function approveRequest($id)
+    public function approveRequest(Request $request, $id)
     {
-        if (!Auth::check()) {
-            return response()->json(['error' => 'Non autorisé'], 401);
-        }
-
         $leaveRequest = LeaveRequest::findOrFail($id);
         $leaveRequest->status = 'approved';
         $leaveRequest->save();
@@ -48,12 +40,8 @@ class LeaveRequestController extends Controller
     }
 
     // Rejeter une demande de congé
-    public function rejectRequest($id)
+    public function rejectRequest(Request $request, $id)
     {
-        if (!Auth::check()) {
-            return response()->json(['error' => 'Non autorisé'], 401);
-        }
-
         $leaveRequest = LeaveRequest::findOrFail($id);
         $leaveRequest->status = 'rejected';
         $leaveRequest->save();

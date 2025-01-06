@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Container\Attributes\Storage;
 
 class UserController extends Controller
 {
@@ -40,10 +42,7 @@ class UserController extends Controller
             'username' => 'required|string|max:255|unique:users',
             'phone' => 'nullable|string|max:255',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'job_title' => 'nullable|string|max:255',
-            'company' => 'nullable|string|max:255',
-            'status' => 'required|in:active,inactive',
-            'last_login' => 'nullable|date',
+        
         ]);
     
         if ($validator->fails()) {
@@ -70,10 +69,7 @@ class UserController extends Controller
             'username' => $request->username,
             'phone' => $request->phone,
             'profile_picture' => $profilePicturePath,  // Save the file path
-            'job_title' => $request->job_title,
-            'company' => $request->company,
-            'status' => $request->status,
-            'last_login' => $request->last_login,
+         
         ]);
     
         return response()->json([
@@ -100,30 +96,35 @@ class UserController extends Controller
             'department_id' => 'nullable|integer',
             'username' => 'nullable|string|max:255|unique:users,username,' . $id,
             'phone' => 'nullable|string|max:255',
-            'profile_picture' => 'nullable|string|max:255',
-            'job_title' => 'nullable|string|max:255',
-            'company' => 'nullable|string|max:255',
-            'status' => 'nullable|in:active,inactive',
-            'last_login' => 'nullable|date',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Added validation for image
         ]);
     
-        $user->name = $validatedData['name'];
-        $user->email = $validatedData['email'];
+        // Handle the uploaded profile picture (if any)
+        if ($request->hasFile('profile_picture')) {
+            // Delete the old profile picture if it exists
+            if ($user->profile_picture) {
+                Storage::disk('public')->delete($user->profile_picture);
+            }
+    
+            // Store the new profile picture and update the path
+            $profilePicturePath = $request->file('profile_picture')->store('profile_pictures', 'public');
+            $user->profile_picture = $profilePicturePath;
+        }
+    
+        // Update other fields
+        $user->name = $validatedData['name'] ?? $user->name;
+        $user->email = $validatedData['email'] ?? $user->email;
     
         if (isset($validatedData['password'])) {
             $user->password = Hash::make($validatedData['password']);
         }
     
-        $user->role = $validatedData['role'];
+        $user->role = $validatedData['role'] ?? $user->role;
         $user->department_id = $validatedData['department_id'] ?? $user->department_id;
         $user->username = $validatedData['username'] ?? $user->username;
         $user->phone = $validatedData['phone'] ?? $user->phone;
-        $user->profile_picture = $validatedData['profile_picture'] ?? $user->profile_picture;
-        $user->job_title = $validatedData['job_title'] ?? $user->job_title;
-        $user->company = $validatedData['company'] ?? $user->company;
-        $user->status = $validatedData['status'] ?? $user->status;
-        $user->last_login = $validatedData['last_login'] ?? $user->last_login;
     
+        // Save the user with updated data
         $user->save();
     
         return response()->json([
@@ -131,6 +132,7 @@ class UserController extends Controller
             'user' => $user
         ], 200);
     }
+    
 
     // Delete user by ID
     public function destroy($id)
