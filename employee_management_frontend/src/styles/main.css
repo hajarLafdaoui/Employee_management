@@ -1,0 +1,101 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.Navbar {
+  border: 1px solid black;
+  /* Dropdown Menu Styling */
+}
+.Navbar .NavbarMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 10px;
+  margin-left: 15px;
+  width: -moz-fit-content;
+  width: fit-content;
+  background-color: #eee;
+  border-radius: 25px;
+}
+.Navbar .NavbarItem {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px;
+  width: 100%; /* Ensure the item takes up full width */
+}
+.Navbar .NavbarItem .navLink {
+  display: flex;
+  align-items: center;
+  color: #000;
+  text-decoration: none;
+  padding: 10px;
+  font-size: 1rem;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+.Navbar .NavbarItem .navLink:hover {
+  color: #5f5d5d;
+  border-radius: 5px;
+}
+.Navbar .NavbarItem .navLink svg {
+  margin-right: 10px; /* Add space between icon and text */
+}
+.Navbar .NavbarItem .dropdown-title {
+  display: flex;
+  align-items: center;
+  color: #000;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+.Navbar .NavbarItem .dropdown-title .dropdownArrow {
+  margin-left: 15px;
+  margin-top: 5px;
+}
+.Navbar .NavbarItem .dropdown-title:hover {
+  color: #000;
+  border-radius: 5px;
+}
+.Navbar .NavbarItem .dropdown-title svg {
+  margin-right: 10px; /* Add space between icon and text */
+}
+.Navbar .dropdown {
+  position: relative; /* Ensure dropdown is positioned relative to the parent item */
+}
+.Navbar .dropdown .dropdownMenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  width: 200px;
+  padding: 10px;
+  list-style: none;
+  margin: 0;
+  border-radius: 5px;
+}
+.Navbar .dropdown:hover .dropdownMenu {
+  display: block; /* Show the dropdown menu when the parent item is hovered */
+}
+.Navbar .dropdown .dropdownMenu li {
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+}
+.Navbar .dropdown .dropdownMenu li .navLink {
+  font-size: 0.9rem;
+  width: 100%;
+  padding: 8px 0;
+}
+.Navbar .dropdown .dropdownMenu li .navLink:hover {
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+}
+.Navbar .dropdown .dropdownMenu li svg {
+  margin-right: 8px; /* Space between icon and text */
+}/*# sourceMappingURL=main.css.map */
