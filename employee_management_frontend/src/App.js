@@ -14,6 +14,7 @@ import UpdateAttendance from './components/attendance/UpdateAttendance';
 import DeleteAttendance from './components/attendance/DeleteAttendance';
 import AttendanceHeader from './components/attendance/AttendanceHeader';
 
+import PrintAttestation from './components/PrintAttestation';
 
 import UpdateUser from './components/UpdateUser';
 import CreateUser from './components/CreateUser';
@@ -60,9 +61,14 @@ function App() {
     
 
 
+
+
+
       <Route path="/update-user/:userId" element={<UpdateUser />} />
       <Route path="/create-user" element={<CreateUser />} />
       <Route   path="/user-details/:userId" element={<DetailUser />} />
+
+      <Route path="/print-attestation" element={<PrintAttestation />} />
 
 
     </Routes>
@@ -74,7 +80,7 @@ function App() {
           path="/login"
           element={
             isAuthenticated ? (
-              <Navigate to="/dashboard" replace />
+              <Navigate to="/dashboard"  />
             ) : (
               <SignIn onLogin={handleLogin} />
             )
@@ -83,7 +89,7 @@ function App() {
          <Route
           path="/profile"
           element={
-            isAuthenticated ? <Profile /> : <Navigate to="/login" replace />
+            isAuthenticated ? <Profile /> : <Navigate to="/login" />
           }
         />
         <Route
@@ -92,27 +98,27 @@ function App() {
             isAuthenticated ? (
               <Dashboard onLogout={handleLogout} />
             ) : (
-              <Navigate to="/login" replace />
+              <Navigate to="/login"  />
             )
           }
         />
         <Route
           path="/update-user/:userId"
           element={
-            isAuthenticated ? <UpdateUser /> : <Navigate to="/login" replace />
+            isAuthenticated ? <UpdateUser /> : <Navigate to="/login" />
           }
         />
         <Route
           path="/create-user/"
           element={
-            isAuthenticated ? <CreateUser /> : <Navigate to="/login" replace />
+            isAuthenticated ? <CreateUser /> : <Navigate to="/login"  />
           }
         />
 <Route
   path="/user-details/:userId"
-  element={isAuthenticated ? <DetailUser /> : <Navigate to="/login" replace />}
+  element={isAuthenticated ? <DetailUser /> : <Navigate to="/login"  />}
 />
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/login"  />} />
       </Routes>
     </Router> */}
     </>

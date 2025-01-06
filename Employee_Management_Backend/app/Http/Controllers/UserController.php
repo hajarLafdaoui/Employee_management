@@ -139,17 +139,32 @@ class UserController extends Controller
     }
     
 
-    // Delete user by ID
-    public function destroy($id)
-    {
-        $user = User::find($id);
+    // // Delete user by ID
+    // public function destroy($id)
+    // {
+    //     $user = User::find($id);
 
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
-        }
+    //     if (!$user) {
+    //         return response()->json(['message' => 'User not found'], 404);
+    //     }
 
-        $user->delete();
+    //     $user->delete();
 
-        return response()->json(['message' => 'User deleted successfully']);
+    //     return response()->json(['message' => 'User deleted successfully']);
+    // }
+
+public function toggleStatus($id){
+    $user=User::find($id);
+    if(!$user){
+        return response()->json(['message'=>'user not found']);
     }
+    $user->status=($user->status==='enabled')?'disabled':'enabled';
+    $user->save();
+    return response()->json([
+        'message'=>'user status updated sucessfuly',
+        'user'=>$user
+    ],200);
+}
+
+
 }
