@@ -1,23 +1,51 @@
-.Navbar {
-    border: 1px solid black;
+.AdminMenu{
+    background: #000000; /* Set background to white for all elements */
+}
+
+.collapse{
+    position: absolute;
+    top: 10px;
+    left: 130px;
+
+    width: 30px;
+    .collapse-img{
+        width: 30px;
     
+    }
+}
+.Navbar {
+    background-color: #fff;
+        margin-left: 15px;
+        padding: 5px;
+        width: fit-content;
+    margin: 5px;
+        // border: 1px solid black;
+    // background-color: #6c747c;
+
+    .menuText{
+        font-size: 16px;
+        margin: 15px 0;
+
+
+    }
     .NavbarMenu {
         display: flex;
         flex-direction: column;
         align-items: start;
         padding: 10px;
-        margin-left: 15px;
+        gap: 5px;
         width: fit-content;
         background-color: #eee;
-        border-radius: 25px; 
+        border-radius: 25px;
     }
 
     .NavbarItem {
         display: flex;
-        justify-content: flex-start;
+        flex-direction: row;
         align-items: center;
+        justify-content: center;
         padding: 10px;
-        width: 100%; /* Ensure the item takes up full width */
+        width: 100%;
 
         .navLink {
             display: flex;
@@ -31,82 +59,83 @@
 
             &:hover {
                 color: #5f5d5d;
-                
                 border-radius: 5px;
             }
 
             svg {
-                margin-right: 10px; /* Add space between icon and text */
+                margin-right: 10px;
             }
         }
-        .dropdown-title{
+    }
+
+    .dropdown-item {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+        width: 100%;
+        position: relative; // Ensure the dropdown remains in position
+
+        .dropdownMenu {
+            display: none;
+            flex-direction: column;
+            background-color: #fff;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            list-style: none;
+            border-radius: 5px;
+            margin-top: 0; // Remove margin between dropdown and trigger
+            width: 100%;
+        }
+
+        &.expanded .dropdownMenu {
+            display: flex;
+        }
+
+        .dropdown-title {
             display: flex;
             align-items: center;
             color: #000;
             text-decoration: none;
+            cursor: pointer;
             transition: background-color 0.3s ease;
+            width: 100%;
 
-            .dropdownArrow{
-                margin-left: 15px;
-                margin-top: 5px;
-
-            }
             &:hover {
                 color: #000;
                 border-radius: 5px;
             }
 
-            svg {
-                margin-right: 10px; /* Add space between icon and text */
+            .dropdownArrow {
+                margin-left: 10px;
             }
 
-        }
-    }
-
-    /* Dropdown Menu Styling */
-    .dropdown {
-        position: relative; /* Ensure dropdown is positioned relative to the parent item */
-
-        .dropdownMenu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: #fff;
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            width: 200px;
-            padding: 10px;
-            list-style: none;
-            margin: 0;
-            border-radius: 5px;
+            svg {
+                margin-right: 10px;
+            }
         }
 
-        &:hover .dropdownMenu {
-            display: block; /* Show the dropdown menu when the parent item is hovered */
-        }
-
-        .dropdownMenu li {
+        li {
             padding: 8px 10px;
             display: flex;
             align-items: center;
 
-            .navLink {
+            .dropdownLink {
                 font-size: 0.9rem;
                 width: 100%;
-                padding: 8px 0;
-            }
+                text-decoration: none;
+                color: #000;
 
-            .navLink:hover {
-                background-color: #007bff;
-                color: white;
-                border-radius: 5px;
-            }
+                &:hover {
+                    background-color: #d9e0ab;
+                    color: white;
+                    border-radius: 5px;
+                }
 
-            svg {
-                margin-right: 8px; /* Space between icon and text */
+                svg {
+                    margin-right: 8px;
+                }
             }
         }
     }
-    
 }

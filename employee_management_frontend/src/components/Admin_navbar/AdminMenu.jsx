@@ -1,127 +1,104 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { 
-    FaTachometerAlt, 
-    FaUserPlus, 
-    FaUsers, 
-    FaCalendarCheck, 
-    FaMoneyBillWave, 
-    FaBuilding, 
-    FaCalendarAlt, 
-    FaChartPie, 
-    FaFileInvoiceDollar 
-} from 'react-icons/fa'; 
-
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa'; 
+import {
+    FaTachometerAlt,
+    FaUserPlus,
+    FaUsers,
+    FaCalendarCheck,
+    FaMoneyBillWave,
+    FaBuilding,
+    FaCalendarAlt,
+    FaChartPie,
+    FaFileInvoiceDollar,
+    FaChevronDown,
+    FaChevronUp
+} from 'react-icons/fa';
 
 const AdminMenu = () => {
-    const [nav, setNav] = useState(true); 
-    const [dropdown, setDropdown] = useState(false); 
-    const [dropdown2, setDropdown2] = useState(false); 
+    const [navVisible, setNavVisible] = useState(true);
+    const [dropdowns, setDropdowns] = useState({});
 
-    const togglDropdown0 = () => setNav(!nav); 
-    const togglDropdown = () => setDropdown(!dropdown); 
-    const togglDropdown2 = () => setDropdown2(!dropdown2); 
+    const toggleNav = () => setNavVisible(!navVisible);
+
+    const toggleDropdown = (key) => {
+        setDropdowns((prev) => ({ ...prev, [key]: !prev[key] }));
+    };
+
+    const renderDropdown = (title, icon, key, items) => (
+        <li className={`dropdown-item ${dropdowns[key] ? 'expanded' : ''}`}>
+            <div className="dropdown-title" onClick={() => toggleDropdown(key)}>
+                {icon}
+                <span>{title}</span>
+                {dropdowns[key] ? <FaChevronUp className="dropdownArrow" /> : <FaChevronDown className="dropdownArrow" />}
+            </div>
+            <ul className="dropdownMenu">
+                {items.map(({ icon, label, link }) => (
+                    <li key={label}>
+                        {icon}
+                        <Link className="dropdownLink" to={link}>{label}</Link>
+                    </li>
+                ))}
+            </ul>
+        </li>
+    );
 
     return (
-        <>
-            <div className='menuToggle' onClick={togglDropdown0}>
-                <button>{nav ? "Hide Menu" : "Show Menu"}</button> 
+        <div className="AdminMenu">
+            <div className="menuToggle">
+                <span className='collapse' onClick={toggleNav}>
+                <img className='collapse-img' src="/icons/collapse.png" alt="collapse" />
+                </span>
             </div>
 
-            {nav && (
-                <nav className='Navbar'>
-                    <div className='logoContainer'>
+            {navVisible && (
+                <nav className="Navbar">
+                    <div className="logoContainer">
                         <Link className="navLink" to="/dashboard">
                             <img src="/logo/logo.png" alt="Logo" />
                         </Link>
                     </div>
-                    <p className='menuText'>Menu</p>
-                    <ul className='NavbarMenu'>
-                        <li className='NavbarItem'>
+                    <p className="menuText">Menu</p>
+                    <ul className="NavbarMenu">
+                        <li className="NavbarItem">
                             <FaTachometerAlt />
                             <Link className="navLink" to="/dashboard">Dashboard</Link>
                         </li>
 
-                        <li className='NavbarItem dropdown'>
-                            <div className="dropdown-title" onClick={togglDropdown}>
-                                <FaUsers />
-                                <span>Manage Employees</span>
-                                {dropdown ? (
-                                    <FaChevronUp className="dropdownArrow" />
-                                ) : (
-                                    <FaChevronDown className="dropdownArrow" />
-                                )}
-                            </div>
-                            {dropdown && (
-                                <ul className='dropdownMenu'>
-                                    <li>
-                                        <FaUserPlus />
-                                        <Link className="dropdownLink" to="/create-user">Add Employee</Link>
-                                    </li>
-                                    <li>
-                                        <FaUsers />
-                                        <Link className="dropdownLink" to="/crud">Employee List</Link>
-                                    </li>
-                                    <li>
-                                        <FaCalendarCheck />
-                                        <Link className="dropdownLink" to="/leave">Employee Leave</Link>
-                                    </li>
-                                    <li>
-                                        <FaMoneyBillWave />
-                                        <Link className="dropdownLink" to="/payroll">Employee Payroll</Link>
-                                    </li>
-                                </ul>
-                            )}
-                        </li>
+                        {renderDropdown("Manage Employees", <FaUsers />, "employees", [
+                            { icon: <FaUserPlus />, label: "Add Employee", link: "/create-user" },
+                            { icon: <FaUsers />, label: "Employee List", link: "/crud" },
+                            { icon: <FaCalendarCheck />, label: "Employee Leave", link: "/leave" },
+                            { icon: <FaMoneyBillWave />, label: "Employee Payroll", link: "/payroll" }
+                        ])}
 
-                        <li className='NavbarItem'>
+                        <li className="NavbarItem">
                             <FaBuilding />
                             <Link className="navLink" to="/departments">Manage Departments</Link>
                         </li>
 
-                        <li className='NavbarItem'>
+                        <li className="NavbarItem">
                             <FaCalendarAlt />
                             <Link className="navLink" to="/AttendanceHeader">Attendance Management</Link>
                         </li>
 
-                        <li className='NavbarItem'>
+                        <li className="NavbarItem">
                             <FaCalendarCheck />
                             <Link className="navLink" to="/leave">Leave Management</Link>
                         </li>
 
-                        <li className='NavbarItem dropdown'>
-                            <div className='dropdown-title' onClick={togglDropdown2}>
-                                <FaMoneyBillWave />
-                                <span>Payroll Management</span>
-                                {dropdown2 ? (
-                                    <FaChevronUp className="dropdownArrow" />
-                                ) : (
-                                    <FaChevronDown className="dropdownArrow" />
-                                )}
-                            </div>
-                            {dropdown2 && (
-                                <ul className='dropdownMenu'>
-                                    <li>
-                                        <FaFileInvoiceDollar />
-                                        <Link className="dropdownLink" to="/payroll/view">View Payroll</Link>
-                                    </li>
-                                    <li>
-                                        <FaMoneyBillWave />
-                                        <Link className="dropdownLink" to="/payroll/generate">Generate Payroll</Link>
-                                    </li>
-                                </ul>
-                            )}
-                        </li>
+                        {renderDropdown("Payroll Management", <FaMoneyBillWave />, "payroll", [
+                            { icon: <FaFileInvoiceDollar />, label: "View Payroll", link: "/payroll/view" },
+                            { icon: <FaMoneyBillWave />, label: "Generate Payroll", link: "/payroll/generate" }
+                        ])}
 
-                        <li className='NavbarItem'>
+                        <li className="NavbarItem">
                             <FaChartPie />
                             <Link className="navLink" to="/reports">Reports</Link>
                         </li>
                     </ul>
                 </nav>
             )}
-        </>
+        </div>
     );
 };
 

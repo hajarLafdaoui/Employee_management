@@ -4,16 +4,38 @@
   box-sizing: border-box;
 }
 
+.AdminMenu {
+  background: #000000; /* Set background to white for all elements */
+}
+
+.collapse {
+  position: absolute;
+  top: 10px;
+  left: 130px;
+  width: 30px;
+}
+.collapse .collapse-img {
+  width: 30px;
+}
+
 .Navbar {
-  border: 1px solid black;
-  /* Dropdown Menu Styling */
+  background-color: #fff;
+  margin-left: 15px;
+  padding: 5px;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 5px;
+}
+.Navbar .menuText {
+  font-size: 16px;
+  margin: 15px 0;
 }
 .Navbar .NavbarMenu {
   display: flex;
   flex-direction: column;
   align-items: start;
   padding: 10px;
-  margin-left: 15px;
+  gap: 5px;
   width: -moz-fit-content;
   width: fit-content;
   background-color: #eee;
@@ -21,10 +43,11 @@
 }
 .Navbar .NavbarItem {
   display: flex;
-  justify-content: flex-start;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
   padding: 10px;
-  width: 100%; /* Ensure the item takes up full width */
+  width: 100%;
 }
 .Navbar .NavbarItem .navLink {
   display: flex;
@@ -41,61 +64,65 @@
   border-radius: 5px;
 }
 .Navbar .NavbarItem .navLink svg {
-  margin-right: 10px; /* Add space between icon and text */
+  margin-right: 10px;
 }
-.Navbar .NavbarItem .dropdown-title {
+.Navbar .dropdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px;
+  width: 100%;
+  position: relative;
+}
+.Navbar .dropdown-item .dropdownMenu {
+  display: none;
+  flex-direction: column;
+  background-color: #fff;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  list-style: none;
+  border-radius: 5px;
+  margin-top: 0;
+  width: 100%;
+}
+.Navbar .dropdown-item.expanded .dropdownMenu {
+  display: flex;
+}
+.Navbar .dropdown-item .dropdown-title {
   display: flex;
   align-items: center;
   color: #000;
   text-decoration: none;
+  cursor: pointer;
   transition: background-color 0.3s ease;
+  width: 100%;
 }
-.Navbar .NavbarItem .dropdown-title .dropdownArrow {
-  margin-left: 15px;
-  margin-top: 5px;
-}
-.Navbar .NavbarItem .dropdown-title:hover {
+.Navbar .dropdown-item .dropdown-title:hover {
   color: #000;
   border-radius: 5px;
 }
-.Navbar .NavbarItem .dropdown-title svg {
-  margin-right: 10px; /* Add space between icon and text */
+.Navbar .dropdown-item .dropdown-title .dropdownArrow {
+  margin-left: 10px;
 }
-.Navbar .dropdown {
-  position: relative; /* Ensure dropdown is positioned relative to the parent item */
+.Navbar .dropdown-item .dropdown-title svg {
+  margin-right: 10px;
 }
-.Navbar .dropdown .dropdownMenu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #fff;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  width: 200px;
-  padding: 10px;
-  list-style: none;
-  margin: 0;
-  border-radius: 5px;
-}
-.Navbar .dropdown:hover .dropdownMenu {
-  display: block; /* Show the dropdown menu when the parent item is hovered */
-}
-.Navbar .dropdown .dropdownMenu li {
+.Navbar .dropdown-item li {
   padding: 8px 10px;
   display: flex;
   align-items: center;
 }
-.Navbar .dropdown .dropdownMenu li .navLink {
+.Navbar .dropdown-item li .dropdownLink {
   font-size: 0.9rem;
   width: 100%;
-  padding: 8px 0;
+  text-decoration: none;
+  color: #000;
 }
-.Navbar .dropdown .dropdownMenu li .navLink:hover {
-  background-color: #007bff;
+.Navbar .dropdown-item li .dropdownLink:hover {
+  background-color: #d9e0ab;
   color: white;
   border-radius: 5px;
 }
-.Navbar .dropdown .dropdownMenu li svg {
-  margin-right: 8px; /* Space between icon and text */
+.Navbar .dropdown-item li .dropdownLink svg {
+  margin-right: 8px;
 }/*# sourceMappingURL=main.css.map */
