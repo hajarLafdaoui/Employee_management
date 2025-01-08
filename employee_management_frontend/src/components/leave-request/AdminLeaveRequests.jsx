@@ -31,6 +31,7 @@ const AdminLeaveRequests = () => {
       <table border="1">
         <thead>
           <tr>
+            <th>User Name</th>
             <th>Leave Type</th>
             <th>Start Date</th>
             <th>End Date</th>
@@ -41,6 +42,7 @@ const AdminLeaveRequests = () => {
         <tbody>
           {requests.map((request) => (
             <tr key={request.id}>
+              <td>{request.user.name}</td>
               <td>{request.leave_type}</td>
               <td>{request.start_date}</td>
               <td>{request.end_date}</td>

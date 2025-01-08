@@ -35,7 +35,7 @@ class LeaveRequestController extends Controller
 
     public function getAllRequests()
     {
-        $leaveRequests = LeaveRequest::all();
+        $leaveRequests = LeaveRequest::with('user:id,name')->get();
 
         return response()->json($leaveRequests);
     }
