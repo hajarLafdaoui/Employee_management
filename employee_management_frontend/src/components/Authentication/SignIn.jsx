@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const SignIn = () => {
-  const [email, setEmail] = useState('alice.johnson@example.com');
+  const [email, setEmail] = useState('john.doe@example.com');
   const [password, setPassword] = useState('password');
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -15,20 +15,16 @@ const SignIn = () => {
     try {
 
       const response = await axiosInstance.post('/login', { email, password });
-      console.log('Response:', response); // Log the entire response to check its structure
+      console.log('Response:', response); 
 
-      // onLogin(); // Update the authentication state
 
 
       if (response.data.token) {
-        localStorage.setItem('token', response.data.token); // Store token
-        localStorage.setItem('user', JSON.stringify(response.data.user)); // Store user data
-        // Check if 'user' object is in the response and contains 'role'
+        localStorage.setItem('token', response.data.token); 
+        localStorage.setItem('user', JSON.stringify(response.data.user));
         if (response.data.user && response.data.user.role) {
 
-          const role = response.data.user.role; // Get role from the 'user' object
-
-          // Redirect based on the role
+          const role = response.data.user.role; 
           if (role === 'employee') {
             navigate('/profile');
           } else if (role === 'admin') {

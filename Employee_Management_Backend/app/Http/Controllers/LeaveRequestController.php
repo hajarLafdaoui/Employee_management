@@ -1,8 +1,10 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\LeaveRequest;
 use Illuminate\Http\Request;
+use App\Notifications\LeaveRequestNotification;
 
 class LeaveRequestController extends Controller
 {
@@ -29,23 +31,32 @@ class LeaveRequestController extends Controller
         return response()->json($leaveRequest);
     }
 
+    // Obtenir toutes les demandes de congé
+
+    public function getAllRequests()
+    {
+        $leaveRequests = LeaveRequest::all();
+
+        return response()->json($leaveRequests);
+    }
+
     // Approuver une demande de congé
     public function approveRequest(Request $request, $id)
-    {
-        $leaveRequest = LeaveRequest::findOrFail($id);
-        $leaveRequest->status = 'approved';
-        $leaveRequest->save();
+{
+    $leaveRequest = LeaveRequest::findOrFail($id);
+    $leaveRequest->status = 'approved';
+    $leaveRequest->save();
 
-        return response()->json($leaveRequest);
-    }
+    return response()->json($leaveRequest);
+}
 
     // Rejeter une demande de congé
     public function rejectRequest(Request $request, $id)
-    {
-        $leaveRequest = LeaveRequest::findOrFail($id);
-        $leaveRequest->status = 'rejected';
-        $leaveRequest->save();
+{
+    $leaveRequest = LeaveRequest::findOrFail($id);
+    $leaveRequest->status = 'rejected';
+    $leaveRequest->save();
 
-        return response()->json($leaveRequest);
-    }
+    return response()->json($leaveRequest);
+}
 }
