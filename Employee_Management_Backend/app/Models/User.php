@@ -69,6 +69,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Attendance::class);
     }
 
+    public function leaves()
+    {
+        return $this->hasMany(LeaveRequest::class);
+    }
+
     /**
      * Get the identifier that will be stored in the JWT token.
      *

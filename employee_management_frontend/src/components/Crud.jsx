@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';  
 import axiosInstance from './axiosSetup';
+import AdminLeaveRequests from './leave-request/AdminLeaveRequests';
 
 const Crud = ({ onLogout }) => {
   const [users, setUsers] = useState([]);
@@ -237,7 +238,7 @@ console.error(error)
           ))}
         </tbody>
       </table>
-
+      <AdminLeaveRequests/>
       <button onClick={onLogout}>Logout</button>
     </div>
 

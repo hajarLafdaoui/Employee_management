@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Container\Attributes\Storage;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Container\Attributes\Storage;
 
 class UserController extends Controller
 {
@@ -165,6 +166,9 @@ public function toggleStatus($id){
         'user'=>$user
     ],200);
 }
-
+public function getUserNotifications(Request $request)
+{
+    return response()->json($request->user()->notifications);
+}
 
 }

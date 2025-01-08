@@ -19,6 +19,8 @@ import PrintAttestation from './components/PrintAttestation';
 import UpdateUser from './components/UpdateUser';
 import CreateUser from './components/CreateUser';
 import DetailUser from './components/DetailUser';
+import AdminLeaveRequests from './components/leave-request/AdminLeaveRequests';
+import LeaveRequestForm from './components/leave-request/LeaveRequestForm';
 
 // Admin Dashboard
 import AdminMenu from './components/Admin_navbar/AdminMenu';
@@ -51,7 +53,12 @@ function App() {
       <Route path="/login" element={<SignIn />} />
       <Route path="/crud" element={<Crud />} />
 
-      {/* attendance  */}
+      <Route path="/Marking" element={<Marking />} />
+
+      <Route path="/leaverequest" element={<LeaveRequestForm />} />
+      <Route path="/leaverequests" element={<AdminLeaveRequests />} />
+      
+      <Route path="/Attendance" element={<Attendance />} />
       <Route path="/update-attendance/:entryId" element={<UpdateAttendance />} />
       <Route path="/delete-attendance/:entryId" element={<DeleteAttendance />} />
       <Route path="/AttendanceHeader" element={<AttendanceHeader />} />
@@ -61,12 +68,9 @@ function App() {
     
 
 
-
-
-
       <Route path="/update-user/:userId" element={<UpdateUser />} />
       <Route path="/create-user" element={<CreateUser />} />
-      <Route   path="/user-details/:userId" element={<DetailUser />} />
+      <Route path="/user-details/:userId" element={<DetailUser />} />
 
       <Route path="/print-attestation" element={<PrintAttestation />} />
 
