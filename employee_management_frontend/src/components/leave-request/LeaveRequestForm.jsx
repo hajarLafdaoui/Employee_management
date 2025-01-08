@@ -69,6 +69,7 @@ const LeaveRequestForm = () => {
                     <option value="sick_leave">Sick Leave</option>
                     <option value="personal_leave">Personal Leave</option>
                     <option value="maternity_leave">Maternity Leave</option>
+                    <option value="other">Other</option>
                 </select>
             </div>
             <div>
