@@ -24,6 +24,7 @@ import LeaveRequestForm from './components/leave-request/LeaveRequestForm';
 
 // Admin Dashboard
 import AdminMenu from './components/Admin_navbar/AdminMenu';
+import Admin_dashboard from './Admin/Admin_dashboard';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -65,6 +66,7 @@ function App() {
 
       {/* Admin Dashboard */}
       <Route path="/AdminMenu" element={<AdminMenu />} />
+      <Route path="/Admin_dashboard" element={<Admin_dashboard />} />
     
 
 
