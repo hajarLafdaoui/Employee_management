@@ -1,0 +1,160 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #eee !important;
+  font-family: "Montserrat", sans-serif;
+}
+
+.AdminMenu {
+  background-color: #fff;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 0px 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+.collapse {
+  position: absolute;
+  top: 20px;
+  left: 240px;
+}
+.collapse .collapse-img {
+  width: 25px;
+  cursor: pointer;
+}
+
+.Navbar {
+  padding: 5px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: space-between;
+}
+.Navbar .logoContainer {
+  border-bottom: 1Px solid #eee;
+  padding-bottom: 10px;
+}
+.Navbar .menuText {
+  font-size: 16px;
+  margin: 15px 0;
+}
+.Navbar .NavbarMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  gap: 5px;
+  width: 240px;
+  background-color: #eee;
+  border-radius: 25px;
+}
+.Navbar .NavbarItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  width: 100%;
+  gap: 10px;
+}
+.Navbar .NavbarItem .navLink {
+  display: flex;
+  align-items: center;
+  color: #000;
+  text-decoration: none;
+  font-size: 1rem;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+.Navbar .NavbarItem .navLink:hover {
+  color: #5f5d5d;
+  border-radius: 5px;
+}
+.Navbar .NavbarItem .navLink svg {
+  margin-right: 10px;
+}
+.Navbar .dropdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px;
+  width: 100%;
+  background-color: #ffd60a;
+  border-radius: 10px;
+}
+.Navbar .dropdown-item .dropdownMenu {
+  display: none;
+  flex-direction: column;
+  padding: 8px 10px;
+  list-style: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  width: 100%;
+}
+.Navbar .dropdown-item.expanded .dropdownMenu {
+  display: flex;
+  gap: 5px;
+}
+.Navbar .dropdown-item .dropdownMenuItem {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Adds space between the icon and the text */
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+.Navbar .dropdown-item .dropdown-title {
+  display: flex;
+  align-items: center;
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  padding: 10px;
+  border-radius: 5px;
+  justify-content: space-between; /* This makes the title and icon space out */
+}
+.Navbar .dropdown-item .dropdown-title .dropdownArrow {
+  margin-left: auto; /* This pushes the arrow icon to the right */
+}
+.Navbar .dropdown-item .dropdown-title svg {
+  margin-right: 10px;
+}
+.Navbar .dropdown-item li {
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+}
+.Navbar .dropdown-item li .dropdownLink {
+  font-size: 0.9rem;
+  width: 100%;
+  text-decoration: none;
+  color: #000;
+}
+.Navbar .dropdown-item li .dropdownLink svg {
+  margin-right: 8px;
+}
+
+.admin-email {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #eee;
+  color: #000;
+  font-size: 1rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}/*# sourceMappingURL=main.css.map */
