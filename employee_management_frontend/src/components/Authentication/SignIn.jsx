@@ -28,7 +28,7 @@ const SignIn = () => {
           if (role === 'employee') {
             navigate('/profile');
           } else if (role === 'admin') {
-            navigate('/dashboard');
+            navigate('/Admin_dashboard');
           } else {
             setError('Unknown role');
           }

@@ -47,7 +47,7 @@ const AttendanceHeader = () => {
         }
     };
 
-    // Filter attendance data based on the selected date
+    // Filtering
     const filteredAttendance = attendance.filter((entry) => {
         const entryDate = new Date(entry.attendance_date);
         return entryDate.toDateString() === currentDate.toDateString();

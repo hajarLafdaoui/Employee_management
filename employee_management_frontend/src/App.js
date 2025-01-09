@@ -3,7 +3,10 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { useEffect, useState } from 'react';
 import SignIn from './components/Authentication/SignIn';
 import Profile from './components/Profile';
-import Dashboard from './components/Dashboard';
+import Crud from './components/Crud';
+import './styles/main.scss'; // Import your main SASS file
+
+
 // Attendance
 import Marking from './components/attendance/Marking';
 import Attendance from './components/attendance/Attendance';
@@ -18,6 +21,10 @@ import CreateUser from './components/CreateUser';
 import DetailUser from './components/DetailUser';
 import AdminLeaveRequests from './components/leave-request/AdminLeaveRequests';
 import LeaveRequestForm from './components/leave-request/LeaveRequestForm';
+
+// Admin Dashboard
+import AdminMenu from './components/Admin_navbar/AdminMenu';
+import Admin_dashboard from './Admin/Admin_dashboard';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -42,9 +49,10 @@ function App() {
   return (    <>
      <Router>
     <Routes>
+
       <Route path="/profile" element={<Profile />} />
       <Route path="/login" element={<SignIn />} />
-      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/crud" element={<Crud />} />
 
       <Route path="/Marking" element={<Marking />} />
 
@@ -55,6 +63,11 @@ function App() {
       <Route path="/update-attendance/:entryId" element={<UpdateAttendance />} />
       <Route path="/delete-attendance/:entryId" element={<DeleteAttendance />} />
       <Route path="/AttendanceHeader" element={<AttendanceHeader />} />
+
+      {/* Admin Dashboard */}
+      <Route path="/AdminMenu" element={<AdminMenu />} />
+      <Route path="/Admin_dashboard" element={<Admin_dashboard />} />
+    
 
 
       <Route path="/update-user/:userId" element={<UpdateUser />} />
