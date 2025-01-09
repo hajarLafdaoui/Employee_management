@@ -11,13 +11,14 @@ import UpdateAttendance from './components/attendance/UpdateAttendance';
 import DeleteAttendance from './components/attendance/DeleteAttendance';
 import AttendanceHeader from './components/attendance/AttendanceHeader';
 
-import PrintAttestation from './components/PrintAttestation';
+import PrintAttestation from './components/AttestatioRequest/PrintAttestation';
 
 import UpdateUser from './components/UpdateUser';
 import CreateUser from './components/CreateUser';
 import DetailUser from './components/DetailUser';
 import AdminLeaveRequests from './components/leave-request/AdminLeaveRequests';
 import LeaveRequestForm from './components/leave-request/LeaveRequestForm';
+import AttestationRequests from './components/AttestatioRequest/AttestationRequests';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -62,6 +63,7 @@ function App() {
       <Route path="/user-details/:userId" element={<DetailUser />} />
 
       <Route path="/print-attestation" element={<PrintAttestation />} />
+      <Route path="/attestation-requests" element={<AttestationRequests />} />
 
 
     </Routes>
