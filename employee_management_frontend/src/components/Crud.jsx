@@ -5,7 +5,6 @@ import AdminLeaveRequests from './leave-request/AdminLeaveRequests';
 
 const Crud = ({ onLogout }) => {
   const [users, setUsers] = useState([]);
-const [attestations, setAttestations]=useState([])
   const navigate=useNavigate()
 
 useEffect(() => {
@@ -21,18 +20,7 @@ useEffect(() => {
       }
     };
 
-    //fetch Attestations
-    const fetchAttestations=async()=>{
-      try{
-        const resp=await axiosInstance.get('/attestations')
-        setAttestations(resp.data);
-
-      }catch(error){
-        console.error('error fetching attestations',error);
-
-      }
-    }
-fetchAttestations()
+ 
     fetchUsers();
   }, []);
 
@@ -74,46 +62,10 @@ console.error(error)
 
   //delete  demande d'attestations
 
-  const handleDeleteAttestationSuccess = (deletedAttestationId) => {
-    setAttestations(attestations.filter(attestation => attestation.id !== deletedAttestationId));
-  };
-
-  const handleDeleteAttestation = async (attestationId) => {
-    const isConfirmed = window.confirm('Are you sure you want to delete this attestation request?');
-    if (!isConfirmed) return;
+  
 
 
-    try {
-      const response = await axiosInstance.delete(`/attestations/${attestationId}`);
-      console.log(response.data.message);
-      handleDeleteAttestationSuccess(attestationId);
-    } catch (error) {
-      console.error('Error deleting attestation:', error);
-    }
-  };
 
-
-  const handleStatusChange = async (attestationId, newStatus) => {
-    try {
-      const response = await axiosInstance.put(`/attestations/${attestationId}`, { status: newStatus });
-      alert(response.data.message || 'Status updated successfully.');
-      setAttestations((prev) =>
-        prev.map((attestation) =>
-          attestation.id === attestationId ? { ...attestation, status: newStatus } : attestation
-        )
-      );
-    } catch (error) {
-      console.error('Error updating status:', error);
-      alert('Failed to update status. Please try again.');
-    }
-  };
-
-
-//print attestation
-
-  const printAttestation = (user) => {
-    navigate('/print-attestation', { state: { user } });
-  };
   return (
     <div>
       <h2>User List</h2>
@@ -193,51 +145,7 @@ console.error(error)
       </table>
       <button onClick={onLogout}>Logout</button>
 
-      <h2>Attestation Requests</h2>
-      <table border="1">
-        <thead>
-          <tr>
-            <th>User</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {attestations.map((attestation) => (
-            <tr key={attestation.id}>
-              <td>{attestation.user?.name || 'Unknown'}</td>
-              <td>{attestation.status}</td>
-              <td>
-                <button
-                  onClick={() => handleStatusChange(attestation.id, 'Approved')}
-                  style={{ marginRight: '10px' }}
-                >
-                  Approve
-                </button>
-                <button
-                  onClick={() => handleStatusChange(attestation.id, 'Printed')}
-                  style={{ marginRight: '10px' }}
-                >
-                  Print
-                </button>
-                <button
-                  onClick={() => handleDeleteAttestation(attestation.id)}
-                  style={{ backgroundColor: 'red', color: 'white' }}
-                >
-                  Delete
-                </button>
-
-                <button
-                  onClick={() => printAttestation(attestation.user)}
-                  style={{ backgroundColor: 'green', color: 'white' }}
-                >
-                  Print Attestation
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+     
       <AdminLeaveRequests/>
       <button onClick={onLogout}>Logout</button>
     </div>

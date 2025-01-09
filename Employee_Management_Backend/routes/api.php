@@ -56,5 +56,6 @@ Route::post('/attestations', [AttestationController::class, 'store']);
 Route::put('/attestations/{id}',[AttestationController::class,'updateStatus']);
 Route::delete('/attestations/{id}',[AttestationController::class,'destroy']);
 
+Route::get('/attestations/user/{userId}', [AttestationController::class, 'show']);
 
 

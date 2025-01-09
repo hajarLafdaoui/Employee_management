@@ -51,7 +51,7 @@ const CreateUser = () => {
       setPhone('');
       setProfilePicture(null);
       setDepartmentId('');
-      navigate("/dashboard")
+      navigate("/crud")
     } catch (error) {
       console.error('Error creating user:', error);
       setMessage(error.response?.data?.message || 'Error creating user');
@@ -117,7 +117,7 @@ const CreateUser = () => {
           onChange={(e) => setRole(e.target.value)}
         >
           <option value="employee">Employee</option>
-          <option value="admin">Admin</option>
+          <option value="sub-admin">sub-admin</option>
         </select>
 
         <select
@@ -140,7 +140,7 @@ const CreateUser = () => {
       </form>
       <p>{message}</p>
 
-      <Link to="/dashboard">
+      <Link to="/crud">
             <button style={{ backgroundColor: 'gray', color: 'white' }}>
               Back to Dashboard
             </button>
