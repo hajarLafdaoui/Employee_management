@@ -3,27 +3,65 @@ import axiosInstance from "../axiosSetup";
 
 const AdminLeaveRequests = () => {
   const [requests, setRequests] = useState([]);
+  const [usersApproved, setUsersApproved] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showApproved, setShowApproved] = useState(false);
 
   useEffect(() => {
     const fetchRequests = async () => {
-      const response = await axiosInstance.get("/leave-requests");
-      setRequests(response.data);
+      try {
+        const response = await axiosInstance.get("/leave-requests");
+        
+        // Filter only pending requests
+        const pendingRequests = response.data.filter(
+          (request) => request.status === "pending"
+        );
+        setRequests(pendingRequests);
+
+        // Set approved requests for the approved section
+        const approvedRequests = response.data.filter(
+          (request) => request.status === "approved"
+        );
+        setUsersApproved(approvedRequests);
+      } catch (error) {
+        console.error("Error fetching leave requests:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchRequests();
   }, []);
 
   const handleApprove = async (id) => {
-    await axiosInstance.put(`/leave-request/${id}/approve`);
-    alert("Request approved");
-    setRequests(requests.filter((request) => request.id !== id));
+    try {
+      const approvedRequest = requests.find((request) => request.id === id);
+      await axiosInstance.put(`/leave-request/${id}/approve`);
+      alert("Request approved");
+
+      setRequests((prev) => prev.filter((request) => request.id !== id));
+      setUsersApproved((prev) => [...prev, { ...approvedRequest, status: "approved" }]);
+    } catch (error) {
+      console.error("Error approving the request:", error);
+      alert("Failed to approve the request.");
+    }
   };
 
   const handleReject = async (id) => {
-    await axiosInstance.put(`/leave-request/${id}/reject`);
-    alert("Request rejected");
-    setRequests(requests.filter((request) => request.id !== id));
+    try {
+      await axiosInstance.put(`/leave-request/${id}/reject`);
+      alert("Request rejected");
+
+      setRequests((prev) => prev.filter((request) => request.id !== id));
+    } catch (error) {
+      console.error("Error rejecting the request:", error);
+      alert("Failed to reject the request.");
+    }
   };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div>
@@ -65,6 +103,34 @@ const AdminLeaveRequests = () => {
           ))}
         </tbody>
       </table>
+      <button onClick={() => setShowApproved(!showApproved)}>
+        {showApproved ? "Hide Approved Users" : "Show Approved Users"}
+      </button>
+      {showApproved && (
+        <div>
+          <h2>Approved Users</h2>
+          <table border="1">
+            <thead>
+              <tr>
+                <th>User Name</th>
+                <th>Leave Type</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {usersApproved.map((approved, index) => (
+                <tr key={index}>
+                  <td>{approved.user.name}</td>
+                  <td>{approved.leave_type}</td>
+                  <td>{approved.start_date}</td>
+                  <td>{approved.end_date}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };
