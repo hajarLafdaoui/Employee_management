@@ -6,12 +6,13 @@ const AdminLeaveRequests = () => {
   const [usersApproved, setUsersApproved] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showApproved, setShowApproved] = useState(false);
+  const [searchDate, setSearchDate] = useState("");
 
   useEffect(() => {
     const fetchRequests = async () => {
       try {
         const response = await axiosInstance.get("/leave-requests");
-        
+
         // Filter only pending requests
         const pendingRequests = response.data.filter(
           (request) => request.status === "pending"
@@ -33,6 +34,25 @@ const AdminLeaveRequests = () => {
     fetchRequests();
   }, []);
 
+  const handleSearch = async () => {
+    if (!searchDate) {
+      alert("Please enter a valid date.");
+      return;
+    }
+
+    try {
+      const filteredApproved = usersApproved.filter(
+        (request) =>
+          request.start_date === searchDate || request.end_date === searchDate || 
+          (new Date(request.start_date) <= new Date(searchDate) && new Date(request.end_date) >= new Date(searchDate))
+      );
+      setUsersApproved(filteredApproved);
+    } catch (error) {
+      console.error("Error searching approved leave requests:", error);
+      alert("Failed to search approved leave requests.");
+    }
+  };
+
   const handleApprove = async (id) => {
     try {
       const approvedRequest = requests.find((request) => request.id === id);
@@ -40,7 +60,10 @@ const AdminLeaveRequests = () => {
       alert("Request approved");
 
       setRequests((prev) => prev.filter((request) => request.id !== id));
-      setUsersApproved((prev) => [...prev, { ...approvedRequest, status: "approved" }]);
+      setUsersApproved((prev) => [
+        ...prev,
+        { ...approvedRequest, status: "approved" },
+      ]);
     } catch (error) {
       console.error("Error approving the request:", error);
       alert("Failed to approve the request.");
@@ -66,7 +89,7 @@ const AdminLeaveRequests = () => {
   return (
     <div>
       <h1>Leave Requests</h1>
-      <table border="1">
+      <table border="1" style={{ marginTop: "20px" }}>
         <thead>
           <tr>
             <th>User Name</th>
@@ -109,6 +132,15 @@ const AdminLeaveRequests = () => {
       {showApproved && (
         <div>
           <h2>Approved Users</h2>
+          <div>
+            <input
+              type="date"
+              value={searchDate}
+              onChange={(e) => setSearchDate(e.target.value)}
+              style={{ marginRight: "10px" }}
+            />
+            <button onClick={handleSearch}>Search</button>
+          </div>
           <table border="1">
             <thead>
               <tr>
