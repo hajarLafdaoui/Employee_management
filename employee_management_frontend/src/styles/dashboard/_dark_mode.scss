@@ -1,0 +1,65 @@
+
+
+
+body.dark-mode {
+    background-color: $black; /* Black background */
+    color: white; /* White text */
+}
+.dark-mode  .AdminMenu{
+    background-color: $grey; /* Black background */
+}
+.dark-mode  .AdminMenu{
+    background-color: $darkGrey; /* Black background */
+}
+
+.dark-mode .NavbarMenu {
+   
+    background-color: $black;
+    color: $white;
+  }
+  .dark-mode .navLink {
+    display: flex;
+    align-items: center;
+    color: $white !important;
+    text-decoration: none;
+    font-size: 1rem;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+  .dark-mode .dropdown-title {
+   
+    width: 100%;
+    background-color: $darkGrey !important;
+    color:$white !important;
+}
+
+.dark-mode  .input-container {
+    display: flex;
+    gap: 5px;
+    background-color: $darkGrey !important;
+    .input{
+        background-color: $darkGrey;
+    }
+    .searchIcon{
+       display :none;
+    }
+    .white-searchIcon
+    {
+        display: block;
+    }
+  
+
+}
+.sun{
+    background-color: transparent !important;
+
+}
+.dark-mode .admin-email{
+    background-color: $black !important;
+    color:$white !important;
+}
+.dark-mode .inRight{
+    color:$white !important;
+    background-color :$darkGrey !important;
+}
+// 
