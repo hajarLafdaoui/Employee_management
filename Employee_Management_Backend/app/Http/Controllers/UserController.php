@@ -61,10 +61,8 @@ class UserController extends Controller
             ], 422);
         }
     
-        // Handle the uploaded profile picture
         $profilePicturePath = null;
         if ($request->hasFile('profile_picture')) {
-            // Store the file in the 'public/profile_pictures' directory
             $profilePicturePath = $request->file('profile_picture')->store('profile_pictures', 'public');
         }
     

@@ -26,6 +26,8 @@ import AttestationRequests from './components/AttestatioRequest/AttestationReque
 // Admin Dashboard
 import AdminMenu from './components/Admin_navbar/AdminMenu';
 import Admin_dashboard from './Admin/Admin_dashboard';
+import SalaryCalculator from './components/salary/SalaryCalculator';
+import SalaryList from './components/salary/SalaryList';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -77,8 +79,10 @@ function App() {
 
       <Route path="/print-attestation" element={<PrintAttestation />} />
       <Route path="/attestation-requests" element={<AttestationRequests />} />
+      {/* Salary */}
 
-
+      <Route path="/calculate-salary" element={<SalaryCalculator/>} />
+      <Route path="/salary" element={<SalaryList />} /> 
     </Routes>
   </Router>
   {/* <Employees/> */}

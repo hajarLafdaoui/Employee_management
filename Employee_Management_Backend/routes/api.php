@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AttestationController;
+use App\Http\Controllers\SalaryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -58,4 +59,6 @@ Route::delete('/attestations/{id}',[AttestationController::class,'destroy']);
 
 Route::get('/attestations/user/{userId}', [AttestationController::class, 'show']);
 
-
+//salary
+Route::post('/calculate-salary', [SalaryController::class, 'calculateSalary']);
+Route::get('/salaries', [SalaryController::class, 'getAllSalaries']);
