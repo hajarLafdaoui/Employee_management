@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import SignIn from './components/Authentication/SignIn';
+import Logout from './components/Authentication/Logout';
 import Profile from './components/Profile';
 import Crud from './components/Crud';
 import './styles/main.scss'; // Import your main SASS file
@@ -52,6 +53,7 @@ function App() {
 
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<SignIn />} />
+        <Route path="/logout" element={<Logout />} />
         <Route path="/crud" element={<Crud />} />
 
         <Route path="/Marking" element={<Marking />} />

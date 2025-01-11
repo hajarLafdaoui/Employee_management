@@ -1,0 +1,108 @@
+
+
+// RESPONSIVE
+.hamburger {
+    display: none;
+    position: fixed;
+    top: 10px;
+    left: 3px;
+    font-size: 24px;
+    padding: 10px;
+    z-index: 1100;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .Navbar.sidebar-open+.hamburger {
+    transform: rotate(0);
+  }
+  
+  .Navbar.sidebar-open {
+    transform: translateX(0);
+  }
+  
+  .Container.sidebar-open .Navbar {
+    transform: translateX(0);
+  }
+  
+  .input-container-responsive {
+    display: none !important;
+  
+  }
+  
+  .Navbar.sidebar-open .hamburger {
+    left: 250px;
+  }
+  
+  @media only screen and (max-width: 767px) {
+    .hamburger {
+      display: block;
+      cursor: pointer;
+    }
+    .close {
+      margin-left: 200px;
+      margin-bottom: 10px;
+      font-size: 26px;
+    }
+  
+    .Navbar {
+      transform: translateX(-100%);
+      flex-direction: column;
+      padding-top: 10px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      background-color: $white;
+      z-index: 1000;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
+    }
+    .Navbar.sidebar-open {
+      transform: translateX(0);
+    }
+    .Container {
+      margin: 5px !important;
+      width: 100%;
+    }
+    .secondPart {
+      margin: 0 10px;
+      width: 100%;
+    }
+  
+    .greeting-container {
+      margin: 10px 0;
+    }
+    .head {
+      flex-direction: column-reverse;
+      gap: 5px;
+      align-items: end !important;
+      justify-content: end !important;
+      width: 100% !important;
+      .right {
+        display: flex;
+        gap: 5px !important;
+        margin-top: 5px;
+      }
+  
+      .input-container {
+        width: 100%;
+        gap: 2px;
+        flex: 1;
+        background-color: $white;
+        border-radius: 30px;
+        justify-content: start !important;
+      }
+  
+      .icon {
+        width: 22px;
+        height: 22px;
+      }
+    }
+  
+    .logout {
+      margin-top: 50px !important;
+      flex-direction: row !important;
+    }
+  }
+  
