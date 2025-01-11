@@ -47,15 +47,27 @@ public function destroy($id){
 
 
 
+// public function show($userId)
+// {
+//     $attestation = Attestation::where('user_id', $userId)->first();
+
+//     if (!$attestation) {
+//         return response()->json(['status' => 'No Attestation Found'], 200); // or return a default status object
+//     }
+
+//     return response()->json($attestation, 200);
+// }
+
+
+
 public function show($userId)
 {
-    $attestation = Attestation::where('user_id', $userId)->first();
-    
-    if (!$attestation) {
-        return response()->json(['message' => 'Attestation not found'], 404);
-    }
-    
-    return response()->json($attestation);
+    $attestations = Attestation::where('user_id', $userId)
+                               ->latest() 
+                               ->take(3)  
+                               ->get(['status', 'created_at']); 
+
+    return response()->json($attestations, 200);
 }
 
 }
