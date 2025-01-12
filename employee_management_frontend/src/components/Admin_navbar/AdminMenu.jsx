@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { FaSignOutAlt } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
+import { FaSun, FaMoon } from "react-icons/fa";
+import { FaBell } from "react-icons/fa";
+
+
+
+
 import {
   FaTachometerAlt,
   FaUserPlus,
@@ -77,7 +85,7 @@ const AdminMenu = ({ user }) => {
           </div>
           <ul className="NavbarMenu">
             <li className="NavbarItem">
-              <FaTachometerAlt />
+              <FaTachometerAlt  className="darkIcon"/>
               <Link className="navLink" to="/dashboard">
                 Dashboard
               </Link>
@@ -107,8 +115,8 @@ const AdminMenu = ({ user }) => {
           </ul>
           <li className="NavbarItem logout">
 
-              <img className="logout-icon" src="/icons/logout.png" alt="Logout" />
-              <Link className="navLink" to="/logout">
+          <FaSignOutAlt className="logout-icon" />
+          <Link className="navLink" to="/logout">
                 Logout            </Link>
           </li>
 
@@ -119,23 +127,18 @@ const AdminMenu = ({ user }) => {
         <div className="head">
 
           <div className="input-container input-container-desktop">
-            <img className="searchIcon" src="/icons/search.png" alt="search" />
-            <input className="input" type="text" placeholder="Search" />
+          <FaSearch className="searchIcon" />
+          <input className="input" type="text" placeholder="Search" />
           </div>
 
           <div className="right">
             <div className="icon-container dark-mode-toggle" onClick={toggleDarkMode}>
-              <img
-                className="icon"
-                src={`/icons/${isDarkMode ? "sun" : "moon"}.png`}
-                alt={isDarkMode ? "Light Mode" : "Dark Mode"}
-              />
+              
+                {isDarkMode ? <FaSun className="dark-icon"></FaSun> : <FaMoon className="dark-icon"></FaMoon>}
             </div>
             <div className="icon-container" >
-              <img
-                className="icon"
-                src="/icons/notification.png" alt="Admin"
-              />
+            <FaBell className=" notification-icon" aria-label="Notification" />
+
             </div>
             <div className="admin-image-container" >
               <img

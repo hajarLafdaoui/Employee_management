@@ -5,7 +5,7 @@ import SignIn from './components/Authentication/SignIn';
 import Logout from './components/Authentication/Logout';
 import Profile from './components/Profile';
 import Crud from './components/Crud';
-import './styles/main.scss'; // Import your main SASS file
+import './styles/main.scss'; 
 
 
 // Attendance
@@ -15,17 +15,21 @@ import UpdateAttendance from './components/attendance/UpdateAttendance';
 import DeleteAttendance from './components/attendance/DeleteAttendance';
 import AttendanceHeader from './components/attendance/AttendanceHeader';
 
-import PrintAttestation from './components/PrintAttestation';
+import PrintAttestation from './components/AttestatioRequest/PrintAttestation';
 
 import UpdateUser from './components/UpdateUser';
 import CreateUser from './components/CreateUser';
 import DetailUser from './components/DetailUser';
 import AdminLeaveRequests from './components/leave-request/AdminLeaveRequests';
 import LeaveRequestForm from './components/leave-request/LeaveRequestForm';
+import AttestationRequests from './components/AttestatioRequest/AttestationRequests';
 
 // Admin Dashboard
 import AdminMenu from './components/Admin_navbar/AdminMenu';
 import Admin_dashboard from './components/Admin/Admin_dashboard';
+// import Admin_dashboard from './Admin/Admin_dashboard';
+import SalaryCalculator from './components/salary/SalaryCalculator';
+import SalaryList from './components/salary/SalaryList';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -79,59 +83,22 @@ function App() {
         <Route path="/print-attestation" element={<PrintAttestation />} />
 
 
-      </Routes>
-      {/* <AdminMenu user={user} /> */}
-
-    </Router>
     
-    {/* <Employees/> */}
-    {/* <Router>
-      <Routes>
-        <Route
-          path="/login"
-          element={
-            isAuthenticated ? (
-              <Navigate to="/dashboard"  />
-            ) : (
-              <SignIn onLogin={handleLogin} />
-            )
-          }
-        />
-         <Route
-          path="/profile"
-          element={
-            isAuthenticated ? <Profile /> : <Navigate to="/login" />
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            isAuthenticated ? (
-              <Dashboard onLogout={handleLogout} />
-            ) : (
-              <Navigate to="/login"  />
-            )
-          }
-        />
-        <Route
-          path="/update-user/:userId"
-          element={
-            isAuthenticated ? <UpdateUser /> : <Navigate to="/login" />
-          }
-        />
-        <Route
-          path="/create-user/"
-          element={
-            isAuthenticated ? <CreateUser /> : <Navigate to="/login"  />
-          }
-        />
-<Route
-  path="/user-details/:userId"
-  element={isAuthenticated ? <DetailUser /> : <Navigate to="/login"  />}
-/>
-        <Route path="*" element={<Navigate to="/login"  />} />
-      </Routes>
-    </Router> */}
+   
+
+      <Route path="/update-user/:userId" element={<UpdateUser />} />
+      <Route path="/create-user" element={<CreateUser />} />
+      <Route path="/user-details/:userId" element={<DetailUser />} />
+
+      <Route path="/print-attestation" element={<PrintAttestation />} />
+      <Route path="/attestation-requests" element={<AttestationRequests />} />
+
+      {/* Salary */}
+      <Route path="/calculate-salary" element={<SalaryCalculator/>} />
+      <Route path="/salary" element={<SalaryList />} /> 
+    </Routes>
+  </Router>
+
   </>
 
 

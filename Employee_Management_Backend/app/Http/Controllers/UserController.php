@@ -14,8 +14,11 @@ class UserController extends Controller
     // Get all users
     public function index()
     {
-        $users = User::all(); 
-        return response()->json($users);
+        $employees = User::whereIn('role', ['employee', 'sub-admin'])
+                         ->where('status', 'enabled')
+                         ->get(); 
+    
+        return response()->json($employees);  
     }
     // get all employees 
     public function fetchEmployees()
@@ -43,7 +46,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
-            'role' => 'required|string|max:50',
+            'role' => 'required|string|in:employee,sub-admin',
             'department_id' => 'required|exists:departments,id',
             'username' => 'required|string|max:255|unique:users',
             'phone' => 'nullable|string|max:255',
@@ -58,10 +61,8 @@ class UserController extends Controller
             ], 422);
         }
     
-        // Handle the uploaded profile picture
         $profilePicturePath = null;
         if ($request->hasFile('profile_picture')) {
-            // Store the file in the 'public/profile_pictures' directory
             $profilePicturePath = $request->file('profile_picture')->store('profile_pictures', 'public');
         }
     

@@ -30,7 +30,8 @@ body {
 }
 .AdminMenu .Navbar .logoContainer {
   border-bottom: 1px solid #eee;
-  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 20px;
 }
 .AdminMenu .Navbar .NavbarMenu {
   display: flex;
@@ -69,10 +70,6 @@ body {
 }
 .AdminMenu .Navbar .NavbarItem .logout {
   flex-direction: row !important;
-}
-.AdminMenu .Navbar .NavbarItem .logout-icon {
-  width: 16px;
-  height: 16px;
 }
 .AdminMenu .Navbar .dropdown-item {
   display: flex;
@@ -160,14 +157,6 @@ body {
   padding: 10px;
   border-radius: 50%;
 }
-.secondPart .head .input-container .white-searchIcon {
-  display: none;
-  width: 35px;
-  height: 35px;
-  padding: 10px;
-  border-radius: 50%;
-  background-color: #000;
-}
 .secondPart .head .input-container .input {
   padding: 10px;
   border: none;
@@ -185,16 +174,19 @@ body {
 }
 .secondPart .head .right .icon-container {
   border-radius: 50%;
-  padding: 5px 6px;
+  padding: 10px;
   background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .secondPart .head .right .icon-container .icon {
-  width: 21px;
-  height: 21px;
+  width: 18px;
+  height: 18px;
 }
 .secondPart .head .right .admin-image {
   width: 38px;
-  height: 39px;
+  height: 38px;
   border-radius: 50%;
 }
 .secondPart .greeting-container {
@@ -210,61 +202,66 @@ body {
 }
 
 body.dark-mode {
-  background-color: #000; /* Black background */
-  color: white; /* White text */
+  background: #0B0B0B;
+  color: #fff !important;
+}
+
+.dark-mode .Navbar {
+  background: linear-gradient(to bottom right, #474B4E 5%, #434142 10%, #0B0B0B 100%) !important;
 }
 
 .dark-mode .AdminMenu {
-  background-color: #eee; /* Black background */
+  background: linear-gradient(to bottom right, #474B4E 5%, #434142 10%, #0B0B0B 100%) !important;
+  color: #fff !important;
 }
 
-.dark-mode .AdminMenu {
-  background-color: #343a40; /* Black background */
+.dark-mode a {
+  color: #fff !important;
 }
 
-.dark-mode .NavbarMenu {
-  background-color: #000;
+.dark-mode .input::-moz-placeholder {
+  color: #999;
+}
+
+.dark-mode .input::placeholder {
+  color: #999;
+}
+
+.dark-mode .greeting {
+  color: #ccc !important;
+}
+
+.dark-mode .icon-container {
+  background-color: transparent !important;
+  border: 1px solid #343435;
+}
+
+.dark-mode .searchIcon {
+  background-color: #434142 !important;
   color: #fff;
 }
 
-.dark-mode .navLink {
-  display: flex;
-  align-items: center;
+.dark-mode .input-container {
+  background: linear-gradient(to bottom right, #474B4E 5%, #434142 10%, #0B0B0B 100%);
+}
+
+.dark-mode .dropdown-item {
+  background-color: #ffd60a;
+  opacity: 0.8;
+}
+
+.dark-mode input {
+  background: transparent !important;
   color: #fff !important;
-  text-decoration: none;
-  font-size: 1rem;
-  width: 100%;
-  transition: background-color 0.3s ease;
+}
+
+.dark-mode .NavbarMenu {
+  background: transparent !important;
 }
 
 .dark-mode .dropdown-title {
-  width: 100%;
-  background-color: #343a40 !important;
+  background-color: #343435 !important;
   color: #fff !important;
-}
-
-.dark-mode .input-container {
-  display: flex;
-  gap: 5px;
-  background-color: #343a40 !important;
-}
-.dark-mode .input-container .input {
-  background-color: #343a40;
-}
-.dark-mode .input-container .searchIcon {
-  display: none;
-}
-.dark-mode .input-container .white-searchIcon {
-  display: block;
-}
-
-.sun {
-  background-color: transparent !important;
-}
-
-.dark-mode .inRight {
-  color: #fff !important;
-  background-color: #343a40 !important;
 }
 
 .hamburger {
@@ -306,7 +303,7 @@ body.dark-mode {
   }
   .close {
     margin-left: 200px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     font-size: 26px;
   }
   .Navbar {

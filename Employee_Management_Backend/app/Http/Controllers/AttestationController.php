@@ -30,7 +30,7 @@ return response()->json(['message'=>'Demande enregistrée avec succès.']);
     //update une demande
     public function updateStatus(Request $request, $id){
         $validated=$request->validate([
-            'status'=>'required|in:Pending,Approved,Printed', 
+            'status'=>'required|in:Pending,Approved', 
 
         ]);
         $attestation=Attestation::findOrFail($id);
@@ -44,4 +44,18 @@ public function destroy($id){
     $attestation->delete();
     return response()->json(['message'=>'Demande Suprrimee avec succès']);
 }
+
+
+
+public function show($userId)
+{
+    $attestation = Attestation::where('user_id', $userId)->first();
+    
+    if (!$attestation) {
+        return response()->json(['message' => 'Attestation not found'], 404);
+    }
+    
+    return response()->json($attestation);
+}
+
 }

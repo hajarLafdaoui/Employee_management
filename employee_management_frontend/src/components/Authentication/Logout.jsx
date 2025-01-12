@@ -3,7 +3,7 @@ import React from 'react'
 const logout = () => {
   return (
     <div>
-      lgout
+      logout
     </div>
   )
 }
