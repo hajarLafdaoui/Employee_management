@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import axiosInstance from './axiosSetup';
+import axiosInstance from './Config/axiosSetup';
 import { Link, useNavigate } from 'react-router-dom';
 
 const CreateUser = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [username, setUsername] = useState(''); 
+  const [username, setUsername] = useState('');
   const [role, setRole] = useState('employee');
   const [phone, setPhone] = useState('');
   const [profilePicture, setProfilePicture] = useState(null);
@@ -14,11 +14,11 @@ const CreateUser = () => {
   const [departmentId, setDepartmentId] = useState('');
   const [departments, setDepartments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
- const navigate=useNavigate()
+  const navigate = useNavigate()
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!name || !email || !password || !role || !username || !departmentId) { 
+    if (!name || !email || !password || !role || !username || !departmentId) {
       setMessage("All fields are required.");
       return;
     }
@@ -27,7 +27,7 @@ const CreateUser = () => {
     formData.append('name', name);
     formData.append('email', email);
     formData.append('password', password);
-    formData.append('username', username); 
+    formData.append('username', username);
     formData.append('role', role);
     formData.append('phone', phone);
     formData.append('department_id', departmentId);
@@ -46,7 +46,7 @@ const CreateUser = () => {
       setName('');
       setEmail('');
       setPassword('');
-      setUsername(''); 
+      setUsername('');
       setRole('employee');
       setPhone('');
       setProfilePicture(null);
@@ -99,7 +99,7 @@ const CreateUser = () => {
           type="text"
           placeholder="Username"
           value={username}
-          onChange={(e) => setUsername(e.target.value)} 
+          onChange={(e) => setUsername(e.target.value)}
         />
         <input
           type="text"
@@ -141,10 +141,10 @@ const CreateUser = () => {
       <p>{message}</p>
 
       <Link to="/crud">
-            <button style={{ backgroundColor: 'gray', color: 'white' }}>
-              Back to Dashboard
-            </button>
-          </Link>
+        <button style={{ backgroundColor: 'gray', color: 'white' }}>
+          Back to Dashboard
+        </button>
+      </Link>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axiosInstance from "../axiosSetup"; 
+import axiosInstance from "../Config/axiosSetup";
 
 const SalaryCalculator = () => {
   const [startDate, setStartDate] = useState('');
@@ -13,7 +13,7 @@ const SalaryCalculator = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axiosInstance.get('/users'); 
+        const response = await axiosInstance.get('/users');
         setUsers(response.data);
       } catch (err) {
         setError('Failed to fetch users. Please try again.');
@@ -35,10 +35,10 @@ const SalaryCalculator = () => {
           user_id: userId
         });
         if (response.data.message) {
-            setMessage(response.data.message);
-          } else {
-            setSalaryData(response.data);
-          }  
+          setMessage(response.data.message);
+        } else {
+          setSalaryData(response.data);
+        }
       } catch (err) {
         setError('Failed to calculate salaries. Please try again.');
         console.error(err);

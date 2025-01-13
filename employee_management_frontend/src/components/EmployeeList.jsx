@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';  
-import axiosInstance from './axiosSetup';
-import AdminLeaveRequests from './leave-request/AdminLeaveRequests';
+import { Link, useNavigate } from 'react-router-dom';
+import axiosInstance from './Config/axiosSetup';
+import AdminLeaveRequests from './Leave/AdminLeaveRequests';
 
-const Crud = ({ onLogout }) => {
+const EmployeeList = ({ onLogout }) => {
   const [users, setUsers] = useState([]);
-  const navigate=useNavigate()
+  const navigate = useNavigate()
 
-useEffect(() => {
+  useEffect(() => {
 
-  //fetch users
+    //fetch users
 
     const fetchUsers = async () => {
       try {
@@ -20,24 +20,25 @@ useEffect(() => {
       }
     };
 
- 
+
     fetchUsers();
   }, []);
 
 
   // disabled users
-  const handeleToggleStatus= async (e,userId,currentStatus)=>{
-e.preventDefault()
-    const isConfirmed=window.confirm(`Are you sure you want to change`)
+  const handeleToggleStatus = async (e, userId, currentStatus) => {
+    e.preventDefault()
+    const isConfirmed = window.confirm(`Are you sure you want to change`)
     if (!isConfirmed) return;
-    try{
-const resp=await axiosInstance.put(`users/${userId}/toggle`)
-console.log(resp.data.message)
-setUsers(users.map(user=>
-  user.id===userId?{...user,status:currentStatus==='enabled'?'disabled':'enabled'}:user
-))}catch(error){
-console.error(error)
-}
+    try {
+      const resp = await axiosInstance.put(`users/${userId}/toggle`)
+      console.log(resp.data.message)
+      setUsers(users.map(user =>
+        user.id === userId ? { ...user, status: currentStatus === 'enabled' ? 'disabled' : 'enabled' } : user
+      ))
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   // const handleDeleteSuccess = (deletedUserId) => {
@@ -62,7 +63,7 @@ console.error(error)
 
   //delete  demande d'attestations
 
-  
+
 
 
 
@@ -91,14 +92,14 @@ console.error(error)
         <tbody>
           {users.map((user) => {
             const profilePictureUrl = user.profile_picture
-              ? `http://localhost:8000/storage/${user.profile_picture}` 
+              ? `http://localhost:8000/storage/${user.profile_picture}`
               : null;
-              const isDisabled = user.status === 'disabled';
+            const isDisabled = user.status === 'disabled';
             return (
               <tr
-  key={user.id}
- 
->
+                key={user.id}
+
+              >
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>{user.username}</td>
@@ -128,13 +129,13 @@ console.error(error)
                     style={{ backgroundColor: 'red', color: 'white' }}>
                     Delete
                   </button> */}
-<button
-  onClick={(e) => handeleToggleStatus(e, user.id, user.status)} 
-  disabled={user.status === 'disabled'}  
-  style={{ backgroundColor: 'orange', color: 'white', marginRight: '10px' }}
->
-  {user.status === 'enabled' ? 'Disable' : 'Enable'}
-</button>
+                  <button
+                    onClick={(e) => handeleToggleStatus(e, user.id, user.status)}
+                    disabled={user.status === 'disabled'}
+                    style={{ backgroundColor: 'orange', color: 'white', marginRight: '10px' }}
+                  >
+                    {user.status === 'enabled' ? 'Disable' : 'Enable'}
+                  </button>
 
 
                 </td>
@@ -145,14 +146,14 @@ console.error(error)
       </table>
       <button onClick={onLogout}>Logout</button>
 
-     
-      <AdminLeaveRequests/>
+
+      <AdminLeaveRequests />
       <button onClick={onLogout}>Logout</button>
     </div>
 
 
-   
+
   );
 };
 
-export default Crud;
+export default EmployeeList;

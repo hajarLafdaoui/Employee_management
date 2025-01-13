@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axiosInstance from "../axiosSetup";
+import axiosInstance from "../Config/axiosSetup";
 import { useParams, useNavigate } from 'react-router-dom';
 
 const DeleteAttendance = () => {
@@ -12,7 +12,7 @@ const DeleteAttendance = () => {
         const deleteAttendance = async () => {
             try {
                 await axiosInstance.delete(`/attendance/${entryId}`);
-                navigate('/AttendanceHeader');  
+                navigate('/AttendanceHeader');
             } catch (err) {
                 console.error(err.response);
                 setError("Failed to delete attendance.");

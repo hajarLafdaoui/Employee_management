@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axiosInstance from '../axiosSetup';
+import axiosInstance from '../Config/axiosSetup';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -15,20 +15,20 @@ const SignIn = () => {
     try {
 
       const response = await axiosInstance.post('/login', { email, password });
-      console.log('Response:', response); 
+      console.log('Response:', response);
 
 
 
       if (response.data.token) {
-        localStorage.setItem('token', response.data.token); 
+        localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
         if (response.data.user && response.data.user.role) {
 
-          const role = response.data.user.role; 
+          const role = response.data.user.role;
           if (role === 'employee') {
             navigate('/profile');
           } else if (role === 'admin') {
-            navigate('/Admin_dashboard');
+            navigate('/');
           } else {
             setError('Unknown role');
           }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axiosInstance from "../axiosSetup";
+import axiosInstance from "../Config/axiosSetup";
 
 const AdminLeaveRequests = () => {
   const [requests, setRequests] = useState([]);
@@ -43,7 +43,7 @@ const AdminLeaveRequests = () => {
     try {
       const filteredApproved = usersApproved.filter(
         (request) =>
-          request.start_date === searchDate || request.end_date === searchDate || 
+          request.start_date === searchDate || request.end_date === searchDate ||
           (new Date(request.start_date) <= new Date(searchDate) && new Date(request.end_date) >= new Date(searchDate))
       );
       setUsersApproved(filteredApproved);

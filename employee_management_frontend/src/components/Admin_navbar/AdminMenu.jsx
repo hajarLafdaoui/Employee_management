@@ -1,31 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { FaSignOutAlt } from "react-icons/fa";
-import { FaSearch } from "react-icons/fa";
-import { FaSun, FaMoon } from "react-icons/fa";
-import { FaBell } from "react-icons/fa";
+import { FaSignOutAlt, FaSearch, FaSun, FaMoon, FaBell, FaBars, FaChevronLeft, FaChevronDown, FaChevronUp, FaTachometerAlt, FaUserPlus, FaUsers, FaCalendarCheck, FaMoneyBillWave, FaBuilding, FaCalendarAlt } from "react-icons/fa";
+import { Link, Outlet } from "react-router-dom";
 
-
-
-
-import {
-  FaTachometerAlt,
-  FaUserPlus,
-  FaUsers,
-  FaCalendarCheck,
-  FaMoneyBillWave,
-  FaBuilding,
-  FaCalendarAlt,
-  FaChartPie,
-  FaChevronLeft,
-  FaFileInvoiceDollar,
-  FaChevronDown,
-  FaChevronUp,
-  FaBars,
-} from "react-icons/fa";
+import AttendanceHeader from "../Attendance/AttendanceHeader";
 
 const AdminMenu = ({ user }) => {
-  const [dropdowns, setDropdowns] = useState({employees: true});
+  const [dropdowns, setDropdowns] = useState({ employees: true });
   const [date, setDate] = useState(new Date());
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -33,10 +13,8 @@ const AdminMenu = ({ user }) => {
   const toggleSidebar = () => {
     const container = document.querySelector(".Container");
     container.classList.toggle("sidebar-open");
-
     setIsSidebarOpen((prevState) => !prevState);
   };
-
 
   const toggleDarkMode = () => {
     setIsDarkMode((prevMode) => !prevMode);
@@ -85,81 +63,65 @@ const AdminMenu = ({ user }) => {
           </div>
           <ul className="NavbarMenu">
             <li className="NavbarItem">
-              <FaTachometerAlt  className="darkIcon"/>
-              <Link className="navLink" to="/dashboard">
-                Dashboard
-              </Link>
+              <FaTachometerAlt className="darkIcon" />
+              <Link className="navLink" to="/dashboard">Dashboard</Link>
             </li>
             {renderDropdown("Employees", <FaUsers />, "employees", [
-              { icon: <FaUserPlus />, label: "Add Employee", link: "/create-user" },
-              { icon: <FaUsers />, label: "Employee List", link: "/crud" },
-              { icon: <FaCalendarCheck />, label: "Employee Leave", link: "/leave" },
-              { icon: <FaMoneyBillWave />, label: "Employee Payroll", link: "/payroll" },
+              { icon: <FaUserPlus />, label: "Add Employee", link: "/createUser" },
+              { icon: <FaUsers />, label: "Employee List", link: "/EmployeeList" },
+              { icon: <FaCalendarCheck />, label: "Employee Leave", link: "/AdminLeaveRequests" },
+              { icon: <FaMoneyBillWave />, label: "Employee Payroll", link: "/Payroll" },
             ])}
             <li className="NavbarItem">
               <FaBuilding />
-              <Link className="navLink" to="/departments">
-                Departments
-              </Link>
+              <Link className="navLink" to="/Departments">Departments</Link>
             </li>
             <li className="NavbarItem">
               <FaCalendarAlt />
-              <Link className="navLink" to="/AttendanceHeader">
-                Attendance
-              </Link>
+              <Link className="navLink" to="/Attendance">Attendance</Link>
             </li>
             {renderDropdown("Payroll", <FaMoneyBillWave />, "payroll", [
-              { icon: <FaFileInvoiceDollar />, label: "View Payroll", link: "/payroll/view" },
+              { icon: <FaMoneyBillWave />, label: "View Payroll", link: "/payroll/view" },
               { icon: <FaMoneyBillWave />, label: "Generate Payroll", link: "/payroll/generate" },
             ])}
           </ul>
           <li className="NavbarItem logout">
-
-          <FaSignOutAlt className="logout-icon" />
-          <Link className="navLink" to="/logout">
-                Logout            </Link>
+            <FaSignOutAlt className="logout-icon" />
+            <Link className="navLink" to="/SignOut">Logout</Link>
           </li>
-
         </nav>
       </div>
 
       <div className="secondPart">
         <div className="head">
-
           <div className="input-container input-container-desktop">
-          <FaSearch className="searchIcon" />
-          <input className="input" type="text" placeholder="Search" />
+            <FaSearch className="searchIcon" />
+            <input className="input" type="text" placeholder="Search" />
           </div>
 
           <div className="right">
             <div className="icon-container dark-mode-toggle" onClick={toggleDarkMode}>
-              
-                {isDarkMode ? <FaSun className="dark-icon"></FaSun> : <FaMoon className="dark-icon"></FaMoon>}
+              {isDarkMode ? <FaSun className="dark-icon" /> : <FaMoon className="dark-icon" />}
             </div>
-            <div className="icon-container" >
-            <FaBell className=" notification-icon" aria-label="Notification" />
-
+            <div className="icon-container">
+              <FaBell className="notification-icon" aria-label="Notification" />
             </div>
-            <div className="admin-image-container" >
-              <img
-                className="admin-image "
-                src="/admin/admin.png" alt="Admin"
-              />
+            <div className="admin-image-container">
+              <img className="admin-image" src="/admin/admin.png" alt="Admin" />
             </div>
-
           </div>
         </div>
 
         <div className="greeting-container">
           <p className="greeting">
-            {date.getHours() < 12
-              ? "Good Morning,"
-              : date.getHours() < 16
-                ? "Good Afternoon,"
-                : "Good Evening,"}
+            {date.getHours() < 12 ? "Good Morning," : date.getHours() < 16 ? "Good Afternoon," : "Good Evening,"}
           </p>
           <p className="admin-name">{user.name}</p>
         </div>
+
+        {/* Render the corresponding component based on the current route */}
+        <Outlet />
+
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
-import axiosInstance from "../axiosSetup";
+import axiosInstance from "../Config/axiosSetup";
 
 const Attendance = ({ attendance, currentDate }) => {
     const [departments, setDepartments] = useState([]);
