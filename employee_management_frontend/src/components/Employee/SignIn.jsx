@@ -26,7 +26,7 @@ const SignIn = () => {
 
           const role = response.data.user.role;
           if (role === 'employee') {
-            navigate('/profile');
+            navigate('/Employee_dashboard');
           } else if (role === 'admin') {
             navigate('/');
           } else {
