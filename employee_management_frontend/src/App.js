@@ -2,36 +2,29 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import SignIn from './components/Employee/SignIn';
-// import Logout from './components/Employee/Logout';
-// import Profile from './components/Profile';
-// import Crud from './components/Crud';
-import './styles/main.scss'; 
+import './styles/main.scss';
 
-
-// Attendance
-// import Marking from './components/attendance/Marking';
-// import Attendance from './components/attendance/Attendance';
-// import UpdateAttendance from './components/attendance/UpdateAttendance';
-// import DeleteAttendance from './components/attendance/DeleteAttendance';
-import AttendanceHeader from './components/Attendance/AttendanceHeader';
-
-// import PrintAttestation from './components/AttestatioRequest/PrintAttestation';
-
-import UpdateUser from './components/UpdateUser';
+// Components
 import CreateUser from './components/CreateUser';
-import DetailUser from './components/DetailUser';
-// import AdminLeaveRequests from './components/leave-request/AdminLeaveRequests';
-// import LeaveRequestForm from './components/leave-request/LeaveRequestForm';
-import AttestationRequests from './components/AttestatioRequest/AttestationRequests';
-
-// Admin Dashboard
-import AdminMenu from './components/Admin_navbar/AdminMenu';
-import Admin_dashboard from './components/Admin/Admin_dashboard';
-// import Admin_dashboard from './Admin/Admin_dashboard';
-import SalaryCalculator from './components/salary/SalaryCalculator';
-import SalaryList from './components/salary/SalaryList';
-import AttestationPage from './components/AttestationPage';
 import EmployeeList from './components/EmployeeList';
+import AdminLeaveRequests from './components/Leave/AdminLeaveRequests';
+import AttendanceHeader from './components/Attendance/AttendanceHeader';
+import Admin_dashboard from './components/Admin/Admin_dashboard';
+import SignOut from './components/Employee/SignOut';
+// Additional imports for other components
+// import SalaryCalculator from './components/Salary/SalaryCalculator';
+// import Payroll from './components/Payroll';
+// import Departments from './components/Departments';
+
+const ProtectedRoute = ({ children }) => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const token = localStorage.getItem('token');
+
+  if (!user || user.role !== 'admin' || !token) {
+    return <Navigate to="/SignIn" replace />;
+  }
+  return children;
+};
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -53,27 +46,31 @@ function App() {
     setIsAuthenticated(false);
   };
 
-  return (<>
+  return (
     <Router>
       <Routes>
-      <Route path="/SignIn" element={<SignIn />} />
-
-        <Route path="/" element={<AdminMenu user={{ name: "Admin User" }} />}>
-          {/* <Route path="/" element={<AdminMenu />} /> */}
-          <Route path="create-user" element={<CreateUser />} />
+        <Route path="/SignIn" element={<SignIn onLogin={handleLogin} />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Admin_dashboard user={JSON.parse(localStorage.getItem('user'))} />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="CreateUser" element={<CreateUser />} />
           <Route path="EmployeeList" element={<EmployeeList />} />
+          <Route path="AdminLeaveRequests" element={<AdminLeaveRequests />} />
           <Route path="Attendance" element={<AttendanceHeader />} />
-          {/* <Route path="logout" element={<Logout />} /> */}
-          {/* <Route path="/login" element={<SignIn />} /> */}
-
+          {/* Additional routes for other components */}
+          {/* <Route path="SalaryCalculator" element={<SalaryCalculator />} /> */}
+          {/* <Route path="Payroll" element={<Payroll />} /> */}
+          {/* <Route path="Departments" element={<Departments />} /> */}
+          <Route path="SignOut" element={<SignOut onLogout={handleLogout} />} />
         </Route>
       </Routes>
     </Router>
-
-
-
-  </>
- );
+  );
 }
 
 export default App;
