@@ -39,7 +39,6 @@ class UserController extends Controller
         return response()->json($user);
     }
 
-    // Create a new user
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -51,7 +50,7 @@ class UserController extends Controller
             'username' => 'required|string|max:255|unique:users',
             'phone' => 'nullable|string|max:255',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        
+        'base_salary' => 'required|numeric|min:0'
         ]);
     
         if ($validator->fails()) {
@@ -75,8 +74,8 @@ class UserController extends Controller
             'department_id' => $request->department_id,
             'username' => $request->username,
             'phone' => $request->phone,
-            'profile_picture' => $profilePicturePath,  // Save the file path
-         
+            'profile_picture' => $profilePicturePath,  
+            'base_salary' => $request->base_salary,
         ]);
     
         return response()->json([
@@ -97,28 +96,25 @@ class UserController extends Controller
     
         $validatedData = $request->validate([
             'name' => 'nullable|string|max:255',
-            'email' => 'nullable|string|email|max:255|unique:users,email,' . $id,
+            'email' => "nullable|string|email|max:255|unique:users,email,$id",
             'password' => 'nullable|string|min:8', 
             'role' => 'nullable|string', 
             'department_id' => 'nullable|integer',
-            'username' => 'nullable|string|max:255|unique:users,username,' . $id,
+            'username' => "nullable|string|max:255|unique:users,username,$id",
             'phone' => 'nullable|string|max:255',
-            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Added validation for image
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'base_salary' => 'nullable|numeric|min:0', 
         ]);
     
-        // Handle the uploaded profile picture (if any)
         if ($request->hasFile('profile_picture')) {
-            // Delete the old profile picture if it exists
             if ($user->profile_picture) {
                 Storage::disk('public')->delete($user->profile_picture);
             }
     
-            // Store the new profile picture and update the path
             $profilePicturePath = $request->file('profile_picture')->store('profile_pictures', 'public');
             $user->profile_picture = $profilePicturePath;
         }
     
-        // Update other fields
         $user->name = $validatedData['name'] ?? $user->name;
         $user->email = $validatedData['email'] ?? $user->email;
     
@@ -130,8 +126,8 @@ class UserController extends Controller
         $user->department_id = $validatedData['department_id'] ?? $user->department_id;
         $user->username = $validatedData['username'] ?? $user->username;
         $user->phone = $validatedData['phone'] ?? $user->phone;
-    
-        // Save the user with updated data
+        $user->base_salary = $validatedData['base_salary'] ?? $user->base_salary; 
+
         $user->save();
     
         return response()->json([

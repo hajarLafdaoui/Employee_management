@@ -3,22 +3,29 @@ import axiosInstance from './axiosSetup';
 import { Link, useNavigate } from 'react-router-dom';
 
 const CreateUser = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username, setUsername] = useState(''); 
-  const [role, setRole] = useState('employee');
-  const [phone, setPhone] = useState('');
-  const [profilePicture, setProfilePicture] = useState(null);
-  const [message, setMessage] = useState('');
-  const [departmentId, setDepartmentId] = useState('');
+  const [userData, setUserData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    username: '',
+    role: 'employee',
+    phone: '',
+    profilePicture: null,
+    departmentId: '',
+    baseSalary: '',
+  });
   const [departments, setDepartments] = useState([]);
+  const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
- const navigate=useNavigate()
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!name || !email || !password || !role || !username || !departmentId) { 
+    const { name, email, password, username, role, phone, departmentId, baseSalary, profilePicture } = userData;
+
+    // Check if required fields are filled
+    if (!name || !email || !password || !role || !username || !departmentId || !baseSalary) { 
       setMessage("All fields are required.");
       return;
     }
@@ -31,6 +38,7 @@ const CreateUser = () => {
     formData.append('role', role);
     formData.append('phone', phone);
     formData.append('department_id', departmentId);
+    formData.append('base_salary', baseSalary); // Add base salary to form data
 
     if (profilePicture) {
       formData.append('profile_picture', profilePicture);
@@ -43,15 +51,18 @@ const CreateUser = () => {
         },
       });
       setMessage(response.data.message);
-      setName('');
-      setEmail('');
-      setPassword('');
-      setUsername(''); 
-      setRole('employee');
-      setPhone('');
-      setProfilePicture(null);
-      setDepartmentId('');
-      navigate("/crud")
+      setUserData({
+        name: '',
+        email: '',
+        password: '',
+        username: '',
+        role: 'employee',
+        phone: '',
+        profilePicture: null,
+        departmentId: '',
+        baseSalary: '',
+      });
+      navigate("/crud");
     } catch (error) {
       console.error('Error creating user:', error);
       setMessage(error.response?.data?.message || 'Error creating user');
@@ -73,56 +84,79 @@ const CreateUser = () => {
     fetchDepartments();
   }, []);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleFileChange = (e) => {
+    setUserData((prevState) => ({
+      ...prevState,
+      profilePicture: e.target.files[0],
+    }));
+  };
+
   return (
     <div>
       <h2>Create User</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
+          name="name"
           placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={userData.name}
+          onChange={handleInputChange}
         />
         <input
           type="email"
+          name="email"
           placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={userData.email}
+          onChange={handleInputChange}
         />
         <input
           type="password"
+          name="password"
           placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={userData.password}
+          onChange={handleInputChange}
         />
         <input
           type="text"
+          name="username"
           placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)} 
+          value={userData.username}
+          onChange={handleInputChange}
         />
         <input
           type="text"
+          name="phone"
           placeholder="Phone"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          value={userData.phone}
+          onChange={handleInputChange}
         />
         <input
           type="file"
-          onChange={(e) => setProfilePicture(e.target.files[0])}
+          name="profilePicture"
+          onChange={handleFileChange}
         />
 
         <select
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
+          name="role"
+          value={userData.role}
+          onChange={handleInputChange}
         >
           <option value="employee">Employee</option>
-          <option value="sub-admin">sub-admin</option>
+          <option value="sub-admin">Sub-Admin</option>
         </select>
 
         <select
-          value={departmentId}
-          onChange={(e) => setDepartmentId(e.target.value)}
+          name="departmentId"
+          value={userData.departmentId}
+          onChange={handleInputChange}
         >
           <option value="">Select Department</option>
           {isLoading ? (
@@ -136,15 +170,23 @@ const CreateUser = () => {
           )}
         </select>
 
+        <input
+          type="text"
+          name="baseSalary"
+          placeholder="Base Salary"
+          value={userData.baseSalary}
+          onChange={handleInputChange}
+        />
+
         <button type="submit">Create User</button>
       </form>
       <p>{message}</p>
 
       <Link to="/crud">
-            <button style={{ backgroundColor: 'gray', color: 'white' }}>
-              Back to Dashboard
-            </button>
-          </Link>
+        <button style={{ backgroundColor: 'gray', color: 'white' }}>
+          Back to Dashboard
+        </button>
+      </Link>
     </div>
   );
 };
