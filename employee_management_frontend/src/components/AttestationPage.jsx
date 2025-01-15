@@ -1,46 +1,46 @@
 
 import React, { useEffect, useState } from 'react';
-import axiosInstance from './axiosSetup';
+import axiosInstance from './Config/axiosSetup';
 
 const AttestationPage = () => {
   const [attestation, setAttestation] = useState([]);
   const [loading, setLoading] = useState(false);
- 
-  const user = JSON.parse(localStorage.getItem('user')); 
+
+  const user = JSON.parse(localStorage.getItem('user'));
 
   // Fetching last 3 attestation requests
   useEffect(() => {
     if (user) {
-        fetchAttestationStatus(user.id);
-      }
-  }, []); 
+      fetchAttestationStatus(user.id);
+    }
+  }, []);
 
- 
+
   const fetchAttestationStatus = async (userId) => {
     try {
       const resp = await axiosInstance.get(`/attestations/user/${userId}`);
       // console.log('Attestation response:', resp.data);
-  
+
       if (resp.data && resp.data.length > 0) {
-        setAttestation(resp.data); 
+        setAttestation(resp.data);
       } else {
         setAttestation([]);
       }
     } catch (error) {
-      console.error('Error fetching attestation status',  error.message);
+      console.error('Error fetching attestation status', error.message);
       alert('Failed to fetch attestation status');
       setAttestation([]);
 
     }
   };
-  
-  
+
+
   // Attestation request
   const handleRequestAttestation = async (e) => {
     e.preventDefault();
     if (!user) return;
     setLoading(true);
-   
+
     try {
       const resp = await axiosInstance.post('/attestations', { user_id: user.id });
       alert(resp.data.message);
@@ -82,8 +82,8 @@ const AttestationPage = () => {
         )}
       </div>
       <button onClick={handleRequestAttestation} disabled={loading}>
-          {loading ? 'Requesting...' : 'Request Attestation'}
-        </button>
+        {loading ? 'Requesting...' : 'Request Attestation'}
+      </button>
     </div>
   );
 };

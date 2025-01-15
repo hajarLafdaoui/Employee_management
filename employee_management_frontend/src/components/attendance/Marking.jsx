@@ -1,4 +1,4 @@
-import axiosInstance from "../axiosSetup";
+import axiosInstance from "../Config/axiosSetup";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 
@@ -27,7 +27,7 @@ const Marking = ({ currentDate }) => {
                 setEmployees(employeesData.data);
                 setDepartments(departmentsData.data);
                 setAttendanceRecords(attendanceData.data);
-                setLeaveRequests(leaveData.data); 
+                setLeaveRequests(leaveData.data);
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -43,7 +43,7 @@ const Marking = ({ currentDate }) => {
     const filteredEmployees = employees.filter(employee => {
         const matchesSearch = employee.name.toLowerCase().includes(search.toLowerCase());
         const matchesDepartment = !selectedDepartment || String(employee.department_id) === String(selectedDepartment);
-        
+
         const formattedCurrentDate = currentDate.toISOString().split('T')[0];
         const formattedEmployeeDate = employee.attendance_date ? employee.attendance_date.split('T')[0] : formattedCurrentDate;
         const matchesDate = formattedEmployeeDate === formattedCurrentDate;
@@ -124,66 +124,66 @@ const Marking = ({ currentDate }) => {
                         </tr>
                     </thead>
                     <tbody>
-    {filteredEmployees.map(employee => {
-        const department = departments.find(dept => dept.id === employee.department_id);
-        const departmentName = department ? department.name : "Unknown";
-        const leaveStatus = getLeaveStatus(employee.id); // Check if the employee is on leave
-        const currentAttendance = attendance[employee.id] || leaveStatus || "";
+                        {filteredEmployees.map(employee => {
+                            const department = departments.find(dept => dept.id === employee.department_id);
+                            const departmentName = department ? department.name : "Unknown";
+                            const leaveStatus = getLeaveStatus(employee.id); // Check if the employee is on leave
+                            const currentAttendance = attendance[employee.id] || leaveStatus || "";
 
-        return (
-            <tr key={employee.id}>
-                <td>{employee.id}</td>
-                <td>{employee.name}--{employee.email}</td>
-                <td style={{ textAlign: "center" }}>
-                    {employee.profile_picture ? (
-                        <img
-                            src={`http://localhost:8000/storage/${employee.profile_picture}`}
-                            alt="Profile"
-                            style={{ width: '50px', height: '50px', borderRadius: '50%' }}
-                        />
-                    ) : (
-                        'No Picture'
-                    )}
-                </td>
-                <td>{departmentName}</td>
-                <td>
-                    {leaveStatus ? (
-                        // Automatically set "leave" if the employee is on leave
-                        <>
-                            <input
-                                type="radio"
-                                name={`attendance-${employee.id}`}
-                                value="leave"
-                                checked={currentAttendance === "leave"}
-                                readOnly
-                            />
-                            Leave
-                        </>
-                    ) : (
-                        <>
-                            <input
-                                type="radio"
-                                name={`attendance-${employee.id}`}
-                                value="present"
-                                checked={currentAttendance === "present"}
-                                onChange={() => handleAttendanceChange(employee.id, "present")}
-                            />
-                            Present
-                            <input
-                                type="radio"
-                                name={`attendance-${employee.id}`}
-                                value="absent"
-                                checked={currentAttendance === "absent"}
-                                onChange={() => handleAttendanceChange(employee.id, "absent")}
-                            />
-                            Absent
-                        </>
-                    )}
-                </td>
-            </tr>
-        );
-    })}
-</tbody>
+                            return (
+                                <tr key={employee.id}>
+                                    <td>{employee.id}</td>
+                                    <td>{employee.name}--{employee.email}</td>
+                                    <td style={{ textAlign: "center" }}>
+                                        {employee.profile_picture ? (
+                                            <img
+                                                src={`http://localhost:8000/storage/${employee.profile_picture}`}
+                                                alt="Profile"
+                                                style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+                                            />
+                                        ) : (
+                                            'No Picture'
+                                        )}
+                                    </td>
+                                    <td>{departmentName}</td>
+                                    <td>
+                                        {leaveStatus ? (
+                                            // Automatically set "leave" if the employee is on leave
+                                            <>
+                                                <input
+                                                    type="radio"
+                                                    name={`attendance-${employee.id}`}
+                                                    value="leave"
+                                                    checked={currentAttendance === "leave"}
+                                                    readOnly
+                                                />
+                                                Leave
+                                            </>
+                                        ) : (
+                                            <>
+                                                <input
+                                                    type="radio"
+                                                    name={`attendance-${employee.id}`}
+                                                    value="present"
+                                                    checked={currentAttendance === "present"}
+                                                    onChange={() => handleAttendanceChange(employee.id, "present")}
+                                                />
+                                                Present
+                                                <input
+                                                    type="radio"
+                                                    name={`attendance-${employee.id}`}
+                                                    value="absent"
+                                                    checked={currentAttendance === "absent"}
+                                                    onChange={() => handleAttendanceChange(employee.id, "absent")}
+                                                />
+                                                Absent
+                                            </>
+                                        )}
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
 
                 </table>
                 <button type="submit">Save Attendance</button>

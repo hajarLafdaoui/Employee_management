@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axiosInstance from '../axiosSetup';
+import axiosInstance from '../Config/axiosSetup';
 import { useNavigate } from 'react-router-dom';
 
 const AttestationRequests = () => {
@@ -94,7 +94,7 @@ const AttestationRequests = () => {
                                 >
                                     Approve
                                 </button>
-                              
+
                                 <button
                                     onClick={() => handleDeleteAttestation(attestation.id)}
                                     style={{ backgroundColor: 'red', color: 'white' }}

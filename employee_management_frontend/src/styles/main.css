@@ -5,56 +5,48 @@
 }
 
 body {
-  background-color: #eee !important;
+  background-color: #eee;
   font-family: "Montserrat", sans-serif;
+  overflow-x: hidden !important;
+}
+
+.Container {
+  display: flex;
+  margin: 10px;
+  width: 100%;
 }
 
 .AdminMenu {
   background-color: #fff;
-  width: -moz-fit-content;
-  width: fit-content;
-  margin: 0px 10px;
-  margin-top: 10px;
+  display: flex;
   border-radius: 10px;
+  height: 100vh !important;
 }
-
-.collapse {
-  position: absolute;
-  top: 20px;
-  left: 240px;
-}
-.collapse .collapse-img {
-  width: 25px;
-  cursor: pointer;
-}
-
-.Navbar {
-  padding: 5px 20px;
+.AdminMenu .Navbar {
+  padding: 5px 10px 20px 10px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  justify-content: space-between;
 }
-.Navbar .logoContainer {
-  border-bottom: 1Px solid #eee;
-  padding-bottom: 10px;
+.AdminMenu .Navbar .logoContainer {
+  border-bottom: 1px solid #eee;
+  padding-top: 10px;
+  padding-bottom: 20px;
 }
-.Navbar .menuText {
-  font-size: 16px;
-  margin: 15px 0;
-}
-.Navbar .NavbarMenu {
+.AdminMenu .Navbar .NavbarMenu {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 10px;
+  padding-top: 0 !important;
+  margin-top: 0 !important;
   gap: 5px;
   width: 240px;
   background-color: #eee;
   border-radius: 25px;
 }
-.Navbar .NavbarItem {
+.AdminMenu .Navbar .NavbarItem {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -63,7 +55,7 @@ body {
   width: 100%;
   gap: 10px;
 }
-.Navbar .NavbarItem .navLink {
+.AdminMenu .Navbar .NavbarItem .navLink {
   display: flex;
   align-items: center;
   color: #000;
@@ -72,14 +64,14 @@ body {
   width: 100%;
   transition: background-color 0.3s ease;
 }
-.Navbar .NavbarItem .navLink:hover {
-  color: #5f5d5d;
+.AdminMenu .Navbar .NavbarItem .navLink:hover {
+  color: #343a40;
   border-radius: 5px;
 }
-.Navbar .NavbarItem .navLink svg {
-  margin-right: 10px;
+.AdminMenu .Navbar .NavbarItem .logout {
+  flex-direction: row !important;
 }
-.Navbar .dropdown-item {
+.AdminMenu .Navbar .dropdown-item {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -88,7 +80,7 @@ body {
   background-color: #ffd60a;
   border-radius: 10px;
 }
-.Navbar .dropdown-item .dropdownMenu {
+.AdminMenu .Navbar .dropdown-item .dropdownMenu {
   display: none;
   flex-direction: column;
   padding: 8px 10px;
@@ -97,19 +89,20 @@ body {
   margin-top: 10px;
   width: 100%;
 }
-.Navbar .dropdown-item.expanded .dropdownMenu {
+.AdminMenu .Navbar .dropdown-item.expanded .dropdownMenu {
   display: flex;
   gap: 5px;
 }
-.Navbar .dropdown-item .dropdownMenuItem {
+.AdminMenu .Navbar .dropdown-item .dropdownMenuItem {
   display: flex;
   align-items: center;
-  gap: 10px; /* Adds space between the icon and the text */
+  gap: 10px;
+  width: 100%;
   padding: 5px 10px;
   border-radius: 5px;
   transition: background-color 0.3s ease;
 }
-.Navbar .dropdown-item .dropdown-title {
+.AdminMenu .Navbar .dropdown-item .dropdown-title {
   display: flex;
   align-items: center;
   color: #000;
@@ -117,44 +110,255 @@ body {
   cursor: pointer;
   transition: background-color 0.3s ease;
   width: 100%;
-  background-color: rgb(255, 255, 255);
+  background-color: #fff;
   padding: 10px;
   border-radius: 5px;
-  justify-content: space-between; /* This makes the title and icon space out */
+  justify-content: start;
+  gap: 10px;
 }
-.Navbar .dropdown-item .dropdown-title .dropdownArrow {
-  margin-left: auto; /* This pushes the arrow icon to the right */
+.AdminMenu .Navbar .dropdown-item .dropdown-title .dropdownArrow {
+  margin-left: auto;
 }
-.Navbar .dropdown-item .dropdown-title svg {
-  margin-right: 10px;
-}
-.Navbar .dropdown-item li {
+.AdminMenu .Navbar .dropdown-item li {
   padding: 8px 10px;
   display: flex;
   align-items: center;
 }
-.Navbar .dropdown-item li .dropdownLink {
+.AdminMenu .Navbar .dropdown-item li .dropdownLink {
   font-size: 0.9rem;
   width: 100%;
   text-decoration: none;
   color: #000;
 }
-.Navbar .dropdown-item li .dropdownLink svg {
-  margin-right: 8px;
+
+.secondPart {
+  margin: 0 20px;
+  width: 100%;
+}
+.secondPart .head {
+  display: flex;
+  align-items: center !important;
+  justify-content: space-around !important;
+  width: 100% !important;
+}
+.secondPart .head .input-container {
+  display: flex;
+  gap: 5px;
+  background-color: #fff;
+  border-radius: 30px;
+  justify-content: center;
+  align-items: start;
+  padding: 3px;
+}
+.secondPart .head .input-container .searchIcon {
+  width: 35px;
+  height: 35px;
+  background-color: #eee;
+  padding: 10px;
+  border-radius: 50%;
+}
+.secondPart .head .input-container .input {
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background-color: #fff;
+  outline: 0;
+}
+.secondPart .head .right {
+  display: flex;
+  gap: 10px !important;
+  justify-content: center;
+  align-items: center;
+  padding: 0 !important;
+  margin-left: auto;
+}
+.secondPart .head .right .icon-container {
+  border-radius: 50%;
+  padding: 10px;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.secondPart .head .right .icon-container .icon {
+  width: 18px;
+  height: 18px;
+}
+.secondPart .head .right .admin-image {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+}
+.secondPart .greeting-container {
+  margin: 14px 0;
+}
+.secondPart .greeting-container .greeting {
+  color: #343a40;
+  font-size: 14px;
+}
+.secondPart .greeting-container .admin-name {
+  font-size: 20px;
+  font-weight: 600;
 }
 
-.admin-email {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+body.dark-mode {
+  background: #0B0B0B;
+  color: #fff !important;
+}
+
+.dark-mode .Navbar {
+  background: linear-gradient(to bottom right, #474B4E 5%, #434142 10%, #0B0B0B 100%) !important;
+}
+
+.dark-mode .AdminMenu {
+  background: linear-gradient(to bottom right, #474B4E 5%, #434142 10%, #0B0B0B 100%) !important;
+  color: #fff !important;
+}
+
+.dark-mode a {
+  color: #fff !important;
+}
+
+.dark-mode .input::-moz-placeholder {
+  color: #999;
+}
+
+.dark-mode .input::placeholder {
+  color: #999;
+}
+
+.dark-mode .greeting {
+  color: #ccc !important;
+}
+
+.dark-mode .icon-container {
+  background-color: transparent !important;
+  border: 1px solid #343435;
+}
+
+.dark-mode .searchIcon {
+  background-color: #434142 !important;
+  color: #fff;
+}
+
+.dark-mode .input-container {
+  background: linear-gradient(to bottom right, #474B4E 5%, #434142 10%, #0B0B0B 100%);
+}
+
+.dark-mode .dropdown-item {
+  background-color: #ffd60a;
+  opacity: 0.8;
+}
+
+.dark-mode input {
+  background: transparent !important;
+  color: #fff !important;
+}
+
+.dark-mode .NavbarMenu {
+  background: transparent !important;
+}
+
+.dark-mode .dropdown-title {
+  background-color: #343435 !important;
+  color: #fff !important;
+}
+
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 3px;
+  font-size: 24px;
   padding: 10px;
-  border-radius: 10px;
-  background-color: #eee;
-  color: #000;
-  font-size: 1rem;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  z-index: 1100;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: transform 0.3s ease;
+}
+
+.Navbar.sidebar-open + .hamburger {
+  transform: rotate(0);
+}
+
+.Navbar.sidebar-open {
+  transform: translateX(0);
+}
+
+.Container.sidebar-open .Navbar {
+  transform: translateX(0);
+}
+
+.input-container-responsive {
+  display: none !important;
+}
+
+.Navbar.sidebar-open .hamburger {
+  left: 250px;
+}
+
+@media only screen and (max-width: 767px) {
+  .hamburger {
+    display: block;
+    cursor: pointer;
+  }
+  .close {
+    margin-left: 200px;
+    margin-bottom: 30px;
+    font-size: 26px;
+  }
+  .Navbar {
+    transform: translateX(-100%);
+    flex-direction: column;
+    padding-top: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background-color: #fff;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+  .Navbar.sidebar-open {
+    transform: translateX(0);
+  }
+  .Container {
+    margin: 5px !important;
+    width: 100%;
+  }
+  .secondPart {
+    margin: 0 10px;
+    width: 100%;
+  }
+  .greeting-container {
+    margin: 10px 0;
+  }
+  .head {
+    flex-direction: column-reverse;
+    gap: 5px;
+    align-items: end !important;
+    justify-content: end !important;
+    width: 100% !important;
+  }
+  .head .right {
+    display: flex;
+    gap: 5px !important;
+    margin-top: 5px;
+  }
+  .head .input-container {
+    width: 100%;
+    gap: 2px;
+    flex: 1;
+    background-color: #fff;
+    border-radius: 30px;
+    justify-content: start !important;
+  }
+  .head .icon {
+    width: 22px;
+    height: 22px;
+  }
+  .logout {
+    margin-top: 50px !important;
+    flex-direction: row !important;
+  }
 }/*# sourceMappingURL=main.css.map */

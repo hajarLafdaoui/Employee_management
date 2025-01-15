@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Marking from './Marking';
 import Attendance from './Attendance';
-import axiosInstance from "../axiosSetup";
+import axiosInstance from "../Config/axiosSetup";
+// import AdminMenu from '../Admin_navbar/AdminMenu';
+import Admin_dashboard from '../Admin/Admin_dashboard';
 
 const AttendanceHeader = () => {
     const [attendance, setAttendance] = useState([]);
@@ -57,8 +59,11 @@ const AttendanceHeader = () => {
     const numberOfLeave = filteredAttendance.filter(entry => entry.status === "leave").length;
     const numberOfPresent = filteredAttendance.filter(entry => entry.status === "present").length;
 
+    // const user = { name: 'Admin' }; // Provide user object
+
     return (
-        <div>
+        <div >
+            {/* //  < Admin_dashboard></Admin_dashboard> */}
             <div>
                 <button onClick={handleLeftButtonClick}>⩤</button>
                 <p>{currentDate.toDateString()}</p>
@@ -71,7 +76,7 @@ const AttendanceHeader = () => {
                 <p>Number of Absent: {numberOfAbsent}</p>
                 <p>Number of Leave: {numberOfLeave}</p>
             </div>
-            {text === 'add attendance' ? <Attendance attendance={attendance} currentDate={currentDate} /> : <Marking  currentDate={currentDate}/>}
+            {text === 'add attendance' ? <Attendance attendance={attendance} currentDate={currentDate} /> : <Marking currentDate={currentDate} />}
         </div>
     );
 };

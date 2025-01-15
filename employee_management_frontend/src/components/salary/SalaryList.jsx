@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axiosInstance from "../axiosSetup"; 
+import axiosInstance from "../Config/axiosSetup";
 
 
 const SalaryList = () => {
@@ -8,21 +8,21 @@ const SalaryList = () => {
     const [error, setError] = useState(null);
 
 
-   
-  useEffect(() => {
-    const fetchSalaries = async () => {
-      try {
-        const response = await axiosInstance.get('/salaries');  
-        setSalaries(response.data.salaries);
-        setLoading(false);
-      } catch (err) {
-        setError('An error occurred while fetching the salaries.');
-        setLoading(false);
-      }
-    };
 
-    fetchSalaries();
-  }, []);
+    useEffect(() => {
+        const fetchSalaries = async () => {
+            try {
+                const response = await axiosInstance.get('/salaries');
+                setSalaries(response.data.salaries);
+                setLoading(false);
+            } catch (err) {
+                setError('An error occurred while fetching the salaries.');
+                setLoading(false);
+            }
+        };
+
+        fetchSalaries();
+    }, []);
 
 
     if (loading) {
@@ -51,7 +51,7 @@ const SalaryList = () => {
                     <tbody>
                         {salaries.map((salary) => (
                             <tr key={salary.id}>
-                                <td>{salary.user.name}</td>  
+                                <td>{salary.user.name}</td>
                                 <td>{salary.start_date}</td>
                                 <td>{salary.end_date}</td>
                                 <td>{salary.total_salary}</td>

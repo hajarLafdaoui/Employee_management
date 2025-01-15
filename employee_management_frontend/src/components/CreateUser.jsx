@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axiosInstance from './axiosSetup';
+import axiosInstance from './Config/axiosSetup';
 import { Link, useNavigate } from 'react-router-dom';
 
 const CreateUser = () => {
@@ -14,6 +14,7 @@ const CreateUser = () => {
     departmentId: '',
     baseSalary: '',
   });
+
   const [departments, setDepartments] = useState([]);
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +27,7 @@ const CreateUser = () => {
 
     // Check if required fields are filled
     if (!name || !email || !password || !role || !username || !departmentId || !baseSalary) { 
-      setMessage("All fields are required.");
+ 
       return;
     }
 
@@ -34,7 +35,7 @@ const CreateUser = () => {
     formData.append('name', name);
     formData.append('email', email);
     formData.append('password', password);
-    formData.append('username', username); 
+    formData.append('username', username);
     formData.append('role', role);
     formData.append('phone', phone);
     formData.append('department_id', departmentId);
@@ -130,7 +131,7 @@ const CreateUser = () => {
           placeholder="Username"
           value={userData.username}
           onChange={handleInputChange}
-        />
+          />
         <input
           type="text"
           name="phone"

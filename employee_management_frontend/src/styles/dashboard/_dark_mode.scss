@@ -1,0 +1,56 @@
+body.dark-mode {
+    background: #0B0B0B;
+    color: $white !important;
+}
+
+.dark-mode .Navbar {
+    background: linear-gradient(to bottom right, #474B4E 5%, #434142 10%, #0B0B0B 100%) !important;
+}
+
+.dark-mode .AdminMenu {
+    background: linear-gradient(to bottom right, #474B4E 5%, #434142 10%, #0B0B0B 100%) !important;
+    color: $white !important;
+}
+
+.dark-mode a {
+    color: $white !important;
+}
+
+.dark-mode .input::placeholder {
+    color: #999;
+}
+
+.dark-mode .greeting {
+    color: #ccc !important;
+}
+
+.dark-mode .icon-container {
+    background-color: transparent !important;
+    border: 1px solid #343435;
+}
+
+.dark-mode .searchIcon {
+    background-color: #434142 !important;
+    color: $white;
+}
+
+.dark-mode .input-container {
+    background: linear-gradient(to bottom right, #474B4E 5%, #434142 10%, #0B0B0B 100%);
+}
+
+.dark-mode .dropdown-item {
+    background-color: $yellow;
+    opacity: 0.8;
+}
+
+.dark-mode input {
+    background: transparent !important;
+    color: $white !important;
+}
+.dark-mode .NavbarMenu {
+    background: transparent !important;
+}
+.dark-mode .dropdown-title {
+    background-color: #343435 !important;
+    color: $white !important;
+}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axiosInstance from '../axiosSetup';
+import axiosInstance from '../Config/axiosSetup';
 
 const LeaveRequestForm = () => {
     const [leaveType, setLeaveType] = useState('');
@@ -12,25 +12,25 @@ const LeaveRequestForm = () => {
 
     // Fetch user data on mount
     useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-        const userParsed = JSON.parse(storedUser);
-        console.log('User from localStorage:', userParsed);
-        setUser(userParsed);
-    }
-}, []);
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            const userParsed = JSON.parse(storedUser);
+            console.log('User from localStorage:', userParsed);
+            setUser(userParsed);
+        }
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
-    
+
         if (!user || !user.id) {
             setError('User not found. Please log in again.');
             setLoading(false);
             return;
         }
-    
+
         try {
             await axiosInstance.post('/leave-request', {
                 user_id: user.id,
@@ -39,7 +39,7 @@ const LeaveRequestForm = () => {
                 end_date: endDate,
                 reason: reason,
             });
-    
+
             alert('Leave request sent successfully');
             setLeaveType('');
             setStartDate('');
@@ -52,8 +52,8 @@ const LeaveRequestForm = () => {
             setLoading(false);
         }
     };
-    
-    
+
+
 
     return (
         <form onSubmit={handleSubmit}>
