@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FaSignOutAlt, FaSearch, FaSun, FaMoon, FaBell, FaBars, FaChevronLeft, FaChevronDown, FaChevronUp, FaTachometerAlt, FaUserPlus, FaUsers, FaCalendarCheck, FaMoneyBillWave, FaBuilding, FaCalendarAlt } from "react-icons/fa";
 import { Link, Outlet } from "react-router-dom";
-
+import LanguageSwitcher from '../LanguageSwitcher'; 
+import { useTranslation } from 'react-i18next'; // Import the translation hook
 
 const Employee_dashboard = ({ user }) => {
+  const { t } = useTranslation(); // Get the translation function
   const [dropdowns, setDropdowns] = useState({ employees: true });
   const [date, setDate] = useState(new Date());
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -63,30 +65,31 @@ const Employee_dashboard = ({ user }) => {
           <ul className="NavbarMenu">
             <li className="NavbarItem">
               <FaTachometerAlt className="darkIcon" />
-              <Link className="navLink" to="/Employee_dashboard">Dashboard</Link>
+              <Link className="navLink" to="/Employee_dashboard">{t('dashboard')}</Link> {/* Translated */}
             </li>
-            {renderDropdown("Employees", <FaUsers />, "employees", [
-              { icon: <FaUserPlus />, label: "Add Employee", link: "/CreateUser" },
-              { icon: <FaUsers />, label: "Employee List", link: "/EmployeeList" },
-              { icon: <FaCalendarCheck />, label: "Employee Leave", link: "/AdminLeaveRequests" },
-              { icon: <FaMoneyBillWave />, label: "Employee Payroll", link: "/Payroll" },
+            {renderDropdown(t('employees'), <FaUsers />, "employees", [
+              { icon: <FaUserPlus />, label: t('add_employee'), link: "attestations" },
+              { icon: <FaUsers />, label: t('employee_list'), link: "/EmployeeList" },
+              { icon: <FaCalendarCheck />, label: t('employee_leave'), link: "/AdminLeaveRequests" },
+              { icon: <FaMoneyBillWave />, label: t('employee_payroll'), link: "/Payroll" },
+              { icon: <FaMoneyBillWave />, label: t('holidays_of_year'), link: "HolidayList" },
             ])}
             <li className="NavbarItem">
               <FaBuilding />
-              <Link className="navLink" to="/Departments">Departments</Link>
+              <Link className="navLink" to="/Departments">{t('departments')}</Link>
             </li>
             <li className="NavbarItem">
               <FaCalendarAlt />
-              <Link className="navLink" to="EmployeeAttendance">Attendance</Link>
+              <Link className="navLink" to="EmployeeAttendance">{t('attendance')}</Link>
             </li>
-            {renderDropdown("Payroll", <FaMoneyBillWave />, "payroll", [
-              { icon: <FaMoneyBillWave />, label: "View Payroll", link: "/payroll/view" },
-              { icon: <FaMoneyBillWave />, label: "Generate Payroll", link: "/payroll/generate" },
+            {renderDropdown(t('payroll'), <FaMoneyBillWave />, "payroll", [
+              { icon: <FaMoneyBillWave />, label: t('view_payroll'), link: "/payroll/view" },
+              { icon: <FaMoneyBillWave />, label: t('generate_payroll'), link: "/payroll/generate" },
             ])}
           </ul>
           <li className="NavbarItem logout">
             <FaSignOutAlt className="logout-icon" />
-            <Link className="navLink" to="/SignOut">Logout</Link>
+            <Link className="navLink" to="/SignOut">{t('logout')}</Link>
           </li>
         </nav>
       </div>
@@ -95,7 +98,7 @@ const Employee_dashboard = ({ user }) => {
         <div className="head">
           <div className="input-container input-container-desktop">
             <FaSearch className="searchIcon" />
-            <input className="input" type="text" placeholder="Search" />
+            <input className="input" type="text" placeholder={t('search')} />
           </div>
 
           <div className="right">
@@ -103,7 +106,7 @@ const Employee_dashboard = ({ user }) => {
               {isDarkMode ? <FaSun className="dark-icon" /> : <FaMoon className="dark-icon" />}
             </div>
             <div className="icon-container">
-              <FaBell className="notification-icon" aria-label="Notification" />
+              <FaBell className="notification-icon" aria-label={t('notification')} />
             </div>
             <div className="admin-image-container">
               <img className="admin-image" src="/admin/admin.png" alt="Admin" />
@@ -113,14 +116,14 @@ const Employee_dashboard = ({ user }) => {
 
         <div className="greeting-container">
           <p className="greeting">
-            {date.getHours() < 12 ? "Good Morning," : date.getHours() < 16 ? "Good Afternoon," : "Good Evening,"}
+            {date.getHours() < 12 ? t('good_morning') : date.getHours() < 16 ? t('good_afternoon') : t('good_evening')}
           </p>
-          <p className="admin-name">{user.name}  sss</p>
+          <p className="admin-name">{user.name}</p>
         </div>
-
-        {/* Render the corresponding component based on the current route */}
+        <div className="icon-container">
+          <LanguageSwitcher /> {/* Add the LanguageSwitcher component here */}
+        </div>
         <Outlet />
-
       </div>
     </div>
   );

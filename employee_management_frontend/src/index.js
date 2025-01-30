@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import './components/i18n/i18n'; 
 import reportWebVitals from './reportWebVitals';
 // index.js or main.js
 

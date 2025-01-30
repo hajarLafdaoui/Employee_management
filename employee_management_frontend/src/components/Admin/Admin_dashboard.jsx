@@ -70,6 +70,8 @@ const Admin_dashboard = ({ user }) => {
               { icon: <FaUsers />, label: "Employee List", link: "/EmployeeList" },
               { icon: <FaCalendarCheck />, label: "Employee Leave", link: "/AdminLeaveRequests" },
               { icon: <FaMoneyBillWave />, label: "Employee Payroll", link: "/Payroll" },
+              { icon: <FaUsers />, label: "Employee holiday", link: "/HolidayCrud" },
+
             ])}
             <li className="NavbarItem">
               <FaBuilding />

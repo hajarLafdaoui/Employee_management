@@ -1,0 +1,50 @@
+{
+    "profile": "الملف الشخصي",
+    "profile_picture": "صورة الملف الشخصي",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "username": "اسم المستخدم",
+    "phone": "الهاتف",
+    "job_title": "المسمى الوظيفي",
+    "no_profile_picture": "لا توجد صورة للملف الشخصي",
+    "leave_request": "طلب إجازة",
+    "attestation_request": "طلب شهادة",
+    "logout": "تسجيل الخروج",
+
+
+
+   
+      "dashboard": "اللوحة الرئيسية",
+      "employees": "الموظفون",
+      "add_employee": "إضافة موظف",
+      "employee_list": "قائمة الموظفين",
+      "employee_leave": "إجازة الموظفين",
+      "employee_payroll": "رواتب الموظفين",
+      "holidays_of_year": "عطلات هذا العام",
+      "departments": "الأقسام",
+      "attendance": "الحضور",
+      "payroll": "الرواتب",
+      "view_payroll": "عرض الرواتب",
+      "generate_payroll": "توليد الرواتب",
+      "search": "بحث",
+      "notification": "إشعار",
+      "good_morning": "صباح الخير،",
+      "good_afternoon": "مساء الخير،",
+      "good_evening": "مساء النور،",
+
+      
+     "holidays": {
+    "Jour de l'An": "رأس السنة الميلادية",
+    "Fête du Travail": "يوم العمال",
+    "Fête du Trône": "يوم العرش",
+    "Fête de la Révolution": "يوم الثورة",
+    "Fête de la Jeunesse": "يوم الشباب",
+    "Aïd el-Fitr": "عيد الفطر",
+    "Aïd el-Adha": "عيد الأضحى",
+    "Anniversaire du Roi": "عيد ميلاد الملك",
+    "Fête de l'Indépendance": "يوم الاستقلال",
+    "Ras as-Sanah al-Hijriyah": "رأس السنة الهجرية",
+    "Mouloud": "المولد"
+  }
+  }
+  

@@ -10,6 +10,7 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\DepartmentController;
 use Tymon\JWTAuth\Http\Middleware\Authenticate;
 use App\Http\Controllers\LeaveRequestController;
+use App\Http\Controllers\HolidayController;
 
 
 Route::get('/user', function (Request $request) {
@@ -62,3 +63,10 @@ Route::get('/attestations/user/{userId}', [AttestationController::class, 'show']
 //salary
 Route::post('/calculate-salary', [SalaryController::class, 'calculateSalary']);
 Route::get('/salaries', [SalaryController::class, 'getAllSalaries']);
+
+
+//holiday
+Route::get('/holidays', [HolidayController::class, 'index']);
+Route::post('/holidays', [HolidayController::class, 'store']);
+Route::delete('/holidays/{id}', [HolidayController::class, 'destroy']);
+Route::put('/holidays/{id}', [HolidayController::class, 'update']);

@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import axiosInstance from './Config/axiosSetup';
+import axiosInstance from '../Config/axiosSetup';
 
 const AttestationPage = () => {
   const [attestation, setAttestation] = useState([]);
