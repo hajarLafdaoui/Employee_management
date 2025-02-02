@@ -25,7 +25,10 @@ class AuthController extends Controller
 
     // Get the authenticated user
     $user = JWTAuth::user();
-
+    
+    if ($user->is_deleted) {
+        return response()->json(['error' => 'Your account has been deactivated. Please contact support.'], 403);
+    }
     // Return the token along with user data (name, email, role)
     return response()->json([
         'token' => $token,

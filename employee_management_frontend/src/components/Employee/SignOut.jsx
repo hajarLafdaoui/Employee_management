@@ -1,11 +1,18 @@
-import React from 'react'
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignOut = () => {
-  return (
-    <div>
-      SignOut
-    </div>
-  )
-}
+  const navigate = useNavigate();
 
-export default SignOut
+  useEffect(() => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    sessionStorage.removeItem("authToken");
+
+    navigate("/SignIn");
+  }, [navigate]);
+
+  return null; 
+};
+
+export default SignOut;

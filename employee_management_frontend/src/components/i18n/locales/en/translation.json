@@ -43,6 +43,22 @@
     "Ras as-Sanah al-Hijriyah": "Islamic New Year",
     "Mouloud": "Mouloud"
   }
+  ,
+    "attestation_requests": "Attestation Requests",
+    "last_attestation_requests": "Last Attestation Requests",
+    "status": "Status",
+    "date": "Date",
+    "no_attestation_found": "No attestation request found.",
+    "request_attestation": "Request Attestation",
+    "requesting": "Requesting...",
+    "failed_to_fetch": "Failed to fetch attestation status.",
+    "failed_to_submit": "Failed to submit attestation request, please try again.",
+    "status_values": {
+      "Approved": "Approved",
+      "Pending": "Pending"
     
+    }
+  
+  
   }
   

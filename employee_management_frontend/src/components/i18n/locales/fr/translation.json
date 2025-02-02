@@ -43,7 +43,21 @@
         "Fête de l'Indépendance": "Fête de l'Indépendance",
         "Ras as-Sanah al-Hijriyah": "Ras as-Sanah al-Hijriyah",
         "Mouloud": "Mouloud"
+  },
+  
+    "attestation_requests": "Demandes d'attestation",
+    "last_attestation_requests": "Dernières demandes d'attestation",
+    "status": "Statut",
+    "date": "Date",
+    "no_attestation_found": "Aucune demande d'attestation trouvée.",
+    "request_attestation": "Demander une attestation",
+    "requesting": "Demande en cours...",
+    "status_values": {
+      "Approved": "Approuvée",
+      "Pending": "En attente"
+    
   }
+  
       
   
     

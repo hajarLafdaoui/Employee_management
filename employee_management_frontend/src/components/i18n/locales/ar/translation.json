@@ -45,6 +45,19 @@
     "Fête de l'Indépendance": "يوم الاستقلال",
     "Ras as-Sanah al-Hijriyah": "رأس السنة الهجرية",
     "Mouloud": "المولد"
+  },
+  "attestation_requests": "طلبات الشهادة",
+  "last_attestation_requests": "آخر طلبات الشهادة",
+  "status": "الحالة",
+  "date": "التاريخ",
+  "no_attestation_found": "لم يتم العثور على طلب شهادة.",
+  "request_attestation": "طلب شهادة",
+  "requesting": "جارٍ الطلب...",
+  "status_values": {
+    "Approved": "موافقة",
+    "Pending": "قيد الانتظار"
+    
+
   }
   }
   

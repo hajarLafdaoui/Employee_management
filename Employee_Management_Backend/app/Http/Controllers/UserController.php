@@ -15,8 +15,8 @@ class UserController extends Controller
     public function index()
     {
         $employees = User::whereIn('role', ['employee', 'sub-admin'])
-                         ->where('status', 'enabled')
-                         ->get(); 
+        ->where('is_deleted', false)
+        ->get(); 
     
         return response()->json($employees);  
     }
@@ -137,32 +137,32 @@ class UserController extends Controller
     }
     
 
-    // // Delete user by ID
-    // public function destroy($id)
-    // {
-    //     $user = User::find($id);
 
-    //     if (!$user) {
-    //         return response()->json(['message' => 'User not found'], 404);
-    //     }
 
-    //     $user->delete();
 
-    //     return response()->json(['message' => 'User deleted successfully']);
-    // }
 
-public function toggleStatus($id){
-    $user=User::find($id);
-    if(!$user){
-        return response()->json(['message'=>'user not found']);
+
+
+public function softDelete($id)
+{
+    $user = User::find($id);
+
+    if (!$user) {
+        return response()->json(['message' => 'User not found'], 404);
     }
-    $user->status=($user->status==='enabled')?'disabled':'enabled';
+    $user->is_deleted = true;
     $user->save();
+    
     return response()->json([
-        'message'=>'user status updated sucessfuly',
-        'user'=>$user
-    ],200);
+        'message' => 'User soft deleted successfully',
+        'user' => $user,
+    ], 200);
 }
+
+
+
+
+
 public function getUserNotifications(Request $request)
 {
     return response()->json($request->user()->notifications);

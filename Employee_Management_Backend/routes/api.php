@@ -70,3 +70,10 @@ Route::get('/holidays', [HolidayController::class, 'index']);
 Route::post('/holidays', [HolidayController::class, 'store']);
 Route::delete('/holidays/{id}', [HolidayController::class, 'destroy']);
 Route::put('/holidays/{id}', [HolidayController::class, 'update']);
+
+
+
+
+
+
+Route::put('/users/{id}/toggle', [UserController::class, 'softDelete']);

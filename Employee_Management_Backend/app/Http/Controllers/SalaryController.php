@@ -87,4 +87,10 @@ class SalaryController extends Controller
             'salaries' => $salaries,
         ]);
     }
+  
+
+
+
+
+    
 }

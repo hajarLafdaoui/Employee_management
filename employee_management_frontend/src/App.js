@@ -15,6 +15,9 @@ import './App.css';
 import AttestationPage from "./components/Employee/AttestationPage";
 import AdminHolidayManagement from "./components/Admin/AdminHolidayManagement";
 import HolidayList from "./components/Employee/HolidayList";
+import AttestationRequests from "./components/AttestatioRequest/AttestationRequests";
+import SalaryCalculator from "./components/salary/SalaryCalculator";
+import SalaryList from "./components/salary/SalaryList";
 
 const ProtectedRoute = ({ children, role }) => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -56,6 +59,9 @@ function App() {
          
           <Route path="Attendance" element={<AttendanceHeader />} />
           <Route path="HolidayCrud" element={<AdminHolidayManagement />} />
+          <Route path="Attestation" element={<AttestationRequests />} />
+          <Route path="payroll" element={<SalaryCalculator />} />
+          <Route path="salarylist" element={<SalaryList />} />
 
           <Route path="SignOut" element={<SignOut />} />
         </Route>

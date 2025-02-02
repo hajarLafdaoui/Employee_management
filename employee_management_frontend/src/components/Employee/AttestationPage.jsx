@@ -1,25 +1,23 @@
-
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../Config/axiosSetup';
+import { useTranslation } from 'react-i18next';
 
 const AttestationPage = () => {
+  const { t } = useTranslation();
   const [attestation, setAttestation] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const user = JSON.parse(localStorage.getItem('user'));
 
-  // Fetching last 3 attestation requests
   useEffect(() => {
     if (user) {
       fetchAttestationStatus(user.id);
     }
   }, []);
 
-
   const fetchAttestationStatus = async (userId) => {
     try {
       const resp = await axiosInstance.get(`/attestations/user/${userId}`);
-      // console.log('Attestation response:', resp.data);
 
       if (resp.data && resp.data.length > 0) {
         setAttestation(resp.data);
@@ -28,14 +26,11 @@ const AttestationPage = () => {
       }
     } catch (error) {
       console.error('Error fetching attestation status', error.message);
-      alert('Failed to fetch attestation status');
+      alert(t('failed_to_fetch'));
       setAttestation([]);
-
     }
   };
 
-
-  // Attestation request
   const handleRequestAttestation = async (e) => {
     e.preventDefault();
     if (!user) return;
@@ -48,29 +43,30 @@ const AttestationPage = () => {
       fetchAttestationStatus(user.id);
     } catch (error) {
       console.error('Error requesting attestation', error);
-      alert('Failed to submit attestation request, please try again');
+      alert(t('failed_to_submit'));
     } finally {
       setLoading(false);
     }
   };
+
   return (
     <div>
-      <h1>Attestation Requests</h1>
+      <h1>{t('attestation_requests')}</h1>
       <div>
-        {attestation ? (
+        {attestation.length > 0 ? (
           <div>
-            <h3>Last Attestation Requests</h3>
+            <h3>{t('last_attestation_requests')}</h3>
             <table>
               <thead>
                 <tr>
-                  <th>Status</th>
-                  <th>Date</th>
+                  <th>{t('status')}</th>
+                  <th>{t('date')}</th>
                 </tr>
               </thead>
               <tbody>
                 {attestation.map((att, index) => (
                   <tr key={index}>
-                    <td>{att.status}</td>
+                    <td>{t(`status_values.${att.status}`)}</td>
                     <td>{new Date(att.created_at).toLocaleDateString()}</td>
                   </tr>
                 ))}
@@ -78,11 +74,11 @@ const AttestationPage = () => {
             </table>
           </div>
         ) : (
-          <p>No attestation request found.</p>
+          <p>{t('no_attestation_found')}</p>
         )}
       </div>
       <button onClick={handleRequestAttestation} disabled={loading}>
-        {loading ? 'Requesting...' : 'Request Attestation'}
+        {loading ? t('requesting') : t('request_attestation')}
       </button>
     </div>
   );
