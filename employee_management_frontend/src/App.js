@@ -12,6 +12,8 @@ import Profile from "./components/Employee/Profile";
 import EmployeeAttendance from "./components/Attendance/EmployeeAttendance";
 import './styles/main.scss';
 import './App.css';
+import AddDepartment from "./components/Department/AddDepartment";
+import MainDepartments from "./components/Department/MainDepartments";
 
 const ProtectedRoute = ({ children, role }) => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -51,8 +53,11 @@ function App() {
           <Route path="AdminLeaveRequests" element={<AdminLeaveRequests />} />
           <Route path="Attendance" element={<AttendanceHeader />} />
           <Route path="SignOut" element={<SignOut />} />
-        </Route>
+          <Route path="Departments" element={<MainDepartments />} />
+          <Route path="addDepartment" element={<AddDepartment />} />
 
+
+        </Route>
 
         {/* Employee Routes */}
         <Route

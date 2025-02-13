@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\AttestationController;
-use App\Http\Controllers\SalaryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\JobController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\AttestationController;
 use Tymon\JWTAuth\Http\Middleware\Authenticate;
 use App\Http\Controllers\LeaveRequestController;
 
@@ -34,6 +35,11 @@ Route::put('/users/{id}/toggle', [UserController::class, 'toggleStatus']);
 
 // Departments
 Route::get('/departments', [DepartmentController::class, 'index']);
+Route::post('/departments', [DepartmentController::class, 'store']);
+Route::delete('/departments/{id}', [DepartmentController::class, 'destroy']);
+Route::put('/departments/{id}', [DepartmentController::class, 'update']);
+
+Route::get('/jobs', [JobController::class, 'index']);
 
 
 
