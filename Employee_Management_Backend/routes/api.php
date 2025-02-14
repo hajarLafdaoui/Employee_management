@@ -37,9 +37,15 @@ Route::put('/users/{id}/toggle', [UserController::class, 'toggleStatus']);
 Route::get('/departments', [DepartmentController::class, 'index']);
 Route::post('/departments', [DepartmentController::class, 'store']);
 Route::delete('/departments/{id}', [DepartmentController::class, 'destroy']);
+Route::get('/departments/{id}', [DepartmentController::class, 'show']);
+
+Route::post('/departments/{id}', [DepartmentController::class, 'update']);
 Route::put('/departments/{id}', [DepartmentController::class, 'update']);
 
 Route::get('/jobs', [JobController::class, 'index']);
+Route::post('/jobs', [JobController::class, 'store']);
+Route::put('/jobs/{id}', [JobController::class, 'store']);
+Route::delete('/jobs/{id}', [JobController::class, 'update']);
 
 
 

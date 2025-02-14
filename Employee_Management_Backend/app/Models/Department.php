@@ -25,4 +25,5 @@ class Department extends Model
     {
         return $this->hasMany(Job::class);
     }
+    
 }

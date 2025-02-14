@@ -14,17 +14,42 @@ class JobController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'department_id' => 'required|exists:departments,id',
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'salary' => 'required|numeric',
+            'description' => 'required|string',
+            'salary' => 'required|numeric|min:0',
+            'department_id' => 'required|exists:departments,id'
         ]);
-
-        return Job::create($request->all());
+    
+        $job = Job::create($request->all());
+        return response()->json($job, 201);
     }
 
-    public function show(Job $job)
+    public function update(Request $request, Job $job)
     {
-        return $job->load('department');
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'salary' => 'required|numeric|min:0',
+            'department_id' => 'required|exists:departments,id'
+        ]);
+        
+        $job->update($request->all());
+        return response()->json($job);
     }
+
+    public function destroy($id)
+    {
+        // Find the job by ID
+        $job = Job::find($id);
+        
+        // If the job exists, delete it and return a success response
+        if ($job) {
+            $job->delete();
+            return response()->json(['message' => 'Job deleted successfully']);
+        }
+        
+        // If the job doesn't exist, return an error response
+        return response()->json(['message' => 'Job not found'], 404);
+    }
+    
 }
