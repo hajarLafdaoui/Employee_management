@@ -45,7 +45,7 @@ Route::put('/departments/{id}', [DepartmentController::class, 'update']);
 Route::get('/jobs', [JobController::class, 'index']);
 Route::post('/jobs', [JobController::class, 'store']);
 Route::put('/jobs/{id}', [JobController::class, 'store']);
-Route::delete('/jobs/{id}', [JobController::class, 'update']);
+Route::delete('/jobs/{id}', [JobController::class, 'destroy']);
 
 
 
