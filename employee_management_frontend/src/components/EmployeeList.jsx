@@ -1,78 +1,50 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axiosInstance from './Config/axiosSetup';
-import AdminLeaveRequests from './Leave/AdminLeaveRequests';
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axiosInstance from "./Config/axiosSetup";
 
 const EmployeeList = ({ onLogout }) => {
   const [users, setUsers] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
-
-    //fetch users
-
     const fetchUsers = async () => {
       try {
-        const response = await axiosInstance.get('/users');
+        const response = await axiosInstance.get("/users");
         setUsers(response.data);
       } catch (error) {
-        console.error('Error fetching users:', error);
+        console.error("Error fetching users:", error);
       }
     };
 
-
     fetchUsers();
   }, []);
-
-
-  // disabled users
-  const handeleToggleStatus = async (e, userId, currentStatus) => {
-    e.preventDefault()
-    const isConfirmed = window.confirm(`Are you sure you want to change`)
+  const handleDelete = async (e, userId) => {
+    e.preventDefault();
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this user?"
+    );
     if (!isConfirmed) return;
+
     try {
-      const resp = await axiosInstance.put(`users/${userId}/toggle`)
-      console.log(resp.data.message)
-      setUsers(users.map(user =>
-        user.id === userId ? { ...user, status: currentStatus === 'enabled' ? 'disabled' : 'enabled' } : user
-      ))
+      await axiosInstance.put(`/users/${userId}/toggle`);
+
+      setUsers(users.filter((user) => user.id !== userId));
+
+      console.log("User soft deleted successfully");
     } catch (error) {
-      console.error(error)
+      console.error(
+        "Error deleting user:",
+        error.response ? error.response.data : error.message
+      );
     }
-  }
-
-  // const handleDeleteSuccess = (deletedUserId) => {
-  //   setUsers(users.filter(user => user.id !== deletedUserId)); 
-  // };
-
-  // const handleDelete = async (userId) => {
-  //   const isConfirmed = window.confirm('Are you sure you want to delete this user?'); 
-  //   if (!isConfirmed) {
-  //     return; 
-  //   }
-
-  //   try {
-  //     const response = await axiosInstance.delete(`/users/${userId}`);
-  //     console.log(response.data.message); 
-  //     handleDeleteSuccess(userId); 
-  //   } catch (error) {
-  //     console.error('Error deleting user:', error);
-  //   }
-  // };
-
-
-  //delete  demande d'attestations
-
-
-
-
+  };
 
   return (
     <div>
       <h2>User List</h2>
 
       <Link to="/create-user">
-        <button style={{ backgroundColor: 'green', color: 'white' }}>
+        <button style={{ backgroundColor: "green", color: "white" }}>
           Create User
         </button>
       </Link>
@@ -94,19 +66,20 @@ const EmployeeList = ({ onLogout }) => {
             const profilePictureUrl = user.profile_picture
               ? `http://localhost:8000/storage/${user.profile_picture}`
               : null;
-            const isDisabled = user.status === 'disabled';
+            const isDeleted = user.is_deleted;
             return (
-              <tr
-                key={user.id}
-
-              >
+              <tr key={user.id}>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>{user.username}</td>
                 <td>{user.phone}</td>
                 <td>
                   {profilePictureUrl ? (
-                    <img src={profilePictureUrl} alt="Profile" style={{ width: '100px', height: '100px' }} />
+                    <img
+                      src={profilePictureUrl}
+                      alt="Profile"
+                      style={{ width: "100px", height: "100px" }}
+                    />
                   ) : (
                     <p>No profile picture</p>
                   )}
@@ -114,45 +87,48 @@ const EmployeeList = ({ onLogout }) => {
                 <td>{user.role}</td>
                 <td>
                   <Link to={`/user-details/${user.id}`}>
-                    <button style={{ backgroundColor: 'purple', color: 'white', marginRight: '10px' }} disabled={isDisabled}>
+                    <button
+                      style={{
+                        backgroundColor: "purple",
+                        color: "white",
+                        marginRight: "10px",
+                      }}
+                      disabled={isDeleted}
+                    >
                       View Details
                     </button>
                   </Link>
                   <Link to={`/update-user/${user.id}`}>
-                    <button style={{ backgroundColor: 'blue', color: 'white', marginRight: '10px' }} disabled={isDisabled}>
+                    <button
+                      style={{
+                        backgroundColor: "blue",
+                        color: "white",
+                        marginRight: "10px",
+                      }}
+                      disabled={isDeleted}
+                    >
                       Update
                     </button>
                   </Link>
 
-                  {/* <button 
-                    onClick={() => handleDelete(user.id)} 
-                    style={{ backgroundColor: 'red', color: 'white' }}>
-                    Delete
-                  </button> */}
                   <button
-                    onClick={(e) => handeleToggleStatus(e, user.id, user.status)}
-                    disabled={user.status === 'disabled'}
-                    style={{ backgroundColor: 'orange', color: 'white', marginRight: '10px' }}
+                    onClick={(e) => handleDelete(e, user.id)}
+                    style={{
+                      backgroundColor: "red",
+                      color: "white",
+                      marginRight: "10px",
+                    }}
                   >
-                    {user.status === 'enabled' ? 'Disable' : 'Enable'}
+                    Delete
                   </button>
-
-
                 </td>
               </tr>
             );
           })}
         </tbody>
       </table>
-      <button onClick={onLogout}>Logout</button>
-
-
-      <AdminLeaveRequests />
-      <button onClick={onLogout}>Logout</button>
+      
     </div>
-
-
-
   );
 };
 

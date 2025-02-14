@@ -6,14 +6,23 @@ import Employee_dashboard from "./components/Employee/Employee_dashboard";
 import CreateUser from "./components/CreateUser";
 import EmployeeList from "./components/EmployeeList";
 import AdminLeaveRequests from "./components/Leave/AdminLeaveRequests";
-import AttendanceHeader from "./components/Attendance/AttendanceHeader";
+import AttendanceHeader from "./components/attendance/AttendanceHeader";
 import SignOut from "./components/Employee/SignOut";
 import Profile from "./components/Employee/Profile";
-import EmployeeAttendance from "./components/Attendance/EmployeeAttendance";
+import EmployeeAttendance from "./components/attendance/EmployeeAttendance";
 import './styles/main.scss';
 import './App.css';
+<<<<<<< HEAD
 import AddDepartment from "./components/Department/AddDepartment";
 import MainDepartments from "./components/Department/MainDepartments";
+=======
+import AttestationPage from "./components/Employee/AttestationPage";
+import AdminHolidayManagement from "./components/Admin/AdminHolidayManagement";
+import HolidayList from "./components/Employee/HolidayList";
+import AttestationRequests from "./components/AttestatioRequest/AttestationRequests";
+import SalaryCalculator from "./components/salary/SalaryCalculator";
+import SalaryList from "./components/salary/SalaryList";
+>>>>>>> 4d5f13e026287ea1c104041978eb07bdd4531a79
 
 const ProtectedRoute = ({ children, role }) => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -34,12 +43,13 @@ function App() {
     }
   }, []);
 
-  return (
-    <Router>
-      <Routes>
-        <Route path="/SignIn" element={<SignIn />} />
 
-        {/* Admin Routes */}
+  return (
+ <Router>
+      <Routes>
+     <Route path="/SignIn" element={<SignIn />} />
+
+
         <Route
           path="/"
           element={
@@ -51,7 +61,13 @@ function App() {
           <Route path="CreateUser" element={<CreateUser />} />
           <Route path="EmployeeList" element={<EmployeeList />} />
           <Route path="AdminLeaveRequests" element={<AdminLeaveRequests />} />
+         
           <Route path="Attendance" element={<AttendanceHeader />} />
+          <Route path="HolidayCrud" element={<AdminHolidayManagement />} />
+          <Route path="Attestation" element={<AttestationRequests />} />
+          <Route path="payroll" element={<SalaryCalculator />} />
+          <Route path="salarylist" element={<SalaryList />} />
+
           <Route path="SignOut" element={<SignOut />} />
           <Route path="Departments" element={<MainDepartments />} />
           <Route path="addDepartment" element={<AddDepartment />} />
@@ -68,8 +84,12 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route path="Profile" element={<Profile />} />
-          <Route path="EmployeeAttendance" element={<EmployeeAttendance />} />
+  <Route index element={<Profile />} />
+  <Route path="EmployeeAttendance" element={<EmployeeAttendance />} />
+  
+  <Route path="attestations" element={<AttestationPage />} />
+  <Route path="HolidayList" element={<HolidayList />} />
+
         </Route>
       </Routes>
     </Router>

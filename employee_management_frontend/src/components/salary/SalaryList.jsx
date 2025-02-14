@@ -55,6 +55,7 @@ const SalaryList = () => {
                                 <td>{salary.start_date}</td>
                                 <td>{salary.end_date}</td>
                                 <td>{salary.total_salary}</td>
+                                <td></td>
                             </tr>
                         ))}
                     </tbody>

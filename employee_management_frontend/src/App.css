@@ -2,4 +2,21 @@ html, body {
   margin: 0;
   padding: 0;
 }
+[dir='rtl'] {
+  text-align: right;  /* Align text to the right */
+}
+/* [dir='rtl'] .some-class {
+  text-align: right;
+} */
+
+/* Example: adjusting padding and margins for RTL */
+/* [dir='rtl'] .navbar {
+  padding-right: 20px;
+  padding-left: 0;
+} */
+
+/* [dir='rtl'] .sidebar {
+  margin-right: 0;
+  margin-left: 20px;
+} */
 @import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');

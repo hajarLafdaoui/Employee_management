@@ -1,0 +1,64 @@
+{
+    "profile": "Profile",
+    "profile_picture": "Profile Picture",
+    "name": "Name",
+    "email": "Email",
+    "username": "Username",
+    "phone": "Phone",
+    "job_title": "Job Title",
+    "no_profile_picture": "No profile picture",
+    "leave_request": "Leave Request",
+    "attestation_request": "Demande attestation",
+    "logout": "Logout",
+
+
+      "dashboard": "Dashboard",
+      "employees": "Employees",
+      "add_employee": "Add Employee",
+      "employee_list": "Employee List",
+      "employee_leave": "Employee Leave",
+      "employee_payroll": "Employee Payroll",
+      "holidays_of_year": "Holidays of this year",
+      "departments": "Departments",
+      "attendance": "Attendance",
+      "payroll": "Payroll",
+      "view_payroll": "View Payroll",
+      "generate_payroll": "Generate Payroll",
+      "search": "Search",
+      "notification": "Notification",
+      "good_morning": "Good Morning,",
+      "good_afternoon": "Good Afternoon,",
+      "good_evening": "Good Evening,",
+
+      "holidays": {
+    "Jour de l'An": "New Year's Day",
+    "Fête du Travail ": "Labor Day",
+    "Fête du Trône": "Throne Day",
+    "Fête de la Révolution": "Revolution Day",
+    "Fête de la Jeunesse": "Youth Day",
+    "Aïd el-Fitr": "Eid al-Fitr",
+    "Aïd el-Adha": "Eid al-Adha",
+    ".Anniversaire du Roi ": "King's Birthday",
+    "Fête de l'Indépendance ": "Independence Day",
+    "Ras as-Sanah al-Hijriyah": "Islamic New Year",
+    "Mouloud": "Mouloud"
+  }
+  ,
+    "attestation_requests": "Attestation Requests",
+    "last_attestation_requests": "Last Attestation Requests",
+    "status": "Status",
+    "date": "Date",
+    "no_attestation_found": "No attestation request found.",
+    "request_attestation": "Request Attestation",
+    "requesting": "Requesting...",
+    "failed_to_fetch": "Failed to fetch attestation status.",
+    "failed_to_submit": "Failed to submit attestation request, please try again.",
+    "status_values": {
+      "Approved": "Approved",
+      "Pending": "Pending"
+    
+    }
+  
+  
+  }
+  

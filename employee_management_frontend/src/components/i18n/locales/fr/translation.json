@@ -1,0 +1,70 @@
+{
+    "profile": "Profil",
+    "profile_picture": "Photo de profil",
+    "name": "Nom",
+    "email": "Email",
+    "username": "Nom d'utilisateur",
+    "phone": "Téléphone",
+    "job_title": "Titre du poste",
+    "no_profile_picture": "Aucune photo de profil",
+    "leave_request": "Demande de congé",
+    "attestation_request": "Demande d'attestation",
+    "logout": "Se déconnecter",
+    
+      "dashboard": "Tableau de bord",
+      "employees": "Employés",
+      "add_employee": "Ajouter un employé",
+      "employee_list": "Liste des employés",
+      "employee_leave": "Congé des employés",
+      "employee_payroll": "Paie des employés",
+      "holidays_of_year": "Jours fériés de cette année",
+      "departments": "Départements",
+      "attendance": "Présence",
+      "payroll": "Paie",
+      "view_payroll": "Voir la paie",
+      "generate_payroll": "Générer la paie",
+      "search": "Rechercher",
+      "notification": "Notification",
+      "good_morning": "Bonjour,",
+      "good_afternoon": "Bon après-midi,",
+      "good_evening": "Bonsoir,",
+
+
+
+      "holidays": {
+        "Jour de l'An": "Jour de l'An",
+        "Fête du Travail": "Fête du Travail",
+        "Fête du Trône": "Fête du Trône",
+        "Fête de la Révolution": "Fête de la Révolution",
+        "Fête de la Jeunesse": "Fête de la Jeunesse",
+        "Aïd el-Fitr": "Aïd el-Fitr",
+        "Aïd el-Adha": "Aïd el-Adha",
+        "Anniversaire du Roi": "Anniversaire du Roi",
+        "Fête de l'Indépendance": "Fête de l'Indépendance",
+        "Ras as-Sanah al-Hijriyah": "Ras as-Sanah al-Hijriyah",
+        "Mouloud": "Mouloud"
+  },
+  
+    "attestation_requests": "Demandes d'attestation",
+    "last_attestation_requests": "Dernières demandes d'attestation",
+    "status": "Statut",
+    "date": "Date",
+    "no_attestation_found": "Aucune demande d'attestation trouvée.",
+    "request_attestation": "Demander une attestation",
+    "requesting": "Demande en cours...",
+    "status_values": {
+      "Approved": "Approuvée",
+      "Pending": "En attente"
+    
+  }
+  
+      
+  
+    
+    
+
+
+
+
+  }
+  
