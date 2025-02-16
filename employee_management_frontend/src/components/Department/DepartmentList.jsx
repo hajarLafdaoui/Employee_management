@@ -28,6 +28,10 @@ const DepartmentsList = () => {
         department_id: null,        
     });
 
+    const [employeesModal, setEmployeesModal] = useState(false);
+const [employees, setEmployees] = useState([]);
+
+
     useEffect(() => {
         fetchJobs();
     }, []);
@@ -139,6 +143,21 @@ const DepartmentsList = () => {
         setJobsData({ ...jobsData, department_id: id });
         setJobsModal(true);
     };
+    const fetchEmployees = async (departmentId) => {
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/api/departments/${departmentId}/employees`);
+            setEmployees(response.data);
+        } catch (error) {
+            console.error("Error fetching employees:", error);
+        }
+    };
+
+    const seeEmployees = (id) => {
+        fetchEmployees(id);  // Fetch employees when opening the modal
+        setEmployeesModal(true);
+    };
+    
+
 
     const closeJobsModal = () => {
         setJobsModal(false);
@@ -175,8 +194,9 @@ const DepartmentsList = () => {
                         <img src={department.full_logo_path} alt={department.name} width="50" />
                         <div>
                             <p onClick={() => seeAddJobs(department.id)} style={{ cursor: "pointer", color: "blue" }}>See jobs</p>
-                            <p style={{ cursor: "pointer", color: "blue" }}>See employees</p>
-                        </div>
+                            <p onClick={() => seeEmployees(department.id)} style={{ cursor: "pointer", color: "blue" }}>
+        See employees
+    </p>                        </div>
                     </li>
                 ))}
             </ul>
@@ -240,6 +260,35 @@ const DepartmentsList = () => {
 
                 <button onClick={closeJobsModal}>Close</button>
             </Modal>
+
+            <Modal isOpen={employeesModal} onRequestClose={() => setEmployeesModal(false)} contentLabel="Employees">
+    <h2>Employees in Department</h2>
+    {employees.length > 0 ? (
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Job</th>
+                    {/* Add more columns as necessary */}
+                </tr>
+            </thead>
+            <tbody>
+                {employees.map(employee => (
+                    <tr key={employee.id}>
+                        <td>{employee.name}</td>
+                        <td>{employee.email}</td>
+                        <td>{employee.job ? employee.job.name : "N/A"}</td> {/* Assuming employee has job info */}
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    ) : (
+        <p>No employees found for this department.</p>
+    )}
+    <button onClick={() => setEmployeesModal(false)}>Close</button>
+</Modal>
+
         </div>
     );
 };

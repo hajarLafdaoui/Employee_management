@@ -21,6 +21,14 @@ class Department extends Model
         return $this->logo ? asset('storage/' . $this->logo) : null;
     }
 
+    // In the Department model
+
+
+public function users()
+{
+    return $this->hasMany(User::class, 'department_id');
+}
+
     public function jobs()
     {
         return $this->hasMany(Job::class);

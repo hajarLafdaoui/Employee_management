@@ -47,6 +47,9 @@ Route::get('/jobs', [JobController::class, 'index']);
 Route::post('/jobs', [JobController::class, 'store']);
 Route::put('/jobs/{id}', [JobController::class, 'store']);
 Route::delete('/jobs/{id}', [JobController::class, 'destroy']);
+Route::get('/departments/{id}/employees', [DepartmentController::class, 'getEmployeesByDepartment']);
+Route::get('/employee-count', [DepartmentController::class, 'getEmployeeCountByDepartment']);
+
 
 
 

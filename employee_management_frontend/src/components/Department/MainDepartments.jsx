@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import DepartmentsList from './DepartmentList';
 import Modal from 'react-modal';
 import AddDepartment from './AddDepartment';
+import BarChart from './BarChart';
+// import { BiBarChart } from 'react-icons/bi';
 
 
 Modal.setAppElement('#root');
@@ -22,6 +24,8 @@ const MainDepartments = () => {
       <button onClick={openModal}>
         Add Department
       </button>
+      <BarChart />
+
 
       <Modal
       

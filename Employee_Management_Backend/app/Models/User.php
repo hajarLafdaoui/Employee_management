@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Models\Job;
 use App\Models\Attendance;
 use App\Models\Department;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -58,10 +59,12 @@ class User extends Authenticatable implements JWTSubject
     }
 
     // relations
+
     public function department()
-    {
-        return $this->belongsTo(Department::class);
-    }
+{
+    return $this->belongsTo(Department::class, 'department_id');
+}
+
 
     public function attendances()
     {
@@ -79,6 +82,12 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(LeaveRequest::class);
     }
 
+
+
+public function job()
+{
+    return $this->belongsTo(Job::class);
+}
 
 
 
