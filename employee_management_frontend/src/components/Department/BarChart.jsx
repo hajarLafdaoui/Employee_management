@@ -9,10 +9,10 @@ const BarChart = () => {
     const fetchData = async () => {
       try {
         const response = await axiosInstance.get('employee-count');
-        console.log(response.data);
+        // console.log(response.data);
         setChartData(response.data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        // console.error('Error fetching data:', error);
       }
     };
 
@@ -25,33 +25,8 @@ const BarChart = () => {
   }));
 
   return (
-    <div style={{ height: '300px', position: 'relative' , width:"50%" }}>
-      <div style={{
-        position: 'absolute',
-        top: 45,
-        right: 10,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        fontSize: '14px',
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-          <div style={{ width: '20px', height: '20px', backgroundColor: '#D91656', marginRight: '5px' }}></div>
-          <span>1 or fewer</span> 
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-          <div style={{ width: '20px', height: '20px', backgroundColor: '#EB5B00', marginRight: '5px' }}></div>
-          <span>1-3</span> 
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-          <div style={{ width: '20px', height: '20px', backgroundColor: '#FFB200', marginRight: '5px' }}></div>
-          <span>3-5</span> 
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-          <div style={{ width: '20px', height: '20px', backgroundColor: '#FFB200', marginRight: '5px' }}></div>
-          <span>5+</span> 
-        </div>
-      </div>
+    <div className='bar'>
+   
 
       {data.length > 0 ? (
         <ResponsiveBar
@@ -93,6 +68,25 @@ const BarChart = () => {
       ) : (
         <div>Loading...</div>
       )}
+         <div className='meaning'
+>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+          <div style={{ width: '20px', height: '20px', backgroundColor: '#D91656', marginRight: '5px' }}></div>
+          <span>1 or fewer</span> 
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+          <div style={{ width: '20px', height: '20px', backgroundColor: '#EB5B00', marginRight: '5px' }}></div>
+          <span>1-3</span> 
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+          <div style={{ width: '20px', height: '20px', backgroundColor: '#FFB200', marginRight: '5px' }}></div>
+          <span>3-5</span> 
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+          <div style={{ width: '20px', height: '20px', backgroundColor: '#FFB200', marginRight: '5px' }}></div>
+          <span>5+</span> 
+        </div>
+      </div>
     </div>
   );
 };

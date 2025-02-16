@@ -1,0 +1,37 @@
+.graphs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pie {
+  height: 300px;
+  margin-top: 20px;
+  width: 50%;
+  padding: 0 !important;
+}
+
+.bar {
+  height: 300px; /* Increased height for better visibility */
+  width: 80%; /* Ensure it has enough width */
+  display: flex;
+  justify-content: center;
+  gap: 0 !important;
+  padding: 0 !important;
+}
+
+.barGraph {
+  background-color: blanchedalmond !important;
+}
+
+.meaning {
+  margin-top: 48px;
+  font-size: 14px;
+  position: absolute;
+  right: 470px;
+}
+
+.barGraph {
+  width: 100%; /* Ensure that the bar chart takes full width of its container */
+}/*# sourceMappingURL=departments.css.map */

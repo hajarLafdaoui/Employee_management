@@ -48,6 +48,7 @@ Route::post('/jobs', [JobController::class, 'store']);
 Route::put('/jobs/{id}', [JobController::class, 'store']);
 Route::delete('/jobs/{id}', [JobController::class, 'destroy']);
 Route::get('/departments/{id}/employees', [DepartmentController::class, 'getEmployeesByDepartment']);
+// BarChart
 Route::get('/employee-count', [DepartmentController::class, 'getEmployeeCountByDepartment']);
 
 

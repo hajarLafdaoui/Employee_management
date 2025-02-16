@@ -3,7 +3,9 @@ import DepartmentsList from './DepartmentList';
 import Modal from 'react-modal';
 import AddDepartment from './AddDepartment';
 import BarChart from './BarChart';
+import PieChart from './PieChart';
 // import { BiBarChart } from 'react-icons/bi';
+import "./departments.scss";
 
 
 Modal.setAppElement('#root');
@@ -24,7 +26,11 @@ const MainDepartments = () => {
       <button onClick={openModal}>
         Add Department
       </button>
+      <div className="graphs">
       <BarChart />
+      <PieChart></PieChart>
+      </div>
+     
 
 
       <Modal
