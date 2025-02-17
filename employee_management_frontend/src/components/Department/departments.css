@@ -1,24 +1,57 @@
+.DepaHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.DepaHead h3 {
+  font-size: 24px;
+}
+.DepaHead .buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffd60a;
+  border-radius: 15px;
+  gap: 8px;
+  padding: 10px 12px;
+}
+.DepaHead .buttonContainer .plusIcon {
+  width: 15px;
+  height: 15px;
+}
+.DepaHead .buttonContainer button {
+  border: none;
+  outline: none;
+  background-color: #ffd60a;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+}
+
 .graphs {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
+  justify-content: start;
+  gap: 20px;
+  margin-top: 10px;
 }
 
 .pie {
   height: 300px;
-  margin-top: 20px;
-  width: 50%;
+  width: 40%;
   padding: 0 !important;
+  border: 1px solid #ccc;
+  border-radius: 12px;
 }
 
 .bar {
-  height: 300px; /* Increased height for better visibility */
-  width: 80%; /* Ensure it has enough width */
+  height: 300px;
+  width: 60%;
   display: flex;
   justify-content: center;
   gap: 0 !important;
   padding: 0 !important;
+  border: 1px solid #ccc;
+  border-radius: 12px;
 }
 
 .barGraph {
@@ -26,12 +59,12 @@
 }
 
 .meaning {
-  margin-top: 48px;
+  margin-top: 49px;
   font-size: 14px;
   position: absolute;
-  right: 470px;
+  right: 450px;
 }
 
 .barGraph {
-  width: 100%; /* Ensure that the bar chart takes full width of its container */
+  width: 100%;
 }/*# sourceMappingURL=departments.css.map */
