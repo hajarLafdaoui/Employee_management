@@ -73,10 +73,12 @@ Route::delete('/attestations/{id}',[AttestationController::class,'destroy']);
 Route::get('/attestations/user/{userId}', [AttestationController::class, 'show']);
 
 //salary
-Route::post('/calculate-salary', [SalaryController::class, 'calculateSalary']);
 Route::get('/salaries', [SalaryController::class, 'getAllSalaries']);
-
-
+Route::get('/salaries/{id}', [SalaryController::class, 'getSalary']);
+Route::post('/calculate-salary', [SalaryController::class, 'calculateSalary']);
+Route::put('/salaries/{id}', [SalaryController::class, 'editSalary']);
+Route::delete('/salaries/{id}', [SalaryController::class, 'deleteSalary']);
+Route::post('/salaries/{id}/show', [SalaryController::class, 'show']);
 //holiday
 Route::get('/holidays', [HolidayController::class, 'index']);
 Route::post('/holidays', [HolidayController::class, 'store']);

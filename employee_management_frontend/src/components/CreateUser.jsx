@@ -63,7 +63,7 @@ const CreateUser = () => {
         departmentId: '',
         baseSalary: '',
       });
-      navigate("/crud");
+      navigate("/EmployeeList");
     } catch (error) {
       console.error('Error creating user:', error);
       setMessage(error.response?.data?.message || 'Error creating user');

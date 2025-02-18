@@ -4,11 +4,13 @@ import axiosInstance from "../Config/axiosSetup";
 const SalaryCalculator = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [paidOn, setPaidOn] = useState('');
   const [userId, setUserId] = useState('');
   const [users, setUsers] = useState([]);
   const [salaryData, setSalaryData] = useState(null);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -32,12 +34,14 @@ const SalaryCalculator = () => {
         const response = await axiosInstance.post('/calculate-salary', {
           start_date: startDate,
           end_date: endDate,
+          paid_on: paidOn,
           user_id: userId
         });
         if (response.data.message) {
           setMessage(response.data.message);
         } else {
           setSalaryData(response.data);
+          setShowModal(true);
         }
       } catch (err) {
         setError('Failed to calculate salaries. Please try again.');
@@ -67,6 +71,16 @@ const SalaryCalculator = () => {
             ))}
           </select>
         </div>
+
+        <div>
+          <label>Paid day</label>
+          <input
+            type="date"
+            value={paidOn}
+            onChange={(e) => setPaidOn(e.target.value)}
+            required
+          />
+        </div>
         <div>
           <label>Start Date:</label>
           <input
@@ -91,15 +105,19 @@ const SalaryCalculator = () => {
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {message && <p style={{ color: 'green' }}>{message}</p>}
 
-      {salaryData && (
-        <div>
-          <h3>Salary Details for {salaryData.name}</h3>
-          <p>Attendances: {salaryData.attendances}</p>
-          <p>Leaves: {salaryData.leaves}</p>
-          <p>Base Salary: {salaryData.base_salary}</p>
-          <p>Attendance Bonus: {salaryData.attendance_bonus}</p>
-          <p>Leave Deduction: {salaryData.leave_deduction}</p>
-          <p>Total Salary: {salaryData.total_salary}</p>
+      {showModal && salaryData && (
+        <div className={`modal ${showModal ? 'show' : ''}`}>
+          <div className="modal-content">
+            <span className="close" onClick={() => setShowModal(false)}>&times;</span>
+            <h3>Salary Details for {salaryData.name}</h3>
+            <h3>Salary Paid On: {salaryData.paidOn}</h3>
+            <p>Attendances: {salaryData.attendances}</p>
+            <p>Leaves: {salaryData.leaves}</p>
+            <p>Base Salary: {salaryData.base_salary}</p>
+            <p>Attendance Bonus: {salaryData.attendance_bonus}</p>
+            <p>Leave Deduction: {salaryData.leave_deduction}</p>
+            <p>Total Salary: {salaryData.total_salary}</p>
+          </div>
         </div>
       )}
     </div>

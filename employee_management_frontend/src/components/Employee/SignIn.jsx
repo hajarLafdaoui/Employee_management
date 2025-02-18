@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
 import axiosInstance from '../Config/axiosSetup';
 import { useNavigate } from 'react-router-dom';
-
-
+import "./SignIn.scss"
 const SignIn = () => {
   const [email, setEmail] = useState('jane.smith@example.com');
   const [password, setPassword] = useState('password');
   const [error, setError] = useState('');
+  const [passwordVisible, setPasswordVisible] = useState(false); 
   const navigate = useNavigate();
 
-
+  const togglePassword = () => {
+    setPasswordVisible(!passwordVisible);
+  };
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    if (!email || !password) {
+      setError('Email and password are required');
+      return;
+    }
     try {
 
       const response = await axiosInstance.post('/login', { email, password });
@@ -45,23 +52,43 @@ const SignIn = () => {
   };
 
 
-
+  const handleFocus = () => {
+    setError('');
+  };
 
 
   return (
-    <div>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Email:</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Login</button>
+    <div className="all">
+    <div className="signin-container">
+      <div className="form-section">
+      <form className="form-details" onSubmit={handleLogin}>
+      <h2 className='title'>welcom to our site</h2>
+
+      <div className="form-group">
+  <label className='label' htmlFor="email">Email:</label>
+  <input id="email" className='input' type="email" value={email}  onFocus={handleFocus} onChange={(e) => setEmail(e.target.value)}  />
+</div>
+
+<div className="form-group">
+  <label className='label' htmlFor="password">Password:</label>
+  <div class="password-container">
+
+  <input id="password" className='input' onFocus={handleFocus} type={passwordVisible ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} />
+  <span class="toggle-password" onClick={togglePassword}>👁️</span>
+</div>
+</div>
+
+{error && <div className="error-popup">{error}</div>}
+<button type="submit"  className="submit-btn">Login</button>
       </form>
+      </div>
+      <div className="image-section">
+        <div className="overlay-content">
+          <p>employees information</p>
+          <span>24h ------ 24h</span>
+        </div>
+      </div>
+    </div>
     </div>
   );
 };

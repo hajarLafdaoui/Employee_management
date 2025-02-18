@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Container\Attributes\Storage;
-
+use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
 {
     // Get all users
@@ -85,7 +84,6 @@ class UserController extends Controller
     }
     
 
-
     public function update(Request $request, $id)
     {
         $user = User::find($id);
@@ -94,52 +92,77 @@ class UserController extends Controller
             return response()->json(['message' => 'User not found'], 404);
         }
     
-        $validatedData = $request->validate([
+        // Validate the input
+        $validator = Validator::make($request->all(), [
             'name' => 'nullable|string|max:255',
-            'email' => "nullable|string|email|max:255|unique:users,email,$id",
-            'password' => 'nullable|string|min:8', 
-            'role' => 'nullable|string', 
-            'department_id' => 'nullable|integer',
-            'username' => "nullable|string|max:255|unique:users,username,$id",
+            'email' => 'nullable|string|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:8',
+            'role' => 'nullable|string|in:employee,sub-admin',
+            'department_id' => 'nullable|exists:departments,id',
+            'username' => 'nullable|string|max:255|unique:users,username,' . $user->id,
             'phone' => 'nullable|string|max:255',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'base_salary' => 'nullable|numeric|min:0', 
+            'base_salary' => 'nullable|numeric|min:0',
         ]);
     
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+    
+        // Update fields if they are provided in the request
+        if ($request->has('name')) {
+            $user->name = $request->name;
+        }
+    
+        if ($request->has('email')) {
+            $user->email = $request->email;
+        }
+    
+        if ($request->has('password')) {
+            $user->password = Hash::make($request->password);
+        }
+    
+        if ($request->has('role')) {
+            $user->role = $request->role;
+        }
+    
+        if ($request->has('department_id')) {
+            $user->department_id = $request->department_id;
+        }
+    
+        if ($request->has('username')) {
+            $user->username = $request->username;
+        }
+    
+        if ($request->has('phone')) {
+            $user->phone = $request->phone;
+        }
+    
         if ($request->hasFile('profile_picture')) {
-            if ($user->profile_picture) {
-                Storage::disk('public')->delete($user->profile_picture);
+            // Delete old profile picture if it exists
+            if ($user->profile_picture && Storage::exists('public/' . $user->profile_picture)) {
+                Storage::delete('public/' . $user->profile_picture);
             }
-    
-            $profilePicturePath = $request->file('profile_picture')->store('profile_pictures', 'public');
-            $user->profile_picture = $profilePicturePath;
+            // Store new profile picture
+            $user->profile_picture = $request->file('profile_picture')->store('profile_pictures', 'public');
         }
     
-        $user->name = $validatedData['name'] ?? $user->name;
-        $user->email = $validatedData['email'] ?? $user->email;
-    
-        if (isset($validatedData['password'])) {
-            $user->password = Hash::make($validatedData['password']);
+        if ($request->has('base_salary')) {
+            $user->base_salary = $request->base_salary;
         }
     
-        $user->role = $validatedData['role'] ?? $user->role;
-        $user->department_id = $validatedData['department_id'] ?? $user->department_id;
-        $user->username = $validatedData['username'] ?? $user->username;
-        $user->phone = $validatedData['phone'] ?? $user->phone;
-        $user->base_salary = $validatedData['base_salary'] ?? $user->base_salary; 
-
         $user->save();
     
         return response()->json([
-            'message' => 'User updated successfully',
-            'user' => $user
+            'message' => 'User updated successfully!',
+            'user' => $user,
         ], 200);
     }
     
-
-
-
-
+  
 
 
 
