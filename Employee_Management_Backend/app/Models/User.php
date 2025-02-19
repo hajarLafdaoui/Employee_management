@@ -31,7 +31,8 @@ class User extends Authenticatable implements JWTSubject
         'profile_picture', 
                 
         'status',   
-        'base_salary'     
+        'base_salary',
+        'gender'  
     ];
     
 

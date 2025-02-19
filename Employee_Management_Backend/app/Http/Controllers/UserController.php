@@ -50,7 +50,9 @@ class UserController extends Controller
             'username' => 'required|string|max:255|unique:users',
             'phone' => 'nullable|string|max:255',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'base_salary' => 'required|numeric|min:0'
+        'base_salary' => 'required|numeric|min:0',
+        'gender' => 'required|in:male,female',
+
         ]);
     
         if ($validator->fails()) {
@@ -76,6 +78,8 @@ class UserController extends Controller
             'phone' => $request->phone,
             'profile_picture' => $profilePicturePath,  
             'base_salary' => $request->base_salary,
+            'gender' => $request->gender,
+
         ]);
     
         return response()->json([
@@ -104,6 +108,8 @@ class UserController extends Controller
             'phone' => 'nullable|string|max:255',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'base_salary' => 'nullable|numeric|min:0', 
+            'gender' => 'required|in:male,female',
+
         ]);
     
         if ($request->hasFile('profile_picture')) {
@@ -127,6 +133,7 @@ class UserController extends Controller
         $user->username = $validatedData['username'] ?? $user->username;
         $user->phone = $validatedData['phone'] ?? $user->phone;
         $user->base_salary = $validatedData['base_salary'] ?? $user->base_salary; 
+        $user->gender = $validatedData['gender'] ?? $user->gender; 
 
         $user->save();
     
