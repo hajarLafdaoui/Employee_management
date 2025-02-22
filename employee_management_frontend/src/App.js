@@ -9,9 +9,10 @@ import UpdateUser from "./components/UpdateUser";
 
 import AdminLeaveRequests from "./components/Leave/AdminLeaveRequests";
 import AttendanceHeader from "./components/attendance/AttendanceHeader";
+import EmployeeAttendance from "./components/attendance/EmployeeAttendance";
+
 import SignOut from "./components/Employee/SignOut";
 import Profile from "./components/Employee/Profile";
-import EmployeeAttendance from "./components/attendance/EmployeeAttendance";
 import './styles/main.scss';
 import './App.css';
 import AddDepartment from "./components/Department/AddDepartment";
@@ -23,6 +24,7 @@ import AttestationRequests from "./components/AttestatioRequest/AttestationReque
 import SalaryCalculator from "./components/salary/SalaryCalculator";
 import SalaryList from "./components/salary/SalaryList";
 import SalaryDetail from "./components/salary/SalaryDetail";
+
 
 const ProtectedRoute = ({ children, role }) => {
   const user = JSON.parse(localStorage.getItem("user"));

@@ -13,6 +13,7 @@ const CreateUser = () => {
     profilePicture: null,
     departmentId: '',
     baseSalary: '',
+    gender: '', // Added gender field
   });
 
   const [departments, setDepartments] = useState([]);
@@ -23,11 +24,9 @@ const CreateUser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { name, email, password, username, role, phone, departmentId, baseSalary, profilePicture } = userData;
+    const { name, email, password, username, role, phone, departmentId, baseSalary, profilePicture, gender } = userData;
 
-    // Check if required fields are filled
-    if (!name || !email || !password || !role || !username || !departmentId || !baseSalary) { 
- 
+    if (!name || !email || !password || !role || !username || !departmentId || !baseSalary || !gender) { 
       return;
     }
 
@@ -39,7 +38,8 @@ const CreateUser = () => {
     formData.append('role', role);
     formData.append('phone', phone);
     formData.append('department_id', departmentId);
-    formData.append('base_salary', baseSalary); // Add base salary to form data
+    formData.append('base_salary', baseSalary);
+    formData.append('gender', gender); // Include gender in form data
 
     if (profilePicture) {
       formData.append('profile_picture', profilePicture);
@@ -62,6 +62,7 @@ const CreateUser = () => {
         profilePicture: null,
         departmentId: '',
         baseSalary: '',
+        gender: '',
       });
       navigate("/EmployeeList");
     } catch (error) {
@@ -104,61 +105,25 @@ const CreateUser = () => {
     <div>
       <h2>Create User</h2>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={userData.name}
-          onChange={handleInputChange}
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={userData.email}
-          onChange={handleInputChange}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={userData.password}
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={userData.username}
-          onChange={handleInputChange}
-          />
-        <input
-          type="text"
-          name="phone"
-          placeholder="Phone"
-          value={userData.phone}
-          onChange={handleInputChange}
-        />
-        <input
-          type="file"
-          name="profilePicture"
-          onChange={handleFileChange}
-        />
+        <input type="text" name="name" placeholder="Name" value={userData.name} onChange={handleInputChange} />
+        <input type="email" name="email" placeholder="Email" value={userData.email} onChange={handleInputChange} />
+        <input type="password" name="password" placeholder="Password" value={userData.password} onChange={handleInputChange} />
+        <input type="text" name="username" placeholder="Username" value={userData.username} onChange={handleInputChange} />
+        <input type="text" name="phone" placeholder="Phone" value={userData.phone} onChange={handleInputChange} />
+        <input type="file" name="profilePicture" onChange={handleFileChange} />
 
-        <select
-          name="role"
-          value={userData.role}
-          onChange={handleInputChange}
-        >
+        <select name="role" value={userData.role} onChange={handleInputChange}>
           <option value="employee">Employee</option>
           <option value="sub-admin">Sub-Admin</option>
         </select>
 
-        <select
-          name="departmentId"
-          value={userData.departmentId}
-          onChange={handleInputChange}
-        >
+        <select name="gender" value={userData.gender} onChange={handleInputChange}>
+          <option value="">Select Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+
+        <select name="departmentId" value={userData.departmentId} onChange={handleInputChange}>
           <option value="">Select Department</option>
           {isLoading ? (
             <option disabled>Loading...</option>
@@ -171,22 +136,14 @@ const CreateUser = () => {
           )}
         </select>
 
-        <input
-          type="text"
-          name="baseSalary"
-          placeholder="Base Salary"
-          value={userData.baseSalary}
-          onChange={handleInputChange}
-        />
+        <input type="text" name="baseSalary" placeholder="Base Salary" value={userData.baseSalary} onChange={handleInputChange} />
 
         <button type="submit">Create User</button>
       </form>
       <p>{message}</p>
 
       <Link to="/crud">
-        <button style={{ backgroundColor: 'gray', color: 'white' }}>
-          Back to Dashboard
-        </button>
+        <button style={{ backgroundColor: 'gray', color: 'white' }}>Back to Dashboard</button>
       </Link>
     </div>
   );

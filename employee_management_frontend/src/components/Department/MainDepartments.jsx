@@ -1,44 +1,100 @@
 import React, { useState } from 'react';
 import DepartmentsList from './DepartmentList';
 import Modal from 'react-modal';
-import AddDepartment from './AddDepartment';
-
+import DepartmentForm from './DepartmentForm';
+import BarChart from './BarChart';
+import PieChart from './PieChart';
+import SuccessAlert from '../Alerts/SuccessAlert';
+import ErrorAlert from '../Alerts/ErrorAlert';
+import "./departments.scss";
 
 Modal.setAppElement('#root');
 
 const MainDepartments = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedDepartment, setSelectedDepartment] = useState(null);
+  const [departments, setDepartments] = useState([]);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(""); 
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const openModal = () => {
+  const openModal = (department = null) => {
+    setSelectedDepartment(department);
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setSelectedDepartment(null);
   };
 
   return (
     <div>
-      <button onClick={openModal}>
-        Add Department
-      </button>
+      <div className="DepaHead">
+        <h3>Department</h3>
+        <div onClick={() => openModal()} className="buttonContainer">
+          <img className='plusIcon' src="/icons/plus.png" alt="Add" />
+          <button>Add New</button>
+        </div>
+      </div>
+
+      <div className="graphs">
+        <BarChart />
+        <PieChart />
+      </div>
 
       <Modal
-      
         isOpen={isModalOpen}
         onRequestClose={closeModal}
-        contentLabel="Add Department"
+        contentLabel="Department Modal"
         className="modal"
-        overlayClassName="overlay"
       >
-        <h2>Add New Department</h2>
-        <img src="/icons/close.png" alt="Logo" onClick={closeModal}/>
+        <div className="modal-header">
+          <h2>{selectedDepartment ? "Edit Department" : "Add a Department"}</h2>
+          <img src="/icons/close.png" className='close' alt="Close" onClick={closeModal} />
+        </div>
 
-        <AddDepartment />
-        <button onClick={closeModal}>Close</button>
+        <DepartmentForm
+          department={selectedDepartment}
+          onClose={closeModal}
+          onSuccess={(updatedDepartment) => {
+            setDepartments((prev) =>
+              selectedDepartment
+                ? prev.map((dept) => (dept.id === updatedDepartment.id ? updatedDepartment : dept)) // ✅ Update existing department
+                : [...prev, updatedDepartment] // ✅ Add new department
+            );
+
+            setSuccessMessage(selectedDepartment ? "Department has been updated!" : "Department has been added!");
+            setShowSuccessAlert(true);
+            setTimeout(() => setShowSuccessAlert(false), 10000);
+          }}
+          setShowErrorAlert={() => {
+            setErrorMessage(selectedDepartment ? "Failed to update department. Please try again later." : "Failed to add department. Please try again later.");
+            setShowErrorAlert(true);
+          }}
+        />
       </Modal>
 
-      <DepartmentsList />
+      {showSuccessAlert && (
+        <SuccessAlert 
+          message={successMessage} 
+          onClose={() => setShowSuccessAlert(false)} 
+        />
+      )}
+
+      {showErrorAlert && (
+        <ErrorAlert 
+          message={errorMessage} 
+          onClose={() => setShowErrorAlert(false)} 
+        />
+      )}
+
+      <DepartmentsList 
+        onEdit={openModal} 
+        departments={departments} 
+        setDepartments={setDepartments} 
+      />
     </div>
   );
 };

@@ -49,7 +49,9 @@ class UserController extends Controller
             'username' => 'required|string|max:255|unique:users',
             'phone' => 'nullable|string|max:255',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'base_salary' => 'required|numeric|min:0'
+        'base_salary' => 'required|numeric|min:0',
+        'gender' => 'required|in:male,female',
+
         ]);
     
         if ($validator->fails()) {
@@ -75,6 +77,8 @@ class UserController extends Controller
             'phone' => $request->phone,
             'profile_picture' => $profilePicturePath,  
             'base_salary' => $request->base_salary,
+            'gender' => $request->gender,
+
         ]);
     
         return response()->json([
@@ -102,7 +106,10 @@ class UserController extends Controller
             'username' => 'nullable|string|max:255|unique:users,username,' . $user->id,
             'phone' => 'nullable|string|max:255',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'base_salary' => 'nullable|numeric|min:0',
+
+            'base_salary' => 'nullable|numeric|min:0', 
+            'gender' => 'required|in:male,female',
+
         ]);
     
         if ($validator->fails()) {
@@ -154,6 +161,13 @@ class UserController extends Controller
             $user->base_salary = $request->base_salary;
         }
     
+        $user->role = $validatedData['role'] ?? $user->role;
+        $user->department_id = $validatedData['department_id'] ?? $user->department_id;
+        $user->username = $validatedData['username'] ?? $user->username;
+        $user->phone = $validatedData['phone'] ?? $user->phone;
+        $user->base_salary = $validatedData['base_salary'] ?? $user->base_salary; 
+        $user->gender = $validatedData['gender'] ?? $user->gender; 
+
         $user->save();
     
         return response()->json([
