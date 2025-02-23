@@ -13,23 +13,44 @@ const CreateUser = () => {
     profilePicture: null,
     departmentId: '',
     baseSalary: '',
-    gender: '', // Added gender field
+    gender: '',
+    nationality: '',
+    payee: '',
+    is_active: true, // Default true
   });
 
   const [departments, setDepartments] = useState([]);
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // Handle submit button state
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axiosInstance.get('/departments');
+        setDepartments(response.data);
+      } catch (error) {
+        console.error('Error fetching departments:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchDepartments();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const { name, email, password, username, role, phone, departmentId, baseSalary, gender } = userData;
 
-    const { name, email, password, username, role, phone, departmentId, baseSalary, profilePicture, gender } = userData;
-
-    if (!name || !email || !password || !role || !username || !departmentId || !baseSalary || !gender) { 
+    // Simple client-side validation for required fields
+    if (!name || !email || !password || !role || !username || !departmentId || !baseSalary || !gender) {
+      setMessage('Please fill in all required fields.');
       return;
     }
 
+    setIsSubmitting(true); // Disable submit button during submission
     const formData = new FormData();
     formData.append('name', name);
     formData.append('email', email);
@@ -39,10 +60,13 @@ const CreateUser = () => {
     formData.append('phone', phone);
     formData.append('department_id', departmentId);
     formData.append('base_salary', baseSalary);
-    formData.append('gender', gender); // Include gender in form data
+    formData.append('gender', gender);
+    formData.append('nationality', userData.nationality);
+    formData.append('payee', userData.payee);
+    formData.append('is_active', userData.is_active ? '1' : '0'); // Set is_active based on login status
 
-    if (profilePicture) {
-      formData.append('profile_picture', profilePicture);
+    if (userData.profilePicture) {
+      formData.append('profile_picture', userData.profilePicture);
     }
 
     try {
@@ -63,28 +87,18 @@ const CreateUser = () => {
         departmentId: '',
         baseSalary: '',
         gender: '',
+        nationality: '',
+        payee: '',
+        is_active: true,
       });
       navigate("/crud");
     } catch (error) {
       console.error('Error creating user:', error);
       setMessage(error.response?.data?.message || 'Error creating user');
+    } finally {
+      setIsSubmitting(false); // Enable submit button again
     }
   };
-
-  useEffect(() => {
-    const fetchDepartments = async () => {
-      setIsLoading(true);
-      try {
-        const response = await axiosInstance.get('/departments');
-        setDepartments(response.data);
-      } catch (error) {
-        console.error('Error fetching departments:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchDepartments();
-  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -137,10 +151,14 @@ const CreateUser = () => {
         </select>
 
         <input type="text" name="baseSalary" placeholder="Base Salary" value={userData.baseSalary} onChange={handleInputChange} />
+        <input type="text" name="nationality" placeholder="Nationality" value={userData.nationality} onChange={handleInputChange} />
+        <input type="text" name="payee" placeholder="Payee" value={userData.payee} onChange={handleInputChange} />
 
-        <button type="submit">Create User</button>
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Creating...' : 'Create User'}
+        </button>
       </form>
-      <p>{message}</p>
+      {message && <p>{message}</p>}
 
       <Link to="/crud">
         <button style={{ backgroundColor: 'gray', color: 'white' }}>Back to Dashboard</button>

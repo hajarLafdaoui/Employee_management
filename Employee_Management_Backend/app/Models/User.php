@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use App\Models\Job;
@@ -29,12 +28,10 @@ class User extends Authenticatable implements JWTSubject
         'username',         
         'phone',           
         'profile_picture', 
-                
-        'status',   
-        'base_salary',
-        'gender'  
+        'nationality',   // Added nationality field
+        'country',        // Added country field
+        'is_active'       // Ensuring this is part of the fillable attributes
     ];
-    
 
     /**
      * The attributes that should be hidden for serialization.
@@ -62,16 +59,14 @@ class User extends Authenticatable implements JWTSubject
     // relations
 
     public function department()
-{
-    return $this->belongsTo(Department::class, 'department_id');
-}
-
+    {
+        return $this->belongsTo(Department::class, 'department_id');
+    }
 
     public function attendances()
     {
         return $this->hasMany(Attendance::class);
     }
-
 
     public function leaveRequests()
     {
@@ -83,19 +78,16 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(LeaveRequest::class);
     }
 
-
-
-public function job()
-{
-    return $this->belongsTo(Job::class);
-}
-
-
+    public function job()
+    {
+        return $this->belongsTo(Job::class);
+    }
 
     public function salaries()
-{
-    return $this->hasMany(Salary::class);
-}
+    {
+        return $this->hasMany(Salary::class);
+    }
+
     /**
      * Get the identifier that will be stored in the JWT token.
      *

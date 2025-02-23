@@ -32,8 +32,11 @@ const ProtectedRoute = ({ children, role }) => {
   return children;
 };
 
+
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     const token = sessionStorage.getItem("authToken");
@@ -67,7 +70,7 @@ function App() {
           <Route path="payroll" element={<SalaryCalculator />} />
           <Route path="salarylist" element={<SalaryList />} />
 
-          <Route path="SignOut" element={<SignOut />} />
+          <Route path="SignOut" element={<SignOut  user={user}/>} />
           <Route path="Departments" element={<MainDepartments />} />
           <Route path="addDepartment" element={<AddDepartment />} />
 

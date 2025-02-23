@@ -21,7 +21,10 @@ Route::get('/user', function (Request $request) {
 
 // auth
 Route::post('/login', [AuthController::class, 'login']);
+Route::put('/users/{userId}/status', [UserController::class, 'updateStatus']);
 
+action: 
+// Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
 // CRUD operations for users
 Route::get('/users', [UserController::class, 'index']);

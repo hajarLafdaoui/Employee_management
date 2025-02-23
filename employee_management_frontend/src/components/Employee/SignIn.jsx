@@ -1,67 +1,61 @@
-import React, { useState } from 'react';
-import axiosInstance from '../Config/axiosSetup';
-import { useNavigate } from 'react-router-dom';
-
+// SignIn.js
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "../Config/axiosSetup";
 
 const SignIn = () => {
-  const [email, setEmail] = useState('jane.smith@example.com');
-  const [password, setPassword] = useState('password');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("alicejohnson@example.com");
+  const [password, setPassword] = useState("aliceSecure789");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     try {
+      const response = await axiosInstance.post("/login", { email, password });
+      const { user, token } = response.data;
 
-      const response = await axiosInstance.post('/login', { email, password });
-      console.log('Response:', response);
+      // Save user info
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
 
+      // Update `is_active` status
+      await axiosInstance.put(`/users/${user.id}/status`, { is_active: 1 });
 
-
-      if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-        if (response.data.user && response.data.user.role) {
-
-          const role = response.data.user.role;
-          if (role === 'employee') {
-            navigate('/Employee_dashboard');
-          } else if (role === 'admin') {
-            navigate('/');
-          } else {
-            setError('Unknown role');
-          }
-        } else {
-          setError('User or role not found in response');
-        }
-      } else {
-        setError('No token received');
+      // Redirect based on role
+      if (user.role === "employee") {
+        localStorage.setItem("employeeUser", JSON.stringify(user));
+        navigate("/Employee_dashboard");
+      } else if (user.role === "admin") {
+        localStorage.setItem("adminUser", JSON.stringify(user));
+        navigate("/");
       }
     } catch (error) {
-      console.error('Error logging in:', error);
-      setError('Invalid credentials or network issue');
+      setErrorMessage("Invalid login credentials.");
+      console.error("Login error:", error);
     }
   };
 
-
-
-
-
   return (
     <div>
+      <h2>Login</h2>
       <form onSubmit={handleLogin}>
-        <div>
-          <label>Email:</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <button type="submit">Login</button>
       </form>
+      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
     </div>
   );
 };
