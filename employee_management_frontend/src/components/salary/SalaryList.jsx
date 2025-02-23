@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link } from "react-router-dom";  
 import axiosInstance from "../Config/axiosSetup";
-import emailjs from '@emailjs/browser'; // Import emailjs
+import emailjs from '@emailjs/browser'; 
 
 const SalaryList = () => {
   const [salaries, setSalaries] = useState([]);
@@ -41,20 +41,20 @@ const SalaryList = () => {
     try {
 
       await emailjs.send(
-        'service_r02e0jl', 'template_uhdnaqw',  // Your template ID from EmailJS
+        'service_r02e0jl', 'template_uhdnaqw',  
         {
             from_email:"admin@example.com",
-          from_name: 'Admin', // You can set this to a fixed name (or dynamic if needed)
-          to_name: user.name, // Dynamic user name
-          to_email: user.email, // Dynamic user email
-          message: message,   // Dynamic message
+          from_name: 'Admin', 
+          to_name: user.name, 
+          to_email: user.email,
+          message: message,  
         },
-        'I3_55oUThRQx1UVWD'   // Your public key from EmailJS
+        'I3_55oUThRQx1UVWD'   
       );
 
       setStatusMessage('Message sent successfully!');
-      setShowMessageForm(false); // Hide the form after sending the message
-      setMessage(''); // Clear the message field
+      setShowMessageForm(false); 
+      setMessage(''); 
     } catch (error) {
       setStatusMessage('Failed to send message. Please try again.');
       console.error('Error:', error.text);
@@ -62,12 +62,12 @@ const SalaryList = () => {
   };
 
   const handleMessageChange = (e) => {
-    setMessage(e.target.value); // Update the message as the user types
+    setMessage(e.target.value); 
   };
 
   const handleShowMessageForm = (user) => {
-    setCurrentUser(user);  // Set the current user whose message we will send
-    setShowMessageForm(true); // Show the message form
+    setCurrentUser(user);   
+    setShowMessageForm(true); 
   };
 
   if (loading) return <p>Loading...</p>;
@@ -87,6 +87,9 @@ const SalaryList = () => {
               <th>Day Paid</th>
               <th>Start Date</th>
               <th>End Date</th>
+              <th>Attende</th>
+              <th>Leaves</th>
+
               <th>Total Salary</th>
               <th>Actions</th>
             </tr>
@@ -98,7 +101,10 @@ const SalaryList = () => {
                 <td>{salary.paid_on}</td>
                 <td>{salary.start_date}</td>
                 <td>{salary.end_date}</td>
+                <td>{salary.attendances}</td>
+                <td>{salary.leaves}</td>
                 <td>{salary.total_salary}</td>
+
                 <td>
                   <Link to={`/salary/${salary.id}`}>Show</Link> {/* Link to SalaryDetail page */}
                   <button onClick={() => handleDelete(salary.id)}>Delete</button>

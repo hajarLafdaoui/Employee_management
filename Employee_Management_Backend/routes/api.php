@@ -16,7 +16,7 @@ use App\Http\Controllers\HolidayController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
-})->middleware('auth:sanctum');
+})->middleware('auth:api');
 
 
 // auth
@@ -30,6 +30,8 @@ Route::get('/users/{id}', [UserController::class, 'show']);
 Route::post('/users', [UserController::class, 'store']);
 Route::put('/users/{id}', [UserController::class, 'update']);
 Route::put('/users/{id}/toggle', [UserController::class, 'toggleStatus']);
+Route::middleware('auth:api')->put('/user/change-password', [UserController::class, 'changePassword']);
+Route::put('/users/{id}/toggle', [UserController::class, 'softDelete']);
 
 // Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
@@ -94,4 +96,3 @@ Route::put('/holidays/{id}', [HolidayController::class, 'update']);
 
 
 
-Route::put('/users/{id}/toggle', [UserController::class, 'softDelete']);

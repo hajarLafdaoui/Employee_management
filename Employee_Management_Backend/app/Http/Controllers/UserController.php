@@ -197,6 +197,39 @@ public function softDelete($id)
 }
 
 
+public function changePassword(Request $request)
+{
+    $user = $request->user(); // GetA the authenticated user
+
+    if (!$user) {
+        return response()->json(['message' => 'Unauthorized'], 401);
+    }
+
+    // Validate the input
+    $validator = Validator::make($request->all(), [
+        'old_password' => 'required|string|min:8',
+        'new_password' => 'required|string|min:8|confirmed', // Ensure 'new_password' and 'confirm_password' match
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'message' => 'Validation failed',
+            'errors' => $validator->errors(),
+        ], 422);
+    }
+
+    // Check if the old password matches
+    if (!Hash::check($request->old_password, $user->password)) {
+        return response()->json(['message' => 'Old password is incorrect'], 400);
+    }
+
+    // Update the password
+    $user->password = Hash::make($request->new_password);
+    $user->save();
+
+    return response()->json(['message' => 'Password updated successfully']);
+}
+
 
 
 

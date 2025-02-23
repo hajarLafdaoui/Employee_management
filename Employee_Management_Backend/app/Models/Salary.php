@@ -10,8 +10,10 @@ class Salary extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'start_date', 'end_date', 'total_salary','paid_on'
+        'user_id', 'start_date', 'end_date', 'base_salary', 'attendances', 'leaves',
+        'attendance_bonus', 'leave_deduction', 'total_salary', 'tva_rate', 'tva_amount', 'paid_on',
     ];
+    
 
     public function user()
     {
