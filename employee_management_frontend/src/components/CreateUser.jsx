@@ -1,6 +1,8 @@
+// CreateUser.js
 import React, { useEffect, useState } from 'react';
 import axiosInstance from './Config/axiosSetup';
 import { Link, useNavigate } from 'react-router-dom';
+import CountrySelect from './CountrySelect';
 
 const CreateUser = () => {
   const [userData, setUserData] = useState({
@@ -14,15 +16,14 @@ const CreateUser = () => {
     departmentId: '',
     baseSalary: '',
     gender: '',
-    nationality: '',
-    payee: '',
-    is_active: true, // Default true
+    country: '',
+    is_active: true,
   });
 
   const [departments, setDepartments] = useState([]);
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false); // Handle submit button state
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,10 +43,10 @@ const CreateUser = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, email, password, username, role, phone, departmentId, baseSalary, gender } = userData;
+    const { name, email, password, username, role, phone, departmentId, baseSalary, gender, country } = userData;
 
     // Simple client-side validation for required fields
-    if (!name || !email || !password || !role || !username || !departmentId || !baseSalary || !gender) {
+    if (!name || !email || !password || !role || !username || !departmentId || !baseSalary || !gender || !country) {
       setMessage('Please fill in all required fields.');
       return;
     }
@@ -61,8 +62,7 @@ const CreateUser = () => {
     formData.append('department_id', departmentId);
     formData.append('base_salary', baseSalary);
     formData.append('gender', gender);
-    formData.append('nationality', userData.nationality);
-    formData.append('payee', userData.payee);
+    formData.append('country', country); // Add country to the form data
     formData.append('is_active', userData.is_active ? '1' : '0'); // Set is_active based on login status
 
     if (userData.profilePicture) {
@@ -87,11 +87,10 @@ const CreateUser = () => {
         departmentId: '',
         baseSalary: '',
         gender: '',
-        nationality: '',
-        payee: '',
+        country: '',
         is_active: true,
       });
-      navigate("/crud");
+      navigate("/");
     } catch (error) {
       console.error('Error creating user:', error);
       setMessage(error.response?.data?.message || 'Error creating user');
@@ -112,6 +111,13 @@ const CreateUser = () => {
     setUserData((prevState) => ({
       ...prevState,
       profilePicture: e.target.files[0],
+    }));
+  };
+
+  const handleCountryChange = (selectedCountry) => {
+    setUserData((prevState) => ({
+      ...prevState,
+      country: selectedCountry.value,
     }));
   };
 
@@ -151,12 +157,13 @@ const CreateUser = () => {
         </select>
 
         <input type="text" name="baseSalary" placeholder="Base Salary" value={userData.baseSalary} onChange={handleInputChange} />
-        <input type="text" name="nationality" placeholder="Nationality" value={userData.nationality} onChange={handleInputChange} />
-        <input type="text" name="payee" placeholder="Payee" value={userData.payee} onChange={handleInputChange} />
+ 
+        <CountrySelect onChange={handleCountryChange} />
+      <button type="submit" disabled={isSubmitting}>
+        {isSubmitting ? 'Creating...' : 'Create User'}
+      </button>
 
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Creating...' : 'Create User'}
-        </button>
+       
       </form>
       {message && <p>{message}</p>}
 

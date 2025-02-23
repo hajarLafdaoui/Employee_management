@@ -28,7 +28,7 @@ class User extends Authenticatable implements JWTSubject
         'username',         
         'phone',           
         'profile_picture', 
-        'nationality',   // Added nationality field
+           // Added nationality field
         'country',        // Added country field
         'is_active'       // Ensuring this is part of the fillable attributes
     ];

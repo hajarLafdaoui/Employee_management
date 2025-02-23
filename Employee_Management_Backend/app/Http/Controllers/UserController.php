@@ -54,8 +54,7 @@ class UserController extends Controller
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'base_salary' => 'required|numeric|min:0',
             'gender' => 'required|in:male,female',
-            'nationality' => 'nullable|string|max:255',
-            'payee' => 'nullable|string|max:255',
+            'country' => 'nullable|string|max:255',
             'is_active' => 'boolean', // Assuming 'status' is boolean for active/inactive
         ]);
 
@@ -83,8 +82,7 @@ class UserController extends Controller
             'profile_picture' => $profilePicturePath,
             'base_salary' => $request->base_salary,
             'gender' => $request->gender,
-            'nationality' => $request->nationality,
-            'payee' => $request->payee,
+            'country' => $request->country,
             'is_active' => $isLoggedIn,  // Set to true only if the user is logged in
         ]);
 
@@ -113,8 +111,7 @@ class UserController extends Controller
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'base_salary' => 'nullable|numeric|min:0',
             'gender' => 'nullable|in:male,female',
-            'nationality' => 'nullable|string|max:255',
-            'payee' => 'nullable|string|max:255',
+            'country' => 'nullable|string|max:255',
             'is_active' => 'nullable|boolean',
         ]);
 
@@ -140,8 +137,7 @@ class UserController extends Controller
         $user->phone = $validatedData['phone'] ?? $user->phone;
         $user->base_salary = $validatedData['base_salary'] ?? $user->base_salary;
         $user->gender = $validatedData['gender'] ?? $user->gender;
-        $user->nationality = $validatedData['nationality'] ?? $user->nationality;
-        $user->payee = $validatedData['payee'] ?? $user->payee;
+        $user->country = $validatedData['country'] ?? $user->country;
         $user->is_active = $validatedData['is_active'] ?? $user->is_active;
 
         $user->save();

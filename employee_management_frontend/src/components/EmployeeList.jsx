@@ -8,12 +8,24 @@ const EmployeeList = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  // Define fetchUsers outside of useEffect
   const fetchUsers = async () => {
     setIsLoading(true);
     try {
       const response = await axiosInstance.get("/users");
-      setUsers(response.data);
+      const usersWithFlags = await Promise.all(
+        response.data.map(async (user) => {
+          try {
+            const countryResponse = await fetch(`https://restcountries.com/v3.1/name/${user.country}?fullText=true`);
+            const countryData = await countryResponse.json();
+            const flagUrl = countryData[0]?.flags?.png || "";
+            return { ...user, flagUrl };
+          } catch (error) {
+            console.error(`Error fetching flag for ${user.country}:`, error);
+            return { ...user, flagUrl: "" };
+          }
+        })
+      );
+      setUsers(usersWithFlags);
     } catch (error) {
       setErrorMessage("Error fetching users.");
       console.error("Error fetching users:", error);
@@ -22,18 +34,17 @@ const EmployeeList = () => {
     }
   };
 
-useEffect(() => {
-  fetchUsers();
-  const handleStorageChange = () => {
+  useEffect(() => {
     fetchUsers();
-  };
+    const handleStorageChange = () => {
+      fetchUsers();
+    };
 
-  window.addEventListener("storage", handleStorageChange);
-  return () => {
-    window.removeEventListener("storage", handleStorageChange);
-  };
-}, []);
-
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
 
   const handleDelete = async (e, userId) => {
     e.preventDefault();
@@ -49,17 +60,6 @@ useEffect(() => {
     } catch (error) {
       console.error("Error deleting user:", error);
       setErrorMessage("Error deleting user.");
-    }
-  };
-
-  const toggleStatus = async (userId, currentStatus) => {
-    const newStatus = currentStatus === 1 ? 0 : 1;
-    try {
-      await axiosInstance.put(`/users/${userId}/status`, { is_active: newStatus });
-      fetchUsers(); // Re-fetch users to get the updated status
-    } catch (error) {
-      console.error("Error toggling status:", error);
-      setErrorMessage("Error toggling user status.");
     }
   };
 
@@ -86,6 +86,7 @@ useEffect(() => {
               <th>Phone</th>
               <th>Profile Picture</th>
               <th>Role</th>
+              <th>Country</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -115,16 +116,19 @@ useEffect(() => {
                   </td>
                   <td>{user.role}</td>
                   <td>
-                  {/* {user.is_active ? "Active" : "Inactive"} */}
-
-                    {user.name === (JSON.parse(localStorage.getItem('user'))).name ? "Active" : ""}
-                    {!(user.name === (JSON.parse(localStorage.getItem('user'))).name )? "Inactive" : ""}
-                    {/* <button
-                      onClick={() => toggleStatus(user.id, user.is_active)}
-                      style={{ marginLeft: "10px" }}
-                    >
-                      Toggle Status
-                    </button> */}
+                    {user.flagUrl && (
+                      <img
+                        src={user.flagUrl}
+                        alt={`${user.country} flag`}
+                        style={{ width: "30px", height: "20px", marginRight: "5px" }}
+                      />
+                    )}
+                    {user.country}
+                  </td>
+                  <td>
+                    {user.name === (JSON.parse(localStorage.getItem("user"))).name
+                      ? "Active"
+                      : "Inactive"}
                   </td>
                   <td>
                     <Link to={`/user-details/${user.id}`}>
