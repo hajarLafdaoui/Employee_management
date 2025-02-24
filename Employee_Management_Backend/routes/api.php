@@ -14,14 +14,17 @@ use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\HolidayController;
 
 
-Route::get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
-})->middleware('auth:api');
+});
 
 
 // auth
 Route::post('/login', [AuthController::class, 'login']);
+Route::put('/users/{userId}/status', [UserController::class, 'updateStatus']);
 
+action: 
+// Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
 // CRUD operations for users
 Route::get('/users', [UserController::class, 'index']);

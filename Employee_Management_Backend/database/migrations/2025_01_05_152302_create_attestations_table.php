@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('attestations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); 
+            // $table->unsignedBigInteger('user_id'); 
             $table->enum('status', ['Pending', 'Approved', 'Printed'])->default('Pending');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
         });
     }

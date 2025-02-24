@@ -35,17 +35,19 @@ return [
     |
     */
 
-    'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
-        'api' => [
-            'driver' => 'jwt',  // Set this to 'jwt' if you're using JWT Auth
-            'provider' => 'users', // You can keep this as 'users'
-            'hash' => false,
-        ],
+
+   'guards' => [
+    'web' => [
+        'driver' => 'session',
+        'provider' => 'users',
     ],
+
+    'api' => [
+        'driver' => 'jwt', // Ensure this is set to 'jwt'
+        'provider' => 'users',
+        'hash' => false,
+    ],
+],
 
     /*
     |--------------------------------------------------------------------------
