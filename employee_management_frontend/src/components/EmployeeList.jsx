@@ -43,7 +43,7 @@ const EmployeeList = ({ onLogout }) => {
     <div>
       <h2>User List</h2>
 
-      <Link to="/create-user">
+      <Link to="/CreateUser">
         <button style={{ backgroundColor: "green", color: "white" }}>
           Create User
         </button>

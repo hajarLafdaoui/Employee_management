@@ -63,7 +63,7 @@ const CreateUser = () => {
         departmentId: '',
         baseSalary: '',
       });
-      navigate("/crud");
+      navigate("/");
     } catch (error) {
       console.error('Error creating user:', error);
       setMessage(error.response?.data?.message || 'Error creating user');
@@ -183,7 +183,7 @@ const CreateUser = () => {
       </form>
       <p>{message}</p>
 
-      <Link to="/crud">
+      <Link to="/">
         <button style={{ backgroundColor: 'gray', color: 'white' }}>
           Back to Dashboard
         </button>

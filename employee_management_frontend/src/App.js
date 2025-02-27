@@ -6,8 +6,8 @@ import Employee_dashboard from "./components/Employee/Employee_dashboard";
 import CreateUser from "./components/CreateUser";
 import EmployeeList from "./components/EmployeeList";
 import AdminLeaveRequests from "./components/Leave/AdminLeaveRequests";
-import AttendanceHeader from "./components/Attendance/AttendanceHeader";
-import EmployeeAttendance from "./components/Attendance/EmployeeAttendance";
+import AttendanceHeader from "./components/attendance/AttendanceHeader";
+import EmployeeAttendance from "./components/attendance/EmployeeAttendance";
 
 import SignOut from "./components/Employee/SignOut";
 import Profile from "./components/Employee/Profile";
