@@ -15,7 +15,8 @@ class UserController extends Controller
     public function index()
     {
         $employees = User::whereIn('role', ['employee', 'sub-admin'])
-            ->get();
+        ->where('is_deleted', false)
+        ->get(); 
 
         return response()->json($employees);
     }
@@ -159,7 +160,9 @@ class UserController extends Controller
             return response()->json(['message' => 'User not found'], 404);
         }
 
-        $user->delete();
+        $user->is_deleted = true;
+        $user->save();
+
 
         return response()->json([
             'message' => 'User soft deleted successfully',

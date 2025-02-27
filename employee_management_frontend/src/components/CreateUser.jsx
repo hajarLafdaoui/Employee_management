@@ -156,7 +156,6 @@ const CreateUser = () => {
           )}
         </select>
 
-        <input type="text" name="baseSalary" placeholder="Base Salary" value={userData.baseSalary} onChange={handleInputChange} />
  
         <CountrySelect onChange={handleCountryChange} />
       <button type="submit" disabled={isSubmitting}>

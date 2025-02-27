@@ -20,7 +20,6 @@ const SignIn = () => {
     e.preventDefault();
 
     try {
-      // Debug: Log the email and password being sent to the backend
       console.log("Making login request with:", { email, password });
 
       const response = await axiosInstance.post("/login", { email, password });
@@ -28,19 +27,15 @@ console.log("Login response:", response);
 
       const { user, token } = response.data;
 
-      // Check if the user and token exist in the response
       if (!user || !token) {
         throw new Error("No user or token found in the response.");
       }
 
-      // Save user info in localStorage
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
 
-      // Update `is_active` status of the user
       await axiosInstance.put(`/users/${user.id}/status`, { is_active: 1 });
 
-      // Redirect based on user role
       if (user.role === "employee") {
         localStorage.setItem("employeeUser", JSON.stringify(user));
         navigate("/Employee_dashboard");
@@ -54,7 +49,6 @@ console.log("Login response:", response);
     }
   };
 
-  // Clear error message when input fields are focused
   const handleFocus = () => {
     setError('');
   };

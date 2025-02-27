@@ -11,11 +11,14 @@ use Illuminate\Http\Request;
 class SalaryController extends Controller
 {public function calculateSalary(Request $request)
     {
+        // Validate input data
         $validated = $request->validate([
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
-            'paid_on' => 'required|date',
-            'user_id' => 'required|exists:users,id',
+          'paid_on' => 'required|date|after_or_equal:end_date',
+            'user_id' => 'required|exists:users,id',[
+                'paid_on.after_or_equal' => 'The payment date must be on or after the end date.'
+            ]
         ]);
     
         $startDate = $validated['start_date'];
@@ -23,20 +26,40 @@ class SalaryController extends Controller
         $userId = $validated['user_id'];
         $paidOn = $validated['paid_on'];
     
-        $existingSalary = Salary::where('user_id', $userId)
-            ->where('start_date', $startDate)
-            ->where('end_date', $endDate)
-            ->first();
+        // Calculate the difference in days between start_date and end_date
+        $dateDifference = (strtotime($endDate) - strtotime($startDate)) / (60 * 60 * 24);
     
-        if ($existingSalary) {
-            return response()->json([
-                'message' => 'Salary has already been calculated for this date range.',
-                'salary' => $existingSalary,
-            ]);
+        // Check if the difference is exactly 28, 30, or 31 days
+        if (!in_array($dateDifference, [28, 30, 31])) {
+            return response()->json(['message' => 'The date range must be exactly 28, 30, or 31 days long.'], 400);
         }
     
+        // Check if salary already exists for the given date range
+        $existingSalary = Salary::where('user_id', $userId)
+        ->whereDate('start_date', $startDate)
+        ->whereDate('end_date', $endDate)
+        ->first();
+    
+        // $existingSalary = Salary::where('user_id', $userId)
+        // ->where(function ($query) use ($startDate, $endDate) {
+        //     $query->whereBetween('start_date', [$startDate, $endDate])
+        //           ->orWhereBetween('end_date', [$startDate, $endDate])
+        //           ->orWhere(function ($q) use ($startDate, $endDate) {
+        //               $q->where('start_date', '<=', $startDate)
+        //                 ->where('end_date', '>=', $endDate);
+        //           });
+        // })
+        // ->exists();
+        if ($existingSalary) {
+            return response()->json([
+                'message' => 'Salary has already been calculated for this period.',
+            ], 400);
+        }
+    
+        // Find the user and their department/job
         $user = User::findOrFail($userId);
         $department = $user->department;
+        
         if (!$department) {
             return response()->json(['message' => 'User does not have an associated department.'], 400);
         }
@@ -46,6 +69,7 @@ class SalaryController extends Controller
             return response()->json(['message' => 'Department does not have an associated job.'], 400);
         }
     
+        // Calculate attendances and leaves in the given date range
         $attendances = Attendance::where('user_id', $userId)
             ->whereBetween('attendance_date', [$startDate, $endDate])
             ->where('status', 'present')
@@ -55,16 +79,18 @@ class SalaryController extends Controller
             ->whereBetween('start_date', [$startDate, $endDate])
             ->count();
     
+        // Base salary and deductions
         $baseSalary = $job->salary;
         $attendanceDeduction = $attendances * 50;
         $leaveDeduction = $leaves * 50;
     
+        // Calculate total salary and TVA (Value Added Tax)
         $totalSalary = $baseSalary - $attendanceDeduction - $leaveDeduction;
-    
-        $tvaRate = 0.20; 
+        $tvaRate = 0.20;
         $tvaAmount = $totalSalary * $tvaRate;
         $totalSalaryWithTva = $totalSalary - $tvaAmount;
     
+        // Store the calculated salary in the database
         $salary = Salary::create([
             'user_id' => $userId,
             'start_date' => $startDate,
@@ -84,6 +110,7 @@ class SalaryController extends Controller
             'salary' => $salary
         ]);
     }
+     
     
     public function getAllSalaries()
     {
