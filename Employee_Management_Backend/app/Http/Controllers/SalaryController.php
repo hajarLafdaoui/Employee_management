@@ -11,11 +11,14 @@ use Illuminate\Http\Request;
 class SalaryController extends Controller
 {public function calculateSalary(Request $request)
     {
+        // Validate input data
         $validated = $request->validate([
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
-            'paid_on' => 'required|date',
-            'user_id' => 'required|exists:users,id',
+          'paid_on' => 'required|date|after_or_equal:end_date',
+            'user_id' => 'required|exists:users,id',[
+                'paid_on.after_or_equal' => 'The payment date must be on or after the end date.'
+            ]
         ]);
     
         $startDate = $validated['start_date'];
@@ -23,20 +26,36 @@ class SalaryController extends Controller
         $userId = $validated['user_id'];
         $paidOn = $validated['paid_on'];
     
-        $existingSalary = Salary::where('user_id', $userId)
-            ->where('start_date', $startDate)
-            ->where('end_date', $endDate)
-            ->first();
+        $dateDifference = (strtotime($endDate) - strtotime($startDate)) / (60 * 60 * 24);
     
+        if (!in_array($dateDifference, [28, 30, 31])) {
+            return response()->json(['message' => 'The date range must be exactly 28, 30, or 31 days long.'], 400);
+        }
+    
+        $existingSalary = Salary::where('user_id', $userId)
+        ->whereDate('start_date', $startDate)
+        ->whereDate('end_date', $endDate)
+        ->first();
+    
+        // $existingSalary = Salary::where('user_id', $userId)
+        // ->where(function ($query) use ($startDate, $endDate) {
+        //     $query->whereBetween('start_date', [$startDate, $endDate])
+        //           ->orWhereBetween('end_date', [$startDate, $endDate])
+        //           ->orWhere(function ($q) use ($startDate, $endDate) {
+        //               $q->where('start_date', '<=', $startDate)
+        //                 ->where('end_date', '>=', $endDate);
+        //           });
+        // })
+        // ->exists();
         if ($existingSalary) {
             return response()->json([
-                'message' => 'Salary has already been calculated for this date range.',
-                'salary' => $existingSalary,
-            ]);
+                'message' => 'Salary has already been calculated for this period.',
+            ], 400);
         }
     
         $user = User::findOrFail($userId);
         $department = $user->department;
+        
         if (!$department) {
             return response()->json(['message' => 'User does not have an associated department.'], 400);
         }
@@ -60,8 +79,7 @@ class SalaryController extends Controller
         $leaveDeduction = $leaves * 50;
     
         $totalSalary = $baseSalary - $attendanceDeduction - $leaveDeduction;
-    
-        $tvaRate = 0.20; 
+        $tvaRate = 0.20;
         $tvaAmount = $totalSalary * $tvaRate;
         $totalSalaryWithTva = $totalSalary - $tvaAmount;
     
@@ -81,9 +99,11 @@ class SalaryController extends Controller
     
         return response()->json([
             'message' => 'Salary calculated and stored successfully with TVA',
-            'salary' => $salary
+            'salary' => $salary,
+            'basesalary'=>$baseSalary
         ]);
     }
+     
     
     public function getAllSalaries()
     {
@@ -94,8 +114,20 @@ class SalaryController extends Controller
     public function getSalary($id)
     {
         $salary = Salary::with('user')->findOrFail($id);
-        return response()->json(['salary' => $salary]);
+        
+        $user = $salary->user; 
+        $department = $user->department;
+        $job = $department->jobs()->first();  
+        $baseSalary = $job->salary;
+    
+        return response()->json([
+            'salary' => $salary,
+            'basesalary' => $baseSalary,
+            'job'=>$job,
+           'department'=> $department
+        ]);
     }
+    
 
     // Edit salary
     public function editSalary(Request $request, $id)

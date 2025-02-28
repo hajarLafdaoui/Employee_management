@@ -24,6 +24,7 @@ import AttestationRequests from "./components/AttestatioRequest/AttestationReque
 import SalaryCalculator from "./components/salary/SalaryCalculator";
 import SalaryList from "./components/salary/SalaryList";
 import SalaryDetail from "./components/salary/SalaryDetail";
+import HistoryPage from "./components/AttestatioRequest/HistoryPage";
 
 
 const ProtectedRoute = ({ children, role }) => {
@@ -64,14 +65,16 @@ function App() {
           }
         >
           <Route path="CreateUser" element={<CreateUser />} />
-          <Route path="EmployeeList" element={<EmployeeList />} />
           <Route path="update-user/:id" element={<UpdateUser />} />
+          <Route path="EmployeeList" element={<EmployeeList />} />
 
           <Route path="AdminLeaveRequests" element={<AdminLeaveRequests />} />
          
           <Route path="Attendance" element={<AttendanceHeader />} />
           <Route path="HolidayCrud" element={<AdminHolidayManagement />} />
           <Route path="Attestation" element={<AttestationRequests />} />
+
+          <Route path="/historyattest" element={<HistoryPage/>} />
           <Route path="payroll" element={<SalaryCalculator />} />
           <Route path="salarylist" element={<SalaryList />} />
           <Route path="salary/:id" element={<SalaryDetail />} />

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from "../Config/axiosSetup";
+import { Link } from 'react-router-dom';
 
 const SalaryCalculator = () => {
   const [startDate, setStartDate] = useState('');
@@ -11,7 +12,7 @@ const SalaryCalculator = () => {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
-
+const[basesalary,setbasesalary]=useState("")
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -27,8 +28,8 @@ const SalaryCalculator = () => {
 
   const handleCalculate = async (e) => {
     e.preventDefault();
-    setError('');
-    
+    setError(''); 
+
     if (userId && startDate && endDate) {
       try {
         const response = await axiosInstance.post('/calculate-salary', {
@@ -37,24 +38,32 @@ const SalaryCalculator = () => {
           paid_on: paidOn,
           user_id: userId
         });
-    
-        console.log("API Response: ", response.data); 
-  
+setUserId("")
+setPaidOn("")
+setStartDate("")
+setEndDate("")
+        console.log("API Response: ", response.data);
+
         if (response.data.salary) {
-          setSalaryData(response.data.salary);  
-          setShowModal(true);  
+          setSalaryData(response.data.salary);
+          setbasesalary(response.data.basesalary);
+
+          setShowModal(true);
         } else {
           setMessage(response.data.message);
         }
       } catch (err) {
-        setError('Failed to calculate salaries. Please try again.');
+        if (err.response && err.response.data) {
+          setError(err.response.data.message || 'Failed to calculate salary. Please try again.');
+        } else {
+          setError('Failed to calculate salaries. Please try again.');
+        }
         console.error(err);
       }
     } else {
       setError('Please fill all fields.');
     }
   };
-  
 
   return (
     <div>
@@ -77,7 +86,7 @@ const SalaryCalculator = () => {
         </div>
 
         <div>
-          <label>Paid day</label>
+          <label>Paid day:</label>
           <input
             type="date"
             value={paidOn}
@@ -110,24 +119,27 @@ const SalaryCalculator = () => {
       {message && <p style={{ color: 'green' }}>{message}</p>}
 
       {showModal && salaryData && (
-  <div className={`modal ${showModal ? 'show' : ''}`}>
-    <div className="modal-content">
-      <span className="close" onClick={() => setShowModal(false)}>&times;</span>
-      <h3>Salary Details for {salaryData.name}</h3>
-      <h3>Salary Paid On: {salaryData.paidOn}</h3>
-      <p>Attendances: {salaryData.attendances}</p>
-      <p>Leaves: {salaryData.leaves}</p>
-      <p>Base Salary: {salaryData.base_salary}</p>
-      <p>Attendance Bonus: {salaryData.attendance_bonus}</p>
-      <p>Leave Deduction: {salaryData.leave_deduction}</p>
-      <p>Tva: {salaryData.tvaRate}</p>
-      <p>tvaAmount: {salaryData.tvaAmount}</p>
+        <div className={`modal ${showModal ? 'show' : ''}`}>
+          <div className="modal-content">
+            <span className="close" onClick={() => setShowModal(false)}>&times;</span>
+            <h3>Salary Details for {salaryData.name}</h3>
+            <h3>Salary Paid On: {salaryData.paid_on}</h3>
+            <p>basesalary {basesalary}</p>
 
-      <p>Total Salary: {salaryData.total_salary}</p>
-    </div>
-  </div>
-)}
+            <p>Attendances: {salaryData.attendances}</p>
+            <p>Leaves: {salaryData.leaves}</p>
+            <p>Attendance Bonus: {salaryData.attendance_bonus}</p>
+            <p>Leave Deduction: {salaryData.leave_deduction}</p>
+            <p>Tva: {salaryData.tva_rate}</p>
+            <p>TVA Amount: {salaryData.tva_amount}</p>
+            {/* <p>BASE SALARY: {salaryData.basesalary}</p> */}
 
+            <p>Total Salary: {salaryData.total_salary}</p>
+          </div>
+          <Link to="salarylist">salarylist</Link>
+
+        </div>
+      )}
     </div>
   );
 };

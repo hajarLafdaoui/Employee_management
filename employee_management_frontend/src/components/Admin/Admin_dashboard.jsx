@@ -51,6 +51,8 @@ const AdminDashboard = ({ adminUser }) => {
         { label: "Salary List", icon: <FaMoneyBillWave />, link: "/salarylist" },
         { label: "Employee Holiday", icon: <FaUsers />, link: "/HolidayCrud" },
         { label: "Attestation Requests", icon: <FaUsers />, link: "/Attestation" },
+        { label: "Attestation history", icon: <FaUsers />, link: "/historyattest" },
+
       ],
     },
     { label: "Departments", icon: <FaBuilding />, link: "/Departments" },
