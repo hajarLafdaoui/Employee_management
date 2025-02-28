@@ -14,14 +14,17 @@ use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\HolidayController;
 
 
-Route::get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
-})->middleware('auth:sanctum');
+});
 
 
 // auth
 Route::post('/login', [AuthController::class, 'login']);
+Route::put('/users/{userId}/status', [UserController::class, 'updateStatus']);
 
+action: 
+// Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
 // CRUD operations for users
 Route::get('/users', [UserController::class, 'index']);
@@ -30,6 +33,8 @@ Route::get('/users/{id}', [UserController::class, 'show']);
 Route::post('/users', [UserController::class, 'store']);
 Route::put('/users/{id}', [UserController::class, 'update']);
 Route::put('/users/{id}/toggle', [UserController::class, 'toggleStatus']);
+Route::middleware('auth:api')->put('/user/change-password', [UserController::class, 'changePassword']);
+Route::put('/users/{id}/toggle', [UserController::class, 'softDelete']);
 
 // Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
@@ -77,10 +82,12 @@ Route::delete('/attestations/{id}',[AttestationController::class,'destroy']);
 Route::get('/attestations/user/{userId}', [AttestationController::class, 'show']);
 
 //salary
-Route::post('/calculate-salary', [SalaryController::class, 'calculateSalary']);
 Route::get('/salaries', [SalaryController::class, 'getAllSalaries']);
-
-
+Route::get('/salaries/{id}', [SalaryController::class, 'getSalary']);
+Route::post('/calculate-salary', [SalaryController::class, 'calculateSalary']);
+Route::put('/salaries/{id}', [SalaryController::class, 'editSalary']);
+Route::delete('/salaries/{id}', [SalaryController::class, 'deleteSalary']);
+Route::post('/salaries/{id}/show', [SalaryController::class, 'show']);
 //holiday
 Route::get('/holidays', [HolidayController::class, 'index']);
 Route::post('/holidays', [HolidayController::class, 'store']);
@@ -92,4 +99,3 @@ Route::put('/holidays/{id}', [HolidayController::class, 'update']);
 
 
 
-Route::put('/users/{id}/toggle', [UserController::class, 'softDelete']);

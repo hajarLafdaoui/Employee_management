@@ -7,13 +7,12 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run th migrations.
+     * Run the migrations.
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->boolean('is_deleted')->default(false);
-
+        Schema::table('salaries', function (Blueprint $table) {
+            $table->date('paid_on')->nullable(); 
         });
     }
 
@@ -22,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('salaries', function (Blueprint $table) {
             //
         });
     }
