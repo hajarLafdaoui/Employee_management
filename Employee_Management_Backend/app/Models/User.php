@@ -83,7 +83,10 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo(Job::class);
     }
-
+    public function jobs()
+    {
+        return $this->belongsTo(Department::class)->hasMany(Job::class)->first();
+    }
     public function salaries()
     {
         return $this->hasMany(Salary::class);

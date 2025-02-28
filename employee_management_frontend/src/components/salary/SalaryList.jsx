@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";  
 import axiosInstance from "../Config/axiosSetup";
 import emailjs from '@emailjs/browser'; 
+import LoadingSpinner from "../../LoadingSpinner";
 
 const SalaryList = () => {
   const [salaries, setSalaries] = useState([]);
@@ -70,7 +71,7 @@ const SalaryList = () => {
     setShowMessageForm(true); 
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingSpinner/>;
   if (error) return <p>{error}</p>;
 
   return (

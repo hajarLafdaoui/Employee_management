@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../Config/axiosSetup';
 import { useNavigate } from 'react-router-dom';
+import LoadingSpinner from '../../LoadingSpinner';
 
 const AttestationRequests = () => {
     const [attestations, setAttestations] = useState([]);
-    const [history, setHistory] = useState([]);
-    const [showHistory, setShowHistory] = useState(false); // State to toggle historique display
+    const [loading, setLoading] = useState(true); 
 
     const navigate = useNavigate();
 
@@ -14,26 +14,20 @@ const AttestationRequests = () => {
         const fetchAttestations = async () => {
             try {
                 const resp = await axiosInstance.get('/attestations');
-                // Filter out "Printed" attestations
                 const filteredAttestations = resp.data.filter(attestation => attestation.status !== 'Approved');
                 setAttestations(filteredAttestations);
+                setLoading(false);
+
             } catch (error) {
                 console.error('Error fetching attestations', error);
+                setLoading(false);
+
             }
         };
         fetchAttestations();
     }, []);
 
-    // Fetch historique
-    const fetchHistorique = async () => {
-        try {
-            const resp = await axiosInstance.get('/attestations');
-            setHistory(resp.data);
-            setShowHistory(true); // Show historique after fetching
-        } catch (error) {
-            console.error('Error fetching historique', error);
-        }
-    };
+ 
 
     const handleDeleteAttestationSuccess = (deletedAttestationId) => {
         setAttestations(attestations.filter(attestation => attestation.id !== deletedAttestationId));
@@ -70,6 +64,7 @@ const AttestationRequests = () => {
     const printAttestation = (user) => {
         navigate('/print-attestation', { state: { user } });
     };
+    if (loading) return <LoadingSpinner/>;
 
     return (
         <div>
@@ -113,31 +108,8 @@ const AttestationRequests = () => {
                 </tbody>
             </table>
 
-            <button onClick={fetchHistorique} style={{ marginTop: '20px' }}>
-                {showHistory ? 'Reload Historique' : 'Show Historique'}
-            </button>
+          
 
-            {showHistory && (
-                <div>
-                    <h2>Historique</h2>
-                    <table border="1">
-                        <thead>
-                            <tr>
-                                <th>User</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {history.map((item) => (
-                                <tr key={item.id}>
-                                    <td>{item.user?.name || 'Unknown'}</td>
-                                    <td>{item.status}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            )}
         </div>
     );
 };

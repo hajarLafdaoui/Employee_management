@@ -163,10 +163,10 @@ class UserController extends Controller
         $user->is_deleted = true;
         $user->save();
 
-
         return response()->json([
             'message' => 'User soft deleted successfully',
             'user' => $user,
+            
         ], 200);
     }
 

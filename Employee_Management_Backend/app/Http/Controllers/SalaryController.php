@@ -26,15 +26,12 @@ class SalaryController extends Controller
         $userId = $validated['user_id'];
         $paidOn = $validated['paid_on'];
     
-        // Calculate the difference in days between start_date and end_date
         $dateDifference = (strtotime($endDate) - strtotime($startDate)) / (60 * 60 * 24);
     
-        // Check if the difference is exactly 28, 30, or 31 days
         if (!in_array($dateDifference, [28, 30, 31])) {
             return response()->json(['message' => 'The date range must be exactly 28, 30, or 31 days long.'], 400);
         }
     
-        // Check if salary already exists for the given date range
         $existingSalary = Salary::where('user_id', $userId)
         ->whereDate('start_date', $startDate)
         ->whereDate('end_date', $endDate)
@@ -56,7 +53,6 @@ class SalaryController extends Controller
             ], 400);
         }
     
-        // Find the user and their department/job
         $user = User::findOrFail($userId);
         $department = $user->department;
         
@@ -69,7 +65,6 @@ class SalaryController extends Controller
             return response()->json(['message' => 'Department does not have an associated job.'], 400);
         }
     
-        // Calculate attendances and leaves in the given date range
         $attendances = Attendance::where('user_id', $userId)
             ->whereBetween('attendance_date', [$startDate, $endDate])
             ->where('status', 'present')
@@ -79,18 +74,15 @@ class SalaryController extends Controller
             ->whereBetween('start_date', [$startDate, $endDate])
             ->count();
     
-        // Base salary and deductions
         $baseSalary = $job->salary;
         $attendanceDeduction = $attendances * 50;
         $leaveDeduction = $leaves * 50;
     
-        // Calculate total salary and TVA (Value Added Tax)
         $totalSalary = $baseSalary - $attendanceDeduction - $leaveDeduction;
         $tvaRate = 0.20;
         $tvaAmount = $totalSalary * $tvaRate;
         $totalSalaryWithTva = $totalSalary - $tvaAmount;
     
-        // Store the calculated salary in the database
         $salary = Salary::create([
             'user_id' => $userId,
             'start_date' => $startDate,
@@ -107,7 +99,8 @@ class SalaryController extends Controller
     
         return response()->json([
             'message' => 'Salary calculated and stored successfully with TVA',
-            'salary' => $salary
+            'salary' => $salary,
+            'basesalary'=>$baseSalary
         ]);
     }
      
@@ -121,8 +114,20 @@ class SalaryController extends Controller
     public function getSalary($id)
     {
         $salary = Salary::with('user')->findOrFail($id);
-        return response()->json(['salary' => $salary]);
+        
+        $user = $salary->user; 
+        $department = $user->department;
+        $job = $department->jobs()->first();  
+        $baseSalary = $job->salary;
+    
+        return response()->json([
+            'salary' => $salary,
+            'basesalary' => $baseSalary,
+            'job'=>$job,
+           'department'=> $department
+        ]);
     }
+    
 
     // Edit salary
     public function editSalary(Request $request, $id)

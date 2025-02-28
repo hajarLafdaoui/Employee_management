@@ -12,7 +12,7 @@ const SalaryCalculator = () => {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
-
+const[basesalary,setbasesalary]=useState("")
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -28,7 +28,7 @@ const SalaryCalculator = () => {
 
   const handleCalculate = async (e) => {
     e.preventDefault();
-    setError(''); // Reset error
+    setError(''); 
 
     if (userId && startDate && endDate) {
       try {
@@ -46,18 +46,16 @@ setEndDate("")
 
         if (response.data.salary) {
           setSalaryData(response.data.salary);
+          setbasesalary(response.data.basesalary);
+
           setShowModal(true);
         } else {
-          // Backend message if no salary is returned
           setMessage(response.data.message);
         }
       } catch (err) {
-        // Check if error is from backend validation
         if (err.response && err.response.data) {
-          // Display error message returned by backend
           setError(err.response.data.message || 'Failed to calculate salary. Please try again.');
         } else {
-          // Fallback error message
           setError('Failed to calculate salaries. Please try again.');
         }
         console.error(err);
@@ -126,15 +124,15 @@ setEndDate("")
             <span className="close" onClick={() => setShowModal(false)}>&times;</span>
             <h3>Salary Details for {salaryData.name}</h3>
             <h3>Salary Paid On: {salaryData.paid_on}</h3>
-            <h3>Salary Details for {salaryData.base_salary}</h3>
+            <p>basesalary {basesalary}</p>
 
             <p>Attendances: {salaryData.attendances}</p>
             <p>Leaves: {salaryData.leaves}</p>
-            <p>Base Salary: {salaryData.base_salary}</p>
             <p>Attendance Bonus: {salaryData.attendance_bonus}</p>
             <p>Leave Deduction: {salaryData.leave_deduction}</p>
             <p>Tva: {salaryData.tva_rate}</p>
             <p>TVA Amount: {salaryData.tva_amount}</p>
+            {/* <p>BASE SALARY: {salaryData.basesalary}</p> */}
 
             <p>Total Salary: {salaryData.total_salary}</p>
           </div>
