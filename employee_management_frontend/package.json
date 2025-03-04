@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
+    "@fortawesome/fontawesome-free": "^6.7.2",
     "@nivo/bar": "^0.88.0",
     "@nivo/pie": "^0.88.0",
     "axios": "^1.7.9",
@@ -11,6 +13,9 @@
     "cra-template": "1.2.0",
     "https-browserify": "^1.0.0",
     "i18next": "^24.2.2",
+    "jspdf": "^2.5.2",
+    "jspdf-autotable": "^5.0.2",
+    "jwt-decode": "^4.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-i18next": "^15.4.0",

@@ -90,7 +90,7 @@ const CreateUser = () => {
         country: '',
         is_active: true,
       });
-      navigate("/");
+      navigate("/EmployeeList");
     } catch (error) {
       console.error('Error creating user:', error);
       setMessage(error.response?.data?.message || 'Error creating user');
@@ -156,7 +156,6 @@ const CreateUser = () => {
           )}
         </select>
 
-        <input type="text" name="baseSalary" placeholder="Base Salary" value={userData.baseSalary} onChange={handleInputChange} />
  
         <CountrySelect onChange={handleCountryChange} />
       <button type="submit" disabled={isSubmitting}>

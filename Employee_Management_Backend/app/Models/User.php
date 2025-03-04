@@ -28,9 +28,10 @@ class User extends Authenticatable implements JWTSubject
         'username',         
         'phone',           
         'profile_picture', 
-           // Added nationality field
         'country',        // Added country field
-        'is_active'       // Ensuring this is part of the fillable attributes
+        'is_active' , 
+        'nationality',
+        'is_deleted' 
     ];
 
     /**
@@ -82,7 +83,10 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo(Job::class);
     }
-
+    public function jobs()
+    {
+        return $this->belongsTo(Department::class)->hasMany(Job::class)->first();
+    }
     public function salaries()
     {
         return $this->hasMany(Salary::class);

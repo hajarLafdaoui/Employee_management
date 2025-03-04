@@ -5,73 +5,121 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class UserSeeder extends Seeder
 {
     public function run()
     {
-        // Insert only one admin user and a few employee users
-        DB::table('users')->insert([
+        // Default profile picture path (for example purposes)
+        $adminProfilePicture = 'storage/profile_pictures/gRKQT7kjtcgVYFvDyJ9NY3llObvmUbfZ6xKeSXC7.png'; // Ensure this path is correct
+
+        // Data for users
+        $users = [
             [
-                'name' => 'Alice Johnson',
-                'email' => 'alicejohnson@example.com',
-                'password' => Hash::make('aliceSecure789'), // Hashed password
-                'role' => 'admin',
                 'department_id' => 1,
-                'username' => 'alicejohnson',
-                'phone' => '5556667777',
-                'profile_picture' => null,
-                'nationality' => 'British',
-                'country' => 'UK',
-                'is_active' => 0,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'John Doe',
-                'email' => 'johndoe@example.com',
-                'password' => Hash::make('password123'),
                 'role' => 'employee',
-                'department_id' => 1,
-                'username' => 'johndoe',
+                'name' => 'John Doe',
+                'email' => 'john.doe@example.com',
+                'gender' => 'male',
+                'password' => Hash::make('password'),
+                'username' => 'john.doe',
                 'phone' => '1234567890',
                 'profile_picture' => null,
-                'nationality' => 'American',
                 'country' => 'USA',
-                'is_active' => 0,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'is_active' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'is_deleted' => 0,
             ],
             [
+                'department_id' => 2,
+                'role' => 'admin',
                 'name' => 'Jane Smith',
-                'email' => 'janesmith@example.com',
-                'password' => Hash::make('securePass456'),
-                'role' => 'employee',
-                'department_id' => 1,
-                'username' => 'janesmith',
-                'phone' => '9876543210',
-                'profile_picture' => null,
-                'nationality' => 'Canadian',
-                'country' => 'Canada',
-                'is_active' => 0,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'email' => 'jane.smith@example.com',
+                'gender' => 'female',
+                'password' => Hash::make('password'),
+                'username' => 'jane.smith',
+                'phone' => '0987654321',
+                'profile_picture' => $adminProfilePicture,
+                'country' => 'UK',
+                'is_active' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'is_deleted' => 0,
             ],
             [
-                'name' => 'Robert Brown',
-                'email' => 'robertbrown@example.com',
-                'password' => Hash::make('robertPass321'),
+                'department_id' => 3,
                 'role' => 'employee',
-                'department_id' => 1,
-                'username' => 'robertbrown',
-                'phone' => '4445556666',
+                'name' => 'Alice Johnson',
+                'email' => 'alice.johnson@example.com',
+                'gender' => 'female',
+                'password' => Hash::make('password'),
+                'username' => 'alice.johnson',
+                'phone' => '1122334455',
                 'profile_picture' => null,
-                'nationality' => 'Australian',
                 'country' => 'Australia',
-                'is_active' => 0,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'is_active' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'is_deleted' => 0,
             ],
-        ]);
+            [
+                'department_id' => 4,
+                'role' => 'employee',
+                'name' => 'Bob Lee',
+                'email' => 'bob.lee@example.com',
+                'gender' => 'male',
+                'password' => Hash::make('password'),
+                'username' => 'bob.lee',
+                'phone' => '2233445566',
+                'profile_picture' => null,
+                'country' => 'Canada',
+                'is_active' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'is_deleted' => 0,
+            ],
+            [
+                'department_id' => 3,
+                'role' => 'employee',
+                'name' => 'Sarah Williams',
+                'email' => 'sarah.williams@example.com',
+                'gender' => 'female',
+                'password' => Hash::make('password'),
+                'username' => 'sarah.williams',
+                'phone' => '3344556677',
+                'profile_picture' => null,
+                'country' => 'Germany',
+                'is_active' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'is_deleted' => 0,
+            ],
+            [
+                'department_id' => 2,
+                'role' => 'employee',
+                'name' => 'David Miller',
+                'email' => 'david.miller@example.com',
+                'gender' => 'male',
+                'password' => Hash::make('password'),
+                'username' => 'david.miller',
+                'phone' => '4455667788',
+                'profile_picture' => null,
+                'country' => 'France',
+                'is_active' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'is_deleted' => 0,
+            ],
+        ];
+
+        // Insert or update users ensuring unique email and username
+        foreach ($users as $user) {
+            DB::table('users')->updateOrInsert(
+                ['email' => $user['email'], 'username' => $user['username']],
+                $user
+            );
+        }
     }
 }

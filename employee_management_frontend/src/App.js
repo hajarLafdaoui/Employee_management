@@ -5,9 +5,11 @@ import Admin_dashboard from "./components/Admin/Admin_dashboard";
 import Employee_dashboard from "./components/Employee/Employee_dashboard";
 import CreateUser from "./components/CreateUser";
 import EmployeeList from "./components/EmployeeList";
+import UpdateUser from "./components/UpdateUser";
+
 import AdminLeaveRequests from "./components/Leave/AdminLeaveRequests";
-import AttendanceHeader from "./components/Attendance/AttendanceHeader";
-import EmployeeAttendance from "./components/Attendance/EmployeeAttendance";
+import AttendanceHeader from "./components/attendance/AttendanceHeader";
+import EmployeeAttendance from "./components/attendance/EmployeeAttendance";
 
 import SignOut from "./components/Employee/SignOut";
 import Profile from "./components/Employee/Profile";
@@ -21,6 +23,8 @@ import HolidayList from "./components/Employee/HolidayList";
 import AttestationRequests from "./components/AttestatioRequest/AttestationRequests";
 import SalaryCalculator from "./components/salary/SalaryCalculator";
 import SalaryList from "./components/salary/SalaryList";
+import SalaryDetail from "./components/salary/SalaryDetail";
+import HistoryPage from "./components/AttestatioRequest/HistoryPage";
 
 
 const ProtectedRoute = ({ children, role }) => {
@@ -61,14 +65,19 @@ function App() {
           }
         >
           <Route path="CreateUser" element={<CreateUser />} />
+          <Route path="update-user/:id" element={<UpdateUser />} />
           <Route path="EmployeeList" element={<EmployeeList />} />
+
           <Route path="AdminLeaveRequests" element={<AdminLeaveRequests />} />
          
           <Route path="Attendance" element={<AttendanceHeader />} />
           <Route path="HolidayCrud" element={<AdminHolidayManagement />} />
           <Route path="Attestation" element={<AttestationRequests />} />
+
+          <Route path="/historyattest" element={<HistoryPage/>} />
           <Route path="payroll" element={<SalaryCalculator />} />
           <Route path="salarylist" element={<SalaryList />} />
+          <Route path="salary/:id" element={<SalaryDetail />} />
 
           <Route path="SignOut" element={<SignOut  user={user}/>} />
           <Route path="Departments" element={<MainDepartments />} />

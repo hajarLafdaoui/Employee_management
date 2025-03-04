@@ -15,12 +15,13 @@ class UserController extends Controller
     public function index()
     {
         $employees = User::whereIn('role', ['employee', 'sub-admin'])
-            ->get();
+        ->where('is_deleted', false)
+        ->get(); 
 
         return response()->json($employees);
     }
 
-    // Get all employees 
+    // Get all employees
     public function fetchEmployees()
     {
         $employees = User::where('role', 'employee')->get();
@@ -39,6 +40,7 @@ class UserController extends Controller
         return response()->json($user);
     }
 
+    // Store a new user
     public function store(Request $request)
     {
         $isLoggedIn = auth()->check(); // returns true if the user is authenticated
@@ -92,6 +94,7 @@ class UserController extends Controller
         ], 201);
     }
 
+    // Update an existing user
     public function update(Request $request, $id)
     {
         $user = User::find($id);
@@ -143,11 +146,12 @@ class UserController extends Controller
         $user->save();
 
         return response()->json([
-            'message' => 'User updated successfully',
-            'user' => $user
+            'message' => 'User updated successfully!',
+            'user' => $user,
         ], 200);
     }
 
+    // Soft delete a user
     public function softDelete($id)
     {
         $user = User::find($id);
@@ -156,39 +160,76 @@ class UserController extends Controller
             return response()->json(['message' => 'User not found'], 404);
         }
 
+        $user->is_deleted = true;
         $user->save();
 
         return response()->json([
             'message' => 'User soft deleted successfully',
             'user' => $user,
+            
         ], 200);
     }
 
+    // Get user notifications
     public function getUserNotifications(Request $request)
     {
         return response()->json($request->user()->notifications);
     }
+
+    // Update user status (active or inactive)
     public function updateStatus(Request $request, $userId)
     {
-        // Log received request
         \Log::info("Updating user status: ", ['userId' => $userId, 'status' => $request->is_active]);
-    
+
         $request->validate([
             'is_active' => 'required|boolean',
         ]);
-    
+
         try {
             $user = User::findOrFail($userId);
             $user->is_active = $request->is_active;
             $user->save();
-    
+
             \Log::info("User status updated successfully", ['user' => $user]);
-    
+
             return response()->json(['message' => 'User status updated successfully']);
         } catch (\Exception $e) {
             \Log::error("Failed to update user status", ['error' => $e->getMessage()]);
             return response()->json(['error' => 'Failed to update user status'], 500);
         }
     }
-    
+
+    // Change user password
+    public function changePassword(Request $request)
+    {
+        $user = $request->user(); // Get the authenticated user
+
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        // Validate the input
+        $validator = Validator::make($request->all(), [
+            'old_password' => 'required|string|min:8',
+            'new_password' => 'required|string|min:8|confirmed', // Ensure 'new_password' and 'confirm_password' match
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        // Check if the old password matches
+        if (!Hash::check($request->old_password, $user->password)) {
+            return response()->json(['message' => 'Old password is incorrect'], 400);
+        }
+
+        // Update the password
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return response()->json(['message' => 'Password updated successfully']);
+    }
 }
