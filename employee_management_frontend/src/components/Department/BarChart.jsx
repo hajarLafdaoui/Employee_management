@@ -9,82 +9,71 @@ const BarChart = () => {
     const fetchData = async () => {
       try {
         const response = await axiosInstance.get('employee-count');
+        console.log("API Response:", response.data); 
         setChartData(response.data);
       } catch (error) {
+        console.error("Error fetching data:", error);
       }
     };
-
+    
     fetchData();
   }, []);
 
-  const data = chartData.map(d => ({
-    department: d.department,
-    employees: d.employee_count,
-  }));
+  const data = chartData
+    .map(d => ({
+      department: d.department || "Unknown",
+      employees: Number(d.employee_count) || 0,
+    }))
+    .sort((a, b) => a.employees - b.employees);
 
   return (
     <div className='bar'>
-
-
       {data.length > 0 ? (
         <ResponsiveBar
           data={data}
           keys={['employees']}
           indexBy="department"
-          margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+          layout="horizontal"
+          margin={{ top: 10, right: 30, bottom: 50, left: 100 }}
           padding={0.3}
-          layout="vertical"
           colors={(d) => {
-            if (d.value <= 1) {
-              return '#D91656';  
-            } else if (d.value > 1 && d.value <= 3) {
-              return '#EB5B00';  
-            } else if (d.value > 3 && d.value <= 5) {
-              return '#FFB200';  
+            if (d.value <= 5 && d.value > 0) {
+              return '#973AA8';
+            } else if (d.value > 5 && d.value <= 10) {
+              return '#C05299';
+            } else if (d.value > 10 && d.value <= 15) {
+              return '#FF8BA0';
+            } else if (d.value > 15 && d.value <= 20) {
+              return '#BD68EE';
+            } else if (d.value > 20) {
+              return '#D55D92';
             } else {
-              return '#FFB200';  
+              return 'transparent';
             }
           }}
           axisBottom={{
+            tickValues: [5, 10, 15, 20, 25],
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
             legend: 'Number of Employees',
             legendPosition: 'middle',
             legendOffset: 32,
+            format: (value) => (value === 0 ? '' : value),
           }}
           axisLeft={{
-            tickValues: [0, 1, 2, 3, 4, 5],
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
             legend: 'Departments',
             legendPosition: 'middle',
-            legendOffset: -40,
+            legendOffset: -80,
+            format: (value) => `${value}`,
           }}
+          labelSkipWidth={12}
+          labelSkipHeight={12}
+          labelTextColor="white"
         />
       ) : (
         <div>Loading...</div>
       )}
-      <div className='meaning'
-      >
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-          <div style={{ width: '20px', height: '20px', backgroundColor: '#D91656', marginRight: '5px' }}></div>
-          <span>1 or fewer</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-          <div style={{ width: '20px', height: '20px', backgroundColor: '#EB5B00', marginRight: '5px' }}></div>
-          <span>1-3</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-          <div style={{ width: '20px', height: '20px', backgroundColor: '#FFB200', marginRight: '5px' }}></div>
-          <span>3-5</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-          <div style={{ width: '20px', height: '20px', backgroundColor: '#FFB200', marginRight: '5px' }}></div>
-          <span>5+</span>
-        </div>
-      </div>
     </div>
   );
 };

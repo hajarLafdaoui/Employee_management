@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const DepartmentForm = ({ 
+  departments,
+  setDepartments,
   department, 
   onClose, 
   onSuccess, 
   onUpdate, 
-  setShowErrorAlert ,
-  
+  setShowErrorAlert 
 }) => {
   const [name, setName] = useState(department?.name || "");
   const [description, setDescription] = useState(department?.description || "");
@@ -16,59 +17,72 @@ const DepartmentForm = ({
   // Update form fields when the department prop changes.
   useEffect(() => {
     if (department) {
-      setName(department.name);
-      setDescription(department.description);
-      setLogo(null);
+      setName(department.name || "");
+      setDescription(department.description || "");
+      setLogo(null); // Reset logo if department changes
     } else {
-      setName("");
+      setName(""); // Clear form fields if no department
       setDescription("");
       setLogo(null);
     }
   }, [department]);
+  
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const formData = new FormData();
     formData.append("name", name);
     formData.append("description", description);
     if (logo) {
       formData.append("logo", logo);
     }
-
+  
     try {
       let response;
-      if (department) {
-        // Edit mode: update an existing department.
+      if (department && department.id) {
         response = await axios.post(
           `http://127.0.0.1:8000/api/departments/${department.id}`,
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
-        if (onUpdate) onUpdate(response.data); // Update parent state if callback provided.
       } else {
-        // Add mode: create a new department.
         response = await axios.post(
           "http://127.0.0.1:8000/api/departments",
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
       }
-
-      onClose();   // Close modal
-      onSuccess(); // Show success alert
       
-      // Optionally, clear the form if adding.
+      
+  
+      if (response.data) {
+        setDepartments((prevDepartments) => {
+          if (department) {
+            return prevDepartments.map((dept) =>
+              dept.id === department.id ? response.data : dept
+            );
+          } else {
+            return [...prevDepartments, response.data];
+          }
+        });
+      }
+  
+      onClose();  // Close modal
+      onSuccess();  // Success message
+  
       if (!department) {
+        // Reset form after adding new department
         setName("");
         setDescription("");
         setLogo(null);
       }
     } catch (error) {
-      onClose(); // Close modal even if the request fails
+      onClose();
       setShowErrorAlert(true);
       setTimeout(() => setShowErrorAlert(false), 10000);
-      console.error("Error in department operation:", error.response?.data || error);
+      console.error("Error with department operation:", error.response?.data || error);
     }
   };
 
@@ -126,7 +140,15 @@ const DepartmentForm = ({
             />
           </label>
         </div>
+
+        {department?.logo && (
+          <div className="current-logo">
+            <img src={department.logo} alt="Current logo" />
+            <p>Current Logo</p>
+          </div>
+        )}
       </div>
+
       <button className="vertical-button" type="submit">
         {department ? "Update Department" : "Add Department"}
       </button>

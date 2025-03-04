@@ -2,32 +2,39 @@ body {
   background-color: $grey ;
   font-family: 'Montserrat', sans-serif;
   overflow-x: hidden !important;
+
 }
 
 .Container {
   display: flex;
-  margin: 10px;
+  margin-top: 10px !important;
   width: 100%;
+  justify-content: space-between;
 
 }
 
 // NAVBAR
 .AdminMenu {
   background-color: $white;
+  position: fixed !important;
+
+  // width: 20%;
   display: flex;
   border-radius: 10px;
-  height: 100vh !important;
+  // height: 100vh !important;
 
   .Navbar {
-    padding: 5px 10px 20px 10px;
+    padding: 5px 10px 10px 10px;
     display: flex;
     flex-direction: column;
     gap: 20px;
+
     .logoContainer {
       border-bottom: 1px solid $grey;
       padding-top: 10px;
       padding-bottom: 20px;
     }
+
     .NavbarMenu {
       display: flex;
       flex-direction: column;
@@ -40,7 +47,9 @@ body {
       width: 240px;
       background-color: $grey;
       border-radius: 25px;
+      z-index: 4949499999 !important;
     }
+
     .NavbarItem {
       display: flex;
       flex-direction: row;
@@ -49,6 +58,7 @@ body {
       padding: 10px;
       width: 100%;
       gap: 10px;
+
       .navLink {
         display: flex;
         align-items: center;
@@ -57,11 +67,13 @@ body {
         font-size: 1rem;
         width: 100%;
         transition: background-color 0.3s ease;
+
         &:hover {
           color: $darkGrey;
           border-radius: 5px;
         }
       }
+
       .logout {
         flex-direction: row !important;
       }
@@ -75,6 +87,7 @@ body {
       width: 100%;
       background-color: $yellow;
       border-radius: 10px;
+
       .dropdownMenu {
         display: none;
         flex-direction: column;
@@ -84,10 +97,12 @@ body {
         margin-top: 10px;
         width: 100%;
       }
+
       &.expanded .dropdownMenu {
         display: flex;
         gap: 5px;
       }
+
       .dropdownMenuItem {
         display: flex;
         align-items: center;
@@ -97,6 +112,11 @@ body {
         border-radius: 5px;
         transition: background-color 0.3s ease;
       }
+
+      .dropdownMenuItemWhite {
+        color: $white !important;
+      }
+
       .dropdown-title {
         display: flex;
         align-items: center;
@@ -132,10 +152,12 @@ body {
 
   }
 }
+
 // SECOND 
 .secondPart {
-  margin: 0 20px;
-  width: 100%;
+  // margin: 0 20px;
+  margin-left: 280px;
+  width: 75%;
 
   .head {
     display: flex;
@@ -191,9 +213,9 @@ body {
           height: 18px;
         }
       }
-      .dark-icon{
 
-      }
+      .dark-icon {}
+
       .admin-image {
         width: 38px;
         height: 38px;
