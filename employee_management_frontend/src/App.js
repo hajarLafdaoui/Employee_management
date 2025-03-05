@@ -19,9 +19,9 @@ import EmployeeAttendance from "./components/attendance/EmployeeAttendance";
 
 import SignOut from "./components/Employee/SignOut";
 import Profile from "./components/Employee/Profile";
-import "./styles/main.scss";
-import "./App.css";
-import AddDepartment from "./components/Department/AddDepartment";
+import './styles/main.scss';
+import './App.css';
+// import AddDepartment from "./components/Department/AddDepartment";
 import MainDepartments from "./components/Department/MainDepartments";
 import AttestationPage from "./components/Employee/AttestationPage";
 import AdminHolidayManagement from "./components/Admin/AdminHolidayManagement";
@@ -85,7 +85,7 @@ function App() {
 
           <Route path="SignOut" element={<SignOut user={user} />} />
           <Route path="Departments" element={<MainDepartments />} />
-          <Route path="addDepartment" element={<AddDepartment />} />
+          {/* <Route path="addDepartment" element={<AddDepartment />} /> */}
         </Route>
 
         {/* Employee Routes */}

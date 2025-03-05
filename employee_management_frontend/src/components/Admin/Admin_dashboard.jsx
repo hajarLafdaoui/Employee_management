@@ -81,7 +81,7 @@ const AdminDashboard = ({ adminUser }) => {
         <nav className="Navbar">
           <div className="logoContainer">
             <Link className="navLink" to="/">
-              <img src="/logo/logo.png" alt="Logo" />
+              {/* <img src="/logo/logo.png" alt="Logo" /> */}
             </Link>
           </div>
           <ul className="NavbarMenu">
@@ -95,9 +95,9 @@ const AdminDashboard = ({ adminUser }) => {
                   </div>
                   <ul className="dropdownMenu">
                     {subItems.map(({ icon, label, link }) => (
-                      <li key={label} className="dropdownMenuItem">
+                      <li key={label} className="dropdownMenuItem dropdownMenuItemWhite">
                         {icon}
-                        <Link className="dropdownLink" to={link}>{label}</Link>
+                        <Link className="dropdownLink dropdownMenuItemWhite" to={link}>{label}</Link>
                       </li>
                     ))}
                   </ul>

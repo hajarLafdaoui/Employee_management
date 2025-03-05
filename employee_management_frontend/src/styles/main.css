@@ -12,18 +12,19 @@ body {
 
 .Container {
   display: flex;
-  margin: 10px;
+  margin-top: 10px !important;
   width: 100%;
+  justify-content: space-between;
 }
 
 .AdminMenu {
-  background-color: #fff;
+  background-color: #ffffff;
+  position: fixed !important;
   display: flex;
   border-radius: 10px;
-  height: 100vh !important;
 }
 .AdminMenu .Navbar {
-  padding: 5px 10px 20px 10px;
+  padding: 5px 10px 10px 10px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -45,6 +46,7 @@ body {
   width: 240px;
   background-color: #eee;
   border-radius: 25px;
+  z-index: 4949499999 !important;
 }
 .AdminMenu .Navbar .NavbarItem {
   display: flex;
@@ -77,7 +79,7 @@ body {
   align-items: flex-start;
   padding: 10px;
   width: 100%;
-  background-color: #ffd60a;
+  background-color: #6247AA;
   border-radius: 10px;
 }
 .AdminMenu .Navbar .dropdown-item .dropdownMenu {
@@ -102,6 +104,9 @@ body {
   border-radius: 5px;
   transition: background-color 0.3s ease;
 }
+.AdminMenu .Navbar .dropdown-item .dropdownMenuItemWhite {
+  color: #ffffff !important;
+}
 .AdminMenu .Navbar .dropdown-item .dropdown-title {
   display: flex;
   align-items: center;
@@ -110,7 +115,7 @@ body {
   cursor: pointer;
   transition: background-color 0.3s ease;
   width: 100%;
-  background-color: #fff;
+  background-color: #ffffff;
   padding: 10px;
   border-radius: 5px;
   justify-content: start;
@@ -132,8 +137,8 @@ body {
 }
 
 .secondPart {
-  margin: 0 20px;
-  width: 100%;
+  margin-left: 280px;
+  width: 75%;
 }
 .secondPart .head {
   display: flex;
@@ -144,7 +149,7 @@ body {
 .secondPart .head .input-container {
   display: flex;
   gap: 5px;
-  background-color: #fff;
+  background-color: #ffffff;
   border-radius: 30px;
   justify-content: center;
   align-items: start;
@@ -161,7 +166,7 @@ body {
   padding: 10px;
   border: none;
   border-radius: 10px;
-  background-color: #fff;
+  background-color: #ffffff;
   outline: 0;
 }
 .secondPart .head .right {
@@ -175,7 +180,7 @@ body {
 .secondPart .head .right .icon-container {
   border-radius: 50%;
   padding: 10px;
-  background-color: #fff;
+  background-color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -203,7 +208,7 @@ body {
 
 body.dark-mode {
   background: #0B0B0B;
-  color: #fff !important;
+  color: #ffffff !important;
 }
 
 .dark-mode .Navbar {
@@ -212,11 +217,11 @@ body.dark-mode {
 
 .dark-mode .AdminMenu {
   background: linear-gradient(to bottom right, #474B4E 5%, #434142 10%, #0B0B0B 100%) !important;
-  color: #fff !important;
+  color: #ffffff !important;
 }
 
 .dark-mode a {
-  color: #fff !important;
+  color: #ffffff !important;
 }
 
 .dark-mode .input::-moz-placeholder {
@@ -238,7 +243,7 @@ body.dark-mode {
 
 .dark-mode .searchIcon {
   background-color: #434142 !important;
-  color: #fff;
+  color: #ffffff;
 }
 
 .dark-mode .input-container {
@@ -246,13 +251,13 @@ body.dark-mode {
 }
 
 .dark-mode .dropdown-item {
-  background-color: #ffd60a;
+  background-color: #6247AA;
   opacity: 0.8;
 }
 
 .dark-mode input {
   background: transparent !important;
-  color: #fff !important;
+  color: #ffffff !important;
 }
 
 .dark-mode .NavbarMenu {
@@ -261,7 +266,7 @@ body.dark-mode {
 
 .dark-mode .dropdown-title {
   background-color: #343435 !important;
-  color: #fff !important;
+  color: #ffffff !important;
 }
 
 .hamburger {
@@ -314,7 +319,7 @@ body.dark-mode {
     top: 0;
     left: 0;
     height: 100vh;
-    background-color: #fff;
+    background-color: #ffffff;
     z-index: 1000;
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out;
@@ -323,8 +328,9 @@ body.dark-mode {
     transform: translateX(0);
   }
   .Container {
-    margin: 5px !important;
-    width: 100%;
+    margin: 0 !important;
+    width: 94%;
+    z-index: 678398 !important;
   }
   .secondPart {
     margin: 0 10px;
@@ -349,7 +355,7 @@ body.dark-mode {
     width: 100%;
     gap: 2px;
     flex: 1;
-    background-color: #fff;
+    background-color: #ffffff;
     border-radius: 30px;
     justify-content: start !important;
   }
@@ -362,25 +368,8 @@ body.dark-mode {
     flex-direction: row !important;
   }
 }
-/* Style for the Modal */
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 20px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+@media (min-width: 601px) and (max-width: 1024px) {
+  .Container {
+    width: 97%;
+  }
 }/*# sourceMappingURL=main.css.map */

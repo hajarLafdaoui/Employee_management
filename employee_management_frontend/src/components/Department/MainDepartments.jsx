@@ -19,6 +19,17 @@ const MainDepartments = () => {
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const handleUpdate = (updatedDepartment) => {
+    setDepartments((prev) =>
+      prev.map((dept) =>
+        dept.id === updatedDepartment.id ? updatedDepartment : dept
+      )
+    );
+    setSuccessMessage("Department has been updated!");
+    setShowSuccessAlert(true);
+    setTimeout(() => setShowSuccessAlert(false), 5000);
+  };
+  
   const openModal = (department = null) => {
     setSelectedDepartment(department);
     setIsModalOpen(true);
@@ -34,7 +45,7 @@ const MainDepartments = () => {
       <div className="DepaHead">
         <h3>Department</h3>
         <div onClick={() => openModal()} className="buttonContainer">
-          <img className='plusIcon' src="/icons/plus.png" alt="Add" />
+          <img className='plusIcon' src="/icons/icons8-plus-50 (1).png" alt="Add" />
           <button>Add New</button>
         </div>
       </div>
@@ -55,7 +66,10 @@ const MainDepartments = () => {
           <img src="/icons/close.png" className='close' alt="Close" onClick={closeModal} />
         </div>
 
+
         <DepartmentForm
+         departments={departments} 
+        setDepartments={setDepartments} 
           department={selectedDepartment}
           onClose={closeModal}
           onSuccess={(updatedDepartment) => {
@@ -67,12 +81,14 @@ const MainDepartments = () => {
 
             setSuccessMessage(selectedDepartment ? "Department has been updated!" : "Department has been added!");
             setShowSuccessAlert(true);
-            setTimeout(() => setShowSuccessAlert(false), 10000);
+            setTimeout(() => setShowSuccessAlert(false), 5000);
           }}
           setShowErrorAlert={() => {
             setErrorMessage(selectedDepartment ? "Failed to update department. Please try again later." : "Failed to add department. Please try again later.");
             setShowErrorAlert(true);
           }}
+          onUpdate={handleUpdate} 
+
         />
       </Modal>
 
