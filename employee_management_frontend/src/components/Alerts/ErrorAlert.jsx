@@ -10,7 +10,7 @@ const ErrorAlert = ({ message, onClose }) => {
             <img src="icons/fail.png" className="error" alt="Error" />
           </div>
           <div className="text-content">
-            <p className="text-white">Failed</p>
+            <p className="text-white">Operation Failed</p>
             <p className="text-gray">{message}</p>
           </div>
         </div>

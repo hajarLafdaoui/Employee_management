@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Job;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class JobController extends Controller
 {
@@ -25,17 +26,24 @@ class JobController extends Controller
     }
 
     public function update(Request $request, Job $job)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'salary' => 'required|numeric|min:0',
-            'department_id' => 'required|exists:departments,id'
-        ]);
-        
-        $job->update($request->all());
-        return response()->json($job);
-    }
+{
+    // Debugging request data
+    Log::debug($request->all());
+
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'required|string',
+        'salary' => 'required|numeric|min:0',
+        'department_id' => 'required|exists:departments,id'
+    ]);
+    
+    $job->update($request->all());
+
+    // Check if update was successful
+    Log::debug('Job updated:', $job->toArray());
+
+    return response()->json($job);
+}
 
     public function destroy($id)
     {
