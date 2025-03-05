@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { FaSignOutAlt, FaSearch, FaSun, FaMoon, FaBell, FaBars, FaChevronLeft, FaChevronDown, FaChevronUp, FaTachometerAlt, FaUserPlus, FaUsers, FaCalendarCheck, FaMoneyBillWave, FaBuilding, FaCalendarAlt } from "react-icons/fa";
+import {
+  FaSignOutAlt, FaSearch, FaSun, FaMoon, FaBell, FaBars, FaChevronLeft,
+  FaChevronDown, FaChevronUp, FaTachometerAlt, 
+ FaMoneyBillWave, FaBuilding, FaCalendarAlt
+} from "react-icons/fa";
+import { MdLibraryAddCheck } from "react-icons/md";
+import { FaRectangleList } from "react-icons/fa6";
+import { RiLockPasswordFill } from "react-icons/ri";
+import { PiCertificateFill } from "react-icons/pi";
+import { FaAddressBook } from "react-icons/fa6";
+
+
+
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import LanguageSwitcher from '../LanguageSwitcher';
 import { useTranslation } from 'react-i18next'; // Import the translation hook
 
 const Employee_dashboard = ({ employeeUser}) => {
   const { t } = useTranslation(); // Get the translation function
-  const [dropdowns, setDropdowns] = useState({ employees: true });
+  const [dropdowns, setDropdowns] = useState({ profile: true });
   const [date, setDate] = useState(new Date());
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -72,12 +84,11 @@ const Employee_dashboard = ({ employeeUser}) => {
               <FaTachometerAlt className="darkIcon" />
               <Link className="navLink" to="/Employee_dashboard">{t('dashboard')}</Link> {/* Translated */}
             </li>
-            {renderDropdown(t('employees'), <FaUsers />, "employees", [
-              { icon: <FaUserPlus />, label: t('add_employee'), link: "attestations" },
-              { icon: <FaUsers />, label: t('employee_list'), link: "/EmployeeList" },
-              { icon: <FaCalendarCheck />, label: t('employee_leave'), link: "/AdminLeaveRequests" },
-              { icon: <FaMoneyBillWave />, label: t('employee_payroll'), link: "/Payroll" },
-              { icon: <FaMoneyBillWave />, label: t('holidays_of_year'), link: "HolidayList" },
+            {renderDropdown(t('Profile'), <FaAddressBook />, "profile", [
+              { icon: <PiCertificateFill />, label: t('Attestation'), link: "attestations" },
+              { icon: <MdLibraryAddCheck />, label: t('Leave_request'), link: "leave" },
+              { icon: <RiLockPasswordFill />, label: t('Change_password'), link: "ChangePassword" },
+              { icon: <FaRectangleList />, label: t('Holidays_of_year'), link: "HolidayList" },
             ])}
             <li className="NavbarItem">
               <FaBuilding />
@@ -89,13 +100,13 @@ const Employee_dashboard = ({ employeeUser}) => {
             </li>
             {renderDropdown(t('payroll'), <FaMoneyBillWave />, "payroll", [
               { icon: <FaMoneyBillWave />, label: t('view_payroll'), link: "/payroll/view" },
-              { icon: <FaMoneyBillWave />, label: t('generate_payroll'), link: "/payroll/generate" },
             ])}
-          </ul>
-          <li className="NavbarItem logout">
+            <li className="NavbarItem logout">
             <FaSignOutAlt className="logout-icon" />
             <Link className="navLink" to="/SignOut">{t('logout')}</Link>
           </li>
+          </ul>
+          
         </nav>
       </div>
 

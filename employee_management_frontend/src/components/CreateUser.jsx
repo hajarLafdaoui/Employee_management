@@ -14,7 +14,7 @@ const CreateUser = () => {
     phone: '',
     profilePicture: null,
     departmentId: '',
-    baseSalary: '',
+    baseSalary: 0,
     gender: '',
     country: '',
     is_active: true,
@@ -46,7 +46,7 @@ const CreateUser = () => {
     const { name, email, password, username, role, phone, departmentId, baseSalary, gender, country } = userData;
 
     // Simple client-side validation for required fields
-    if (!name || !email || !password || !role || !username || !departmentId || !baseSalary || !gender || !country) {
+    if (!name || !email || !password || !role || !username || !departmentId  || !gender || !country) {
       setMessage('Please fill in all required fields.');
       return;
     }
@@ -85,7 +85,7 @@ const CreateUser = () => {
         phone: '',
         profilePicture: null,
         departmentId: '',
-        baseSalary: '',
+        baseSalary: 0,
         gender: '',
         country: '',
         is_active: true,
