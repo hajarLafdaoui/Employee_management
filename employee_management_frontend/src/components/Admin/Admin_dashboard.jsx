@@ -47,8 +47,8 @@ const AdminDashboard = ({ adminUser }) => {
         { label: "Add Employee", icon: <FaUserPlus />, link: "/CreateUser" },
         { label: "Employee List", icon: <FaUsers />, link: "/EmployeeList" },
         { label: "Employee Leave", icon: <FaCalendarCheck />, link: "/AdminLeaveRequests" },
-        { label: "Employee Payroll", icon: <FaMoneyBillWave />, link: "/Payroll" },
-        { label: "Salary List", icon: <FaMoneyBillWave />, link: "/salarylist" },
+        // { label: "Employee Payroll", icon: <FaMoneyBillWave />, link: "/Payroll" },
+        // { label: "Salary List", icon: <FaMoneyBillWave />, link: "/salarylist" },
         { label: "Employee Holiday", icon: <FaUsers />, link: "/HolidayCrud" },
         { label: "Attestation Requests", icon: <FaUsers />, link: "/Attestation" },
         { label: "Attestation history", icon: <FaUsers />, link: "/historyattest" },
@@ -62,8 +62,8 @@ const AdminDashboard = ({ adminUser }) => {
       icon: <FaMoneyBillWave />,
       key: "payroll",
       subItems: [
-        { label: "View Payroll", icon: <FaMoneyBillWave />, link: "/payroll/view" },
-        { label: "Generate Payroll", icon: <FaMoneyBillWave />, link: "/payroll/generate" },
+        { label: "View Payroll", icon: <FaMoneyBillWave />, link: "/salarylist" },
+        { label: "Generate Payroll", icon: <FaMoneyBillWave />, link: "/payroll" },
       ],
     },
   ];

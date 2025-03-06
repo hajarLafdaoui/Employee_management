@@ -564,3 +564,52 @@ input:valid~label {
     cursor: pointer;
   }
 }
+
+
+
+
+//style select
+
+
+
+.select-input {
+  border-radius: 1rem;
+  font-size: 1rem;
+  width: 100%;
+  padding: 10px 12px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  transition: all 0.3s ease;
+ 
+}
+
+.select-input-container {
+  position: relative;
+  width: 100%;
+}
+
+.select-input-container::after {
+  content: '▼';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  
+  pointer-events: none;
+}
+
+
+
+//salaryform
+
+.salaryform{
+  background-color: #fff;
+  padding: 30px 100px;
+  border-radius: 10px;
+}
+
+.salaryform h2{
+  text-align: center;
+  margin-bottom: 20px;
+}
