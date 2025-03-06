@@ -1,0 +1,254 @@
+form {
+    .vertical-button {
+        width: 100%;
+    }
+
+    button {
+        margin-top: 20px;
+        appearance: none;
+        background-color: transparent;
+        border: 0.125em solid #1A1A1A;
+        border-radius: 0.9375em;
+        box-sizing: border-box;
+        color: #3B3B3B;
+        cursor: pointer;
+        display: inline-block;
+        font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        font-size: 16px;
+        font-weight: 600;
+        line-height: normal;
+        min-height: 2.8em;
+        min-width: 0;
+        outline: none;
+        padding: .2em 5em;
+        text-align: center;
+        text-decoration: none;
+        transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        will-change: transform;
+    }
+
+    button:disabled {
+        pointer-events: none;
+    }
+
+    button:hover {
+        color: #fff;
+        background-color: #805ebf;
+        border: none;
+        box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+        transform: translateY(-2px);
+    }
+
+    button:active {
+        box-shadow: none;
+        transform: translateY(0);
+    }
+}
+
+.inputs {
+    display: flex !important;
+    gap: 5px;
+}
+
+.inputs-vertical {
+    flex-direction: column;
+    gap: 14px;
+}
+
+.input-group {
+    position: relative;
+}
+
+.input-vertical {
+    border: solid 1.5px #9e9e9e;
+    border-radius: 1rem;
+    background: none;
+    width: 100%;
+    font-size: 1rem;
+    color: #f5f5f5;
+    transition: border 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input {
+    border: solid 1.5px #9e9e9e;
+    border-radius: 1rem;
+    background: none;
+    padding: .8rem;
+    font-size: 1rem;
+    color: #000;
+    transition: border 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.user-label {
+    position: absolute;
+    left: 15px;
+    color: #e8e8e8;
+    pointer-events: none;
+    transform: translateY(1rem);
+    transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input:focus,
+input:valid {
+    outline: none;
+    border: 1.5px solid #805ebf;
+}
+
+.input:focus~label,
+input:valid~label {
+    transform: translateY(-50%) scale(0.8);
+    background-color: #fff;
+    padding: 0 .2em;
+    color: #805ebf;
+}
+
+.input:focus~.user-label,
+.input:not(:placeholder-shown)~.user-label {
+    transform: translateY(-50%) scale(0.8);
+    background-color: #fff;
+    padding: 0 .2em;
+    color: #805ebf;
+}
+.modal{
+  // margin: 0 20px !important;
+  width: 95% !important;
+ }
+   
+ .modal-header {
+  display: flex;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 0 !important;
+  // background-color: #999;
+  h2{
+    margin-left: 0px !important;
+
+  }
+  .close{
+  margin-left: 40px !important;
+  margin-top: 25px !important;
+
+  }
+ }
+ 
+ 
+@media only screen and (max-width: 767px), 
+       only screen and (min-width: 601px) and (max-width: 1024px) {    form {
+        .button-med {
+            width: 100%;
+        }
+    
+        button {
+            margin-top: 20px;
+            appearance: none;
+            background-color: transparent;
+            border: 0.125em solid #1A1A1A;
+            border-radius: 0.9375em;
+            box-sizing: border-box;
+            color: #3B3B3B;
+            cursor: pointer;
+            display: inline-block;
+            font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            font-size: 16px;
+            font-weight: 600;
+            line-height: normal;
+            min-height: 2.8em;
+            min-width: 0;
+            outline: none;
+            padding: .2em 5em;
+            text-align: center;
+            text-decoration: none;
+            transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            will-change: transform;
+        }
+    
+        button:disabled {
+            pointer-events: none;
+        }
+    
+        button:hover {
+            color: #fff;
+            background-color: #805ebf;
+            border: none;
+            box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+            transform: translateY(-2px);
+        }
+    
+        button:active {
+            box-shadow: none;
+            transform: translateY(0);
+        }
+    }
+    
+    .inputs {
+        display: flex !important;
+        gap: 5px;
+    }
+    
+    .inputs-med {
+        flex-direction: column;
+        gap: 14px;
+    }
+    
+    .input-group {
+        position: relative;
+    }
+    
+    .input-med {
+        border: solid 1.5px #9e9e9e;
+        border-radius: 1rem;
+        background: none;
+        width: 100%;
+        font-size: 1rem;
+        color: #f5f5f5;
+        transition: border 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .input {
+        border: solid 1.5px #9e9e9e;
+        border-radius: 1rem;
+        background: none;
+        padding: .8rem;
+        font-size: 1rem;
+        color: #000;
+        transition: border 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .user-label {
+        position: absolute;
+        left: 15px;
+        color: #e8e8e8;
+        pointer-events: none;
+        transform: translateY(1rem);
+        transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .input:focus,
+    input:valid {
+        outline: none;
+        border: 1.5px solid #805ebf;
+    }
+    
+    .input:focus~label,
+    input:valid~label {
+        transform: translateY(-50%) scale(0.8);
+        background-color: #fff;
+        padding: 0 .2em;
+        color: #805ebf;
+    }
+    
+    .input:focus~.user-label,
+    .input:not(:placeholder-shown)~.user-label {
+        transform: translateY(-50%) scale(0.8);
+        background-color: #fff;
+        padding: 0 .2em;
+        color: #805ebf;
+    }
+    
+}

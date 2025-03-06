@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import SignIn from "./components/Employee/SignIn";
 import Admin_dashboard from "./components/Admin/Admin_dashboard";
 import Employee_dashboard from "./components/Employee/Employee_dashboard";
@@ -8,6 +13,7 @@ import EmployeeList from "./components/EmployeeList";
 import UpdateUser from "./components/UpdateUser";
 
 import AdminLeaveRequests from "./components/Leave/AdminLeaveRequests";
+import LeaveRequestForm from "./components/Leave/LeaveRequestForm";
 import AttendanceHeader from "./components/attendance/AttendanceHeader";
 import EmployeeAttendance from "./components/attendance/EmployeeAttendance";
 
@@ -15,7 +21,7 @@ import SignOut from "./components/Employee/SignOut";
 import Profile from "./components/Employee/Profile";
 import './styles/main.scss';
 import './App.css';
-import AddDepartment from "./components/Department/AddDepartment";
+// import AddDepartment from "./components/Department/AddDepartment";
 import MainDepartments from "./components/Department/MainDepartments";
 import AttestationPage from "./components/Employee/AttestationPage";
 import AdminHolidayManagement from "./components/Admin/AdminHolidayManagement";
@@ -25,7 +31,7 @@ import SalaryCalculator from "./components/salary/SalaryCalculator";
 import SalaryList from "./components/salary/SalaryList";
 import SalaryDetail from "./components/salary/SalaryDetail";
 import HistoryPage from "./components/AttestatioRequest/HistoryPage";
-
+import ChangePassword from "./components/Employee/ChangePassword";
 
 const ProtectedRoute = ({ children, role }) => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -35,8 +41,6 @@ const ProtectedRoute = ({ children, role }) => {
   }
   return children;
 };
-
-
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -49,18 +53,18 @@ function App() {
     }
   }, []);
 
-
   return (
- <Router>
+    <Router>
       <Routes>
-     <Route path="/SignIn" element={<SignIn />} />
-
+        <Route path="/SignIn" element={<SignIn />} />
 
         <Route
           path="/"
           element={
             <ProtectedRoute role="admin">
-              <Admin_dashboard user={JSON.parse(localStorage.getItem("user"))} />
+              <Admin_dashboard
+                user={JSON.parse(localStorage.getItem("user"))}
+              />
             </ProtectedRoute>
           }
         >
@@ -69,21 +73,19 @@ function App() {
           <Route path="EmployeeList" element={<EmployeeList />} />
 
           <Route path="AdminLeaveRequests" element={<AdminLeaveRequests />} />
-         
+
           <Route path="Attendance" element={<AttendanceHeader />} />
           <Route path="HolidayCrud" element={<AdminHolidayManagement />} />
           <Route path="Attestation" element={<AttestationRequests />} />
 
-          <Route path="/historyattest" element={<HistoryPage/>} />
+          <Route path="/historyattest" element={<HistoryPage />} />
           <Route path="payroll" element={<SalaryCalculator />} />
           <Route path="salarylist" element={<SalaryList />} />
           <Route path="salary/:id" element={<SalaryDetail />} />
 
-          <Route path="SignOut" element={<SignOut  user={user}/>} />
+          <Route path="SignOut" element={<SignOut user={user} />} />
           <Route path="Departments" element={<MainDepartments />} />
-          <Route path="addDepartment" element={<AddDepartment />} />
-
-
+          {/* <Route path="addDepartment" element={<AddDepartment />} /> */}
         </Route>
 
         {/* Employee Routes */}
@@ -91,20 +93,24 @@ function App() {
           path="/Employee_dashboard"
           element={
             <ProtectedRoute role="employee">
-              <Employee_dashboard user={JSON.parse(localStorage.getItem("user"))} />
+              <Employee_dashboard
+                user={JSON.parse(localStorage.getItem("user"))}
+              />
             </ProtectedRoute>
           }
         >
-  <Route index element={<Profile />} />
-  <Route path="EmployeeAttendance" element={<EmployeeAttendance />} />
-  
-  <Route path="attestations" element={<AttestationPage />} />
-  <Route path="HolidayList" element={<HolidayList />} />
-
+          <Route index element={<Profile />} />
+          <Route path="EmployeeAttendance" element={<EmployeeAttendance />} />
+          <Route path="SignOut" element={<SignOut user={user} />} />
+          <Route path="leave" element={<LeaveRequestForm />} />
+          <Route path="ChangePassword" element={<ChangePassword />} />
+          <Route path="attestations" element={<AttestationPage />} />
+          <Route path="HolidayList" element={<HolidayList />} />
         </Route>
       </Routes>
     </Router>
   );
+
 }
 
 export default App;

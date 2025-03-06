@@ -1,0 +1,67 @@
+.graphs {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 27px;
+  margin-top: 10px;
+  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+  // background-color: blue;
+}
+
+.pie, .bar {
+  font-family: 'Montserrat', sans-serif;
+  height: 300px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+}
+
+.pie {
+  width: 40%;
+  padding: 0 !important;
+}
+
+.bar {
+  width: 57%;
+  display: flex;
+  justify-content: center;
+  gap: 0 !important;
+  padding: 0 !important;
+}
+
+.barGraph {
+  background-color: blanchedalmond !important;
+  width: 100%;
+}
+
+.meaning {
+  margin-top: 49px;
+  font-size: 14px;
+  position: absolute;
+  right: 450px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+
+/* Media Queries for Mobile and Tablet Screens */
+@media only screen and (max-width: 767px) {
+  .pie, .bar {
+    width: 100%; /* Take full width on mobile and tablet */
+    height: 200px !important; /* Ensure full width on very small screens */
+
+  }
+  .graphs {
+    flex-direction: column; /* Stack the charts vertically */
+    gap: 10px; /* Reduce gap between graphs on smaller screens */
+
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  .pie, .bar {
+    width: 100% !important; /* Ensure full width on very small screens */
+    height: 200px !important; /* Ensure full width on very small screens */
+  }
+  .graphs {
+    gap: 5px; /* Reduce gap further on very small screens */
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';  
 import axiosInstance from '../Config/axiosSetup';
 import { ResponsivePie } from '@nivo/pie';
 
@@ -11,11 +11,31 @@ const PieChart = () => {
         const response = await axiosInstance.get('employee-count');
         const data = response.data;
         const totalEmployees = data.reduce((sum, department) => sum + department.employee_count, 0);
-        const pieChartData = data.map(department => ({
-          id: department.department,
-          label: department.department,
-          value: (department.employee_count / totalEmployees) * 100,
-        }));
+        
+        const pieChartData = data
+          .filter(department => department.employee_count > 0)
+          .map((department) => {
+            let color = '#973AA8';
+
+            if (department.employee_count <= 5) {
+              color = '#973AA8';
+            } else if (department.employee_count <= 10) {
+              color = '#C05299';
+            } else if (department.employee_count <= 15) {
+              color = '#FF8BA0';
+            } else if (department.employee_count <= 20) {
+              color = '#BD68EE';
+            } else if (department.employee_count > 20) {
+              color = '#D55D92';
+            }
+
+            return {
+              id: department.department,
+              label: department.department,
+              value: Math.round((department.employee_count / totalEmployees) * 100),
+              color: color,
+            };
+          });
 
         setChartData(pieChartData);
       } catch (error) {
@@ -26,52 +46,43 @@ const PieChart = () => {
     fetchData();
   }, []);
 
-  const customColors = [
-    '#FF6363', '#FFB03B', '#FFDA5C', '#70D8A5', '#6D7C8A', '#A0A9D3', '#9B71E8'
-  ];
-
   return (
-    <div className='pie' >
+    <div className='pie'>
       {chartData.length > 0 ? (
         <ResponsivePie
           data={chartData}
-          margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+          margin={{ top: 0, right: 80, bottom: 0, left: 80 }}
           innerRadius={0.5}
-          padAngle={0.7}
-          cornerRadius={3}
-          colors={customColors}
-          borderWidth={1}
-          borderColor="white"
+          padAngle={0.2}
+          cornerRadius={2}
+          colors={d => d.data.color}
+          borderWidth={0}
+          borderColor="#fff"
           enableArcLinkLabels={true}
           arcLinkLabelsSkipAngle={20}
           arcLinkLabelsTextColor="#000"
-          arcLinkLabelsDiagonalLength={20}
-          arcLinkLabelsStraightLength={20}
+          arcLinkLabelsDiagonalLength={10}
+          arcLinkLabelsStraightLength={10}
           arcLinkLabelsColor={{ from: 'color' }}
-          arcLabelsTextColor="#000"
+          arcLabelsTextColor="#fff"
           sliceLabel={(e) => `${e.id}: ${Math.round(e.value)}%`}
           tooltip={({ datum }) => (
-            <strong>{datum.id}: {Math.round(datum.value)}%</strong>
+            <a style={{ color: 'black', background: 'white', padding: '5px', borderRadius: '2px' }}>
+              {datum.id}: {Math.round(datum.value)}%
+            </a>
           )}
           theme={{
-            labels: {
-              text: {
-                fontSize: 16, // Increase text size of labels
-              }
-            },
-            legends: {
-              text: {
-                fontSize: 14, // Adjust legend text size if needed
-              }
-            },
-            arcLinkLabels: {
-              text: {
-                fontSize: 16, // Increase arc link label font size
+            tooltip: {
+              container: {
+                background: 'rgba(0, 0, 0, 0.7)',
+                color: 'white',
+                padding: '8px',
+                borderRadius: '4px',
+                boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
               }
             }
           }}
         />
-
       ) : (
         <div>Loading...</div>
       )}

@@ -136,45 +136,52 @@ const AdminHolidayManagement = () => {
             <img className="close" src="icons/close.png" alt="close" />
           </span>
         </div>
-        <form onSubmit={(e) => e.preventDefault()} className="form form-vertical">
-          <div className="inputs inputs-vertical">
-            <div className="input-group">
-              <input
-                placeholder=" "
-                required
-                type="text"
-                name="name"
-                autoComplete="off"
-                value={newHoliday.name}
-                onChange={(e) => setNewHoliday({ ...newHoliday, name: e.target.value })}
-                className="input input-vertical"
-              />
-              <label className="user-label">Holiday Name</label>
-            </div>
+        <form className="form form-vertical">
+  <div className="inputs inputs-vertical">
+    <div className="input-group">
+      <input
+        placeholder=" "
+        required
+        type="text"
+        name="name"
+        autoComplete="off"
+        value={newHoliday.name}
+        onChange={(e) => setNewHoliday({ ...newHoliday, name: e.target.value })}
+        className="input input-vertical"
+      />
+      <label className="user-label">Holiday Name</label>
+    </div>
 
-            <div className="input-group">
-              <input
-                placeholder=" "
-                required
-                type="date"
-                name="date"
-                value={newHoliday.date}
-                onChange={(e) => setNewHoliday({ ...newHoliday, date: e.target.value })}
-                className="input input-vertical"
-              />
-              <label className="user-label">Holiday Date</label>
-            </div>
+    <div className="input-group">
+      <input
+        placeholder=" "
+        required
+        type="date"
+        name="date"
+        value={newHoliday.date}
+        onChange={(e) => setNewHoliday({ ...newHoliday, date: e.target.value })}
+        className="input input-vertical"
+      />
+      <label className="user-label">Holiday Date</label>
+    </div>
 
-            <div className="button-group">
-              <button 
-                onClick={editHoliday ? updateHoliday : addHoliday}
-                className="vertical-button"
-              >
-                {editHoliday ? "Update Holiday" : "Add Holiday"}
-              </button>
-            </div>
-          </div>
-        </form>
+    <div className="button-group">
+      <button
+        onClick={(e) => {
+          e.preventDefault(); 
+          if (editHoliday) {
+            updateHoliday(); 
+          } else {
+            addHoliday(); 
+          }
+        }}
+        className="vertical-button"
+      >
+        {editHoliday ? "Update Holiday" : "Add Holiday"}
+      </button>
+    </div>
+  </div>
+</form>
       </Modal>
 
       <table>
