@@ -1,0 +1,221 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.table-wrapper {
+  width: 100%;
+  margin-top: 20px;
+  display: table;
+  border-spacing: 0 10px;
+}
+
+.table-header,
+.table-row {
+  display: table-row;
+}
+
+.table-header div,
+.table-row div {
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 5px;
+}
+
+.table-header div:first-child,
+.table-row div:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.table-header div:last-child,
+.table-row div:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.table-row {
+  background-color: #fff;
+  border-radius: 6px;
+  display: table-row;
+}
+
+.actions {
+  position: relative;
+}
+
+.action-button {
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 30px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1;
+}
+
+.dropdown-menu .button {
+  width: 100%;
+  text-align: left;
+}
+
+.button {
+  padding: 10px 20px;
+  color: black;
+  border: none;
+  cursor: pointer;
+}
+
+.button.create {
+  background-color: #ffd60a;
+  border-radius: 10px;
+}
+
+.button.view {
+  background-color: purple;
+}
+
+.button.update {
+  background-color: blue;
+}
+
+.button.delete {
+  background-color: red;
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profileimg {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-button {
+  padding: 8px 16px;
+  margin: 0 5px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.pagination-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 6px;
+}
+
+.head h2 {
+  margin: 0;
+}
+
+.head a {
+  margin-left: auto;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  .table-wrapper {
+    border-spacing: 10px 0;
+  }
+  .table-header {
+    display: none;
+  }
+  .table-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .table-header div,
+  .table-row div {
+    display: block;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .actions {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+  }
+  .profile-container {
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+  }
+  .profileimg {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+  }
+  .pagination {
+    flex-direction: column;
+  }
+  .pagination-button {
+    width: 100%;
+    margin: 5px 0;
+  }
+  .head {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+  .head h2 {
+    margin-bottom: 10px;
+  }
+  .head a {
+    margin-left: 0;
+  }
+}
+@media (max-width: 480px) {
+  .table-header div,
+  .table-row div {
+    font-size: 14px;
+  }
+  .button {
+    padding: 8px 15px;
+  }
+  .profileimg {
+    width: 35px;
+    height: 35px;
+  }
+}/*# sourceMappingURL=EmployeeList.css.map */

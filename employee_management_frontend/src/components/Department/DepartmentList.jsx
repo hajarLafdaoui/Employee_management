@@ -79,53 +79,56 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
             console.error("Error fetching employees:", error);
         }
     };
-
-    const handleJobSubmit = async (e) => {
-        e.preventDefault();
-    
-        console.log("Edit Data:", editData);  // Add this log to check the values of editData
-        console.log("Job Data:", jobsData);   // Add this log to check jobsData
-    
+    const addJob = async (jobData) => {
         try {
-            if (editData.id === null) {
-                // Add new job logic
-                const response = await axiosInstance.post("/jobs", jobsData);
-                setJobs((prevJobs) => [...prevJobs, response.data]);
-                setSuccessMessage("Job added successfully!");
-                setJobsData({
-                    name: "",
-                    description: "",
-                    salary: "",
-                    department_id: null,
-                });
-                setDetailModalOpen(false);
-                navigate("/departments");
-            }
-            if (editData.id !== null) {
-                // Edit existing job logic
-                const response = await axiosInstance.put(`/jobs/${editData.id}`, jobsData);
-                
-                console.log('Updated Job:', response.data); // Log to see the updated data
-            
-                setJobs((prevJobs) =>
-                    prevJobs.map((job) => (job.id === editData.id ? response.data : job))
-                );
-            
-                setSuccessMessage("Job edited successfully!");
-                setDetailModalOpen(false);
-                navigate("/departments");
-            }
-    
+            const response = await axiosInstance.post("/jobs", jobData);
+            setJobs((prevJobs) => [...prevJobs, response.data]);
+            setSuccessMessage("Job added successfully!");
             setShowSuccessAlert(true);
+    
+            // Clear inputs
             setJobsData({ name: "", description: "", salary: "", department_id: "" });
+    
+            // Close the detail modal
+            setDetailModalOpen(false);
+    
+            // Redirect to /departments
+            navigate('/departments');
         } catch (error) {
-            setErrorMessage(editData.id === null ? "Failed to add job!" : "Failed to edit job!");
+            setErrorMessage("Failed to add job!");
             setShowErrorAlert(true);
-            console.error("Error processing job:", error);
+            console.error("Error adding job:", error);
         }
     };
     
-
+    const updateJob = async (jobId, updatedJobData) => {
+        try {
+            console.log("Updating job with ID:", jobId); // Debugging
+            console.log("Updated job data:", updatedJobData); // Debugging
+    
+            const response = await axiosInstance.put(`/jobs/${jobId}`, updatedJobData);
+            console.log("Update response:", response.data); // Debugging
+    
+            setJobs((prevJobs) =>
+                prevJobs.map((job) => (job.id === jobId ? response.data : job))
+            );
+            setSuccessMessage("Job updated successfully!");
+            setShowSuccessAlert(true);
+    
+            // Clear inputs
+            setEditData({ id: null, name: "", description: "", salary: "", department_id: null });
+    
+            // Close the detail modal
+            setDetailModalOpen(false);
+    
+            // Redirect to /departments
+            navigate('/departments');
+        } catch (error) {
+            console.error("Error updating job:", error); // Debugging
+            setErrorMessage("Failed to update job!");
+            setShowErrorAlert(true);
+        }
+    };
     const deleteDepartment = async (id) => {
         setItemToDelete({ type: 'Department', id }); 
         setShowDeletePopUp(true);
@@ -150,8 +153,18 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
             if (response.status === 200) {
                 if (type === 'Department') {
                     setDepartments((prevDepartments) => prevDepartments.filter((dept) => dept.id !== id));
+                       // Close the detail modal
+            setDetailModalOpen(false);
+    
+            // Redirect to /departments
+            navigate('/departments');
                 } else if (type === 'Job') {
                     setJobs((prevJobs) => prevJobs.filter((job) => job.id !== id));
+                       // Close the detail modal
+            setDetailModalOpen(false);
+    
+            // Redirect to /departments
+            navigate('/departments');
                 }
                 setShowDeletePopUp(false);
                 setSuccessMessage(`${type} deleted successfully!`);
@@ -168,18 +181,18 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
         }
     };
    
-    // const openEditModal = (department) => {
-    //     setSelectedDepartment(department);
-    //     setUpdatedName(department.name || "");
-    //     setUpdatedDescription(department.description || "");
-    //     setUpdatedLogo(null);
-    //     setIsEditModalOpen(true);
-    // };
+    const openEditModal = (department) => {
+        setSelectedDepartment(department);
+        setUpdatedName(department.name || "");
+        setUpdatedDescription(department.description || "");
+        setUpdatedLogo(null);
+        setIsEditModalOpen(true);
+    };
 
-    // const closeEditModal = () => {
-    //     setIsEditModalOpen(false);
-    //     setSelectedDepartment(null);
-    // };
+    const closeEditModal = () => {
+        setIsEditModalOpen(false);
+        setSelectedDepartment(null);
+    };
 
     const openDetailModal = (department) => {
         setSelectedDepartment(department);
@@ -285,7 +298,7 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
                     <tbody>
                         {getPaginatedDepartments().length > 0 ? (
                             getPaginatedDepartments()?.map((department) => (
-                                <tr key={department.id}>
+                                <tr  key={department.id} {...department}>
                                     <td>
                                         {department?.full_logo_path ? (
                                             <img
@@ -373,13 +386,13 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
                     </li>
                 </div>
             </div>
-
             <Modal
-                isOpen={detailModalOpen}
-                onRequestClose={() => setDetailModalOpen(false)}
-                contentLabel="Department Modal"
-                className="modal modal-content"
-            >
+    isOpen={detailModalOpen} // Ensure this is correctly bound
+    onRequestClose={() => setDetailModalOpen(false)} // Close modal on request
+    contentLabel="Department Detail Modal"
+    className="modal modal-content"
+>
+    {/* Modal content */}
                 <div className="modal-header">
                     <h2>{selectedDepartment?.name}</h2>
                     <img className="close" src="icons/close.png" alt="" onClick={() => setDetailModalOpen(false)} />
@@ -433,9 +446,21 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
                     )}
 
                     {detailActiveTab === "jobs" && (
-                        <div>
-                            <form className="form" onSubmit={handleJobSubmit}>
-                                <div className="inputs inputs-med">
+                        <div><form
+                        className="form"
+                        onSubmit={async (e) => {
+                            e.preventDefault();
+                            console.log("Form submitted with editData:", editData); // Debugging
+                            console.log("Form submitted with jobsData:", jobsData); // Debugging
+                    
+                            if (editData.id === null) {
+                                await addJob(jobsData);
+                            } else {
+                                await updateJob(editData.id, jobsData);
+                            }
+                        }}
+                    >
+                          <div className="inputs inputs-med">
                                     <div className="input-group input-group-med">
                                         <input
                                             required
@@ -482,8 +507,8 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
                                     </div>
                                 </div>
                                 <button className="button-med" type="submit">
-                                {editData && editData.id ? "Update Job" : "Add Job"}
-                                </button>
+        {editData && editData.id ? "Update Job" : "Add Job"}
+    </button>
                             </form>
 
                             <h2>All Jobs</h2>
@@ -497,8 +522,8 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {jobs.map((j) => (
-                        <tr key={j.id} job={j}>
+                    {jobs.map((j, index) => (
+                        <tr key={index}>
                             <td>{j.name}</td>
                             <td>{j.description}</td>
                             <td>${j.salary}</td>
@@ -545,7 +570,14 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
                 </div>
             </Modal>
 
-          
+            {/* {showDeletePopUp && (
+                <DeleteModal
+                    setShowDeletePopUp={setShowDeletePopUp}
+                    handleDelete={handleDelete}
+                    itemType={itemToDelete?.type}
+                    itemId={itemToDelete?.id}
+                />
+            )} */}
         </div>
     );
 };

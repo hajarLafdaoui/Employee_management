@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../Config/axiosSetup";
+import LoadingSpinner from '../../LoadingSpinner';
+
 
 const AdminLeaveRequests = () => {
   const [requests, setRequests] = useState([]);
@@ -82,9 +84,7 @@ const AdminLeaveRequests = () => {
     }
   };
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+  if (loading) return <LoadingSpinner/>;
 
   return (
     <div>

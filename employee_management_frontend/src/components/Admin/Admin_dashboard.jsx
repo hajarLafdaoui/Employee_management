@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useMemo } from "react";
-import {
-  FaSignOutAlt, FaSearch, FaSun, FaMoon, FaBell, FaBars, FaChevronLeft, FaChevronDown, FaChevronUp, 
-  FaTachometerAlt, FaUserPlus, FaUsers, FaCalendarCheck, FaMoneyBillWave, FaBuilding, FaCalendarAlt
+import { 
+  FaSignOutAlt, FaSearch, FaSun, FaMoon, FaBell, FaBars, FaChevronLeft, 
+  FaChevronDown, FaChevronUp, FaTachometerAlt, FaUserPlus, FaUsers, 
+  FaCalendarCheck, FaMoneyBillWave, FaBuilding, FaCalendarAlt 
 } from "react-icons/fa";
+
 import { Link, Outlet, useNavigate } from "react-router-dom";
 
 const AdminDashboard = ({ adminUser }) => {
