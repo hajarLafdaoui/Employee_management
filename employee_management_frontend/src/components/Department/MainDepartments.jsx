@@ -59,36 +59,35 @@ const MainDepartments = () => {
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         contentLabel="Department Modal"
-        className="modal"
+        className=" modal-form"
       >
         <div className="modal-header">
           <h2>{selectedDepartment ? "Edit Department" : "Add a Department"}</h2>
           <img src="/icons/close.png" className='close' alt="Close" onClick={closeModal} />
         </div>
 
-
         <DepartmentForm
-         departments={departments} 
-        setDepartments={setDepartments} 
+          departments={departments} 
+          setDepartments={setDepartments} 
           department={selectedDepartment}
           onClose={closeModal}
           onSuccess={(updatedDepartment) => {
             setDepartments((prev) =>
               selectedDepartment
-                ? prev.map((dept) => (dept.id === updatedDepartment.id ? updatedDepartment : dept)) // ✅ Update existing department
-                : [...prev, updatedDepartment] // ✅ Add new department
+                ? prev.map((dept) => (dept.id === updatedDepartment.id ? updatedDepartment : dept)) 
+                : [...prev, updatedDepartment]
             );
 
             setSuccessMessage(selectedDepartment ? "Department has been updated!" : "Department has been added!");
             setShowSuccessAlert(true);
             setTimeout(() => setShowSuccessAlert(false), 5000);
           }}
-          setShowErrorAlert={() => {
-            setErrorMessage(selectedDepartment ? "Failed to update department. Please try again later." : "Failed to add department. Please try again later.");
+          setShowErrorAlert={(message) => {
+            setErrorMessage(message);
             setShowErrorAlert(true);
+            setTimeout(() => setShowErrorAlert(false), 5000);
           }}
           onUpdate={handleUpdate} 
-
         />
       </Modal>
 

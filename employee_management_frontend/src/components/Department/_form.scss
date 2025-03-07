@@ -51,6 +51,7 @@ form {
 .inputs {
     display: flex !important;
     gap: 5px;
+    // background: red;
 }
 
 .inputs-vertical {
@@ -74,7 +75,7 @@ form {
 
 .input {
     border: solid 1.5px #9e9e9e;
-    border-radius: 1rem;
+    border-radius: 1rem !important;
     background: none;
     padding: .8rem;
     font-size: 1rem;
@@ -250,5 +251,8 @@ input:valid~label {
         padding: 0 .2em;
         color: #805ebf;
     }
-    
+    .inputs-vertical {
+        flex-direction: column;
+        gap: 18px;
+    }
 }

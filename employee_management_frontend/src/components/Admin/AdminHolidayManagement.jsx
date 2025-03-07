@@ -6,7 +6,6 @@ import DeleteModal from "../Cnfirm/DeleteModal";
 import LoadingSpinner from "../../LoadingSpinner";
 import SuccessAlert from "../Alerts/SuccessAlert";
 import ErrorAlert from "../Alerts/ErrorAlert";
-
 const AdminHolidayManagement = () => {
   const [holidays, setHolidays] = useState([]);
   const [newHoliday, setNewHoliday] = useState({ name: "", date: "" });
@@ -124,9 +123,9 @@ const AdminHolidayManagement = () => {
         isOpen={showModal}
         onRequestClose={() => setShowModal(false)}
         contentLabel={editHoliday ? "Edit Holiday" : "Add New Holiday"}
-        overlayClassName="modal"
-        className="modal-content"
-      >
+        overlayClassName="Department Detail Modal"
+        className="modal modal-content"
+        >
         <div className="modal-header">
           <h3>{editHoliday ? "Edit Holiday" : "Add New Holiday"}</h3>
           <span
@@ -183,7 +182,7 @@ const AdminHolidayManagement = () => {
   </div>
 </form>
       </Modal>
-
+<div  className=".dark-mode dep-con">
       <table>
         <thead>
           <tr>
@@ -217,7 +216,7 @@ const AdminHolidayManagement = () => {
           ))}
         </tbody>
       </table>
-
+      </div>
       <DeleteModal
         showDeletePopUp={showDeletePopUp}
         setShowDeletePopUp={setShowDeletePopUp}

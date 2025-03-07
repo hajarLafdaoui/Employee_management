@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./alerts.scss"; // Ensure styling is consistent
+
 const SuccessAlert = ({ message, onClose }) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onClose(); // Automatically close the alert after 5 seconds
+    }, 5000);
+
+    return () => clearTimeout(timer); // Cleanup the timer on component unmount
+  }, [onClose]);
+
   return (
     <div className="alert-container">
       <div className="success-alert">
@@ -20,6 +29,5 @@ const SuccessAlert = ({ message, onClose }) => {
     </div>
   );
 };
-
 
 export default SuccessAlert;

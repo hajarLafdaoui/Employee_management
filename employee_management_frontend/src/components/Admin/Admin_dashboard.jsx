@@ -120,10 +120,10 @@ const AdminDashboard = ({ adminUser }) => {
       {/* Main Content */}
       <div className="secondPart">
         <div className="head">
-          <div className="input-container input-container-desktop">
+          {/* <div className="input-container input-container-desktop">
             <FaSearch className="searchIcon" />
             <input className="input" type="text" placeholder="Search" />
-          </div>
+          </div> */}
 
           <div className="right">
             <div className="icon-container dark-mode-toggle" onClick={toggleDarkMode}>

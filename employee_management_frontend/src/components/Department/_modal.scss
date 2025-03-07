@@ -111,21 +111,41 @@
     background-color: #fff !important;
 
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-between !important;
+    align-items: center !important;
     border: none;
-    margin-bottom: 10px;
-    padding: 10px 0 !important;
-    // background : red;
+    // margin-bottom: 10px;
+    // padding: 10px 0 !important;
+    // background : red !important;
   
   
-    .close {
-      width: 40px;
-      height: 30px;
-      cursor: pointer;
-    }
   }
 
+  .modal-form{
+    border: none !important;
+    // background-color: red !important;
+    padding: 1px 15px 15px !important;
+    margin: 0 !important;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 440px;
+    overflow-y
+
+: scroll !important;
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+padding: 20px;
+background-color: white;
+border-radius: 8px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+z-index: 1000;
+overflow-y: scroll !important;
+
+  }
   // 
   /* Style for the Modal */
 .modal {
@@ -158,9 +178,10 @@
 /* Media Queries for Mobile and Tablet Screens */
  
 @media only screen and (max-width: 767px), 
-       only screen and (min-width: 601px) and (max-width: 1024px) { .modal{
+       only screen and (min-width: 601px) and (max-width: 1024px) { 
+        .modal{
   // margin: 0 20px !important;
-  width: 95% !important;
+  width: 90% !important;
  }
    
  .modal-header {
@@ -174,9 +195,19 @@
 
   }
   .close{
-  margin-left: 40px !important;
+  // margin-left: 40px !important;
   margin-top: 25px !important;
 
   }
  }
+}
+
+
+.close {
+  width: 40px;
+  height: 30px;
+  cursor: pointer;
+margin-bottom: 20px !important;
+
+
 }

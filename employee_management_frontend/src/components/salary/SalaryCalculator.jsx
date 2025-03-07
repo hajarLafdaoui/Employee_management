@@ -136,8 +136,8 @@ const SalaryCalculator = () => {
         isOpen={showModal}
         onRequestClose={() => setShowModal(false)}
         contentLabel="Détails du Salaire"
-        overlayClassName="modal"
-        className="modal-content"
+           overlayClassName="Department Detail Modal"
+        className="modal modal-content"
       >
         <div className="modal-header">
           <h3>Détails du salaire pour {salaryData?.name}</h3>

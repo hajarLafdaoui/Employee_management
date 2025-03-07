@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Job extends Model
 {
     use HasFactory;
-    protected $fillable = ['department_id', 'name', 'description', 'salary'];
+    protected $fillable = ['name', 'description', 'salary', 'department_id'];
+
 
     public function department()
     {
