@@ -119,7 +119,7 @@
 
 .modal-content {
   border: none !important;
-  padding: 1px 15px 15px !important;
+  padding: 0px 15px 15px !important;
   margin: 0 !important;
   width: 950px;
   display: flex;
@@ -154,9 +154,12 @@
 }
 
 .modal-header {
-  position: sticky;
-  top: 0;
+  position: sticky !important;
+  top: 0 !important;
   background-color: #fff !important;
+  z-index: 1000 !important;
+  padding-top: 0 !important;
+  margin-top: 0 !important;
   display: flex;
   justify-content: space-between !important;
   align-items: center !important;
@@ -179,7 +182,7 @@
   transform: translate(-50%, -50%);
   padding: 20px;
   background-color: white;
-  border-radius: 8px;
+  border-radius: 2px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   overflow-y: scroll !important;
@@ -316,8 +319,6 @@ table tr:hover {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-left: 4px;
-  margin-right: 50px;
   padding: 4px;
   border-radius: 5px;
 }
@@ -328,12 +329,13 @@ table tr:hover {
 .more-dropdown .edit-container {
   display: flex;
   justify-content: start;
-  align-items: center;
+  align-items: center !important;
   gap: 10px;
 }
 .more-dropdown .delete-container p,
 .more-dropdown .edit-container p {
   color: #000 !important;
+  margin-bottom: 0 !important;
 }
 .more-dropdown .delete-container p:hover,
 .more-dropdown .edit-container p:hover {
@@ -366,10 +368,10 @@ table tr:hover {
   align-items: center;
 }
 
-form .vertical-button {
+form .vertical-button-form {
   width: 100%;
 }
-form button {
+form .button-form {
   margin-top: 20px;
   -webkit-appearance: none;
      -moz-appearance: none;
@@ -398,17 +400,17 @@ form button {
   touch-action: manipulation;
   will-change: transform;
 }
-form button:disabled {
+form .button-form:disabled {
   pointer-events: none;
 }
-form button:hover {
+form .button-form:hover {
   color: #fff;
   background-color: #805ebf;
   border: none;
   box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
   transform: translateY(-2px);
 }
-form button:active {
+form .button-form:active {
   box-shadow: none;
   transform: translateY(0);
 }
@@ -504,10 +506,10 @@ input:valid ~ label {
 }
 
 @media only screen and (max-width: 767px), only screen and (min-width: 601px) and (max-width: 1024px) {
-  form .button-med {
+  form .button-form-med {
     width: 100%;
   }
-  form button {
+  form .button-form {
     margin-top: 20px;
     -webkit-appearance: none;
        -moz-appearance: none;
@@ -536,17 +538,17 @@ input:valid ~ label {
     touch-action: manipulation;
     will-change: transform;
   }
-  form button:disabled {
+  form .button-form:disabled {
     pointer-events: none;
   }
-  form button:hover {
+  form .button-form:hover {
     color: #fff;
     background-color: #805ebf;
     border: none;
     box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     transform: translateY(-2px);
   }
-  form button:active {
+  form .button-form:active {
     box-shadow: none;
     transform: translateY(0);
   }
@@ -667,7 +669,7 @@ input:valid ~ label {
 
 .title-search-sort {
   display: flex;
-  align-items: center;
+  align-items: center !important;
   justify-content: space-between;
 }
 
@@ -679,17 +681,17 @@ input:valid ~ label {
 .input-search-container {
   display: flex;
   justify-content: start;
-  align-items: center;
+  align-items: center !important;
   border: 1px solid #aaa !important;
   width: -moz-fit-content !important;
   width: fit-content !important;
   border-radius: 10px;
-  padding: 6px 3px;
+  padding: 2px;
   gap: 5px;
   background-color: #fff;
 }
 .input-search-container img {
-  width: 25px;
+  width: 20px;
 }
 
 .input-search {
@@ -703,21 +705,21 @@ input:valid ~ label {
 
 .sortingConatiner {
   display: flex;
-  justify-content: start;
-  align-items: center;
+  justify-content: start !important;
+  align-items: center !important;
   border: 1px solid #aaa !important;
   width: -moz-fit-content !important;
   width: fit-content !important;
   border-radius: 10px;
-  padding: 6px 3px;
+  padding: 2px;
   gap: 5px;
-  background-color: #fff;
 }
 .sortingConatiner img {
   width: 25px;
 }
-.sortingConatiner button {
+.sortingConatiner p {
   border: none;
+  margin-top: 12px !important;
   outline: none;
   background-color: #fff;
 }

@@ -1,6 +1,6 @@
 .title-search-sort{
     display: flex;
-    align-items: center;
+    align-items: center !important;
     justify-content: space-between;
 
 }
@@ -12,11 +12,11 @@
 .input-search-container{
     display: flex;
     justify-content: start;
-    align-items: center;
+    align-items: center !important;
     border: 1px solid #aaa !important;
     width: fit-content !important;
     border-radius: 10px;
-    padding: 6px 3px;
+    padding: 2px;
     gap: 5px;
     background-color: #fff;
 
@@ -24,7 +24,7 @@
 
     img{
         // background-color: #fff;
-        width: 25px;
+        width: 20px;
     }
 
 }
@@ -40,21 +40,23 @@
 // soting
 .sortingConatiner{
     display: flex;
-    justify-content: start;
-    align-items: center;
+    justify-content: start !important;
+    align-items: center !important;
     border: 1px solid #aaa !important;
     width: fit-content !important;
     border-radius: 10px;
-    padding: 6px 3px;
+    padding: 2px;
     gap: 5px;
-    background-color: #fff;
+    // background-color: #8e5b5b;
     img{
         width: 25px;
     }
-    button{
+    p{
         border: none;
+        margin-top: 12px !important;
         outline: none;
     background-color: #fff;
+
         
     }
     

@@ -17,9 +17,9 @@ const ErrorAlert = ({ message, onClose }) => {
           <div className="icon">
             <img src="icons/fail.png" className="error" alt="Error" />
           </div>
-          <div className="text-content">
-            <p className="text-white">Operation Failed</p>
-            <p className="text-gray">{message}</p>
+          <div className="text-content-alert">
+            <p className="MSG ">Operation Failed</p>
+            <p className="msg2">{message}</p>
           </div>
         </div>
         <button className="close-btn" onClick={onClose}>

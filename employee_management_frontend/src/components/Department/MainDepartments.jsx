@@ -19,17 +19,6 @@ const MainDepartments = () => {
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleUpdate = (updatedDepartment) => {
-    setDepartments((prev) =>
-      prev.map((dept) =>
-        dept.id === updatedDepartment.id ? updatedDepartment : dept
-      )
-    );
-    setSuccessMessage("Department has been updated!");
-    setShowSuccessAlert(true);
-    setTimeout(() => setShowSuccessAlert(false), 5000);
-  };
-  
   const openModal = (department = null) => {
     setSelectedDepartment(department);
     setIsModalOpen(true);
@@ -38,6 +27,18 @@ const MainDepartments = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedDepartment(null);
+  };
+
+  const handleSuccess = (updatedDepartment) => {
+    setDepartments((prev) =>
+      selectedDepartment
+        ? prev.map((dept) => (dept.id === updatedDepartment.id ? updatedDepartment : dept)) // Update existing department
+        : [...prev, updatedDepartment] // Add new department
+    );
+
+    setSuccessMessage(selectedDepartment ? "Department has been updated!" : "Department has been added!");
+    setShowSuccessAlert(true);
+    setTimeout(() => setShowSuccessAlert(false), 5000);
   };
 
   return (
@@ -59,7 +60,7 @@ const MainDepartments = () => {
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         contentLabel="Department Modal"
-        className=" modal-form"
+        className="modal-form"
       >
         <div className="modal-header">
           <h2>{selectedDepartment ? "Edit Department" : "Add a Department"}</h2>
@@ -71,23 +72,12 @@ const MainDepartments = () => {
           setDepartments={setDepartments} 
           department={selectedDepartment}
           onClose={closeModal}
-          onSuccess={(updatedDepartment) => {
-            setDepartments((prev) =>
-              selectedDepartment
-                ? prev.map((dept) => (dept.id === updatedDepartment.id ? updatedDepartment : dept)) 
-                : [...prev, updatedDepartment]
-            );
-
-            setSuccessMessage(selectedDepartment ? "Department has been updated!" : "Department has been added!");
-            setShowSuccessAlert(true);
-            setTimeout(() => setShowSuccessAlert(false), 5000);
-          }}
+          onSuccess={handleSuccess} // Pass the handleSuccess function
           setShowErrorAlert={(message) => {
             setErrorMessage(message);
             setShowErrorAlert(true);
             setTimeout(() => setShowErrorAlert(false), 5000);
           }}
-          onUpdate={handleUpdate} 
         />
       </Modal>
 

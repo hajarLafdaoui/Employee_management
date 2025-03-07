@@ -1,21 +1,19 @@
-.modal-overlay {
+.🛑 {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1050 !important; /* Ensure it's above other elements */  background-color: #ffffff;
-  opacity: 0.6 !important;
+  z-index: 1050 !important;
   background-color: #ffffff;
-
+  opacity: 0.6 !important;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  pointer-events: all; /* Allow interaction with the modal */
+  pointer-events: all;
 }
 
-.delete-card {
+.🗑️ {
   overflow: hidden;
   position: relative;
   text-align: left;
@@ -23,16 +21,15 @@
   max-width: 290px;
   background-color: #fff;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  pointer-events: auto; /* Allow interaction with the modal */
+  pointer-events: auto;
 }
 
-/* Rest of the styles for delete card content */
-.delete-header {
+.📌 {
   padding: 1.25rem 1rem 1rem 1rem;
   background-color: #ffffff;
 }
 
-.delete-image {
+.⚠️ {
   display: flex;
   margin-left: auto;
   margin-right: auto;
@@ -45,37 +42,37 @@
   border-radius: 9999px;
 }
 
-.delete-image svg {
+.⚠️ svg {
   color: #dc2626;
   width: 1.5rem;
   height: 1.5rem;
 }
 
-.delete-content {
+.📝 {
   margin-top: 0.75rem;
   text-align: center;
 }
 
-.delete-title {
+.🔤 {
   color: #111827;
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.5rem;
 }
 
-.delete-message {
+.📄 {
   margin-top: 0.5rem;
   color: #6b7280;
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
 
-.delete-actions {
+.🎯 {
   margin: 0.75rem 1rem;
   background-color: #f9fafb;
 }
 
-.delete-button {
+.❌ {
   display: inline-flex;
   padding: 0.5rem 1rem;
   background-color: #dc2626;
@@ -91,7 +88,7 @@
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-.cancel-button {
+.🔙 {
   display: inline-flex;
   margin-top: 0.75rem;
   padding: 0.5rem 1rem;
@@ -107,6 +104,15 @@
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-button {
-  cursor: pointer;
+.❌,
+.🔙 {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    background-color: inherit !important;
+    color: black !important;
+    border-color: inherit !important;
+    // transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
 }

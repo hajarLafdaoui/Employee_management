@@ -45,15 +45,14 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
     const rowsPerPage = 4;
     const [search, setSearch] = useState('');
 
-    const navigate  = useNavigate()
-
+    const navigate = useNavigate()
 
     useEffect(() => {
         axios
             .get("http://127.0.0.1:8000/api/departments")
             .then((response) => setDepartments(response.data))
             .catch((error) => console.error("Error fetching departments:", error));
-    }, []);
+    }, [onEdit]);
 
     const fetchDepartmentJobs = async (departmentId) => {
         try {
@@ -85,13 +84,13 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
             setJobs((prevJobs) => [...prevJobs, response.data]);
             setSuccessMessage("Job added successfully!");
             setShowSuccessAlert(true);
-    
+
             // Clear inputs
             setJobsData({ name: "", description: "", salary: "", department_id: "" });
-    
+
             // Close the detail modal
             setDetailModalOpen(false);
-    
+
             // Redirect to /departments
             navigate('/departments');
         } catch (error) {
@@ -100,27 +99,27 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
             console.error("Error adding job:", error);
         }
     };
-    
+
     const updateJob = async (jobId, updatedJobData) => {
         try {
             console.log("Updating job with ID:", jobId); // Debugging
             console.log("Updated job data:", updatedJobData); // Debugging
-    
+
             const response = await axiosInstance.put(`/jobs/${jobId}`, updatedJobData);
             console.log("Update response:", response.data); // Debugging
-    
+
             setJobs((prevJobs) =>
                 prevJobs.map((job) => (job.id === jobId ? response.data : job))
             );
             setSuccessMessage("Job updated successfully!");
             setShowSuccessAlert(true);
-    
+
             // Clear inputs
             setEditData({ id: null, name: "", description: "", salary: "", department_id: null });
-    
+
             // Close the detail modal
             setDetailModalOpen(false);
-    
+
             // Redirect to /departments
             navigate('/departments');
         } catch (error) {
@@ -130,13 +129,13 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
         }
     };
     const deleteDepartment = async (id) => {
-        setItemToDelete({ type: 'Department', id }); 
+        setItemToDelete({ type: 'Department', id });
         setShowDeletePopUp(true);
     };
     // delete job function
     const deleteJob = async (id) => {
-        setItemToDelete({ type: 'Job', id }); 
-        setShowDeletePopUp(true); 
+        setItemToDelete({ type: 'Job', id });
+        setShowDeletePopUp(true);
     };
     // 
     const handleDelete = async () => {
@@ -148,23 +147,23 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
             } else if (type === 'Job') {
                 endpoint = `/jobs/${id}`;
             }
-    
+
             const response = await axiosInstance.delete(endpoint);
             if (response.status === 200) {
                 if (type === 'Department') {
                     setDepartments((prevDepartments) => prevDepartments.filter((dept) => dept.id !== id));
-                       // Close the detail modal
-            setDetailModalOpen(false);
-    
-            // Redirect to /departments
-            navigate('/departments');
+                    // Close the detail modal
+                    setDetailModalOpen(false);
+
+                    // Redirect to /departments
+                    navigate('/departments');
                 } else if (type === 'Job') {
                     setJobs((prevJobs) => prevJobs.filter((job) => job.id !== id));
-                       // Close the detail modal
-            setDetailModalOpen(false);
-    
-            // Redirect to /departments
-            navigate('/departments');
+                    // Close the detail modal
+                    setDetailModalOpen(false);
+
+                    // Redirect to /departments
+                    navigate('/departments');
                 }
                 setShowDeletePopUp(false);
                 setSuccessMessage(`${type} deleted successfully!`);
@@ -180,7 +179,7 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
             setShowErrorAlert(true);
         }
     };
-   
+
     const openEditModal = (department) => {
         setSelectedDepartment(department);
         setUpdatedName(department.name || "");
@@ -206,7 +205,7 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
         }));
     };
     const filteredDepartments = [...departments]
-    
+
         .filter((department) => department?.name?.toLowerCase().includes(search.toLowerCase()))
         .sort((a, b) => {
             if (sortOrder === "alphabetical") {
@@ -298,7 +297,7 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
                     <tbody>
                         {getPaginatedDepartments().length > 0 ? (
                             getPaginatedDepartments()?.map((department) => (
-                                <tr  key={department.id} {...department}>
+                                <tr key={department.id} {...department}>
                                     <td>
                                         {department?.full_logo_path ? (
                                             <img
@@ -320,24 +319,24 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
                                                 alt="Edit"
                                                 onClick={() => onEdit(department)}
                                             />
-                                             <img
-                                            className="delete-icon"
-                                            src="/icons/delete.png"
-                                            alt="Delete"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                deleteDepartment(department.id); // Or deleteJob(job.id) based on the item
-                                            }}
-                                        />
-                                        {/*  */}
-                                    
-                                                            <DeleteModal
-                                                                showDeletePopUp={showDeletePopUp}
-                                                                setShowDeletePopUp={setShowDeletePopUp}
-                                                                handleDelete={handleDelete}
-                                                                itemType="department"
-                                                                itemId={departmenId} // Pass the specific ID here
-                                                            />
+                                            <img
+                                                className="delete-icon"
+                                                src="/icons/delete.png"
+                                                alt="Delete"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    deleteDepartment(department.id); // Or deleteJob(job.id) based on the item
+                                                }}
+                                            />
+                                            {/*  */}
+
+                                            <DeleteModal
+                                                showDeletePopUp={showDeletePopUp}
+                                                setShowDeletePopUp={setShowDeletePopUp}
+                                                handleDelete={handleDelete}
+                                                itemType="department"
+                                                itemId={departmenId} // Pass the specific ID here
+                                            />
 
                                             <img
                                                 className="view-icon"
@@ -387,12 +386,12 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
                 </div>
             </div>
             <Modal
-    isOpen={detailModalOpen} // Ensure this is correctly bound
-    onRequestClose={() => setDetailModalOpen(false)} // Close modal on request
-    contentLabel="Department Detail Modal"
-    className="modal modal-content"
->
-    {/* Modal content */}
+                isOpen={detailModalOpen} // Ensure this is correctly bound
+                onRequestClose={() => setDetailModalOpen(false)} // Close modal on request
+                contentLabel="Department Detail Modal"
+                className="modal modal-content"
+            >
+                {/* Modal content */}
                 <div className="modal-header">
                     <h2>{selectedDepartment?.name}</h2>
                     <img className="close" src="icons/close.png" alt="" onClick={() => setDetailModalOpen(false)} />
@@ -447,124 +446,124 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
 
                     {detailActiveTab === "jobs" && (
                         <div><form
-                        className="form"
-                        onSubmit={async (e) => {
-                            e.preventDefault();
-                            console.log("Form submitted with editData:", editData); // Debugging
-                            console.log("Form submitted with jobsData:", jobsData); // Debugging
-                    
-                            if (editData.id === null) {
-                                await addJob(jobsData);
-                            } else {
-                                await updateJob(editData.id, jobsData);
-                            }
-                        }}
-                    >
-                          <div className="inputs inputs-med">
-                                    <div className="input-group input-group-med">
-                                        <input
-                                            required
-                                            type="text"
-                                            name="name"
-                                            autoComplete="off"
-                                            value={jobsData.name}
-                                            onChange={(e) =>
-                                                setJobsData({ ...jobsData, name: e.target.value })
-                                            }
-                                            className="input input-med"
-                                        />
-                                        <label className="user-label">Job Name</label>
-                                    </div>
+                            className="form"
+                            onSubmit={async (e) => {
+                                e.preventDefault();
+                                console.log("Form submitted with editData:", editData); // Debugging
+                                console.log("Form submitted with jobsData:", jobsData); // Debugging
 
-                                    <div className="input-group input-group-med">
-                                        <input
-                                            required
-                                            type="text"
-                                            name="description"
-                                            autoComplete="off"
-                                            value={jobsData.description}
-                                            onChange={(e) =>
-                                                setJobsData({ ...jobsData, description: e.target.value })
-                                            }
-                                            className="input input-med"
-                                        />
-                                        <label className="user-label">Job Description</label>
-                                    </div>
-
-                                    <div className="input-group input-group-med">
-                                        <input
-                                            required
-                                            type="number"
-                                            name="salary"
-                                            autoComplete="off"
-                                            value={jobsData.salary}
-                                            onChange={(e) =>
-                                                setJobsData({ ...jobsData, salary: e.target.value })
-                                            }
-                                            className="input input-med"
-                                        />
-                                        <label className="user-label">Salary</label>
-                                    </div>
+                                if (editData.id === null) {
+                                    await addJob(jobsData);
+                                } else {
+                                    await updateJob(editData.id, jobsData);
+                                }
+                            }}
+                        >
+                            <div className="inputs inputs-med">
+                                <div className="input-group input-group-med">
+                                    <input
+                                        required
+                                        type="text"
+                                        name="name"
+                                        autoComplete="off"
+                                        value={jobsData.name}
+                                        onChange={(e) =>
+                                            setJobsData({ ...jobsData, name: e.target.value })
+                                        }
+                                        className="input input-med"
+                                    />
+                                    <label className="user-label">Job Name</label>
                                 </div>
-                                <button className="button-med" type="submit">
-        {editData && editData.id ? "Update Job" : "Add Job"}
-    </button>
-                            </form>
+
+                                <div className="input-group input-group-med">
+                                    <input
+                                        required
+                                        type="text"
+                                        name="description"
+                                        autoComplete="off"
+                                        value={jobsData.description}
+                                        onChange={(e) =>
+                                            setJobsData({ ...jobsData, description: e.target.value })
+                                        }
+                                        className="input input-med"
+                                    />
+                                    <label className="user-label">Job Description</label>
+                                </div>
+
+                                <div className="input-group input-group-med">
+                                    <input
+                                        required
+                                        type="number"
+                                        name="salary"
+                                        autoComplete="off"
+                                        value={jobsData.salary}
+                                        onChange={(e) =>
+                                            setJobsData({ ...jobsData, salary: e.target.value })
+                                        }
+                                        className="input input-med"
+                                    />
+                                    <label className="user-label">Salary</label>
+                                </div>
+                            </div>
+                            <button className=" button-form button-med" type="submit">
+                                {editData && editData.id ? "Update Job" : "Add Job"}
+                            </button>
+                        </form>
 
                             <h2>All Jobs</h2>
                             <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Salary</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {jobs.map((j, index) => (
-                        <tr key={index}>
-                            <td>{j.name}</td>
-                            <td>{j.description}</td>
-                            <td>${j.salary}</td>
-                            <td>
-                                <img
-                                    src={dropdownVisible === j.id ? "/icons/more2.png" : "/icons/more.png"}
-                                    alt="More"
-                                    onClick={() => toggleDropdown(j.id)} // Correctly calling toggleDropdown
-                                    style={{ width: "30px", cursor: "pointer" }}
-                                />
-                                {dropdownVisible === j.id && (
-                                    <div className="more-dropdown">
-                                        <div
-                                            onClick={() => {
-                                                setEditData(j);
-                                                setJobsData(j);
-                                            }}
-                                            className="edit-container"
-                                        >
-                                            <img className="edit-icon" src="/icons/edit.png" alt="Edit" />
-                                            <p>Edit</p>
-                                        </div>
-                                        <div
-                                            className="edit-container"
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Salary</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {jobs.map((j, index) => (
+                                        <tr key={index}>
+                                            <td>{j.name}</td>
+                                            <td>{j.description}</td>
+                                            <td>${j.salary}</td>
+                                            <td>
+                                                <img
+                                                    src={dropdownVisible === j.id ? "/icons/more2.png" : "/icons/more.png"}
+                                                    alt="More"
+                                                    onClick={() => toggleDropdown(j.id)} // Correctly calling toggleDropdown
+                                                    style={{ width: "30px", cursor: "pointer" }}
+                                                />
+                                                {dropdownVisible === j.id && (
+                                                    <div className="more-dropdown">
+                                                        <div
+                                                            onClick={() => {
+                                                                setEditData(j);
+                                                                setJobsData(j);
+                                                            }}
+                                                            className="edit-container"
+                                                        >
+                                                            <img className="edit-icon" src="/icons/edit.png" alt="Edit" />
+                                                            <p>Edit</p>
+                                                        </div>
+                                                        <div
+                                                            className="edit-container"
 
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                deleteJob(j.id);
-                                                
-                                            }}
-                                        >
-                                            <img className="delete-icon" src="/icons/delete.png" alt="Delete" />
-                                            <p>Delete</p>
-                                        </div>
-                                    </div>
-                                )}
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                deleteJob(j.id);
+
+                                                            }}
+                                                        >
+                                                            <img className="delete-icon" src="/icons/delete.png" alt="Delete" />
+                                                            <p>Delete</p>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
                     )}
                 </div>

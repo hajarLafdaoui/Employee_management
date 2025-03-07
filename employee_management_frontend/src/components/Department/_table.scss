@@ -90,8 +90,8 @@ table {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-left: 4px;
-    margin-right: 50px;
+    // margin-left: 4px;
+    // margin-right: 50px;
     padding: 4px;
     border-radius: 5px;
 
@@ -102,12 +102,13 @@ table {
     .delete-container,
     .edit-container {
       display: flex;
-      justify-content: start;
-      align-items: center;
+      justify-content: start ;
+      align-items: center !important;
       gap: 10px;
   
       p {
         color: #000 !important;
+        margin-bottom: 0 !important;
       }
   
       p:hover {
