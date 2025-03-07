@@ -13,10 +13,10 @@ const DeleteModal = ({
   const deleteMessage = `Are you sure you want to delete this ${itemType}? This action cannot be undone.`;
 
   return (
-    <div className="modal-overlay">
-      <div className="delete-card">
-        <div className="delete-header">
-          <div className="delete-image">
+    <div className="🛑">
+      <div className="🗑️">
+        <div className="📌">
+          <div className="⚠️">
             <svg
               aria-hidden="true"
               stroke="currentColor"
@@ -31,17 +31,17 @@ const DeleteModal = ({
               ></path>
             </svg>
           </div>
-          <div className="delete-content">
-            <span className="delete-title">{deleteTitle}</span>
-            <p className="delete-message">{deleteMessage}</p>
+          <div className="📝">
+            <span className="🔤">{deleteTitle}</span>
+            <p className="📄">{deleteMessage}</p>
           </div>
         </div>
-        <div className="delete-actions">
-          <button className="delete-button" type="button" onClick={handleDelete}>
+        <div className="🎯">
+          <button className="❌" type="button" onClick={handleDelete}>
             Delete
           </button>
           <button
-            className="cancel-button"
+            className="🔙"
             type="button"
             onClick={() => setShowDeletePopUp(false)}
           >

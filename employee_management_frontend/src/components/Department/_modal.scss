@@ -66,7 +66,7 @@
   .modal-content {
     border: none !important;
     // background-color: red !important;
-    padding: 1px 15px 15px !important;
+    padding: 0px 15px 15px !important;
     margin: 0 !important;
     width: 950px;
     display: flex;
@@ -106,9 +106,12 @@
   }
   
   .modal-header {
-    position: sticky;
-    top: 0;
+    position: sticky !important;
+    top: 0 !important;
     background-color: #fff !important;
+    z-index: 1000 !important;
+    padding-top: 0 !important;
+    margin-top: 0 !important;
 
     display: flex;
     justify-content: space-between !important;
@@ -140,7 +143,7 @@ left: 50%;
 transform: translate(-50%, -50%);
 padding: 20px;
 background-color: white;
-border-radius: 8px;
+border-radius: 2px;
 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 z-index: 1000;
 overflow-y: scroll !important;

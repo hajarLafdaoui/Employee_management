@@ -1,9 +1,9 @@
 form {
-    .vertical-button {
+    .vertical-button-form {
         width: 100%;
     }
 
-    button {
+    .button-form {
         margin-top: 20px;
         appearance: none;
         background-color: transparent;
@@ -30,11 +30,11 @@ form {
         will-change: transform;
     }
 
-    button:disabled {
+    .button-form:disabled {
         pointer-events: none;
     }
 
-    button:hover {
+    .button-form:hover {
         color: #fff;
         background-color: #805ebf;
         border: none;
@@ -42,7 +42,7 @@ form {
         transform: translateY(-2px);
     }
 
-    button:active {
+    .button-form:active {
         box-shadow: none;
         transform: translateY(0);
     }
@@ -138,11 +138,11 @@ input:valid~label {
  
 @media only screen and (max-width: 767px), 
        only screen and (min-width: 601px) and (max-width: 1024px) {    form {
-        .button-med {
+        .button-form-med {
             width: 100%;
         }
     
-        button {
+        .button-form {
             margin-top: 20px;
             appearance: none;
             background-color: transparent;
@@ -169,11 +169,11 @@ input:valid~label {
             will-change: transform;
         }
     
-        button:disabled {
+        .button-form:disabled {
             pointer-events: none;
         }
     
-        button:hover {
+        .button-form:hover {
             color: #fff;
             background-color: #805ebf;
             border: none;
@@ -181,7 +181,7 @@ input:valid~label {
             transform: translateY(-2px);
         }
     
-        button:active {
+        .button-form:active {
             box-shadow: none;
             transform: translateY(0);
         }
