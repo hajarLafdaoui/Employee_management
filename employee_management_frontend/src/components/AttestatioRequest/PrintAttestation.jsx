@@ -1,18 +1,18 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import "./PrintAttestation.scss"
 
 const PrintAttestation = () => {
-    const location = useLocation();
-    const { user } = location.state || {};
-    if (!user) {
-        return <p>No user data available for printing.</p>;
-    }
+  const location = useLocation();
+  const { user } = location.state || {};
 
+  if (!user) {
+    return <p>No user data available for printing.</p>;
+  }
 
-    return (
-        <div>
-   
-          <h1>Attestation de Travail</h1>
+  return (
+    <div className="attestation-container">
+      <h1 className="title">Attestation de Travail</h1>
       <div className="content">
         <p>Nous, soussignés, attestons que :</p>
         <p><strong>Nom:</strong> {user.name}</p>
@@ -20,7 +20,7 @@ const PrintAttestation = () => {
         <p><strong>Phone:</strong> {user.phone}</p>
         <p>
           Est employé(e) dans notre entreprise en qualité de 
-          <strong>{user.role}</strong>, et ce depuis la date de son embauche.
+          <strong> {user.role}</strong>, et ce depuis la date de son embauche.
         </p>
         <p>
           Cette attestation est délivrée à la demande de l'intéressé(e) pour servir et valoir ce que de droit.
@@ -28,11 +28,11 @@ const PrintAttestation = () => {
       </div>
       <div className="footer">
         <p>Fait à Agadir, le {new Date().toLocaleDateString()}</p>
-        <p> Entreprise Name</p>
+        <p>Entreprise Name</p>
       </div>
       <button
         onClick={() => window.print()}
-        style={{ backgroundColor: 'blue', color: 'white', marginTop: '20px' }}
+        className="print-button"
       >
         Print
       </button>

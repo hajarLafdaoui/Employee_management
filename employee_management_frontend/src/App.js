@@ -34,6 +34,7 @@ import SalaryList from "./components/salary/SalaryList";
 import SalaryDetail from "./components/salary/SalaryDetail";
 import HistoryPage from "./components/AttestatioRequest/HistoryPage";
 import ChangePassword from "./components/Employee/ChangePassword";
+import PrintAttestation from "./components/AttestatioRequest/PrintAttestation";
 
 const ProtectedRoute = ({ children, role }) => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -79,6 +80,7 @@ function App() {
           <Route path="Attendance" element={<AttendanceHeader />} />
           <Route path="HolidayCrud" element={<AdminHolidayManagement />} />
           <Route path="Attestation" element={<AttestationRequests />} />
+          <Route path="print-attestation" element={<PrintAttestation />} />
 
           <Route path="/historyattest" element={<HistoryPage />} />
           <Route path="payroll" element={<SalaryCalculator />} />

@@ -1,0 +1,70 @@
+@media print {
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-size: 12px;
+      }
+    .attestation-container {
+        font-family: 'Arial', sans-serif;
+        width: 100%;   
+
+      max-width: 600px;
+        padding: 20px;
+        background-color: #fff;
+      } 
+      .print-button {
+        display: none;
+      }
+  }
+  
+  @media screen {
+    .attestation-container {
+      font-family: 'Arial', sans-serif;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      border: 2px solid #2c3e50;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  
+    .title {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #34495e;
+      margin-bottom: 30px;
+    }
+  
+    .content {
+      font-size: 1.1rem;
+      color: #2c3e50;
+    }
+  
+    .footer {
+      text-align: center;
+      font-size: 1rem;
+      color: #7f8c8d;
+      margin-top: 40px;
+    }
+  
+    .print-button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background-color: #3498db;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 20px;
+    }
+  
+    .print-button:hover {
+      background-color: #2980b9;
+    }
+  }
+  

@@ -62,7 +62,8 @@ const SalaryDetail = () => {
     return (
         <>
         <div className="salary-actions">
-                    <button onClick={handlePrint}>Print</button>
+                    <button onClick={handlePrint}><img src="/icons/paper.png" alt=""                                                 className="edit2-icon"
+                    /></button>
                     <button onClick={handleDownloadPDF}> PDF</button>
                     </div>
             <div className="salary-container"ref={pdfRef}>
