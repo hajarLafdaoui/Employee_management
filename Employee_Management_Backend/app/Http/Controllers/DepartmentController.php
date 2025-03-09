@@ -50,55 +50,77 @@ class DepartmentController extends Controller
         return response()->json($employees);
     }
 
-
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Ensure it's a valid image
-            'description' => 'nullable|string',
+            'description' => 'required|string',
+            'logo' => 'nullable|string', // Expect base64 encoded image
         ]);
-
-        $data = $request->only(['name', 'description']);
-
-        // Store the file path in database, Save the file inside storage/app/public/logos/
-        if ($request->hasFile('logo')) {
-            $data['logo'] = $request->file('logo')->store('logos', 'public'); // Store in 'storage/app/public/logos'
+    
+        $logoPath = null;
+        if ($request->has('logo')) {
+            // Decode the base64 image
+            $logoData = $request->input('logo');
+            $extension = explode('/', mime_content_type($logoData))[1]; // Get extension from mime type
+            $logoData = str_replace('data:image/' . $extension . ';base64,', '', $logoData);
+            $logoData = base64_decode($logoData);
+    
+            // Generate unique filename for the image
+            $logoPath = 'logos/' . uniqid() . '.' . $extension;
+    
+            // Store the image in storage
+            Storage::disk('public')->put($logoPath, $logoData);
         }
-
-        $department = Department::create($data);
-
-        return response()->json($department, 201);
-    }
-
-    // Laravel Controller Method
-    public function update(Request $request, $id)
-    {
-        $department = Department::find($id);
-        if (!$department) {
-            return response()->json(['message' => 'Department not found'], 404);
-        }
-
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    
+        $department = Department::create([
+            'name' => $validated['name'],
+            'description' => $validated['description'],
+            'logo' => $logoPath,
         ]);
-
-        $department->name = $request->input('name');
-        $department->description = $request->input('description');
-
-        if ($request->hasFile('logo')) {
-            if ($department->logo) {
-                Storage::delete('public/' . $department->logo);
-            }
-            $department->logo = $request->file('logo')->store('logos', 'public');
-        }
-
-        $department->save();
-
+    
         return response()->json($department);
     }
+    
+    public function update(Request $request, $id)
+    {
+        $department = Department::findOrFail($id);
+    
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'logo' => 'nullable|string', // Expect base64 encoded image
+        ]);
+    
+        $logoPath = $department->logo;
+        if ($request->has('logo')) {
+            // Decode the base64 image
+            $logoData = $request->input('logo');
+            $extension = explode('/', mime_content_type($logoData))[1]; // Get extension from mime type
+            $logoData = str_replace('data:image/' . $extension . ';base64,', '', $logoData);
+            $logoData = base64_decode($logoData);
+    
+            // Delete the old logo if a new one is uploaded
+            if ($logoPath) {
+                Storage::delete('public/' . $logoPath);
+            }
+    
+            // Generate unique filename for the image
+            $logoPath = 'logos/' . uniqid() . '.' . $extension;
+    
+            // Store the image in storage
+            Storage::disk('public')->put($logoPath, $logoData);
+        }
+    
+        $department->update([
+            'name' => $validated['name'],
+            'description' => $validated['description'],
+            'logo' => $logoPath,
+        ]);
+    
+        return response()->json($department);
+    }
+    
     public function destroy($id)
     {
         $department = Department::find($id);
