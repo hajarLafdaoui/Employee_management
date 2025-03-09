@@ -82,12 +82,19 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
         try {
             const response = await axiosInstance.post("/jobs", jobData);
             setJobs((prevJobs) => [...prevJobs, response.data]);
+
+            // thiiiiiis one
             setSuccessMessage("Job added successfully!");
             setShowSuccessAlert(true);
+            setTimeout(() => {
+                setShowSuccessAlert(false);
+            }, 5000);
+            // to thiiiis
 
             // Clear inputs
             setJobsData({ name: "", description: "", salary: "", department_id: "" });
 
+          
             // Close the detail modal
             setDetailModalOpen(false);
 
@@ -96,34 +103,40 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
         } catch (error) {
             setErrorMessage("Failed to add job!");
             setShowErrorAlert(true);
+            setTimeout(() => {
+                setShowSuccessAlert(false);
+            }, 5000);
+
             console.error("Error adding job:", error);
         }
     };
 
     const updateJob = async (jobId, updatedJobData) => {
         try {
-            console.log("Updating job with ID:", jobId); // Debugging
-            console.log("Updated job data:", updatedJobData); // Debugging
-
             const response = await axiosInstance.put(`/jobs/${jobId}`, updatedJobData);
-            console.log("Update response:", response.data); // Debugging
-
+    
             setJobs((prevJobs) =>
                 prevJobs.map((job) => (job.id === jobId ? response.data : job))
             );
+    
             setSuccessMessage("Job updated successfully!");
             setShowSuccessAlert(true);
-
+    
+            // Hide the success alert after 5 seconds
+            setTimeout(() => {
+                setShowSuccessAlert(false);
+            }, 5000);
+    
             // Clear inputs
             setEditData({ id: null, name: "", description: "", salary: "", department_id: null });
-
+    
             // Close the detail modal
             setDetailModalOpen(false);
-
+    
             // Redirect to /departments
             navigate('/departments');
         } catch (error) {
-            console.error("Error updating job:", error); // Debugging
+            console.error("Error updating job:", error);
             setErrorMessage("Failed to update job!");
             setShowErrorAlert(true);
         }
@@ -147,27 +160,35 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
             } else if (type === 'Job') {
                 endpoint = `/jobs/${id}`;
             }
-
+    
             const response = await axiosInstance.delete(endpoint);
             if (response.status === 200) {
                 if (type === 'Department') {
                     setDepartments((prevDepartments) => prevDepartments.filter((dept) => dept.id !== id));
                     // Close the detail modal
                     setDetailModalOpen(false);
-
+    
                     // Redirect to /departments
                     navigate('/departments');
                 } else if (type === 'Job') {
                     setJobs((prevJobs) => prevJobs.filter((job) => job.id !== id));
                     // Close the detail modal
                     setDetailModalOpen(false);
-
+    
                     // Redirect to /departments
                     navigate('/departments');
                 }
+    
+                // Show the success alert
                 setShowDeletePopUp(false);
                 setSuccessMessage(`${type} deleted successfully!`);
                 setShowSuccessAlert(true);
+    
+                // Hide the success alert after 5 seconds
+                setTimeout(() => {
+                    setShowSuccessAlert(false);
+                }, 5000);
+    
             } else {
                 console.error(`Failed to delete ${type}: ${response.data.message}`);
                 setErrorMessage(`Failed to delete ${type}.`);
@@ -179,12 +200,13 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
             setShowErrorAlert(true);
         }
     };
+    
 
     const openEditModal = (department) => {
         setSelectedDepartment(department);
-        setUpdatedName(department.name || "");
-        setUpdatedDescription(department.description || "");
-        setUpdatedLogo(null);
+        setUpdatedName(department.name);
+        setUpdatedDescription(department.description);
+        setUpdatedLogo(department.logo);
         setIsEditModalOpen(true);
     };
 

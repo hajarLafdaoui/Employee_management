@@ -14,88 +14,80 @@ const DepartmentForm = ({
   const [name, setName] = useState(department?.name || "");
   const [description, setDescription] = useState(department?.description || "");
   const [logo, setLogo] = useState(null);
-  const [error, setError] = useState(null); // State to handle form errors
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
-
-  // Reset form fields when the `department` prop changes
-  useEffect(() => {
-    if (department) {
-      setName(department.name || "");
-      setDescription(department.description || "");
-      setLogo(null);
-    } else {
-      setName("");
-      setDescription("");
-      setLogo(null);
-    }
-  }, [department]);
-
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validate the name field
-    if (!name.trim()) {
-      setError("The name field is required."); // Set error message
-      return;
-    }
-
-    // Clear any previous errors
-    setError(null);
-
-    // Prepare form data
-    const formData = new FormData();
-    formData.append("name", name.trim());
-    formData.append("description", description);
-    if (logo) formData.append("logo", logo);
-
-    // Debugging: Log the form data
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
-
-    try {
-      const url = department?.id
-        ? `http://127.0.0.1:8000/api/departments/${department.id}`
-        : "http://127.0.0.1:8000/api/departments";
-
-      const method = department?.id ? "put" : "post";
-      const response = await axiosInstance[method](url, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data", // Ensure proper content type for file uploads
-        },
-      });
-
-      if (response.data) {
+  
+    // Convert logo to base64 if a logo is provided
+    let logoBase64 = null;
+    if (logo) {
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        logoBase64 = reader.result;
+  
+        try {
+          let response;
+          if (department?.id) {
+            // If updating an existing department, send a PUT request
+            console.log("Updating department with ID:", department.id);
+            response = await axiosInstance.put(`/departments/${department.id}`, {
+              name: name.trim(),
+              description: description,
+              logo: logoBase64, // Send base64 image
+            });
+          } else {
+            // If creating a new department, send a POST request
+            console.log("Creating new department");
+            response = await axiosInstance.post("/departments", {
+              name: name.trim(),
+              description: description,
+              logo: logoBase64, // Send base64 image
+            });
+          }
+  
+          console.log("API Response:", response.data);
+          onSuccess(response.data);  // Trigger the success callback
+          onClose();  // Immediately close the modal
+          navigate("/departments");  // Redirect to the departments page
+        } catch (error) {
+          console.error("API Error:", error.response?.data || error.message);
+          setError(error.response?.data?.message || "An error occurred. Please try again.");
+        }
+      };
+  
+      reader.readAsDataURL(logo); // Start reading the image file as base64
+    } else {
+      // If no logo is provided, submit the form without it
+      try {
+        let response;
+        if (department?.id) {
+          response = await axiosInstance.put(`/departments/${department.id}`, {
+            name: name.trim(),
+            description: description,
+          });
+        } else {
+          response = await axiosInstance.post("/departments", {
+            name: name.trim(),
+            description: description,
+          });
+        }
+  
         console.log("API Response:", response.data);
-        onSuccess(response.data); // Notify parent component of success
+        onSuccess(response.data);  // Trigger the success callback
+        onClose();  // Immediately close the modal
+        navigate("/departments");  // Redirect to the departments page
+      } catch (error) {
+        console.error("API Error:", error.response?.data || error.message);
+        setError(error.response?.data?.message || "An error occurred. Please try again.");
       }
-
-      onClose(); // Close the form
-    } catch (error) {
-      console.error("API Error:", error);
-
-      // Handle specific error cases
-      if (error.response) {
-        // Backend returned an error response
-        setError(error.response.data.message || "An error occurred. Please try again.");
-      } else if (error.request) {
-        // No response received from the server
-        setError("No response from the server. Please check your connection.");
-      } else {
-        // Something went wrong in setting up the request
-        setError("An unexpected error occurred. Please try again.");
-      }
-
-      // Optionally, navigate to a fallback route
-      navigate("/departments");
     }
   };
-
+  
+  
   return (
     <form onSubmit={handleSubmit} className="form form-vertical">
       <div className="inputs inputs-vertical">
-        {/* Display error message if any */}
         {error && <div className="error-message">{error}</div>}
 
         <div className="input-group">
@@ -134,21 +126,13 @@ const DepartmentForm = ({
             <input
               type="file"
               id="file"
-              onChange={(e) => setLogo(e.target.files[0])}
+              onChange={(e) => setLogo(e.target.files[0])} // Set the logo file
             />
           </label>
         </div>
-
-        {/* Display current logo if updating */}
-        {department?.logo && (
-          <div className="current-logo">
-            <img src={department.logo} alt="Current logo" />
-            <p>Current Logo</p>
-          </div>
-        )}
       </div>
 
-      <button className=" button-form vertical-button-form" type="submit">
+      <button className="button-form vertical-button-form" type="submit">
         {department?.id ? "Update Department" : "Add Department"}
       </button>
     </form>
