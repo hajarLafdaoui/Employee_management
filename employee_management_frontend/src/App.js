@@ -34,6 +34,8 @@ import SalaryList from "./components/salary/SalaryList";
 import SalaryDetail from "./components/salary/SalaryDetail";
 import HistoryPage from "./components/AttestatioRequest/HistoryPage";
 import ChangePassword from "./components/Employee/ChangePassword";
+import DeleteAttendance from "./components/Attendance/DeleteAttendance";
+import UpdateAttendance from "./components/Attendance/UpdateAttendance";
 
 const ProtectedRoute = ({ children, role }) => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -77,6 +79,9 @@ function App() {
           <Route path="AdminLeaveRequests" element={<AdminLeaveRequests />} />
 
           <Route path="Attendance" element={<AttendanceHeader />} />
+          <Route path="DeleteAttendance/:id" element={<DeleteAttendance />} />
+          <Route path="UpdateAttendance/:id" element={<UpdateAttendance />} />
+          <Route path="AttendanceHeader" element={<AttendanceHeader />} />
           <Route path="HolidayCrud" element={<AdminHolidayManagement />} />
           <Route path="Attestation" element={<AttestationRequests />} />
 

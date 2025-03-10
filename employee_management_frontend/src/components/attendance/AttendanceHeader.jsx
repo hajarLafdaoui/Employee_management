@@ -4,6 +4,9 @@ import Attendance from './Attendance';
 import axiosInstance from "../Config/axiosSetup";
 // import AdminMenu from '../Admin_navbar/AdminMenu';
 import Admin_dashboard from '../Admin/Admin_dashboard';
+import './attendance.scss';
+import AttendanceChart from "./AttendanceChart";
+
 
 const AttendanceHeader = () => {
     const [attendance, setAttendance] = useState([]);
@@ -64,19 +67,56 @@ const AttendanceHeader = () => {
     return (
         <div >
             {/* //  < Admin_dashboard></Admin_dashboard> */}
-            <div>
-                <button onClick={handleLeftButtonClick}>⩤</button>
-                <p>{currentDate.toDateString()}</p>
-                <button onClick={handleRightButtonClick}>⩥</button>
-            </div>
-            <button onClick={HandleAttendanceButton}>{text}</button>
+            <div className="headAtt">
 
-            <div>
-                <p>Number of Present: {numberOfPresent}</p>
-                <p>Number of Absent: {numberOfAbsent}</p>
-                <p>Number of Leave: {numberOfLeave}</p>
+                <div className="attFirstPart">
+                    <div className="attFirstPartHeader">
+                        <h3>Attendance</h3>
+                        <div className="dateNav">
+                            <p onClick={handleLeftButtonClick}>
+                                <img className='lessGreaterIcon' src="/icons/less-than.png" />
+                            </p>
+                            <p>{currentDate.toDateString()}</p>
+                            <p onClick={handleRightButtonClick}>
+                                <img className='lessGreaterIcon' src="/icons/greater-than.png" />
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='toggleAttButton' onClick={HandleAttendanceButton}>
+                        <img src="icons/check.png" alt="" />
+                        <p>{text}</p>
+                    </div>
+                </div>
+
+                <div className="attSecondPart">
+                    <div className="attendanceSummary">
+                        <h5>Attendance Summary</h5>
+                        <div className="ps">
+                            <p>Number of Present: <span>{numberOfPresent}</span></p>
+                            <hr />
+                            <p>Number of Absent: <span> {numberOfAbsent}</span></p>
+                            <hr />
+
+                            <p>Number of Leave:<span> {numberOfLeave}</span></p>
+                        </div>
+
+
+                    </div>
+                    <div className="lineGraph">
+                        <h5>Attendance Trends for {new Date().toLocaleString('default', { month: 'long', year: 'numeric' })}</h5>
+                        <div className="line">
+                            <AttendanceChart attendance={attendance} />
+
+                        </div>
+                    </div>
+                </div>
+                {text === 'add attendance' ? <Attendance attendance={attendance} currentDate={currentDate} /> : <Marking currentDate={currentDate} />}
             </div>
-            {text === 'add attendance' ? <Attendance attendance={attendance} currentDate={currentDate} /> : <Marking currentDate={currentDate} />}
+
+            {/* Add this below the second part showing attendance summary */}
+
+
         </div>
     );
 };

@@ -13,6 +13,7 @@ const Marking = ({ currentDate }) => {
     const [selectedDepartment, setSelectedDepartment] = useState('');
     const [attendance, setAttendance] = useState({});
     const [attendanceRecords, setAttendanceRecords] = useState([]);
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -98,19 +99,37 @@ const Marking = ({ currentDate }) => {
 
     return (
         <>
-            <input
-                type="text"
-                value={search}
-                onChange={handleSearch}
-                placeholder="Search by name"
-            />
 
-            <select onChange={handleSelect} value={selectedDepartment}>
-                <option value="">All Departments</option>
-                {departments.map(dept => (
-                    <option key={dept.id} value={dept.id}>{dept.name}</option>
-                ))}
-            </select>
+          <div className="title-search-sort">
+                <h5>Attendance</h5>
+                <div className="search-sort">
+                    <div className="input-search-container">
+                        <img src="icons/search.png" alt="" />
+                        <input
+                            className="input-search"
+                            type="text"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            placeholder="Search employees..."
+                        />
+                    </div>
+
+                    <select
+                        value={selectedDepartment}
+                        onChange={(e) => setSelectedDepartment(e.target.value)}
+                    >
+                        <option value="">All Departments</option>
+                        {departments.map((department) => (
+                            <option key={department.id} value={department.id}>
+                                {department.name}
+                            </option>
+                        ))}
+                    </select>
+
+                   
+
+                </div>
+            </div>
 
             <form onSubmit={handleSubmit}>
                 <table>
@@ -161,7 +180,8 @@ const Marking = ({ currentDate }) => {
                                             </>
                                         ) : (
                                             <>
-                                                <input
+                                            <div className="preAbs">
+                                            <input
                                                     type="radio"
                                                     name={`attendance-${employee.id}`}
                                                     value="present"
@@ -177,6 +197,8 @@ const Marking = ({ currentDate }) => {
                                                     onChange={() => handleAttendanceChange(employee.id, "absent")}
                                                 />
                                                 Absent
+                                            </div>
+                                                
                                             </>
                                         )}
                                     </td>
@@ -186,7 +208,7 @@ const Marking = ({ currentDate }) => {
                     </tbody>
 
                 </table>
-                <button type="submit">Save Attendance</button>
+                <button className="saveMarkingAtt" type="submit">Save Attendance</button>
             </form>
         </>
     );

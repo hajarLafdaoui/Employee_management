@@ -3,7 +3,7 @@ import axiosInstance from "../Config/axiosSetup";
 import { useParams, useNavigate } from 'react-router-dom';
 
 const DeleteAttendance = () => {
-    const { entryId } = useParams();
+    const { id } = useParams();
 
     const [error, setError] = useState(null);
     const navigate = useNavigate();
@@ -11,7 +11,7 @@ const DeleteAttendance = () => {
     useEffect(() => {
         const deleteAttendance = async () => {
             try {
-                await axiosInstance.delete(`/attendance/${entryId}`);
+                await axiosInstance.delete(`/attendance/${id}`);
                 navigate('/AttendanceHeader');
             } catch (err) {
                 console.error(err.response);
@@ -20,7 +20,7 @@ const DeleteAttendance = () => {
         };
 
         deleteAttendance();
-    }, [entryId, navigate]);
+    }, [id, navigate]);
 
     return (
         <div>

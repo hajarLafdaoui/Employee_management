@@ -1,33 +1,91 @@
+.contact{
+  border: #666 1px solid;
+  padding: 1px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+
+}
+.spacer {
+  margin-bottom: 12px !important; /* Adjust spacing */
+  display: block !important;
+}
+
+
 table {
-    border: 1px solid #ccc;
-    border-radius: 10px !important;
-    border-collapse: collapse;
-    margin: 10px 0;
-    padding: 0;
-    width: 100%;
-    table-layout: fixed;
-  }
-  
-  table caption {
-    font-size: 1.5em;
-    margin: .5em 0 .75em;
-  }
-  
-  table tr {
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
-    padding: .35em;
-    cursor: pointer;
-  }
-  
-  table th,
-  table td {
-    padding: .625em;
-    text-align: start;
-  }
-  
+  border: 1px solid #ccc;
+  border-radius: 10px !important;
+  border-collapse: collapse;
+  margin: 10px 0;
+  padding: 0;
+  width: 100%;
+  table-layout: auto; /* Allows flexible column resizing */
+}
+
+table th,
+table td {
+  padding: .625em;
+  text-align: start;
+  vertical-align: middle;
+}
+
+/* Ensure proper spacing for each column */
+table th:nth-child(1), /* ID Column */
+table td:nth-child(1) {
+  width: 5%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+table th:nth-child(2), /* Name Column */
+table td:nth-child(2) {
+  width: 18%;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+table th:nth-child(3), /* Department Column */
+table td:nth-child(3) {
+  width: 15%;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+table th:nth-child(4), /* Contact Column (Email & Phone) */
+table td:nth-child(4) {
+  width: 22%;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+table th:nth-child(5), /* Status Column */
+table td:nth-child(5) {
+  width: 10%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+table th:nth-child(6), /* Actions Column */
+table td:nth-child(6) {
+  width: 10%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Prevent long text from overlapping */
+td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Ensure wrapping for text-heavy columns */
+td:nth-child(2),
+td:nth-child(3),
+td:nth-child(4) {
+  word-break: break-word;
+}
+
   table th {
-    font-size: .85em;
+    font-size: .82em;
     letter-spacing: .1em;
     text-transform: uppercase;
   }
@@ -45,7 +103,7 @@ table {
     }
   
     table caption {
-      font-size: 1.3em;
+      font-size: 1em;
     }
   
     table thead {
@@ -68,7 +126,7 @@ table {
     table td {
       border-bottom: 1px solid #ddd;
       display: block;
-      font-size: .8em;
+      font-size: .5em;
       text-align: left;
     }
   

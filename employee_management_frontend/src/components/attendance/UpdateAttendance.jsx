@@ -2,8 +2,7 @@ import axiosInstance from "../Config/axiosSetup";
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-const UpdateAttendance = () => {
-    const { entryId } = useParams();
+const UpdateAttendance = ({ id }) => {
     const navigate = useNavigate();
     const [attendance, setAttendance] = useState(null);
     const [status, setStatus] = useState('');
@@ -11,9 +10,17 @@ const UpdateAttendance = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        console.log("Fetching attendance for ID:", id); // Debugging
+        if (!id) {
+            setError("Invalid attendance ID.");
+            setLoading(false);
+            return;
+        }
+        
         const fetchAttendanceData = async () => {
             try {
-                const resp = await axiosInstance.get(`/attendance/${entryId}`);
+                const resp = await axiosInstance.get(`/attendance/${id}`);
+                console.log("Attendance data:", resp.data); // Debugging
                 setAttendance(resp.data);
                 setStatus(resp.data.status);
             } catch (err) {
@@ -23,9 +30,9 @@ const UpdateAttendance = () => {
                 setLoading(false);
             }
         };
-
+    
         fetchAttendanceData();
-    }, [entryId]);
+    }, [id]);
 
     const handleChangeStatus = (e) => {
         setStatus(e.target.value);
@@ -34,7 +41,7 @@ const UpdateAttendance = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axiosInstance.put(`/attendance/${entryId}`, { status });
+            await axiosInstance.put(`/attendance/${id}`, { status });
             alert("Attendance updated successfully!");
             navigate("/AttendanceHeader");
         } catch (err) {
@@ -47,7 +54,6 @@ const UpdateAttendance = () => {
 
     return (
         <div>
-            <h1>Update Attendance</h1>
             {attendance && (
                 <form onSubmit={handleSubmit}>
                     <div>
@@ -63,7 +69,7 @@ const UpdateAttendance = () => {
                         <span>{attendance.attendance_date}</span>
                     </div>
                     <div>
-                        <label>department name: </label>
+                        <label>Department Name: </label>
                         <span>{attendance.user.department.name}</span>
                     </div>
                     <div>
@@ -98,11 +104,12 @@ const UpdateAttendance = () => {
                             </label>
                         </div>
                     </div>
-                    <button type="submit">Update Attendance</button>
+                    <button className="updateAtt" type="submit">Update Attendance</button>
                 </form>
             )}
         </div>
     );
 };
+
 
 export default UpdateAttendance;
