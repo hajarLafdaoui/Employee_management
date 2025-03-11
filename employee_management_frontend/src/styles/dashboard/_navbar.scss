@@ -1,8 +1,10 @@
 body {
-  background-color: $grey ;
+  // background-color: $grey ;
   font-family: 'Montserrat', sans-serif;
   overflow-x: hidden !important;
+  background: linear-gradient(to right, #ffffff, #f6e9c9);
 
+ height: 100vh;
 }
 
 .Container {

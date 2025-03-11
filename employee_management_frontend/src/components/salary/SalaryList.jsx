@@ -8,6 +8,9 @@ import Modal from "react-modal";
 import SuccessAlert from "../Alerts/SuccessAlert";
 import ErrorAlert from "../Alerts/ErrorAlert";
 import "../EmployeeList.scss"
+
+import { CalendarIcon } from "@heroicons/react/solid";
+
 const SalaryList = () => {
   const [salaries, setSalaries] = useState([]);
   const [filteredSalaries, setFilteredSalaries] = useState([]);  
@@ -192,6 +195,7 @@ const SalaryList = () => {
           </div>
           <div className="input-search-container">
             <input
+            className="date-input"
               type="date"
               value={dateSearch}
               onChange={(e) => setDateSearch(e.target.value)}

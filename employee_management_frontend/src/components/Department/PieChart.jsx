@@ -15,6 +15,7 @@ const PieChart = () => {
         const pieChartData = data
           .filter(department => department.employee_count > 0)
           .map((department) => {
+            
             let color = '#973AA8';
 
             if (department.employee_count <= 5) {

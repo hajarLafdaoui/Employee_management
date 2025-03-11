@@ -37,14 +37,14 @@
       border-radius: 0.4rem;
   
       &:hover {
-        color:#805ebf;
+        color:#ffd60a;
       }
   
       &.active {
         color: #ffffff;
-        background:#805ebf;
+        background:#ffd60a;
         font-weight: 600;
-        border: 1px solid#805ebf;
+        border: 1px solid#ffd60a;
       }
     }
   
@@ -57,7 +57,7 @@
         pointer-events: initial;
   
         &:hover {
-          color:#805ebf;
+          color:#ffd60a;
         }
       }
     }
