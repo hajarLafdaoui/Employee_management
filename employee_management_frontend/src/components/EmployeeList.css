@@ -12,9 +12,19 @@
   border-spacing: 0 10px;
 }
 
+.table-row:hover {
+  background-color: #fcf6da !important;
+  cursor: pointer;
+}
+
 .table-header,
 .table-row {
   display: table-row;
+}
+
+.table-header {
+  margin-bottom: 40px;
+  font-weight: bold;
 }
 
 .table-header div,
@@ -79,6 +89,10 @@
   cursor: pointer;
 }
 
+.button:hover {
+  background-color: transparent;
+}
+
 .button.create {
   background-color: #ffd60a;
   border-radius: 10px;
@@ -119,7 +133,6 @@
 .pagination-button {
   padding: 8px 16px;
   margin: 0 5px;
-  background-color: #007bff;
   color: white;
   border: none;
   cursor: pointer;

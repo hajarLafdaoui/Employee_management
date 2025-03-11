@@ -245,21 +245,36 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
         );
     };
 
+    const getPaginationRange = () => {
+        const totalPages = Math.ceil(filteredDepartments.length / rowsPerPage);
+        const maxPagesToShow = 3;
+        let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+        let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+
+        if (endPage - startPage + 1 < maxPagesToShow) {
+            startPage = Math.max(1, endPage - maxPagesToShow + 1);
+        }
+
+        return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+    };
     const getPaginatedDepartments = () => {
         const startIndex = (currentPage - 1) * rowsPerPage;
         const endIndex = startIndex + rowsPerPage;
         return filteredDepartments.slice(startIndex, endIndex);
     };
 
-    const nextPage = () => {
-        if (currentPage < Math.ceil(filteredDepartments.length / rowsPerPage)) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
-
+    // Function to go to the previous page
     const prevPage = () => {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
+        }
+    };
+
+    // Function to go to the next page
+    const nextPage = () => {
+        const totalPages = Math.ceil(filteredDepartments.length / rowsPerPage);
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
         }
     };
     const toggleDropdown = (jobId) => {
@@ -375,37 +390,38 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
                         )}
                     </tbody>
                 </table>
-                <div className="page">
+               
+            <div className="page">
+                <li
+                    className="page__btn"
+                    onClick={prevPage}
+                    style={{ pointerEvents: currentPage === 1 ? 'none' : 'auto' }}
+                >
+                    <span className="material-icons">
+                        <img src="icons/left-arrow.png" alt="left" />
+                    </span>
+                </li>
+                {getPaginationRange().map((pageNumber) => (
                     <li
-                        className="page__btn"
-                        onClick={prevPage}
-                        style={{ pointerEvents: currentPage === 1 ? 'none' : 'auto' }}
+                        key={pageNumber}
+                        className={`page__numbers ${currentPage === pageNumber ? 'active' : ''}`}
+                        onClick={() => setCurrentPage(pageNumber)}
                     >
-                        <span className="material-icons">
-                            <img src="icons/left-arrow.png" alt="left" />
-                        </span>
+                        {pageNumber}
                     </li>
-                    {[...Array(Math.ceil(filteredDepartments.length / rowsPerPage)).keys()].map((index) => (
-                        <li
-                            key={index + 1}
-                            className={`page__numbers ${currentPage === index + 1 ? 'active' : ''}`}
-                            onClick={() => setCurrentPage(index + 1)}
-                        >
-                            {index + 1}
-                        </li>
-                    ))}
-                    <li
-                        className="page__btn"
-                        onClick={nextPage}
-                        style={{
-                            pointerEvents: currentPage === Math.ceil(filteredDepartments.length / rowsPerPage) ? 'none' : 'auto',
-                        }}
-                    >
-                        <span className="material-icons">
-                            <img src="icons/right-arrow.png" alt="right" />
-                        </span>
-                    </li>
-                </div>
+                ))}
+                <li
+                    className="page__btn"
+                    onClick={nextPage}
+                    style={{
+                        pointerEvents: currentPage === Math.ceil(filteredDepartments.length / rowsPerPage) ? 'none' : 'auto',
+                    }}
+                >
+                    <span className="material-icons">
+                        <img src="icons/right-arrow.png" alt="right" />
+                    </span>
+                </li>
+            </div>
             </div>
             <Modal
                 isOpen={detailModalOpen} // Ensure this is correctly bound

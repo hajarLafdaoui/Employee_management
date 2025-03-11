@@ -1,8 +1,8 @@
 import axiosInstance from "../Config/axiosSetup";
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const UpdateAttendance = ({ id }) => {
+const UpdateAttendance = ({ id, onClose, onSuccess, onError }) => {
     const navigate = useNavigate();
     const [attendance, setAttendance] = useState(null);
     const [status, setStatus] = useState('');
@@ -16,7 +16,7 @@ const UpdateAttendance = ({ id }) => {
             setLoading(false);
             return;
         }
-        
+
         const fetchAttendanceData = async () => {
             try {
                 const resp = await axiosInstance.get(`/attendance/${id}`);
@@ -26,13 +26,14 @@ const UpdateAttendance = ({ id }) => {
             } catch (err) {
                 console.error("Error fetching attendance data:", err);
                 setError("Failed to fetch attendance data.");
+                onError("Failed to fetch attendance data."); // Trigger custom error alert
             } finally {
                 setLoading(false);
             }
         };
-    
+
         fetchAttendanceData();
-    }, [id]);
+    }, [id, onError]);
 
     const handleChangeStatus = (e) => {
         setStatus(e.target.value);
@@ -42,10 +43,11 @@ const UpdateAttendance = ({ id }) => {
         e.preventDefault();
         try {
             await axiosInstance.put(`/attendance/${id}`, { status });
-            alert("Attendance updated successfully!");
-            navigate("/AttendanceHeader");
+            onSuccess("Attendance updated successfully!"); // Trigger custom success alert
+            onClose(); // Close the modal
         } catch (err) {
-            setError("Failed to update attendance.");
+            console.error("Error updating attendance:", err);
+            onError("Failed to update attendance."); // Trigger custom error alert
         }
     };
 
@@ -110,6 +112,5 @@ const UpdateAttendance = ({ id }) => {
         </div>
     );
 };
-
 
 export default UpdateAttendance;

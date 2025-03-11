@@ -1,7 +1,6 @@
 .salary-container {
   display: flex;
   flex-direction: column;
-  font-family: Arial, sans-serif;
   padding: 20px;
   border: 1px solid #ddd;
   background-color: white;
@@ -46,6 +45,10 @@ th, td {
   border: 1px solid #ddd;
 }
 
+table tr:hover {
+  background-color: #fcf6da !important;
+}
+
 th {
   background-color: #f4f4f4;
 }
@@ -64,6 +67,13 @@ th {
   margin-bottom: 20px;
 }
 
+.dropdown-menu {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+}
+
 button {
   padding: 5px 8px;
   background-color: #808a96;
@@ -71,10 +81,6 @@ button {
   border: none;
   cursor: pointer;
   font-size: 16px;
-}
-
-button:hover {
-  background-color: #0056b3;
 }
 
 @media print {
@@ -99,7 +105,7 @@ button:hover {
     display: block;
     padding: 20px;
     border: 1px solid #ddd;
-    background-color: white;
+    background-color: rgb(202, 42, 42) !important;
     margin: 0 auto;
     width: 100%;
     max-width: 600px;

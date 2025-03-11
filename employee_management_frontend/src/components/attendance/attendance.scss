@@ -1,116 +1,182 @@
 @import 'Marking';
 
-.headAtt{
+.headAtt {
     display: flex;
     flex-direction: column;
     gap: 20px;
     margin-bottom: 10px;
 
-.attFirstPart {
-    display: flex;
-    justify-content: space-between;
-    align-items: center !important;
-
-
-    .attFirstPartHeader {
+    .attFirstPart {
         display: flex;
-        justify-content: start;
+        justify-content: space-between;
         align-items: center !important;
-        gap: 30px;
 
-        .dateNav {
-
+        .attFirstPartHeader {
             display: flex;
             justify-content: start;
             align-items: center !important;
-            gap: 15px;
-            margin-top: 10px;
+            gap: 30px;
+            align-self: start;
 
-            .lessGreaterIcon {
-                width: 28px !important;
-                background-color: #fff;
-                padding: 3px;
-                border-radius: 3px;
+            .dateNav {
+                display: flex;
+                justify-content: start;
+                align-items: center !important;
+                gap: 15px;
+                margin-top: 10px;
+
+                .lessGreaterIcon {
+                    width: 28px !important;
+                    background-color: #fff;
+                    cursor: pointer;
+                    padding: 3px;
+                    border-radius: 3px;
+                }
+            }
+        }
+
+        .toggleAttButton {
+            display: flex;
+            justify-content: center;
+            align-items: center !important;
+            gap: 15px;
+            background-color: #6247AA;
+            padding: 10px 20px !important;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            cursor: pointer;
+
+            img {
+                width: 25px;
+            }
+
+            p {
+                margin: 0 !important;
+                padding: 0 !important;
             }
         }
     }
-    .toggleAttButton{
+
+    .attSecondPart {
         display: flex;
-        justify-content: center;
-        align-items: center !important;
+        justify-content: space-between;
+        align-items: flex-start !important;
+        gap: 20px;
 
-        gap: 15px;
-        background-color: #6247AA ;
-        padding: 10px 20px  !important;
-        border-radius: 12px;
-        // margin-top: 10px;
-        margin-bottom: 20px;
-        cursor: pointer;
-        img{
-            width: 25px;
-        }
-        p{
-            // margin-top: 12px;
-            margin: 0 !important;
-            padding: 0 !important;
-
-
-        }
-    }
-  
-}
-
-  // 
-  .attSecondPart{
-    display: flex;
-    justify-content: space-between;
-    align-items: center !important;
-    .attendanceSummary{
-        display: FLEX;
-        // justify-content: space-between;
-        flex-direction: column;
-        // align-items: space-between !important;
-        // justify-content: space-between !important;
-        gap: 28px;
-     
-        height: 300px;
-        .ps{
-            background-color: #FFF;
-            border-radius: 15px;
-            padding: 5px 10px;
-            margin: 0 !important;
+        .attendanceSummary {
             display: flex;
             flex-direction: column;
-            gap: 0 !important;
+            gap: 30px;
+            height: 280px;
 
-            font-size: 16px;
-            font-weight: 500;
-            span{
-                font-size: 18px;
-                font-weight: 600;
+            .ps {
+                background-color: #FFF;
+                border-radius: 15px;
+                padding: 5px 10px;
+                margin: 0 !important;
+                display: flex;
+                flex-direction: column;
+                gap: 0 !important;
+                font-size: 16px;
+                font-weight: 500;
+
+                span {
+                    font-size: 18px;
+                    font-weight: 600;
+                }
             }
         }
-        
-    }
-    .line{
-        width: 700px;
-         height: 260px;
 
+        .lineGraph {
+            flex: 1;
+
+            .line {
+                width: 100%;
+                height: 260px;
+            }
+        }
     }
 }
+.selects{
+    display: flex;
+    gap: 10px;
+}
+.search-sort{
+    display: flex;
+
+}
+// Media Queries for Mobile and Tablet
+@media only screen and (max-width: 1024px) {
+    .headAtt {
+        gap: 35px !important;
+        .attSecondPart {
+            flex-direction: column; // Stack elements vertically
+            gap: 20px;
+
+            .attendanceSummary {
+                width: 100%; // Full width for summary
+                height: auto; // Auto height for summary
+            }
+
+            .lineGraph {
+                width: 100%; // Full width for graph
+                .line {
+                    width: 100%; // Full width for graph
+                    height: 200px; // Adjust height for smaller screens
+                }
+            }
+        }
+    }
+    .attFirstPart{
+        flex-direction: column;
+        justify-content: start !important;
+        align-items: start !important;
+        // background-color: aqua;
+        gap: 0; // Add gap between stacked elements
+
+        .toggleAttButton {
+            align-self: start !important;
+        }
+
+       
+        .toggleAttButton{
+            margin: 0 !important;
+        }
+    }
+    .attendanceSummary {
+        gap: 5px !important;
+
+    }
+    .title-search-sort{
+        align-items: start !important;
+        justify-content: start !important;
+        h5{
+            align-self: start;
+        }
+    }
+    .selects {
+        display: flex;
+        gap: 10px;
+    
+        select {
+            display: flex;
+            flex-direction: column;
+    
+            option {
+            
+            }
+        }
+    }
+    .search-sortAttendance{
+        flex-direction: column;
+align-self: start;
+    }
+    
 }
 
-
-// 
-.saveMarkingAtt{
-    background-color: #6247AA ;
-    padding: 10px 20px  !important;
+// Save Marking Button
+.saveMarkingAtt {
+    background-color: #6247AA;
+    padding: 10px 20px !important;
     border-radius: 12px;
 }
-
-@media only screen and (max-width: 767px), 
-       only screen and (min-width: 601px) and (max-width: 1024px) { 
-        .headAtt{
-            flex-direction: column !important;
-        }
-       }

@@ -146,29 +146,6 @@ body {
   justify-content: space-around !important;
   width: 100% !important;
 }
-.secondPart .head .input-container {
-  display: flex;
-  gap: 5px;
-  background-color: #ffffff;
-  border-radius: 30px;
-  justify-content: center;
-  align-items: start;
-  padding: 3px;
-}
-.secondPart .head .input-container .searchIcon {
-  width: 35px;
-  height: 35px;
-  background-color: #eee;
-  padding: 10px;
-  border-radius: 50%;
-}
-.secondPart .head .input-container .input {
-  padding: 10px;
-  border: none;
-  border-radius: 10px;
-  background-color: #ffffff;
-  outline: 0;
-}
 .secondPart .head .right {
   display: flex;
   gap: 10px !important;
@@ -193,9 +170,6 @@ body {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-}
-.secondPart .greeting-container {
-  margin: 14px 0;
 }
 .secondPart .greeting-container .greeting {
   color: #343a40;
@@ -267,6 +241,48 @@ body.dark-mode {
 .dark-mode .dropdown-title {
   background-color: #343435 !important;
   color: #ffffff !important;
+}
+
+.dark-mode .dep-con {
+  background-color: #0B0B0B;
+  color: #0B0B0B;
+  border: solid black;
+}
+
+.dark-mode table {
+  color: #fff;
+  border: #fff solid 1 px;
+}
+
+.dark-mode tr {
+  background-color: #0B0B0B;
+}
+
+.dark-mode th {
+  background-color: #0B0B0B;
+}
+
+.dark-mode .salaryform {
+  background-color: #0B0B0B;
+  color: #fff;
+}
+
+.dark-mode .input:not(:-moz-placeholder-shown) ~ .user-label {
+  background-color: #0B0B0B !important;
+}
+
+.dark-mode .input:focus ~ .user-label,
+.dark-mode .input:not(:placeholder-shown) ~ .user-label {
+  background-color: #0B0B0B !important;
+}
+
+.dark-mode button {
+  border: #fff solid 1px;
+  color: #fff;
+}
+
+.dark-mode .select-input {
+  color: #fff !important;
 }
 
 .hamburger {

@@ -1,16 +1,3 @@
-.contact{
-  border: #666 1px solid;
-  padding: 1px 10px;
-  border-radius: 10px;
-  cursor: pointer;
-
-}
-.spacer {
-  margin-bottom: 12px !important; /* Adjust spacing */
-  display: block !important;
-}
-
-
 table {
   border: 1px solid #ccc;
   border-radius: 10px !important;
@@ -18,184 +5,156 @@ table {
   margin: 10px 0;
   padding: 0;
   width: 100%;
-  table-layout: auto; /* Allows flexible column resizing */
+  // /* Remove table-layout: fixed; to allow cells to expand */
+}
+
+table caption {
+  font-size: 1.5em;
+  margin: .5em 0 .75em;
+}
+
+table tr {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: .35em;
+  cursor: pointer;
 }
 
 table th,
 table td {
   padding: .625em;
   text-align: start;
-  vertical-align: middle;
+  /* Prevent text from wrapping */
+  white-space: wrap;
+  /* Ensure content doesn't get clipped */
+  overflow: visible;
 }
 
-/* Ensure proper spacing for each column */
-table th:nth-child(1), /* ID Column */
-table td:nth-child(1) {
-  width: 5%;
-  text-align: center;
-  white-space: nowrap;
+table th {
+  font-size: .85em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
 }
 
-table th:nth-child(2), /* Name Column */
-table td:nth-child(2) {
-  width: 18%;
-  word-wrap: break-word;
-  white-space: normal;
+table tr:hover {
+  background-color: #fcf6da !important;
 }
 
-table th:nth-child(3), /* Department Column */
-table td:nth-child(3) {
-  width: 15%;
-  word-wrap: break-word;
-  white-space: normal;
-}
+/* Media Queries for Mobile and Tablet Screens */
 
-table th:nth-child(4), /* Contact Column (Email & Phone) */
-table td:nth-child(4) {
-  width: 22%;
-  word-wrap: break-word;
-  white-space: normal;
-}
+@media only screen and (max-width: 767px), 
+     only screen and (min-width: 601px) and (max-width: 1024px) {
+  table {
+    border: 0;
+  }
 
-table th:nth-child(5), /* Status Column */
-table td:nth-child(5) {
-  width: 10%;
-  text-align: center;
-  white-space: nowrap;
-}
+  table caption {
+    font-size: 1.3em;
+  }
 
-table th:nth-child(6), /* Actions Column */
-table td:nth-child(6) {
-  width: 10%;
-  text-align: center;
-  white-space: nowrap;
-}
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
 
-/* Prevent long text from overlapping */
-td {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: .625em;
+  }
 
-/* Ensure wrapping for text-heavy columns */
-td:nth-child(2),
-td:nth-child(3),
-td:nth-child(4) {
-  word-break: break-word;
-}
+  table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: .8em;
+    text-align: left;
+    /* Allow text to wrap in mobile view */
+    white-space: normal;
+  }
 
-  table th {
-    font-size: .82em;
-    letter-spacing: .1em;
+  table td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
     text-transform: uppercase;
   }
-  
-  table tr:hover {
-    background-color: #fcf6da !important;
-  }
-  
-/* Media Queries for Mobile and Tablet Screens */
- 
-@media only screen and (max-width: 767px), 
-       only screen and (min-width: 601px) and (max-width: 1024px) {
-  table {
-      border: 0;
-    }
-  
-    table caption {
-      font-size: 1em;
-    }
-  
-    table thead {
-      border: none;
-      clip: rect(0 0 0 0);
-      height: 1px;
-      margin: -1px;
-      overflow: hidden;
-      padding: 0;
-      position: absolute;
-      width: 1px;
-    }
-  
-    table tr {
-      border-bottom: 3px solid #ddd;
-      display: block;
-      margin-bottom: .625em;
-    }
-  
-    table td {
-      border-bottom: 1px solid #ddd;
-      display: block;
-      font-size: .5em;
-      text-align: left;
-    }
-  
-    table td::before {
-      content: attr(data-label);
-      float: left;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-  
-    table td:last-child {
-      border-bottom: 0;
-    }
-  }
 
-// 
+  table td:last-child {
+    border-bottom: 0;
+  }
+}
+
+.contact {
+  border: #666 1px solid;
+  padding: 1px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.spacer {
+  margin-bottom: 12px !important; /* Adjust spacing */
+  display: block !important;
+}
+
 .more-dropdown {
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    // margin-left: 4px;
-    // margin-right: 50px;
-    padding: 4px;
-    border-radius: 5px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px;
+  border-radius: 5px;
+}
 
-    hr {
-      color: #aaa;
-    }
-  
-    .delete-container,
-    .edit-container {
-      display: flex;
-      justify-content: start ;
-      align-items: center !important;
-      gap: 10px;
-  
-      p {
-        color: #000 !important;
-        margin-bottom: 0 !important;
-      }
-  
-      p:hover {
-        color: #666 !important;
-      }
-  
-      .edit-icon,
-      .edit2-icon,
-      .view-icon {
-        width: 24px;
-      }
-  
-      .delete-icon {
-        width: 20px;
-      }
-    }
-    }
-  
-  .edit-icon,
-  .edit2-icon,
-  .view-icon,
-  .delete-icon {
-    width: 24px;
-  }
+.more-dropdown hr {
+  color: #aaa;
+}
 
-  .action-icons {
-    display: flex;
-    gap: 10px;
-    justify-content: start;
-    align-items: center;
-  }
-  
+.more-dropdown .delete-container,
+.more-dropdown .edit-container {
+  display: flex;
+  justify-content: start;
+  align-items: center !important;
+  gap: 10px;
+}
+
+.more-dropdown .delete-container p,
+.more-dropdown .edit-container p {
+  color: #000 !important;
+  margin-bottom: 0 !important;
+}
+
+.more-dropdown .delete-container p:hover,
+.more-dropdown .edit-container p:hover {
+  color: #666 !important;
+}
+
+.more-dropdown .edit-icon,
+.more-dropdown .edit2-icon,
+.more-dropdown .view-icon {
+  width: 24px;
+}
+
+.more-dropdown .delete-icon {
+  width: 20px;
+}
+
+.edit-icon,
+.edit2-icon,
+.view-icon,
+.delete-icon {
+  width: 24px;
+}
+
+.action-icons {
+  display: flex;
+  gap: 10px;
+  justify-content: start;
+  align-items: center;
+}
+

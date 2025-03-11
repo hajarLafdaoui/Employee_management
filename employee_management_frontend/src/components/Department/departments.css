@@ -256,74 +256,29 @@ table {
   margin: 10px 0;
   padding: 0;
   width: 100%;
-  table-layout: auto; /* Allows flexible column resizing */
+  table-layout: fixed;
+}
+
+table caption {
+  font-size: 1.5em;
+  margin: 0.5em 0 0.75em;
+}
+
+table tr {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: 0.35em;
+  cursor: pointer;
 }
 
 table th,
 table td {
   padding: 0.625em;
   text-align: start;
-  vertical-align: middle;
-}
-
-/* Ensure proper spacing for each column */
-table th:nth-child(1),
-table td:nth-child(1) {
-  width: 5%;
-  text-align: center;
-  white-space: nowrap;
-}
-
-table th:nth-child(2),
-table td:nth-child(2) {
-  width: 18%;
-  word-wrap: break-word;
-  white-space: normal;
-}
-
-table th:nth-child(3),
-table td:nth-child(3) {
-  width: 15%;
-  word-wrap: break-word;
-  white-space: normal;
-}
-
-table th:nth-child(4),
-table td:nth-child(4) {
-  width: 22%;
-  word-wrap: break-word;
-  white-space: normal;
-}
-
-table th:nth-child(5),
-table td:nth-child(5) {
-  width: 10%;
-  text-align: center;
-  white-space: nowrap;
-}
-
-table th:nth-child(6),
-table td:nth-child(6) {
-  width: 10%;
-  text-align: center;
-  white-space: nowrap;
-}
-
-/* Prevent long text from overlapping */
-td {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Ensure wrapping for text-heavy columns */
-td:nth-child(2),
-td:nth-child(3),
-td:nth-child(4) {
-  word-break: break-word;
 }
 
 table th {
-  font-size: 0.82em;
+  font-size: 0.85em;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -338,7 +293,7 @@ table tr:hover {
     border: 0;
   }
   table caption {
-    font-size: 1em;
+    font-size: 1.3em;
   }
   table thead {
     border: none;
@@ -358,7 +313,7 @@ table tr:hover {
   table td {
     border-bottom: 1px solid #ddd;
     display: block;
-    font-size: 0.5em;
+    font-size: 0.8em;
     text-align: left;
   }
   table td::before {
@@ -498,7 +453,7 @@ form .button-form:active {
 
 .input {
   border: solid 1.5px #9e9e9e;
-  border-radius: 1rem;
+  border-radius: 1rem !important;
   background: none;
   padding: 0.8rem;
   font-size: 1rem;
@@ -671,6 +626,10 @@ input:valid ~ label {
     padding: 0 0.2em;
     color: #805ebf;
   }
+  .inputs-vertical {
+    flex-direction: column;
+    gap: 18px;
+  }
 }
 .page {
   display: flex;
@@ -680,6 +639,7 @@ input:valid ~ label {
   border-radius: 0.6rem;
   background: #ffffff;
   box-shadow: 0 0.8rem 2rem rgba(90, 97, 129, 0.05);
+  color: #000;
 }
 .page__numbers, .page__btn, .page__dots {
   display: flex;

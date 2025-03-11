@@ -54,3 +54,44 @@ body.dark-mode {
     background-color: #343435 !important;
     color: $white !important;
 }
+
+.dark-mode .dep-con{
+background-color: #0B0B0B;
+color: #0B0B0B;
+border: solid black;
+}
+.dark-mode table {
+    color: #fff;
+    border:#fff solid 1 px ;
+}
+
+.dark-mode tr  {
+    background-color: #0B0B0B;
+}
+
+.dark-mode th{
+    background-color: #0B0B0B;
+
+}
+
+
+
+.dark-mode .salaryform{
+    background-color: #0B0B0B;
+    color: #fff;
+}
+
+
+.dark-mode .input:focus ~ .user-label,
+.dark-mode .input:not(:placeholder-shown) ~ .user-label {
+    background-color: #0B0B0B !important;
+}
+
+.dark-mode button{
+    border: #fff solid 1px;
+    color: #fff;
+}
+.dark-mode .select-input{
+    color: #fff !important;
+}
+

@@ -62,27 +62,28 @@ const SalaryDetail = () => {
     return (
         <>
         <div className="salary-actions">
-                    <button onClick={handlePrint}>Print</button>
+                    <button onClick={handlePrint}><img src="/icons/paper.png" alt=""                                                 className="edit2-icon"
+                    /></button>
                     <button onClick={handleDownloadPDF}> PDF</button>
                     </div>
             <div className="salary-container"ref={pdfRef}>
                 <div className="salary-header">
                     <h1>Pays for the Month</h1>
-                    <p><strong>{new Date(salary.paid_on).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</strong></p>
+                    <p>{new Date(salary.paid_on).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
                 </div>
 
                 <div className="salary-info">
                     <div className="user-info">
-                        <p><strong>User Name:</strong> {salary.user.name}</p>
-                        <p><strong>Department:</strong> {department.name}</p>
-                        <p><strong>Job Title:</strong> {job.name}</p>
-                        <p><strong>Start Date:</strong> {new Date(salary.start_date).toLocaleDateString()}</p>
-                        <p><strong>End Date:</strong> {new Date(salary.end_date).toLocaleDateString()}</p>
+                        <p>User Name: {salary.user.name}</p>
+                        <p>Department: {department.name}</p>
+                        <p>Job Title: {job.name}</p>
+                        <p>Start Date: {new Date(salary.start_date).toLocaleDateString()}</p>
+                        <p>End Date: {new Date(salary.end_date).toLocaleDateString()}</p>
                     </div>
 
                     <div className="enterprise-info">
-                        <p><strong>Enterprise Name:</strong> XYZ Corporation</p>
-                        <p><strong>Enterprise Address:</strong> 123 Main Street, City</p>
+                        <p>Enterprise Name: XYZ Corporation</p>
+                        <p>Enterprise Address: 123 Main Street, City</p>
                     </div>
                 </div>
 
@@ -96,19 +97,19 @@ const SalaryDetail = () => {
                         </thead>
                         <tbody>
                             <tr>
-                                <td><strong>Base Salary</strong></td>
+                                <td>Base Salary</td>
                                 <td>{baseSalary}</td>
                             </tr>
                             <tr>
-                                <td><strong>Leave Deductions</strong></td>
+                                <td>Leave Deductions</td>
                                 <td>{salary.leave_deduction}</td>
                             </tr>
                             <tr>
-                                <td><strong>Attendance Deductions</strong></td>
+                                <td>Attendance Deductions</td>
                                 <td>{salary.attendance_bonus}</td>
                             </tr>
                             <tr>
-                                <td><strong>Total Salary</strong></td>
+                                <td>Total Salary</td>
                                 <td>{salary.total_salary}</td>
                             </tr>
                         </tbody>
@@ -116,7 +117,7 @@ const SalaryDetail = () => {
                 </div>
 
                 <div className="net-salary">
-                    <p><strong>Net Salary:</strong> {salary.total_salary}</p>
+                    <p> <strong>Net Salary:</strong> {salary.total_salary}</p>
                 </div>
 
                

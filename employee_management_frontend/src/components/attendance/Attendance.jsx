@@ -5,11 +5,11 @@ import Modal from 'react-modal';
 import UpdateAttendance from './UpdateAttendance'; // Import the update form component
 import SuccessAlert from '../Alerts/SuccessAlert';
 import ErrorAlert from '../Alerts/ErrorAlert';
+import DeleteModal from '../Cnfirm/DeleteModal'; // Import the DeleteModal component
 import "./attendance.scss"; // Ensure you have a corresponding SCSS file for attendance
 
 Modal.setAppElement('#root');
-
-const Attendance = ({ attendance, currentDate }) => {
+const Attendance = ({ attendance, currentDate, refreshAttendance }) => {
     const [departments, setDepartments] = useState([]);
     const [search, setSearch] = useState("");
     const [selectedDepartment, setSelectedDepartment] = useState("");
@@ -32,6 +32,10 @@ const Attendance = ({ attendance, currentDate }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 5;
 
+    // Delete modal state
+    const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
+    const [deleteId, setDeleteId] = useState(null);
+
     const fetchDepartments = async () => {
         try {
             const resp = await axiosInstance.get("/departments");
@@ -51,13 +55,11 @@ const Attendance = ({ attendance, currentDate }) => {
     };
 
     const openModal = (id) => {
-        console.log("Opening modal with ID:", id);
-        setSelectedAttendance(id); // Only set the ID
+        setSelectedAttendance(id);
         setIsModalOpen(true);
     };
 
     const closeModal = () => {
-        console.log("Closing modal");
         setIsModalOpen(false);
         setSelectedAttendance(null);
     };
@@ -66,6 +68,7 @@ const Attendance = ({ attendance, currentDate }) => {
         setSuccessMessage(message);
         setShowSuccessAlert(true);
         setTimeout(() => setShowSuccessAlert(false), 5000);
+        refreshAttendance(); // Refresh attendance data after success
     };
 
     const handleError = (message) => {
@@ -97,13 +100,31 @@ const Attendance = ({ attendance, currentDate }) => {
         if (currentPage > 1) setCurrentPage(currentPage - 1);
     };
 
-    if (!attendance.length) return <div>Loading...</div>;
+    const openDeleteModal = (id) => {
+        setDeleteId(id);
+        setConfirmDeleteModal(true);
+    };
+
+    const closeDeleteModal = () => {
+        setDeleteId(null);
+        setConfirmDeleteModal(false);
+    };
+
+    const deleteAttendance = async () => {
+        try {
+            await axiosInstance.delete(`/attendance/${deleteId}`);
+            handleSuccess("Attendance deleted successfully.");
+            closeDeleteModal();
+        } catch (error) {
+            handleError("Failed to delete attendance.");
+        }
+    };
 
     return (
         <div>
             <div className="title-search-sort">
                 <h5>Attendance</h5>
-                <div className="search-sort">
+                <div className="search-sort search-sortAttendance">
                     <div className="input-search-container">
                         <img src="icons/search.png" alt="" />
                         <input
@@ -114,48 +135,42 @@ const Attendance = ({ attendance, currentDate }) => {
                             placeholder="Search employees..."
                         />
                     </div>
+                    <div className="selects">
+                        <select
+                            value={selectedDepartment}
+                            onChange={(e) => setSelectedDepartment(e.target.value)}
+                        >
+                            <option value="">All Departments</option>
+                            {departments.map((department) => (
+                                <option key={department.id} value={department.id}>
+                                    {department.name}
+                                </option>
+                            ))}
+                        </select>
 
-                    <select value={selectedDepartment} onChange={(e) => setSelectedDepartment(e.target.value)}>
-                        <option value="">All Departments</option>
-                        {departments.map((department) => (
-                            <option key={department.id} value={department.id}>{department.name}</option>
-                        ))}
-                    </select>
-
-                    <select value={status} onChange={(e) => setStatus(e.target.value)}>
-                        <option value="">All Status</option>
-                        {['present', 'absent', 'leave'].map((status) => (
-                            <option key={status} value={status}>{status}</option>
-                        ))}
-                    </select>
+                        <select value={status} onChange={(e) => setStatus(e.target.value)}>
+                            <option value="">All Status</option>
+                            {["present", "absent", "leave"].map((status) => (
+                                <option key={status} value={status}>
+                                    {status}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
             </div>
 
             <table border="1" style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead>
                     <tr>
-                        <th className="table-header"># ID</th>
-                        <th className="table-headerr">
-                            <span>Name</span>
-                        </th>
-                        <th className="table-header">
-                            <span>Country</span>
-                        </th>
-                        <th className="table-header">
-                            <span>Role</span>
-                        </th>
-                        <th className="table-header">
-                            <span>Department</span>
-                        </th>
-                        <th className="table-header">
-                            <span>Contact</span>
-                        </th>
-                        <th className="table-header">
-                            <span>Status</span>
-                        </th>
-                        <th className="table-header">
-                            <span>Actions</span>
-                        </th>
+                        <th># ID</th>
+                        <th>Name</th>
+                        <th>Country</th>
+                        <th>Role</th>
+                        <th>Department</th>
+                        <th>Contact</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -194,7 +209,7 @@ const Attendance = ({ attendance, currentDate }) => {
                                             <p>Edit</p>
                                         </div>
 
-                                        <div className="edit-container" onClick={() => window.location.href = `/DeleteAttendance/${entry.id}`}>
+                                        <div className="edit-container" onClick={() => openDeleteModal(entry.id)}>
                                             <img className="delete-icon" src="/icons/delete.png" alt="Delete" />
                                             <p>Delete</p>
                                         </div>
@@ -206,45 +221,95 @@ const Attendance = ({ attendance, currentDate }) => {
                 </tbody>
             </table>
 
-            {/* Update Attendance Modal */}
-            <Modal
-                isOpen={isModalOpen}
-                onRequestClose={closeModal}
-                contentLabel="Edit Attendance"
-                className="modal-form"
-            >
-                <div className="modal-header">
-                    <h2>Edit Attendance</h2>
-                    <img src="/icons/close.png" className='close' alt="Close" onClick={closeModal} />
-                </div>
+            {/* Pagination */}
+            <div className="page">
+                <li
+                    className="page__btn"
+                    onClick={prevPage}
+                    style={{ pointerEvents: currentPage === 1 ? 'none' : 'auto' }}
+                >
+                    <span className="material-icons">
+                        <img src="icons/left-arrow.png" alt="left" />
+                    </span>
+                </li>
 
-                {selectedAttendance ? (
-                    <UpdateAttendance
-                        id={selectedAttendance}
-                        onClose={closeModal}
-                        onSuccess={handleSuccess}
-                        onError={handleError}
+                {[...Array(totalPages).keys()]
+                    .slice(
+                        Math.max(0, Math.min(currentPage - 2, totalPages - 3)),
+                        Math.max(3, Math.min(currentPage + 1, totalPages))
+                    )
+                    .map((index) => (
+                        <li
+                            key={index + 1}
+                            className={`page__numbers ${currentPage === index + 1 ? 'active' : ''}`}
+                            onClick={() => setCurrentPage(index + 1)}
+                        >
+                            {index + 1}
+                        </li>
+                    ))}
+
+                <li
+                    className="page__btn"
+                    onClick={nextPage}
+                    style={{
+                        pointerEvents: currentPage === totalPages ? 'none' : 'auto',
+                    }}
+                >
+                    <span className="material-icons">
+                        <img src="icons/right-arrow.png" alt="right" />
+                    </span>
+                </li>
+            </div>
+
+                {/* Update Attendance Modal */}
+<Modal
+    isOpen={isModalOpen}
+    onRequestClose={closeModal}
+    contentLabel="Edit Attendance"
+    className="modal-form"
+>
+    <div className="modal-header">
+        <h2>Edit Attendance</h2>
+        <img src="/icons/close.png" className='close' alt="Close" onClick={closeModal} />
+    </div>
+
+    {selectedAttendance ? (
+        <UpdateAttendance
+            id={selectedAttendance}
+            onClose={closeModal} // Pass the closeModal function
+            onSuccess={handleSuccess} // Pass the handleSuccess function
+            onError={handleError} // Pass the handleError function
+        />
+    ) : (
+        <p>Loading...</p>
+    )}
+</Modal>
+                {/* Delete Confirmation Modal */}
+                {/* Delete Confirmation Modal */}
+                <DeleteModal
+                    showDeletePopUp={confirmDeleteModal}
+                    setShowDeletePopUp={setConfirmDeleteModal}
+                    handleDelete={deleteAttendance}
+                    itemType="attendance"
+                />
+
+                {/* Success and Error Alerts */}
+                {showSuccessAlert && (
+                    <SuccessAlert
+                        message={successMessage}
+                        onClose={() => setShowSuccessAlert(false)}
                     />
-                ) : (
-                    <p>Loading...</p>
                 )}
-            </Modal>
 
-            {showSuccessAlert && (
-                <SuccessAlert
-                    message={successMessage}
-                    onClose={() => setShowSuccessAlert(false)}
-                />
-            )}
+                {showErrorAlert && (
+                    <ErrorAlert
+                        message={errorMessage}
+                        onClose={() => setShowErrorAlert(false)}
+                    />
+                )}
+            </div>
 
-            {showErrorAlert && (
-                <ErrorAlert
-                    message={errorMessage}
-                    onClose={() => setShowErrorAlert(false)}
-                />
-            )}
-        </div>
-    );
+            );
 };
 
-export default Attendance;
+            export default Attendance;
