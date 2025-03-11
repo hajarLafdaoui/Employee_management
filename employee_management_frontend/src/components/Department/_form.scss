@@ -36,7 +36,7 @@ form {
 
     .button-form:hover {
         color: #fff;
-        background-color: #805ebf;
+        background-color: #ffd60a;
         border: none;
         box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
         transform: translateY(-2px);
@@ -95,7 +95,7 @@ form {
 .input:focus,
 input:valid {
     outline: none;
-    border: 1.5px solid #805ebf;
+    border: 1.5px solid #ffd60a;
 }
 
 .input:focus~label,
@@ -103,7 +103,7 @@ input:valid~label {
     transform: translateY(-50%) scale(0.8);
     background-color: #fff;
     padding: 0 .2em;
-    color: #805ebf;
+    color: #ffd60a;
 }
 
 .input:focus~.user-label,
@@ -111,7 +111,7 @@ input:valid~label {
     transform: translateY(-50%) scale(0.8);
     background-color: #fff;
     padding: 0 .2em;
-    color: #805ebf;
+    color: #ffd60a;
 }
 .modal{
   // margin: 0 20px !important;
@@ -175,7 +175,7 @@ input:valid~label {
     
         .button-form:hover {
             color: #fff;
-            background-color: #805ebf;
+            background-color: #ffd60a;
             border: none;
             box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
             transform: translateY(-2px);
@@ -233,7 +233,7 @@ input:valid~label {
     .input:focus,
     input:valid {
         outline: none;
-        border: 1.5px solid #805ebf;
+        border: 1.5px solid #ffd60a;
     }
     
     .input:focus~label,
@@ -241,7 +241,7 @@ input:valid~label {
         transform: translateY(-50%) scale(0.8);
         background-color: #fff;
         padding: 0 .2em;
-        color: #805ebf;
+        color: #ffd60a;
     }
     
     .input:focus~.user-label,
@@ -249,7 +249,7 @@ input:valid~label {
         transform: translateY(-50%) scale(0.8);
         background-color: #fff;
         padding: 0 .2em;
-        color: #805ebf;
+        color: #ffd60a;
     }
     .inputs-vertical {
         flex-direction: column;

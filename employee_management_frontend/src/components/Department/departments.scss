@@ -1,9 +1,11 @@
+
 @import 'graphs';
 @import 'modal';
 @import 'table';
 @import 'form';
 @import 'pageination';
 @import 'search';
+
 
 .DepaHead {
   display: flex;
@@ -19,7 +21,7 @@
 
     justify-content: center;
     align-items: center;
-    background-color: #6247AA;
+    background-color: #ffd60a;
     border-radius: 15px;
     gap: 8px;
 
@@ -35,7 +37,8 @@
     button {
       border: none;
       outline: none;
-      background-color: #6247AA;
+      background-color:#ffd60a;
+;
       font-family: 'Montserrat', sans-serif;
       font-size: 16px;
     cursor: pointer;
@@ -96,3 +99,49 @@
   border-radius: 12px;
 
 }
+
+
+//style select
+
+
+
+.select-input {
+  border-radius: 1rem;
+  font-size: 1rem;
+  width: 100%;
+  padding: 10px 12px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  transition: all 0.3s ease;
+ 
+}
+
+.select-input-container {
+  position: relative;
+  width: 100%;
+}
+
+.select-input-container::after {
+  content: '▼';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  
+  pointer-events: none;
+}
+
+
+
+//salaryform
+
+.salaryform{
+  background-color: #fff;
+  padding: 30px 100px;
+  border-radius: 10px;
+}
+
+.salaryform h2{
+  text-align: center;
+  margin-bottom: 20px;}
