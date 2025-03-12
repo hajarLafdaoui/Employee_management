@@ -237,6 +237,18 @@
   margin-bottom: 20px !important;
 }
 
+.contact {
+  border: #666 1px solid;
+  padding: 1px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.spacer {
+  margin-bottom: 12px !important; /* Adjust spacing */
+  display: block !important;
+}
+
 table {
   border: 1px solid #ccc;
   border-radius: 10px !important;
@@ -441,7 +453,7 @@ form .button-form:active {
 
 .input {
   border: solid 1.5px #9e9e9e;
-  border-radius: 1rem;
+  border-radius: 1rem !important;
   background: none;
   padding: 0.8rem;
   font-size: 1rem;
@@ -614,6 +626,10 @@ input:valid ~ label {
     padding: 0 0.2em;
     color: #805ebf;
   }
+  .inputs-vertical {
+    flex-direction: column;
+    gap: 18px;
+  }
 }
 .page {
   display: flex;
@@ -623,6 +639,7 @@ input:valid ~ label {
   border-radius: 0.6rem;
   background: #ffffff;
   box-shadow: 0 0.8rem 2rem rgba(90, 97, 129, 0.05);
+  color: #000;
 }
 .page__numbers, .page__btn, .page__dots {
   display: flex;
@@ -686,7 +703,7 @@ input:valid ~ label {
   width: -moz-fit-content !important;
   width: fit-content !important;
   border-radius: 10px;
-  padding: 2px;
+  padding: 2px !important;
   gap: 5px;
   background-color: #fff;
 }
@@ -711,7 +728,7 @@ input:valid ~ label {
   width: -moz-fit-content !important;
   width: fit-content !important;
   border-radius: 10px;
-  padding: 2px;
+  padding: 2px !important;
   gap: 5px;
 }
 .sortingConatiner img {

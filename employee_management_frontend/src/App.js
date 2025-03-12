@@ -13,8 +13,8 @@ import EmployeeList from "./components/EmployeeList";
 import UpdateUser from "./components/UpdateUser";
 
 import AdminLeaveRequests from "./components/Leave/AdminLeaveRequests";
-import AttendanceHeader from "./components/attendance/AttendanceHeader";
-import EmployeeAttendance from "./components/attendance/EmployeeAttendance";
+import AttendanceHeader from "./components/Attendance/AttendanceHeader";
+import EmployeeAttendance from "./components/Attendance/EmployeeAttendance";
 
 import LeaveRequestForm from "./components/Leave/LeaveRequestForm";
 
@@ -33,6 +33,8 @@ import SalaryCalculator from "./components/salary/SalaryCalculator";
 import SalaryList from "./components/salary/SalaryList";
 import HistoryPage from "./components/AttestatioRequest/HistoryPage";
 import ChangePassword from "./components/Employee/ChangePassword";
+import DeleteAttendance from "./components/Attendance/DeleteAttendance";
+import UpdateAttendance from "./components/Attendance/UpdateAttendance";
 import PrintAttestation from "./components/AttestatioRequest/PrintAttestation";
 import PrintSalary from "./components/salary/PrintSalary";
 
@@ -78,6 +80,9 @@ function App() {
           <Route path="AdminLeaveRequests" element={<AdminLeaveRequests />} />
 
           <Route path="Attendance" element={<AttendanceHeader />} />
+          <Route path="DeleteAttendance/:id" element={<DeleteAttendance />} />
+          <Route path="UpdateAttendance/:id" element={<UpdateAttendance />} />
+          <Route path="AttendanceHeader" element={<AttendanceHeader />} />
           <Route path="HolidayCrud" element={<AdminHolidayManagement />} />
           <Route path="Attestation" element={<AttestationRequests />} />
           <Route path="print-attestation" element={<PrintAttestation />} />

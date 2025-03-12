@@ -1,0 +1,101 @@
+.updateAtt {
+  display: flex;
+  justify-content: center;
+  align-items: center !important;
+  gap: 15px;
+  background-color: #6247AA;
+  padding: 10px 20px !important;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.headAtt {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+.headAtt .attFirstPart {
+  display: flex;
+  justify-content: space-between;
+  align-items: center !important;
+}
+.headAtt .attFirstPart .attFirstPartHeader {
+  display: flex;
+  justify-content: start;
+  align-items: center !important;
+  gap: 30px;
+}
+.headAtt .attFirstPart .attFirstPartHeader .dateNav {
+  display: flex;
+  justify-content: start;
+  align-items: center !important;
+  gap: 15px;
+  margin-top: 10px;
+}
+.headAtt .attFirstPart .attFirstPartHeader .dateNav .lessGreaterIcon {
+  width: 28px !important;
+  background-color: #fff;
+  padding: 3px;
+  border-radius: 3px;
+}
+.headAtt .attFirstPart .toggleAttButton {
+  display: flex;
+  justify-content: center;
+  align-items: center !important;
+  gap: 15px;
+  background-color: #6247AA;
+  padding: 10px 20px !important;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.headAtt .attFirstPart .toggleAttButton img {
+  width: 25px;
+}
+.headAtt .attFirstPart .toggleAttButton p {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.headAtt .attSecondPart {
+  display: flex;
+  justify-content: space-between;
+  align-items: center !important;
+}
+.headAtt .attSecondPart .attendanceSummary {
+  display: FLEX;
+  flex-direction: column;
+  gap: 28px;
+  height: 300px;
+}
+.headAtt .attSecondPart .attendanceSummary .ps {
+  background-color: #FFF;
+  border-radius: 15px;
+  padding: 5px 10px;
+  margin: 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 0 !important;
+  font-size: 16px;
+  font-weight: 500;
+}
+.headAtt .attSecondPart .attendanceSummary .ps span {
+  font-size: 18px;
+  font-weight: 600;
+}
+.headAtt .attSecondPart .line {
+  width: 700px;
+  height: 260px;
+}
+
+.saveMarkingAtt {
+  background-color: #6247AA;
+  padding: 10px 20px !important;
+  border-radius: 12px;
+}
+
+@media only screen and (max-width: 767px), only screen and (min-width: 601px) and (max-width: 1024px) {
+  .headAtt {
+    flex-direction: column !important;
+  }
+}/*# sourceMappingURL=attendance.css.map */
