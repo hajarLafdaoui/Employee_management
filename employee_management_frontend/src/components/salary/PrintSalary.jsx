@@ -8,7 +8,7 @@ import { useRef } from "react";
 
 import './SalaryDetail.scss';
 
-const SalaryDetail = () => {
+const PrintSalary = () => {
     const { id } = useParams();  
     const [salary, setSalary] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -62,9 +62,10 @@ const SalaryDetail = () => {
     return (
         <>
         <div className="salary-actions">
-                    <button onClick={handlePrint}><img src="/icons/paper.png" alt=""                                                 className="edit2-icon"
-                    /></button>
-                    <button onClick={handleDownloadPDF}> PDF</button>
+                    <button className="btnslary" onClick={handlePrint}><img src="/icons/paper.png" alt=""                                                 className="edit2-icon"
+                    />Print</button>
+                    <button className="btnslary" onClick={handleDownloadPDF}> <img src="/icons/pdf.png" alt=""                                                 className="edit2-icon"
+                    />Pdf</button>
                     </div>
             <div className="salary-container"ref={pdfRef}>
                 <div className="salary-header">
@@ -127,4 +128,4 @@ const SalaryDetail = () => {
     );
 };
 
-export default SalaryDetail;
+export default PrintSalary;

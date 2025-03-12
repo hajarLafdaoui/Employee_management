@@ -31,10 +31,10 @@ import HolidayList from "./components/Employee/HolidayList";
 import AttestationRequests from "./components/AttestatioRequest/AttestationRequests";
 import SalaryCalculator from "./components/salary/SalaryCalculator";
 import SalaryList from "./components/salary/SalaryList";
-import SalaryDetail from "./components/salary/SalaryDetail";
 import HistoryPage from "./components/AttestatioRequest/HistoryPage";
 import ChangePassword from "./components/Employee/ChangePassword";
 import PrintAttestation from "./components/AttestatioRequest/PrintAttestation";
+import PrintSalary from "./components/salary/PrintSalary";
 
 const ProtectedRoute = ({ children, role }) => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -85,7 +85,7 @@ function App() {
           <Route path="/historyattest" element={<HistoryPage />} />
           <Route path="payroll" element={<SalaryCalculator />} />
           <Route path="salarylist" element={<SalaryList />} />
-          <Route path="salary/:id" element={<SalaryDetail />} />
+          <Route path="salary/:id" element={<PrintSalary />} />
 
           <Route path="SignOut" element={<SignOut user={user} />} />
           <Route path="Departments" element={<MainDepartments />} />
