@@ -3,21 +3,24 @@ body {
   font-family: 'Montserrat', sans-serif;
   overflow-x: hidden !important;
   background: linear-gradient(to right, #ffffff, #f6e9c9);
-
- height: 100vh;
+ height: fit-content;
 }
 
 .Container {
   display: flex;
   margin-top: 10px !important;
+  // margin-left: 10px !important;
+  
   width: 100%;
   justify-content: space-between;
+  // background-color: aquamarine;
 
 }
 
 // NAVBAR
 .AdminMenu {
-  background-color: $white;
+  // background-color: red;
+  z-index: 89823793;
   position: fixed !important;
 
   // width: 20%;
@@ -25,16 +28,18 @@ body {
   border-radius: 10px;
   // height: 100vh !important;
 
+
   .Navbar {
-    padding: 5px 10px 10px 10px;
+    padding: 0px 10px 0px 10px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 0px;
+    // justify-content: space-between !important;
 
     .logoContainer {
-      border-bottom: 1px solid $grey;
-      padding-top: 10px;
-      padding-bottom: 20px;
+      // border-bottom: 1px solid $grey;
+      padding-top: 8px;
+      padding-bottom: 10px;
     }
 
     .NavbarMenu {
@@ -42,14 +47,15 @@ body {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 10px;
+      padding: 8px;
       padding-top: 0 !important;
       margin-top: 0 !important;
-      gap: 5px;
+      gap: 0 !important;
       width: 240px;
       background-color: $grey;
       border-radius: 25px;
       z-index: 4949499999 !important;
+      
     }
 
     .NavbarItem {
@@ -57,9 +63,9 @@ body {
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      padding: 10px;
+      padding:  10px;
       width: 100%;
-      gap: 10px;
+      gap: 5px;
 
       .navLink {
         display: flex;
@@ -108,7 +114,7 @@ body {
       .dropdownMenuItem {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 5px;
         width: 100%;
         padding: 5px 10px;
         border-radius: 5px;
@@ -131,7 +137,7 @@ body {
         padding: 10px;
         border-radius: 5px;
         justify-content: start;
-        gap: 10px;
+        gap: 5px;
 
         .dropdownArrow {
           margin-left: auto;
@@ -160,13 +166,16 @@ body {
   // margin: 0 20px;
   margin-left: 280px;
   width: 75%;
+  // background-color: bisque;
 
   .head {
     display: flex;
-    align-items: center !important;
-    justify-content: space-around !important;
-    width: 100% !important;
+    align-items: start !important;
+    justify-content: space-between !important;
+    // width: 100% !important;
+    margin-top: 20px;
 
+    // background-color: burlywood;
     // SEARCH
     // .input-container {
     //   display: flex;
@@ -196,11 +205,12 @@ body {
 
     .right {
       display: flex;
-      gap: 10px !important;
+      gap: 5px !important;
       justify-content: center;
       align-items: center;
       padding: 0 !important;
       margin-left: auto;
+
 
       .icon-container {
         border-radius: 50%;
@@ -228,15 +238,26 @@ body {
 
   .greeting-container {
     // margin: 14px 0;
+    // background-color: brown;
+    display: flex;
+    flex-direction: column;
+    gap: 0px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+
 
     .greeting {
       color: $darkGrey;
       font-size: 14px;
+      margin: 0 !important;
+      padding: 0 !important;
     }
 
     .admin-name {
       font-size: 20px;
       font-weight: 600;
+      margin: 0 !important;
+      padding: 0 !important;
     }
   }
 

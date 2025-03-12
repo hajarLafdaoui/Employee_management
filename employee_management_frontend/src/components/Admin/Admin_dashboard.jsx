@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { 
-  FaSignOutAlt, FaSearch, FaSun, FaMoon, FaBell, FaBars, FaChevronLeft, 
-  FaChevronDown, FaChevronUp, FaTachometerAlt, FaUserPlus, FaUsers, 
-  FaCalendarCheck, FaMoneyBillWave, FaBuilding, FaCalendarAlt 
+import {
+  FaSignOutAlt, FaSearch, FaSun, FaMoon, FaBell, FaBars, FaChevronLeft,
+  FaChevronDown, FaChevronUp, FaTachometerAlt, FaUserPlus, FaUsers,
+  FaCalendarCheck, FaMoneyBillWave, FaBuilding, FaCalendarAlt
 } from "react-icons/fa";
 
 import { Link, Outlet, useNavigate } from "react-router-dom";
@@ -23,7 +23,13 @@ const AdminDashboard = ({ adminUser }) => {
   }, [isDarkMode]);
 
   const toggleDropdown = (key) => {
-    setDropdowns((prev) => ({ ...prev, [key]: !prev[key] }));
+    setDropdowns((prev) => {
+      const newDropdowns = {};
+      Object.keys(prev).forEach((dropdownKey) => {
+        newDropdowns[dropdownKey] = dropdownKey === key ? !prev[dropdownKey] : false;
+      });
+      return newDropdowns;
+    });
   };
 
   const toggleSidebar = () => {
@@ -49,12 +55,9 @@ const AdminDashboard = ({ adminUser }) => {
         { label: "Add Employee", icon: <FaUserPlus />, link: "/CreateUser" },
         { label: "Employee List", icon: <FaUsers />, link: "/EmployeeList" },
         { label: "Employee Leave", icon: <FaCalendarCheck />, link: "/AdminLeaveRequests" },
-        // { label: "Employee Payroll", icon: <FaMoneyBillWave />, link: "/Payroll" },
-        // { label: "Salary List", icon: <FaMoneyBillWave />, link: "/salarylist" },
         { label: "Employee Holiday", icon: <FaUsers />, link: "/HolidayCrud" },
         { label: "Attestation Requests", icon: <FaUsers />, link: "/Attestation" },
         { label: "Attestation history", icon: <FaUsers />, link: "/historyattest" },
-
       ],
     },
     { label: "Departments", icon: <FaBuilding />, link: "/Departments" },
@@ -81,7 +84,7 @@ const AdminDashboard = ({ adminUser }) => {
         <nav className="Navbar">
           <div className="logoContainer">
             <Link className="navLink" to="/">
-              {/* <img src="/logo/logo.png" alt="Logo" /> */}
+              <img src="/logo/logo.png" alt="Logo" />
             </Link>
           </div>
           <ul className="NavbarMenu">
@@ -120,10 +123,11 @@ const AdminDashboard = ({ adminUser }) => {
       {/* Main Content */}
       <div className="secondPart">
         <div className="head">
-          {/* <div className="input-container input-container-desktop">
-            <FaSearch className="searchIcon" />
-            <input className="input" type="text" placeholder="Search" />
-          </div> */}
+          {/* Greeting */}
+          <div className="greeting-container">
+            <p className="greeting">{greeting}</p>
+            <p className="admin-name">{adminUser ? adminUser.name : "Guest"}</p>
+          </div>
 
           <div className="right">
             <div className="icon-container dark-mode-toggle" onClick={toggleDarkMode}>
@@ -138,18 +142,13 @@ const AdminDashboard = ({ adminUser }) => {
           </div>
         </div>
 
-        {/* Greeting */}
-        <div className="greeting-container">
-  <p className="greeting">{greeting}</p>
-  <p className="admin-name">{adminUser ? adminUser.name : "Guest"}</p>
-  </div>
-
-
         {/* Render page content */}
         <Outlet />
       </div>
     </div>
   );
 };
+
+
 
 export default AdminDashboard;

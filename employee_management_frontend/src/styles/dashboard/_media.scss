@@ -76,15 +76,20 @@
       margin: 10px 0;
     }
     .head {
-      flex-direction: column-reverse;
+      flex-direction: column-reverse !important;
       gap: 5px;
       align-items: end !important;
       justify-content: end !important;
       width: 100% !important;
+      // margin-top: 50px !important;
+      padding: 0 !important;
+      // background-color: burlywood;
+
       .right {
         display: flex;
         gap: 5px !important;
         margin-top: 5px;
+        
       }
   
       .input-container {

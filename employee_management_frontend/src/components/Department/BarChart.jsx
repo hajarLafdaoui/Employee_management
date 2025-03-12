@@ -38,15 +38,15 @@ const BarChart = () => {
           padding={0.3}
           colors={(d) => {
             if (d.value <= 5 && d.value > 0) {
-              return '#973AA8';
+              return '#E9F7DF';
             } else if (d.value > 5 && d.value <= 10) {
-              return '#C05299';
+              return '#D1F1BB';
             } else if (d.value > 10 && d.value <= 15) {
-              return '#FF8BA0';
+              return '#AFDC8F';
             } else if (d.value > 15 && d.value <= 20) {
-              return '#BD68EE';
+              return '#87BB62';
             } else if (d.value > 20) {
-              return '#D55D92';
+              return '#63993D';
             } else {
               return 'transparent';
             }

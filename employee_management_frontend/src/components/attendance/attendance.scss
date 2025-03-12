@@ -40,7 +40,7 @@
             justify-content: center;
             align-items: center !important;
             gap: 15px;
-            background-color: #6247AA;
+            background-color: #ffd60a;
             padding: 10px 20px !important;
             border-radius: 12px;
             margin-bottom: 20px;
@@ -161,10 +161,6 @@
         select {
             display: flex;
             flex-direction: column;
-    
-            option {
-            
-            }
         }
     }
     .search-sortAttendance{
@@ -176,7 +172,7 @@ align-self: start;
 
 // Save Marking Button
 .saveMarkingAtt {
-    background-color: #6247AA;
+    background-color: #ffd60a;
     padding: 10px 20px !important;
     border-radius: 12px;
 }

@@ -15,19 +15,19 @@ const PieChart = () => {
         const pieChartData = data
           .filter(department => department.employee_count > 0)
           .map((department) => {
-            
-            let color = '#973AA8';
+            let color = '#973AA8';  // Default color if no condition matches
 
+            // Color logic from BarChart
             if (department.employee_count <= 5) {
-              color = '#973AA8';
-            } else if (department.employee_count <= 10) {
-              color = '#C05299';
-            } else if (department.employee_count <= 15) {
-              color = '#FF8BA0';
-            } else if (department.employee_count <= 20) {
-              color = '#BD68EE';
+              color = '#FFE8CC';
+            } else if (department.employee_count > 5 && department.employee_count <= 10) {
+              color = '#FCCB8F';
+            } else if (department.employee_count > 10 && department.employee_count <= 15) {
+              color = '#F8AE54';
+            } else if (department.employee_count > 15 && department.employee_count <= 20) {
+              color = '#F5921B';
             } else if (department.employee_count > 20) {
-              color = '#D55D92';
+              color = '#CA6C0F';
             }
 
             return {
