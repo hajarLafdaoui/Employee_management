@@ -172,7 +172,7 @@ const AttestationRequests = () => {
                     style={{ pointerEvents: currentPage === 1 ? 'none' : 'auto' }}
                 >
                     <span className="material-icons">
-                        <img src="icons/left-arrow.png" alt="left" />
+                        <img src="icons/left-arrow.png" alt="left" className='left' />
                     </span>
                 </li>
                 {[...Array(Math.ceil(attestations.length / rowsPerPage)).keys()].map((index) => (

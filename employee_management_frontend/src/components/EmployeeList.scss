@@ -51,16 +51,17 @@
     background-color: #fff;
     border-radius: 6px;
     display: table-row;
-  }
+height: 50px;  }
   
   .actions {
     position: relative;
     width: 110px;
+    border: none;
   }
   
   .action-button {
     background-color: transparent;
-    border: none;
+    border: none !important;
     font-size: 24px;
     cursor: pointer;
   }
@@ -298,3 +299,72 @@ padding: 6px;
       height: 35px;
     }
   }
+
+  //darkmode table
+
+
+
+  .dark-mode .table-row{
+    background-color: #2c2c2c;
+  }
+
+
+  .dark-mode .page{
+      background-color: #2c2c2c;
+    
+  }
+  .dark-mode .material-icons img{
+    filter: invert(1) brightness(1000%) contrast(100%);
+
+  }
+  // .dark-mode .material-icons{
+   
+  // color: white !important;
+    
+  // } 
+
+
+ .dark-mode .table-row:hover {
+    background-color: #444 !important;
+    cursor: pointer;
+  }
+
+ .dark-mode .input-container{
+background: #2c2c2c !important;
+
+border-radius: 8px;
+ }
+
+
+ .dark-mode .input-search-container{
+  background: #2c2c2c;
+  border-radius: 8px;
+  border: solid 1px black !important;
+
+ }
+
+ .dark-mode .input-search-container img{
+  filter: invert(1) brightness(1000%) contrast(100%);
+ }
+
+ .dark-mode .action-icons img{
+  filter: invert(1) brightness(1000%) contrast(100%);
+
+ }
+ 
+
+ .dark-mode .dropdown-menu img{
+  filter: invert(1) brightness(1000%) contrast(100%);
+
+ }
+ .dark-mode .dropdown-menu p{
+color: white;
+ }
+ .dark-mode .dropdown-menu {
+  background-color: #2c2c2c;
+  border: black solid 1px;
+ }
+
+ .dark-mode .page__numbers{
+  color: #fff;
+ }
