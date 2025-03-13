@@ -293,25 +293,27 @@ useEffect(() => {
       placeholder="Search by Name"
     />
     {nameSearch && (
-      <button onClick={() => setNameSearch('')}>Clear</button>
+      <button className="clear-btn" onClick={() => setNameSearch('')}>Clear</button>
     )}
   </div>
 
   <div className="input-container">
-    <input
-      className="date-input"
-      type="date"
-      value={dateSearch}
-      onChange={(e) => setDateSearch(e.target.value)}
-      placeholder="Paid"
-    />
-    <img src="icons/calender.png" alt="calendar icon" className="email" />
-   
-  </div>
+  <input
+    className="date-input"
+    type="date"
+    value={dateSearch}
+    onChange={(e) => setDateSearch(e.target.value)}
+    placeholder="Paid"
+  />
+  <img src="icons/calender.png" alt="calendar icon" className="email" />
+  {dateSearch && (
+    <button onClick={() => setDateSearch('')} className="clear-button">Clear</button>
+  )}
+</div>
 </div>
 
         {filteredSalaries.length === 0 ? (
-          <p>No salaries found.</p>
+          <p className="no-salaries-message">No salaries found.</p>
         ) : (
           <div className="table-wrapper">
             <div className="table-header">
@@ -345,31 +347,33 @@ useEffect(() => {
                     &#x22EE;
                   </button>
                   {activeMenu === salary.id && (
-                    <div className="dropdown-menu">
+                  <div className="dropdown-menu">
+
+                    
                                     <div
       onClick={() => fetchSalaryDetails(salary.id)} 
-      className="view-link"
+      className="viewlink"
     >
-      <img className="view-icon" src="/icons/view.png" alt="View" />
+      <img className="view-icon" src="/icons/view.png" alt="View" /><p>show</p>
     </div>
-                      <Link to={`/salary/${salary.id}`}  className="view-link">
-                        <img className="view-icon" src="/icons/print1.png" alt="" />
+                      <Link to={`/salary/${salary.id}`}  className="viewlink">
+                        <img className="view-icon" src="/icons/print1.png" alt="" /><p>print</p> 
                       </Link>
                    
                       <div
                         onClick={() => handleShowMessageForm(salary.user)}
-                        className="send-message-button"
+                        className="viewlink"
                       >
-                       <img src="icons/email.png" alt=""  className="view-icon"/>
+                       <img src="icons/email.png" alt=""  className="view-icon"/><p>msg</p>
                       </div>
                       <div
                         onClick={() => {
                           setDeleteSalaryId(salary.id);
                           setShowDeletePopUp(true);
                         }}
-                        className="delete-container"
+                        className="viewlink"
                       >
-                        <img className="delete-icon" src="/icons/delete.png" alt="Delete" />
+                        <img className="delete-icon" src="/icons/delete.png" alt="Delete" /><p>delete</p>
                       </div>
                     </div>
                   )}

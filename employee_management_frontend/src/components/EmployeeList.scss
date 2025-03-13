@@ -55,6 +55,7 @@
   
   .actions {
     position: relative;
+    width: 110px;
   }
   
   .action-button {
@@ -67,22 +68,38 @@
   .dropdown-menu {
     position: absolute;
     right: 0;
-    top: 30px;
+    top: 40px;
     background-color: #fff;
     border: 1px solid #ddd;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 10px;
     display: flex;
+    justify-content: start;
     flex-direction: column;
     gap: 10px;
     z-index: 1;
   }
   
-  .dropdown-menu .button {
-    width: 100%;
-    text-align: left;
-  }
   
+  
+  .viewlink{
+    width: 100%;
+    text-decoration: none;
+    color: black;
+    text-align: left;
+    display: flex !important;
+    
+    gap: 10px;
+    cursor: pointer;
+    p{
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      margin-bottom:0;      
+    }
+}
+
+
   .button {
     padding: 10px 20px;
     color: black;
@@ -166,24 +183,28 @@
 
 
  @media (max-width: 768px) {
+ 
     .container {
-      padding: 10px;
+padding: 6px; 
 
     }
-  
     .table-wrapper {
-      border-spacing:  10px 0; 
-
+      width: 100%;
+      margin-top: 20px;
+      display: table; 
+      border-spacing: 0 10px;
+    text-align: 6px;
     }
+    
   
     .table-header{
       display: none;
     }
     .table-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
+     text-align: center;
+    line-height: 40px;
+      margin-bottom: 20px;
+      padding: 20px 0 ;
     }
   
     .table-header div,
@@ -234,6 +255,24 @@
     .head a {
       margin-left: 0; 
     }
+
+    .userprofile{
+      width: 80px !important;
+      height: 80px !important;
+      border-radius: 50%;
+    }
+
+
+    .dropdown-menu {
+    
+      display: flex;
+      justify-content: start;
+      flex-direction: row !important;  
+      gap: 10px;
+    
+  }
+  
+
   }
   
   @media (max-width: 480px) {
@@ -242,6 +281,14 @@
       font-size: 14px;
     }
   
+    .dropdown-menu {
+    
+      display: flex;
+      justify-content: start;
+      flex-direction: row !important;  
+      gap: 10px;
+    
+  }
     .button {
       padding: 8px 15px;
     }
