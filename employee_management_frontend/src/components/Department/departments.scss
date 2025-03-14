@@ -15,33 +15,34 @@
     font-size: 24px;
   }
 
-  .buttonContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+ 
+}
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffd60a;
+  border-radius: 15px;
+  gap: 5px;
+  padding: 5px 10px !important;
+  cursor: pointer;
+
+
+  .plusIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  button {
+    border: none;
+    outline: none;
     background-color: #ffd60a;
-    border-radius: 15px;
-    gap: 5px;
-    padding: 5px 10px !important;
+    ;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
     cursor: pointer;
+    color: #fff !important;
 
-
-    .plusIcon {
-      width: 20px;
-      height: 20px;
-    }
-
-    button {
-      border: none;
-      outline: none;
-      background-color: #ffd60a;
-      ;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 16px;
-      cursor: pointer;
-      color: #fff !important;
-
-    }
   }
 }
 

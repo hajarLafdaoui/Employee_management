@@ -15,8 +15,8 @@ class UserController extends Controller
     public function index()
     {
         $employees = User::whereIn('role', ['employee', 'sub-admin'])
-        ->where('is_deleted', false)
-        ->get(); 
+            ->where('is_deleted', false)
+            ->get();
 
         return response()->json($employees);
     }
@@ -53,8 +53,8 @@ class UserController extends Controller
             'department_id' => 'required|exists:departments,id',
             'username' => 'required|string|max:255|unique:users',
             'phone' => 'nullable|string|max:255',
-            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'base_salary' => 'required|numeric|min:0',
+            'profile_picture' => 'nullable|string', // Expect base64 encoded image
+            // 'base_salary' => 'required|numeric|min:0',
             'gender' => 'required|in:male,female',
             'country' => 'nullable|string|max:255',
             'is_active' => 'boolean', // Assuming 'status' is boolean for active/inactive
@@ -68,8 +68,8 @@ class UserController extends Controller
         }
 
         $profilePicturePath = null;
-        if ($request->hasFile('profile_picture')) {
-            $profilePicturePath = $request->file('profile_picture')->store('profile_pictures', 'public');
+        if ($request->has('profile_picture')) {
+            $profilePicturePath = $this->handleBase64Image($request->input('profile_picture'));
         }
 
         // Create the new user
@@ -82,7 +82,7 @@ class UserController extends Controller
             'username' => $request->username,
             'phone' => $request->phone,
             'profile_picture' => $profilePicturePath,
-            'base_salary' => $request->base_salary,
+            // 'base_salary' => $request->base_salary,
             'gender' => $request->gender,
             'country' => $request->country,
             'is_active' => $isLoggedIn,  // Set to true only if the user is logged in
@@ -95,60 +95,83 @@ class UserController extends Controller
     }
 
     // Update an existing user
-    public function update(Request $request, $id)
+
+    /**
+     * Handle base64 image upload.
+     *
+     * @param string $base64Image
+     * @param string|null $oldImagePath
+     * @return string|null
+     */
+
+     public function update(Request $request, $id)
+     {
+         $validator = Validator::make($request->all(), [
+             'name' => 'required|string|max:255',
+             'email' => 'required|email|unique:users,email,' . $id,
+             'username' => 'required|string|max:255|unique:users,username,' . $id,
+             'gender' => 'required|in:male,female',
+             'phone' => 'nullable|string|max:255',
+             'country' => 'nullable|string|max:255',
+             'department_id' => 'required|exists:departments,id',
+             'profile_picture' => 'nullable|string', // Expect base64 encoded image
+         ]);
+     
+         if ($validator->fails()) {
+             return response()->json([
+                 'message' => 'Validation failed',
+                 'errors' => $validator->errors(),
+             ], 422);
+         }
+     
+         $user = User::find($id);
+         if (!$user) {
+             return response()->json(['message' => 'User not found'], 404);
+         }
+     
+         $profilePicturePath = $user->profile_picture;
+         if ($request->has('profile_picture')) {
+             $profilePicturePath = $this->handleBase64Image($request->input('profile_picture'), $profilePicturePath);
+         }
+     
+         $user->update([
+             'name' => $request->name,
+             'email' => $request->email,
+             'username' => $request->username,
+             'gender' => $request->gender,
+             'phone' => $request->phone,
+             'country' => $request->country,
+             'department_id' => $request->department_id,
+             'profile_picture' => $profilePicturePath,
+         ]);
+     
+         return response()->json([
+             'message' => 'User updated successfully',
+             'user' => $user,
+         ]);
+     }
+    private function handleBase64Image($base64Image, $oldImagePath = null)
     {
-        $user = User::find($id);
-
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
+        if (!$base64Image) {
+            return null;
         }
 
-        $validatedData = $request->validate([
-            'name' => 'nullable|string|max:255',
-            'email' => "nullable|string|email|max:255|unique:users,email,$id",
-            'password' => 'nullable|string|min:8',
-            'role' => 'nullable|string',
-            'department_id' => 'nullable|integer',
-            'username' => "nullable|string|max:255|unique:users,username,$id",
-            'phone' => 'nullable|string|max:255',
-            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'base_salary' => 'nullable|numeric|min:0',
-            'gender' => 'nullable|in:male,female',
-            'country' => 'nullable|string|max:255',
-            'is_active' => 'nullable|boolean',
-        ]);
+        // Decode the base64 image
+        $imageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64Image));
 
-        if ($request->hasFile('profile_picture')) {
-            if ($user->profile_picture) {
-                Storage::disk('public')->delete($user->profile_picture);
-            }
+        // Generate a unique filename
+        $extension = 'png'; // Default extension (you can detect it from the base64 string if needed)
+        $filename = 'profile_pictures/' . uniqid() . '.' . $extension;
 
-            $profilePicturePath = $request->file('profile_picture')->store('profile_pictures', 'public');
-            $user->profile_picture = $profilePicturePath;
+        // Save the image to storage
+        Storage::disk('public')->put($filename, $imageData);
+
+        // Delete the old image if it exists
+        if ($oldImagePath && Storage::disk('public')->exists($oldImagePath)) {
+            Storage::disk('public')->delete($oldImagePath);
         }
 
-        $user->name = $validatedData['name'] ?? $user->name;
-        $user->email = $validatedData['email'] ?? $user->email;
-
-        if (isset($validatedData['password'])) {
-            $user->password = Hash::make($validatedData['password']);
-        }
-
-        $user->role = $validatedData['role'] ?? $user->role;
-        $user->department_id = $validatedData['department_id'] ?? $user->department_id;
-        $user->username = $validatedData['username'] ?? $user->username;
-        $user->phone = $validatedData['phone'] ?? $user->phone;
-        $user->base_salary = $validatedData['base_salary'] ?? $user->base_salary;
-        $user->gender = $validatedData['gender'] ?? $user->gender;
-        $user->country = $validatedData['country'] ?? $user->country;
-        $user->is_active = $validatedData['is_active'] ?? $user->is_active;
-
-        $user->save();
-
-        return response()->json([
-            'message' => 'User updated successfully!',
-            'user' => $user,
-        ], 200);
+        return $filename;
     }
 
     // Soft delete a user
@@ -166,7 +189,6 @@ class UserController extends Controller
         return response()->json([
             'message' => 'User soft deleted successfully',
             'user' => $user,
-            
         ], 200);
     }
 
