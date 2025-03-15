@@ -9,6 +9,7 @@ border-radius: 20px;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
     transition: right 0.3s ease;
     z-index: 1000;
+    font-size: 14px;
   }
   .userprofile{
     width: 45px;
@@ -63,35 +64,43 @@ border-radius: 20px;
     align-items: center;
     justify-content: center;
     gap: 30px;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
  }
   .totalatten{
-    padding: 10px;
 border-radius: 6px;
 background-color: antiquewhite;
-text-align: center;
-line-height: 4px;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
 width: 120px;
 .number{
     font-weight: bold;
+    margin: 0;
 }
 .numbertitle{
     font-size: 14px;
+    margin: 0;
+
         }
   }
 
   .totalleave{
     border-radius: 6px;
     background-color: rgb(249, 222, 45);
-    text-align: center;
-    padding: 10px;
-    line-height: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     width: 120px;
     .numbertitle{
 font-size: 14px;
+margin: 0;
     }
     .number{
         font-weight: bold;
+        margin: 0;
+
     }
 
       }
@@ -113,17 +122,29 @@ font-size: 14px;
   }
 
   .items{
-margin-top: 20px;
+margin-top: 40px;
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 60px;
     padding-left: 20px;
+    .viewlink{
+      border: #ffd60a 2px solid;
+      width: 150px;
+      padding: 6px;
+      border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+    }
     
+    .viewlink:hover{
+      background-color: #ffd60a;
+    }
   }
 
   .email,.viewicon{
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
   }
 
 
@@ -147,7 +168,8 @@ margin-top: 20px;
 
 
   .input-search-container{
-height: 40px ;  }
+height: 40px ;  
+}
   
   .input-container {
     position: relative;

@@ -270,6 +270,7 @@ padding: 6px;
       justify-content: start;
       flex-direction: row !important;  
       gap: 10px;
+      margin: 0;
     
   }
   
@@ -366,5 +367,19 @@ color: white;
  }
 
  .dark-mode .page__numbers{
+  color: #fff;
+ }
+
+ .dark-mode .sortingConatiner{
+  background-color: #2c2c2c;
+ border: solid 1px #000000 !important;
+ }
+
+ .dark-mode .sortingConatiner img{
+  filter: invert(1) brightness(1000%) contrast(100%);
+
+ }
+ .dark-mode .sortingConatiner p{
+  background-color: transparent;
   color: #fff;
  }
