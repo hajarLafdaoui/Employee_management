@@ -1,65 +1,65 @@
-@media print {
+.attestation-container {
+  font-family: Arial, sans-serif;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+}
 
-    
-    .attestation-container {
-        font-family: 'Arial', sans-serif;
-        width: 100%;   
-margin-right: -10px;
-      max-width: 600px;
-        padding: 20px;
-        background-color: #fff;
-        
-      } 
-      .print-button {
-        display: none;
-      }
+.logo1 {
+  width: 120px;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.content {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.footer {
+  font-size: 14px;
+  text-align: center;
+  margin-top: 40px;
+}
+
+
+
+
+
+
+
+@media print {
+  
+
+  .attestation-container {
+    width: 900px;
+    background-color: white;
+    padding: 40px;
+    font-size: 16px;
+    border: none;
+    font-size: 16px;
+    line-height: 50px;
+  }
+
+ 
+  .title {
+    margin-bottom: 40px !important;
   }
   
-  @media screen {
-    .attestation-container {
-      font-family: 'Arial', sans-serif;
-      max-width: 800px;
-      margin: 20px auto;
-      padding: 20px;
-      border: 2px solid #2c3e50;
-      background-color: #fff;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-  
-    .title {
-      text-align: center;
-      font-size: 2rem;
-      font-weight: bold;
-      color: #34495e;
-      margin-bottom: 30px;
-    }
-  
-    .content {
-      font-size: 1.1rem;
-      color: #2c3e50;
-    }
-  
-    .footer {
-      text-align: center;
-      font-size: 1rem;
-      color: #7f8c8d;
-      margin-top: 40px;
-    }
-  
-    .print-button {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      color: white;
-      font-size: 1rem;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      margin-top: 20px;
-    }
-  
-    .print-button:hover {
-    }
+
+  .footer {
+    margin-top: 50px !important;
+    background-color: antiquewhite;
   }
-  
+}
+
+
+.dark-mode .attestation-container{
+  background-color: #2c2c2c;
+}

@@ -117,15 +117,25 @@ const AttestationRequests = () => {
 
                         <div>User</div>
                         <div>Status</div>
+                        <div>date</div>
                         <div>Actions</div>
                    
                 </div>
                
                     {getPaginatedAttestations().map((attestation) => (
               <div key={attestation.id} className="table-row">
-                       <div> <img src="img/images.jpg" alt="#"className="userprofile" /></div>
+                       <div> <img src={`http://localhost:8000/storage/${attestation.user.profile_picture}`} alt="#"className="userprofile" /></div>
                             <div>{attestation.user?.name || 'Unknown'}</div>
                             <div>{attestation.status}</div>
+                            <div>  {new Date(attestation.created_at).toLocaleString('en-MA', {
+    year: 'numeric',
+    day: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false, 
+  })}</div>
                             <div className="actions">
                             <button
                     className="button action-button"
