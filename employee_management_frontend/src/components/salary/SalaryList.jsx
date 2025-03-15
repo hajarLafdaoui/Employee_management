@@ -230,25 +230,25 @@ useEffect(() => {
 
               </div>
             <div className="detais-user">
-              <h4>Basic informition</h4>
+              <h6>Basic informition</h6>
             <p > <img src="icons/telephone.png" alt="" className="iconsuser" />phone..................{salaryDetails.user.phone}</p>
             <p><img src="icons/email.png" alt="" className="iconsuser" /> email..................{salaryDetails.user.email}</p>
             <p><img src="icons/countries.png" alt="" className="iconsuser" />country...............{salaryDetails.user.country}</p>
 
-            <h4>Salary information</h4>
+            <h6>Salary information</h6>
             <p>base salary.................{baseSalary} DH</p>
             <p>salary net...................{salaryDetails.total_salary}DH</p>
             <p>paid_on......................{new Date(salaryDetails.paid_on).toLocaleDateString()}</p>
             
             </div>
             <div className="items">
-            <Link to={`/salary/${salaryDetails.id}`}  className="viewlink">
+            <Link to={`/salary/${salaryDetails.id}`}  className="viewlink side">
             <img className="viewicon" src="/icons/print1.png" alt="" />
           print 
             </Link>
             <div
                         onClick={() => handleShowMessageForm(salaryDetails.user)}
-                  className="viewlink"
+                  className="viewlink side"
                       >
                        <img src="icons/email.png" alt=""  className="email"/>send email
                       </div>
@@ -297,19 +297,27 @@ useEffect(() => {
     )}
   </div>
 
-  <div className="input-container">
-  <input
-    className="date-input"
-    type="date"
-    value={dateSearch}
-    onChange={(e) => setDateSearch(e.target.value)}
-    placeholder="Paid"
-  />
-  <img src="icons/calender.png" alt="calendar icon" className="email" />
-  {dateSearch && (
-    <button onClick={() => setDateSearch('')} className="clear-button">Clear</button>
-  )}
-</div>
+<div className="input-container">
+      <input
+        className="date-input"
+        type="date"
+        value={dateSearch}
+        onChange={(e) => setDateSearch(e.target.value)} 
+        placeholder="Paid"
+        onClick={(e) => e.target.showPicker()}
+      />
+      
+      {dateSearch &&
+        <img
+          src="icons/remove.png"
+          alt="clear"
+          className="remove"
+          onClick={() => setDateSearch('')} 
+        />
+      
+       
+      }
+    </div>
 </div>
 
         {filteredSalaries.length === 0 ? (
@@ -432,7 +440,7 @@ useEffect(() => {
               <img className="close" src="icons/close.png" alt="Close" />
             </span>
           </div>
-          <div>
+          <form>
           <textarea 
               value={message} 
               onChange={handleMessageChange} 
@@ -442,8 +450,11 @@ useEffect(() => {
               className="input input-vertical"
             />
             <br />
-            {sending ? <LoadingSpinner /> : <button onClick={() => sendMessage(currentUser)}>Send Message</button>}
-          </div>
+{sending ? <LoadingSpinner /> : (
+  <button className="button-form vertical-button-form" onClick={() => sendMessage(currentUser)}>
+    Send Message
+  </button>
+)}          </form>
          
         </Modal>
 

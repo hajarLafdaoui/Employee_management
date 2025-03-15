@@ -84,53 +84,119 @@ button {
   display: flex;
   gap: 10px;
   color: black;
+  
+}
+.btnslary:hover{
+  border:1 solid #ffd60a;
+  border-radius: 6px;
+  background-color: #ffd60a;
+  
 }
 
-
-  @media print {
-   
-    .AdminMenu,
-    .secondPart .head,
-    .secondPart .right,
-    .secondPart .icon-container,
-    .secondPart .input-container,
-    .secondPart .greeting-container,
-    .secondPart .admin-image-container,
-    .secondPart .logout,
-    .secondPart .searchIcon,
-    .salary-actions {
-      display: none !important;
-    
-
-    }
+    @media print {
+      * {
+          margin: 0 auto !important;
+          padding: 0 !important;
+      }
   
-    .salary-container {
-      display: block;
-      padding: 15px;
-      margin: 0 auto !important;
-      max-width: 600px !important;
-      width: 100%;
-      border: none;
+      .AdminMenu,
+      .secondPart .head,
+      .secondPart .right,
+      .secondPart .icon-container,
+      .secondPart .input-container,
+      .secondPart .greeting-container,
+      .secondPart .admin-image-container,
+      .secondPart .logout,
+      .secondPart .searchIcon,
+      .salary-actions {
+          display: none !important;
+      }
+  .salary-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+   border: none;
+}
+  
+.salary-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.salary-info {
+  display: flex !important;
+  justify-content: space-between !important;
+  margin-bottom: 30px !important;
+}
+
+.user-info {
+  flex: 1;
+  padding-right: 20px;
+}
+
+.enterprise-info {
+  flex: 1;
+  padding-left: 20px;
+  text-align: right;
+}
+
+.salary-details {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ddd;
+  
+}
+
+table tr:hover {
+background-color: #fcf6da !important;
+
+}
+th {
+  background-color: #f4f4f4;
+}
+
+.net-salary {
+  text-align: right;
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+  
+ 
+
+    
   }
   
-    .salary-container .salary-header h1,
-    .salary-container .salary-details p {
-      font-size: 16px;
-    }
+
+
+.dark-mode .salary-container{
+  background-color:transparent;
+  border: none;
+}
+.dark-mode tr{
+  background-color: #2c2c2c;
+}
+
+.dark-mode th{
+  background-color: #4e4c4c00;
+}
+.dark-mode tr:hover{
+  background-color: #444 !important;
   
-    .salary-container p {
-      margin: 5px 0;
-    }
-
-
-    
-  }
-  
-
-
-
-
-
-
+}
+.dark-mode button{
+  border: none;
+}
   
   

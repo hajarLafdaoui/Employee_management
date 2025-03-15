@@ -9,6 +9,7 @@ border-radius: 20px;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
     transition: right 0.3s ease;
     z-index: 1000;
+    font-size: 14px;
   }
   .userprofile{
     width: 45px;
@@ -63,35 +64,43 @@ border-radius: 20px;
     align-items: center;
     justify-content: center;
     gap: 30px;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
  }
   .totalatten{
-    padding: 10px;
 border-radius: 6px;
 background-color: antiquewhite;
-text-align: center;
-line-height: 4px;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
 width: 120px;
 .number{
     font-weight: bold;
+    margin: 0;
 }
 .numbertitle{
     font-size: 14px;
+    margin: 0;
+
         }
   }
 
   .totalleave{
     border-radius: 6px;
     background-color: rgb(249, 222, 45);
-    text-align: center;
-    padding: 10px;
-    line-height: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     width: 120px;
     .numbertitle{
 font-size: 14px;
+margin: 0;
     }
     .number{
         font-weight: bold;
+        margin: 0;
+
     }
 
       }
@@ -113,17 +122,29 @@ font-size: 14px;
   }
 
   .items{
-margin-top: 20px;
+margin-top: 40px;
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 60px;
     padding-left: 20px;
+    .viewlink{
+      border: #ffd60a 2px solid;
+      width: 150px;
+      padding: 6px;
+      border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+    }
     
+    .viewlink:hover{
+      background-color: #ffd60a;
+    }
   }
 
   .email,.viewicon{
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
   }
 
 
@@ -145,18 +166,19 @@ margin-top: 20px;
   }
   
 
-
-  .input-search-container{
-height: 40px ;  }
+  .input-search-container {
+    height: 40px;
+  }
   
   .input-container {
     position: relative;
+    width: 20%;
   }
   
   .date-input {
     width: 100%;
-    height: 40px ;
-    padding: 6px;
+    height: 40px; 
+    padding: 6px 30px 6px 10px; 
     font-size: 16px;
     border-radius: 8px;
     outline: none;
@@ -164,25 +186,63 @@ height: 40px ;  }
     border: solid 1px black !important;
   }
   
+  
   .date-input:focus {
-    background-color: #ffffff;
+    background-color: #f4f4f4; 
+    border-color: #4a90e2; 
   }
   
   .date-input::placeholder {
     font-style: italic;
+    color: #888; 
   }
   
-  .input-container img {
+  .input-container .remove {
     position: absolute;
-    top: 45%;
-    right: 5px; 
-    transform: translateY(-50%);
+    top: 40%; 
+    right: 10px;
+    transform: translateY(-50%); 
     font-size: 18px;
-    pointer-events: none; 
+    cursor: pointer;
+    pointer-events: auto; 
+    z-index: 2;
+    width: 22px; 
+    height: 22px; 
+    object-fit: contain; 
+  }
+  .date-input::-webkit-calendar-picker-indicator {
+    display: none; 
+}
+
+.date-input::before {
+    content: "";
+    position: absolute;
+    top: 40%;
+    right: 12px;
+    transform: translateY(-50%);
+    background-image: url('/assets/calender.png');
+    background-size: 16px;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    pointer-events: all;
+}
+  .remove {
+    display: block;
   }
   
-
-
+  .email {
+    display: block;
+  }
+  
+  .input-container img.hidden {
+    display: none;
+  }
+  
+  
+  
   .modal-content button {
     margin-top: 20px;
     appearance: none;
@@ -217,21 +277,7 @@ height: 40px ;  }
     transform: translateY(-2px);
 }
 
-.clear-button {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-60%);
-right: -60px;
-  background-color: #ffd60a;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  border-radius: 50%;
 
-}
 
 
 
@@ -247,3 +293,160 @@ right: -60px;
 }
 
 
+@media (max-width: 480px) {
+  .salary-details-sidebar {
+    width: 100%;  
+    right: 0; 
+    border-radius: 0; 
+  }
+
+  .userprofile {
+    width: 30px; 
+    height: 30px;
+  }
+
+  .imgdetails {
+    height: 60px; 
+  }
+
+  .head-user {
+    line-height: 12px;
+  }
+
+  .imguser {
+    width: 60px; 
+    height: 60px;
+    margin-top: -30px; 
+  }
+
+  .detais-user {
+    margin-left: 10px; 
+  }
+
+  .total {
+    flex-direction: column; 
+    gap: 15px; 
+  }
+
+  .totalatten,
+  .totalleave {
+    width: 100%; 
+    margin-bottom: 10px; 
+  }
+
+  .items {
+    margin-top: 20px;
+    gap: 20px; 
+    padding-left: 10px; 
+  }
+
+  .viewlink {
+    width: 100%; 
+    padding: 8px; 
+    font-size: 14px; 
+  }
+
+  .input-container {
+    width: 90%; 
+  }
+
+  .date-input {
+    height: 30px; 
+    font-size: 14px; 
+  }
+
+  .remove {
+    top: 30%; 
+    width: 20px; 
+    height: 20px;
+  }
+
+  .modal-content button {
+    padding: 1.5em 2em; 
+    font-size: 14px; 
+  }
+  .no-salaries-message {
+    font-size: 18px; 
+    padding: 15px; 
+    margin: 40px auto; 
+    max-width: 60%; 
+  }
+  
+}
+
+@media (max-width: 768px) {
+  .salary-details-sidebar {
+    width: 100%;  
+    right: 0; 
+    border-radius: 0;
+  }
+  .no-salaries-message {
+    font-size: 18px; 
+    padding: 15px; 
+    margin: 40px auto; 
+    max-width: 80%; 
+  }
+  .userprofile {
+    width: 40px; 
+    height: 40px;
+  }
+
+  .imgdetails {
+    height: 80px; 
+  }
+
+  .head-user {
+    line-height: 14px; 
+  }
+
+  .imguser {
+    width: 80px; 
+    height: 80px;
+    margin-top: -40px; 
+  }
+
+  .detais-user {
+    margin-left: 15px; 
+  }
+
+  .total {
+    flex-direction: row; 
+    gap: 25px; 
+  }
+
+  .totalatten,
+  .totalleave {
+    width: 120px; 
+  }
+
+  .items {
+    margin-top: 30px;
+    gap: 40px; 
+    padding-left: 15px; 
+  }
+
+  .viewlink {
+    width: 120px;
+    padding: 6px; 
+    font-size: 14px;
+  }
+
+  .input-container {
+    width: 30%; 
+  }
+
+  .date-input {
+    font-size: 15px; 
+  }
+
+  .remove {
+    top: 40%; 
+    width: 22px; 
+    height: 22px;
+  }
+
+  .modal-content button {
+    padding: 1.8em 2.5em; 
+    font-size: 15px; 
+  }
+}
