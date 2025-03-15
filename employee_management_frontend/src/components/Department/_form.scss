@@ -295,3 +295,65 @@ input:valid~label {
 .dark-mode input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(1) brightness(1000%) contrast(100%);
 }
+
+
+// 
+.small-form{
+    width: 100%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 30px 100px;
+    border-radius: 10px;
+    // margin-right: 10px 30px !important;
+  
+}
+.small-form-inputs{
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+}
+.select-empployee{
+    width: 100% !important;
+    height: 30px;
+    // background-color: aquamarine;
+}
+.create-user{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    // margin-top: 20px;
+    // background-color: aquamarine;
+}
+.input-row {
+    display: flex;
+    gap: 10px; /* Adjust the gap between inputs */
+    width: 100%;
+  }
+  
+  .input-row .input-group {
+    flex: 1; /* Ensure both inputs take equal space */
+  }
+  
+  /* Media query for mobile and tablet devices */
+  @media only screen and (max-width: 767px), 
+         only screen and (min-width: 601px) and (max-width: 1024px) {
+            .small-form{
+                padding: 30px 30px;
+                // margin-right: 10px 30px !important;
+              
+            }
+    .input-row {
+      flex-direction: column; /* Stack inputs vertically */
+      gap: 14px; /* Adjust the gap between stacked inputs */
+    }
+  
+    .input-row .input-group {
+      flex: none; /* Reset flex to ensure full width */
+      width: 100%; /* Ensure inputs take full width */
+    }
+  }
+
+  .employeeTitle{
+    align-self: self-start !important;
+    margin-top: 10px;
+  }

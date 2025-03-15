@@ -138,118 +138,140 @@ const UpdateUser = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h2>Update User</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label className="form-label">Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={user.name}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
+    <div className="create-user">
+      <h4 className="employeeTitle">Update User</h4>
 
-        <div className="mb-3">
-          <label className="form-label">Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={user.email}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
+      <div className="form form-vertical small-form">
+        <form onSubmit={handleSubmit} className="small-form-inputs inputs inputs-vertical">
+          {/* Two Inputs in One Line */}
+          <div className="input-row">
+            <div className="input-group">
+              <input
+                type="text"
+                name="name"
+                placeholder=" "
+                value={user.name}
+                onChange={handleChange}
+                className="input input-vertical"
+                required
+              />
+              <label className="user-label">Name</label>
+            </div>
 
-        <div className="mb-3">
-          <label className="form-label">Username:</label>
-          <input
-            type="text"
-            name="username"
-            value={user.username}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
+            <div className="input-group">
+              <input
+                type="email"
+                name="email"
+                placeholder=" "
+                value={user.email}
+                onChange={handleChange}
+                className="input input-vertical"
+                required
+              />
+              <label className="user-label">Email</label>
+            </div>
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Gender:</label>
-          <select
-            name="gender"
-            value={user.gender}
-            onChange={handleChange}
-            className="form-control"
-            required
-          >
-            <option value="">Select Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-        </div>
+          {/* Two Inputs in One Line */}
+          <div className="input-row">
+            <div className="input-group">
+              <input
+                type="text"
+                name="username"
+                placeholder=" "
+                value={user.username}
+                onChange={handleChange}
+                className="input input-vertical"
+                required
+              />
+              <label className="user-label">Username</label>
+            </div>
 
-        <div className="mb-3">
-          <label className="form-label">Phone:</label>
-          <input
-            type="text"
-            name="phone"
-            value={user.phone}
-            onChange={handleChange}
-            className="form-control"
-          />
-        </div>
+            <div className="input-group">
+              <input
+                type="text"
+                name="phone"
+                placeholder=" "
+                value={user.phone}
+                onChange={handleChange}
+                className="input input-vertical"
+              />
+              <label className="user-label">Phone</label>
+            </div>
+          </div>
+          <div className="input-group">
+            <label className="custum-file-upload" htmlFor="file">
+              <div className="icon">📁</div>
+              <div className="text">
+                <span>Click to upload profile picture</span>
+              </div>
+              <input
+                type="file"
+                id="file"
+                name="profile_picture"
+                onChange={handleFileChange}
+              />
+            </label>
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Country:</label>
-          <CountrySelect
-            onChange={handleCountryChange}
-            defaultValue={user.country} // Pass the previous country as the default value
-          />
-        </div>
+          {/* Single Input */}
+          <div className="input-group">
+            <select
+              name="gender"
+              value={user.gender}
+              onChange={handleChange}
+              className="select-empployee"
+              required
+            >
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+            {/* <label className="user-label">Gender</label> */}
+          </div>
+            {/* Department Select */}
+            <div className="input-group">
+            <select
+              name="department_id"
+              value={user.department_id}
+              onChange={handleChange}
+              className="select-empployee"
+              required
+            >
+              <option value="">Select Department</option>
+              {departments.map((dept) => (
+                <option key={dept.id} value={dept.id}>
+                  {dept.name}
+                </option>
+              ))}
+            </select>
+            {/* <label className="user-label">Department</label> */}
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Profile Picture:</label>
-          <input
-            type="file"
-            name="profile_picture"
-            onChange={handleFileChange}
-            className="form-control"
-          />
-        </div>
+          {/* Single Input */}
+          <div  className="select-empployee" >
+            <CountrySelect
+              onChange={handleCountryChange}
+              defaultValue={user.country} // Pass the previous country as the default value
+              className="select-empployee"
+            />
+            {/* <label className="user-label">Country</label> */}
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Department:</label>
-          <select
-            name="department_id"
-            value={user.department_id}
-            onChange={handleChange}
-            className="form-control"
-            required
-          >
-            <option value="">Select Department</option>
-            {departments.map((dept) => (
-              <option key={dept.id} value={dept.id}>
-                {dept.name}
-              </option>
-            ))}
-          </select>
-        </div>
+          {/* File Upload */}
+          
 
-        <button type="submit" className="btn btn-success">
-          Update
-        </button>
-        <button
-          type="button"
-          className="btn btn-secondary ms-3"
-          onClick={() => navigate("/employee-list")}
-        >
-          Cancel
-        </button>
-      </form>
+        
+
+          {/* Buttons */}
+          <div className="input-row">
+            <button className="button-form vertical-button-form" type="submit">
+              Update
+            </button>
+           
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

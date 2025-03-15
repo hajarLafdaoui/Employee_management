@@ -1,4 +1,3 @@
-// CreateUser.js
 import React, { useEffect, useState } from 'react';
 import axiosInstance from './Config/axiosSetup';
 import { Link, useNavigate } from 'react-router-dom';
@@ -122,55 +121,151 @@ const CreateUser = () => {
   };
 
   return (
-    <div>
-      <h2>Create User</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Name" value={userData.name} onChange={handleInputChange} />
-        <input type="email" name="email" placeholder="Email" value={userData.email} onChange={handleInputChange} />
-        <input type="password" name="password" placeholder="Password" value={userData.password} onChange={handleInputChange} />
-        <input type="text" name="username" placeholder="Username" value={userData.username} onChange={handleInputChange} />
-        <input type="text" name="phone" placeholder="Phone" value={userData.phone} onChange={handleInputChange} />
-        <input type="file" name="profilePicture" onChange={handleFileChange} />
+    <div className="create-user">
+      <h4 className='employeeTitle'>Create User</h4>
 
-        <select name="role" value={userData.role} onChange={handleInputChange}>
-          <option value="employee">Employee</option>
-          <option value="sub-admin">Sub-Admin</option>
-        </select>
+      <div className="form form-vertical small-form">
+        <form onSubmit={handleSubmit} className="small-form-inputs inputs inputs-vertical">
+          {message && <div className="error-message">{message}</div>}
 
-        <select name="gender" value={userData.gender} onChange={handleInputChange}>
-          <option value="">Select Gender</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
+   {/* Two Inputs in One Line */}
+<div className="input-row">
+  <div className="input-group">
+    <input
+      type="text"
+      name="name"
+      placeholder=" "
+      value={userData.name}
+      onChange={handleInputChange}
+      className="input input-vertical"
+    />
+    <label className="user-label">Name</label>
+  </div>
 
-        <select name="departmentId" value={userData.departmentId} onChange={handleInputChange}>
-          <option value="">Select Department</option>
-          {isLoading ? (
-            <option disabled>Loading...</option>
-          ) : (
-            departments.map((department) => (
-              <option key={department.id} value={department.id}>
-                {department.name}
-              </option>
-            ))
-          )}
-        </select>
+  <div className="input-group">
+    <input
+      type="email"
+      name="email"
+      placeholder=" "
+      value={userData.email}
+      onChange={handleInputChange}
+      className="input input-vertical"
+    />
+    <label className="user-label">Email</label>
+  </div>
+</div>
 
- 
-        <CountrySelect onChange={handleCountryChange} />
-      <button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? 'Creating...' : 'Create User'}
-      </button>
+{/* Two Inputs in One Line */}
+<div className="input-row">
+  <div className="input-group">
+    <input
+      type="password"
+      name="password"
+      placeholder=" "
+      value={userData.password}
+      onChange={handleInputChange}
+      className="input input-vertical"
+    />
+    <label className="user-label">Password</label>
+  </div>
 
-       
-      </form>
-      {message && <p>{message}</p>}
+  <div className="input-group">
+    <input
+      type="text"
+      name="username"
+      placeholder=" "
+      value={userData.username}
+      onChange={handleInputChange}
+      className="input input-vertical"
+    />
+    <label className="user-label">Username</label>
+  </div>
+</div>
 
-      <Link to="/">
-        <button style={{ backgroundColor: 'gray', color: 'white' }}>
-          Back to Dashboard
-        </button>
-      </Link>
+          {/* Single Input */}
+          <div className="input-group">
+            <input
+              type="text"
+              name="phone"
+              placeholder=" "
+              value={userData.phone}
+              onChange={handleInputChange}
+              className="input input-vertical"
+            />
+            <label className="user-label">Phone</label>
+          </div>
+
+          {/* File Upload */}
+          <div className="input-group">
+            <label className="custum-file-upload" htmlFor="file">
+              <div className="icon">📁</div>
+              <div className="text">
+                <span>Click to upload profile picture</span>
+              </div>
+              <input
+                type="file"
+                id="file"
+                name="profilePicture"
+                onChange={handleFileChange}
+              />
+            </label>
+          </div>
+
+          {/* Dropdowns and Select elements remain unchanged */}
+          <div className="input-group">
+            <select
+              className="select-empployee"
+              name="role"
+              value={userData.role}
+              onChange={handleInputChange}
+            >
+              <option value="employee">Employee</option>
+              <option value="sub-admin">Sub-Admin</option>
+            </select>
+          </div>
+
+          <div className="input-group">
+            <select
+              className="select-empployee"
+              name="gender"
+              value={userData.gender}
+              onChange={handleInputChange}
+            >
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+
+          <div className="input-group select-group">
+            <select
+              className="select-empployee"
+              name="departmentId"
+              value={userData.departmentId}
+              onChange={handleInputChange}
+            >
+              <option value="">Select Department</option>
+              {isLoading ? (
+                <option disabled>Loading...</option>
+              ) : (
+                departments.map((department) => (
+                  <option key={department.id} value={department.id}>
+                    {department.name}
+                  </option>
+                ))
+              )}
+            </select>
+          </div>
+
+          <div className="select-empployee">
+            <CountrySelect className="select-empployee" onChange={handleCountryChange} />
+          </div>
+
+          <button className="button-form vertical-button-form" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Creating...' : 'Create User'}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
