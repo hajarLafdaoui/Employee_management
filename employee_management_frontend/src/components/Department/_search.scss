@@ -2,11 +2,15 @@
     display: flex;
     align-items: center !important;
     justify-content: space-between;
+    margin: 0;
+    padding: 0;
+    
 
 }
 .search-sort{
     display: flex;
     gap: 10px;
+    height: 50px;
 }
 
 .input-search-container{
@@ -67,13 +71,30 @@
 @media only screen and (max-width: 767px) {
     .title-search-sort{
         flex-direction: column;
-    align-items: start ;
-    gap: 10px;
+    align-items: start  !important;
+    gap: 5px;
+    margin: 0;
+    padding: 0;
 
+    .search-sort{
+    //     display: flex;
+    //     gap: 10px;
+        flex-direction: column;
+    //     height: 20px;
+    // width: fit-content;
+    // // height: fit-content;
+    // border-radius: 20px;
+    margin-bottom: 40px ;
+  
+    }
+   
     
     }
     .sortingConatiner{
-        padding: 6px 10px;
+        padding: 6px 40px 6px 10px !important; 
+        height: 35px;
+        // margin-left: 10px;
+
 
     }
   }
@@ -81,13 +102,30 @@
   @media (min-width: 601px) and (max-width: 1024px) {
     .title-search-sort{
         flex-direction: column;
-    align-items: start ;
-    gap: 10px;
+    align-items: start  !important;
+    gap: 5px;
+    margin: 0;
+    padding: 0;
 
+    .search-sort{
+    //     display: flex;
+    //     gap: 10px;
+        // flex-direction: column;
+    //     height: 20px;
+    // width: fit-content;
+    // // height: fit-content;
+    // border-radius: 20px;
+    // margin-bottom: 40px ;
+  
+    }
+   
     
     }
     .sortingConatiner{
-        padding: 6px 10px;
+        // padding: 6px 40px 6px 10px !important; 
+        // height: 35px;/
+        // margin-left: 10px;
+
 
     }
   }

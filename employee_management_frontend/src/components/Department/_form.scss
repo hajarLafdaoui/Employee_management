@@ -53,6 +53,13 @@ form {
 .inputs {
     display: flex !important;
     gap: 5px;
+    justify-content: start !important;
+    align-items: start !important;
+    margin: 0 !important;   
+    width: fit-content;
+
+    padding: 0;
+    // background: red;
 }
 
 .inputs-vertical {
@@ -84,6 +91,7 @@ form {
     font-size: 1rem;
     color: #000;
     transition: border 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    align-self: flex-start !important;
 }
 
 .user-label {

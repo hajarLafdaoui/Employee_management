@@ -1,4 +1,3 @@
-
 @import 'graphs';
 @import 'modal';
 @import 'table';
@@ -16,35 +15,34 @@
     font-size: 24px;
   }
 
-  .buttonContainer {
-    display: flex;
+ 
+}
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffd60a;
+  border-radius: 15px;
+  gap: 5px;
+  padding: 5px 10px !important;
+  cursor: pointer;
 
-    justify-content: center;
-    align-items: center;
+
+  .plusIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  button {
+    border: none;
+    outline: none;
     background-color: #ffd60a;
-    border-radius: 15px;
-    gap: 8px;
-
-    padding: 10px 12px;
-    cursor: pointer;
-
-
-    .plusIcon {
-      width: 20px;
-      height: 20px;
-    }
-
-    button {
-      border: none;
-      outline: none;
-      background-color:#ffd60a;
-;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 16px;
+    ;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
     cursor: pointer;
     color: #fff !important;
 
-    }
   }
 }
 
@@ -91,7 +89,7 @@
   display: none;
 }
 
-.dep-con{
+.dep-con {
   border: 1px solid #ccc;
   background-color: #fff;
   margin: 10px 0;
@@ -114,7 +112,7 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   transition: all 0.3s ease;
- 
+
 }
 
 .select-input-container {
@@ -128,20 +126,17 @@
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  
+
   pointer-events: none;
 }
 
-
-
-//salaryform
-
-.salaryform{
+.salaryform {
   background-color: #fff;
   padding: 30px 100px;
   border-radius: 10px;
 }
 
-.salaryform h2{
+.salaryform h2 {
   text-align: center;
-  margin-bottom: 20px;}
+  margin-bottom: 20px;
+}

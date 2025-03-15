@@ -57,8 +57,8 @@ const UpdateAttendance = ({ id, onClose, onSuccess, onError }) => {
     return (
         <div>
             {attendance && (
-                <form onSubmit={handleSubmit}>
-                    <div>
+                <form onSubmit={handleSubmit} className="employeAttDetails">
+                    <div className="">
                         <label>User ID: </label>
                         <span>{attendance.user_id}</span>
                     </div>
