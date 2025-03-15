@@ -32,6 +32,13 @@ const AdminDashboard = ({ adminUser }) => {
     });
   };
 
+  useEffect(() => {
+    const allClosed = Object.values(dropdowns).every((isOpen) => !isOpen);
+    if (allClosed) {
+      setDropdowns((prev) => ({ ...prev, employees: true }));
+    }
+  }, [dropdowns]);
+
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
@@ -148,7 +155,5 @@ const AdminDashboard = ({ adminUser }) => {
     </div>
   );
 };
-
-
 
 export default AdminDashboard;

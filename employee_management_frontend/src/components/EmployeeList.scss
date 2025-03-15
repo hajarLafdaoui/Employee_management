@@ -172,10 +172,21 @@ height: 50px;  }
 
 
 
- @media (max-width: 768px) {
- 
+  @media only screen and (max-width: 767px), 
+  only screen and (min-width: 601px) and (max-width: 1024px){ 
+    .filter-bar{
+      flex-direction: column;
+      justify-content: start !important;
+      align-items: start !important;
+      gap: 10px !important;
+    }
+    .otherFiltering{
+      flex-wrap: wrap !important;
+      gap: 10px !important;
+    }
     .container {
 padding: 6px; 
+
 
     }
     .table-wrapper {
@@ -299,7 +310,7 @@ padding: 6px;
     display: flex;
     justify-content: space-between !important;
     align-items: center;
-    gap: 0 !important;
+    gap: 0 ;
     width: 100%;
     margin-top: 20px;
 
@@ -406,3 +417,4 @@ color: white;
   background-color: #2c2c2c;
 color: white;
  }
+ 
