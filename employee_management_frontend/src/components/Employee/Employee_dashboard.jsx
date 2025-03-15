@@ -2,32 +2,30 @@ import React, { useEffect, useState } from "react";
 import {
   FaSignOutAlt, FaSearch, FaSun, FaMoon, FaBell, FaBars, FaChevronLeft,
   FaChevronDown, FaChevronUp, FaTachometerAlt, 
- FaMoneyBillWave, FaBuilding, FaCalendarAlt
+  FaMoneyBillWave, FaBuilding, FaCalendarAlt
 } from "react-icons/fa";
 import { MdLibraryAddCheck } from "react-icons/md";
 import { FaRectangleList } from "react-icons/fa6";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { PiCertificateFill } from "react-icons/pi";
 import { FaAddressBook } from "react-icons/fa6";
-
-
-
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import LanguageSwitcher from '../LanguageSwitcher';
 import { useTranslation } from 'react-i18next'; // Import the translation hook
 
-const Employee_dashboard = ({ employeeUser}) => {
+const Employee_dashboard = ({ employeeUser }) => {
   const { t } = useTranslation(); // Get the translation function
-  const [dropdowns, setDropdowns] = useState({ profile: true });
+  const [dropdowns, setDropdowns] = useState({ profile: false, payroll: false });
   const [date, setDate] = useState(new Date());
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const navigate = useNavigate()
-  employeeUser= JSON.parse(localStorage.getItem("employeeUser"));
+  const navigate = useNavigate();
+  employeeUser = JSON.parse(localStorage.getItem("employeeUser"));
   if (!employeeUser) {
-    navigate("/SignIn")
+    navigate("/SignIn");
   }
+
   const toggleSidebar = () => {
     const container = document.querySelector(".Container");
     container.classList.toggle("sidebar-open");
@@ -43,8 +41,21 @@ const Employee_dashboard = ({ employeeUser}) => {
   }, [isDarkMode]);
 
   const toggleDropdown = (key) => {
-    setDropdowns((prev) => ({ ...prev, [key]: !prev[key] }));
+    setDropdowns((prev) => {
+      const newDropdowns = {};
+      Object.keys(prev).forEach((dropdownKey) => {
+        newDropdowns[dropdownKey] = dropdownKey === key ? !prev[dropdownKey] : false;
+      });
+      return newDropdowns;
+    });
   };
+
+  useEffect(() => {
+    const allClosed = Object.values(dropdowns).every((isOpen) => !isOpen);
+    if (allClosed) {
+      setDropdowns((prev) => ({ ...prev, profile: true }));
+    }
+  }, [dropdowns]);
 
   const renderDropdown = (title, icon, key, items) => (
     <li className={`dropdown-item dropdown-${key} ${dropdowns[key] ? "expanded" : ""}`}>
@@ -102,11 +113,10 @@ const Employee_dashboard = ({ employeeUser}) => {
               { icon: <FaMoneyBillWave />, label: t('view_payroll'), link: "/payroll/view" },
             ])}
             <li className="NavbarItem logout">
-            <FaSignOutAlt className="logout-icon" />
-            <Link className="navLink" to="/SignOut">{t('logout')}</Link>
-          </li>
+              <FaSignOutAlt className="logout-icon" />
+              <Link className="navLink" to="/SignOut">{t('logout')}</Link>
+            </li>
           </ul>
-          
         </nav>
       </div>
 
@@ -134,7 +144,7 @@ const Employee_dashboard = ({ employeeUser}) => {
           <p className="greeting">
             {date.getHours() < 12 ? t('good_morning') : date.getHours() < 16 ? t('good_afternoon') : t('good_evening')}
           </p>
-          <p className="admin-name">{employeeUser? employeeUser.name : t('loading')}</p> {/* Add check for employeeUser*/}
+          <p className="admin-name">{employeeUser ? employeeUser.name : t('loading')}</p> {/* Add check for employeeUser*/}
         </div>
         <div className="icon-container">
           <LanguageSwitcher /> {/* Add the LanguageSwitcher component here */}
