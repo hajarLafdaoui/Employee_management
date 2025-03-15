@@ -297,19 +297,27 @@ useEffect(() => {
     )}
   </div>
 
-  <div className="input-container">
-  <input
-    className="date-input"
-    type="date"
-    value={dateSearch}
-    onChange={(e) => setDateSearch(e.target.value)}
-    placeholder="Paid"
-  />
-  <img src="icons/calender.png" alt="calendar icon" className="email" />
-  {dateSearch && (
-    <button onClick={() => setDateSearch('')} className="clear-button">Clear</button>
-  )}
-</div>
+<div className="input-container">
+      <input
+        className="date-input"
+        type="date"
+        value={dateSearch}
+        onChange={(e) => setDateSearch(e.target.value)} 
+        placeholder="Paid"
+        onClick={(e) => e.target.showPicker()}
+      />
+      
+      {dateSearch &&
+        <img
+          src="icons/remove.png"
+          alt="clear"
+          className="remove"
+          onClick={() => setDateSearch('')} 
+        />
+      
+       
+      }
+    </div>
 </div>
 
         {filteredSalaries.length === 0 ? (
@@ -432,7 +440,7 @@ useEffect(() => {
               <img className="close" src="icons/close.png" alt="Close" />
             </span>
           </div>
-          <div>
+          <form>
           <textarea 
               value={message} 
               onChange={handleMessageChange} 
@@ -442,8 +450,11 @@ useEffect(() => {
               className="input input-vertical"
             />
             <br />
-            {sending ? <LoadingSpinner /> : <button onClick={() => sendMessage(currentUser)}>Send Message</button>}
-          </div>
+{sending ? <LoadingSpinner /> : (
+  <button className="button-form vertical-button-form" onClick={() => sendMessage(currentUser)}>
+    Send Message
+  </button>
+)}          </form>
          
         </Modal>
 
