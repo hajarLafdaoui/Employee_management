@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "./Config/axiosSetup";
 import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import LoadingSpinner from "../LoadingSpinner";
 
 const EmployeeList = () => {
   const [users, setUsers] = useState([]);
@@ -10,6 +11,7 @@ const EmployeeList = () => {
   const [dropdownVisible, setDropdownVisible] = useState(null); // State for dropdown visibility
   const [currentPage, setCurrentPage] = useState(1); // Current page for pagination
   const [rowsPerPage, setRowsPerPage] = useState(5); // Number of rows per page
+  const [loading, setLoading] = useState(true); // Loading state
 
   // Filter states
   const [selectedGender, setSelectedGender] = useState("");
@@ -47,6 +49,8 @@ const EmployeeList = () => {
     } catch (error) {
       console.error("Error fetching users:", error.response ? error.response.data : error.message);
       setErrorMessage("Failed to load users.");
+    } finally {
+      setLoading(false); // Set loading to false after fetching data
     }
   };
 
@@ -135,31 +139,23 @@ const EmployeeList = () => {
     return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   };
 
+  // Display loading spinner while data is being fetched
+  if (loading) return <LoadingSpinner />;
+
   return (
     <div className="">
       <div className="btnTitle">
         <h4>Employee List</h4>
         <div className="buttonContainer" onClick={() => navigate("/CreateUser")}>
           <img className='plusIcon' src="/icons/icons8-plus-50 (1).png" alt="Add" />
-          <button>   Add Employee
-          </button>
+          <button>Add Employee</button>
         </div>
-
-
-
-
       </div>
-
-
 
       {/* Filter Bar */}
       <div className="filter-bar ">
-
-
-
         <div className="input-search-container">
           <img src="icons/search.png" alt="" />
-
           <input
             type="text"
             className="input-search"
@@ -209,21 +205,6 @@ const EmployeeList = () => {
             </select>
           </div>
         </div>
-
-        {/* <div className="col-md-3">
-            <button
-              className="btn btn-secondary w-100"
-              onClick={() => {
-                setSearchQuery("");
-                setSelectedGender("");
-                setSelectedDepartment("");
-                setSelectedCountry("");
-              }}
-            >
-              Clear Filters
-            </button>
-          </div> */}
-
       </div>
 
       {errorMessage && <p className="alert alert-danger">{errorMessage}</p>}

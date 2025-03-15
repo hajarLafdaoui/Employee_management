@@ -182,21 +182,21 @@ const AdminHolidayManagement = () => {
   </div>
 </form>
       </Modal>
-<div  className=".dark-mode dep-con">
-      <table>
-        <thead>
-          <tr>
-            <th>Holiday Name</th>
-            <th>Holiday Date</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
+<div >
+<div className="table-wrapper">
+
+<div className="table-header">
+<div>Holiday Name</div>
+            <div>Holiday Date</div>
+            <div>Actions</div>
+          </div>
+       
+       
           {holidays.map((holiday) => (
-            <tr key={holiday.id}>
-              <td>{holiday.name}</td>
-              <td>{holiday.date}</td>
-              <td>
+              <div key={holiday.id} className="table-row">
+              <div>{holiday.name}</div>
+              <div>{holiday.date}</div>
+              
                 <div className="action-icons">
                   <img
                     className="edit2-icon"
@@ -211,11 +211,10 @@ const AdminHolidayManagement = () => {
                     onClick={() => confirmDeleteHoliday(holiday.id)} 
                   />
                 </div>
-              </td>
-            </tr>
+                </div>
           ))}
-        </tbody>
-      </table>
+        
+      </div>
       </div>
       <DeleteModal
         showDeletePopUp={showDeletePopUp}

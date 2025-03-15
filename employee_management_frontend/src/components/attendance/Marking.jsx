@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../Config/axiosSetup";
 import SuccessAlert from "../Alerts/SuccessAlert";
 import ErrorAlert from "../Alerts/ErrorAlert";
+import LoadingSpinner from "../../LoadingSpinner"; // Import the LoadingSpinner component
 
 const Marking = ({ currentDate }) => {
     const navigate = useNavigate();
@@ -135,7 +136,7 @@ const Marking = ({ currentDate }) => {
         }
     };
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <LoadingSpinner />; // Use the LoadingSpinner component here
     if (error) return <p>Error: {error}</p>;
 
     return (

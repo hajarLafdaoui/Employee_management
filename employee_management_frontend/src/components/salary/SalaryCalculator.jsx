@@ -129,7 +129,7 @@ const SalaryCalculator = () => {
           </div>
         </div>
 
-        <button className="vertical-button" type="submit">Calculer</button>
+        <button className="button-form vertical-button-form" type="submit">Calculer</button>
       </form>
 
       <Modal

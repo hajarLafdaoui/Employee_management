@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend } from "chart.js";
 import axios from "axios";
+import LoadingSpinner from "../../LoadingSpinner";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 const AttendanceChart = ({ attendance }) => {
+    const [isLoading, setIsLoading] = useState(true); // State to track loading status
+
     const [currentMonth, setCurrentMonth] = useState(new Date().getMonth()); // Get current month (0-based)
     const [currentYear, setCurrentYear] = useState(new Date().getFullYear()); // Get current year
 
@@ -37,6 +40,14 @@ const AttendanceChart = ({ attendance }) => {
 
         return { present, absent, leave };
     });
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false); // Set loading to false after data is "fetched"
+        }, 2000); // Simulate a 2-second delay
+
+        return () => clearTimeout(timer); // Cleanup the timer
+    }, []);
 
     // Prepare the chart data
     const data = {
@@ -85,8 +96,17 @@ const AttendanceChart = ({ attendance }) => {
     };
 
     return (
-            <Line data={data} options={options} />
+        <>
+         {isLoading ? (
+                <LoadingSpinner /> // Show the spinner while loading
+            ) : (
+                <Line data={data} options={options} /> // Show the chart when data is ready
+            )}
+        </>
+
+           
     );
+    
 };
 
 export default AttendanceChart;

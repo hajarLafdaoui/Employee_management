@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../Config/axiosSetup';
 import { ResponsiveBar } from '@nivo/bar';
+import LoadingSpinner from '../../LoadingSpinner'; // Import the LoadingSpinner component
 
 const BarChart = () => {
   const [chartData, setChartData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axiosInstance.get('employee-count');
-        console.log("API Response:", response.data); 
+        console.log("API Response:", response.data);
         setChartData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false); // Disable loading after data is fetched
       }
     };
-    
+
     fetchData();
   }, []);
 
@@ -28,7 +32,9 @@ const BarChart = () => {
 
   return (
     <div className='bar'>
-      {data.length > 0 ? (
+      {isLoading ? (
+        <LoadingSpinner /> // Show the spinner while loading
+      ) : data.length > 0 ? (
         <ResponsiveBar
           data={data}
           keys={['employees']}
@@ -72,7 +78,7 @@ const BarChart = () => {
           labelTextColor="white"
         />
       ) : (
-        <div>Loading...</div>
+        <div>No data available</div>
       )}
     </div>
   );
