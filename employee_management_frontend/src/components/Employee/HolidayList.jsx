@@ -33,12 +33,12 @@ const HolidayList = () => {
 
   return (
     <div>
-      <h3>Holiday List</h3>
+      <h3>{t('holidayListTitle')}</h3>
       <table>
         <thead>
           <tr>
-            <th>{t('holidays.name')}</th>
-            <th>{t('holidays.date')}</th>
+            <th>{t('name')}</th>
+            <th>{t('date')}</th>
           </tr>
         </thead>
         <tbody>

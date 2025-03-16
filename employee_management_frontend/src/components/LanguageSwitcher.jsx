@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const LanguageSwitcher = () => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
 
@@ -12,26 +12,20 @@ const LanguageSwitcher = () => {
     setIsDropdownOpen(false); 
   };
 
-  const getLanguageCode = (lang) => {
-    if (lang === 'fr') return 'FR';
-    if (lang === 'ar') return 'AR';
-    return 'EN'; 
-  };
-
   return (
     <div className="dropdown">
       <button 
         className="langbtn" 
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       >
-        {getLanguageCode(selectedLanguage)}
+        {selectedLanguage === 'fr' ? 'FR' : selectedLanguage === 'ar' ? 'AR' : 'EN'}
       </button>
       
       {isDropdownOpen && (
         <div className="dropdown-content">
-          <button className="langbtn" onClick={() => changeLanguage('fr')}>FR</button>
-          <button className="langbtn" onClick={() => changeLanguage('en')}>EN</button>
-          <button className="langbtn" onClick={() => changeLanguage('ar')}>AR</button>
+          <button className="langbtn" onClick={() => changeLanguage('en')}>{t("english")}</button> 
+          <button className="langbtn" onClick={() => changeLanguage('fr')}>{t("french")}</button> 
+          <button className="langbtn" onClick={() => changeLanguage('ar')}>{t("arabic")}</button> 
         </div>
       )}
     </div>
