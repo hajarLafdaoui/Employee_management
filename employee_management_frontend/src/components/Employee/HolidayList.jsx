@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../Config/axiosSetup';
 import { useTranslation } from 'react-i18next';
+import LoadingSpinner from '../../LoadingSpinner';
+
 const HolidayList = () => {
   const [holidays, setHolidays] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,9 +24,8 @@ const HolidayList = () => {
     fetchHolidays();
   }, []);
 
-  if (loading) {
-    return <div>Loading holidays...</div>;
-  }
+  if (loading) return <LoadingSpinner />;
+
 
   if (error) {
     return <div>{error}</div>;
@@ -33,14 +34,22 @@ const HolidayList = () => {
   return (
     <div>
       <h3>Holiday List</h3>
-      <ul>
-        {holidays.map((holiday) => (
-          <li key={holiday.id}>
-  
-            {t(`holidays.${holiday.name}`)} - {new Date(holiday.date).toLocaleDateString()}
-          </li>          
-        ))}
-      </ul>
+      <table>
+        <thead>
+          <tr>
+            <th>{t('holidays.name')}</th>
+            <th>{t('holidays.date')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {holidays.map((holiday) => (
+            <tr key={holiday.id}>
+              <td>{t(`holidays.${holiday.name}`)}</td>
+              <td>{new Date(holiday.date).toLocaleDateString()}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

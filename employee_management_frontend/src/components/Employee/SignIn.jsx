@@ -90,7 +90,7 @@ console.log("Login response:", response);
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <span className="toggle-password" onClick={togglePassword}>👁️</span>
+                <span className="toggle-password" onClick={togglePassword}><img src="/icons/view.png" className='view-icon' alt="" /></span>
               </div>
             </div>
 

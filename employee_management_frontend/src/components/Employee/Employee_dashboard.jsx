@@ -110,7 +110,7 @@ const Employee_dashboard = ({ employeeUser }) => {
               <Link className="navLink" to="EmployeeAttendance">{t('attendance')}</Link>
             </li>
             {renderDropdown(t('payroll'), <FaMoneyBillWave />, "payroll", [
-              { icon: <FaMoneyBillWave />, label: t('view_payroll'), link: "/payroll/view" },
+              { icon: <FaMoneyBillWave />, label: t('view_payroll'), link: "view" },
             ])}
             <li className="NavbarItem logout">
               <FaSignOutAlt className="logout-icon" />
