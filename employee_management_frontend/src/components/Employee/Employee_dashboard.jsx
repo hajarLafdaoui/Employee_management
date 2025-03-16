@@ -12,13 +12,15 @@ import { FaAddressBook } from "react-icons/fa6";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import LanguageSwitcher from '../LanguageSwitcher';
 import { useTranslation } from 'react-i18next'; // Import the translation hook
-
+import "./Employee_dashboard.scss"
+import Confirmation from "../Confirmation";
 const Employee_dashboard = ({ employeeUser }) => {
   const { t } = useTranslation(); // Get the translation function
   const [dropdowns, setDropdowns] = useState({ profile: false, payroll: false });
   const [date, setDate] = useState(new Date());
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [showConfirmPopUp, setShowConfirmPopUp] = useState(false);
 
   const navigate = useNavigate();
   employeeUser = JSON.parse(localStorage.getItem("employeeUser"));
@@ -35,6 +37,24 @@ const Employee_dashboard = ({ employeeUser }) => {
   const toggleDarkMode = () => {
     setIsDarkMode((prevMode) => !prevMode);
   };
+
+  //handel logout
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("employeeUser");
+    localStorage.removeItem("adminUser");
+
+    navigate("/SignIn");
+  };
+//handel confirm logout
+
+  const handleConfirmLogout = () => {
+    handleLogout(); 
+    setShowConfirmPopUp(false); 
+  };
+
+
 
   useEffect(() => {
     document.body.classList.toggle("dark-mode", isDarkMode);
@@ -112,10 +132,26 @@ const Employee_dashboard = ({ employeeUser }) => {
             {renderDropdown(t('payroll'), <FaMoneyBillWave />, "payroll", [
               { icon: <FaMoneyBillWave />, label: t('view_payroll'), link: "view" },
             ])}
-            <li className="NavbarItem logout">
+            {/* <li className="NavbarItem logout">
               <FaSignOutAlt className="logout-icon" />
               <Link className="navLink" to="/SignOut">{t('logout')}</Link>
-            </li>
+            </li> */}
+
+
+                 <li className="NavbarItem logout" onClick={() => setShowConfirmPopUp(true)}>
+                    <FaSignOutAlt className="logout-icon" />
+                    <span className="navLink">{t('logout')}</span>
+                  </li>
+                  <Confirmation
+        showConfirmPopUp={showConfirmPopUp}
+        setShowConfirmPopUp={setShowConfirmPopUp}
+        handleConfirm={handleConfirmLogout} 
+        itemType="Logout" 
+      />
+
+
+
+
           </ul>
         </nav>
       </div>
@@ -146,8 +182,8 @@ const Employee_dashboard = ({ employeeUser }) => {
           </p>
           <p className="admin-name">{employeeUser ? employeeUser.name : t('loading')}</p> {/* Add check for employeeUser*/}
         </div>
-        <div className="icon-container">
-          <LanguageSwitcher /> {/* Add the LanguageSwitcher component here */}
+        <div className="language-container">
+          <LanguageSwitcher /> 
         </div>
         <Outlet />
       </div>

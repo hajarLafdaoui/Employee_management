@@ -83,7 +83,7 @@ const AttestationPage = () => {
   };
 
   return (
-    <div>
+    <div className="salaryform">
       {showErrorAlert && (
         <ErrorAlert message={error} onClose={() => setShowErrorAlert(false)} />
       )}
