@@ -104,7 +104,7 @@ function App() {
           }
         >
           <Route index element={<Profile />} />
-          <Route path="EmployeeAttendance" element={<EmployeeAttendance />} />
+          <Route path="EmployeeAttendance" element={<EmployeeAttendance userId={user?.id}/>} />
           <Route path="SignOut" element={<SignOut user={user} />} />
           <Route path="leave" element={<LeaveRequestForm />} />
           <Route path="ChangePassword" element={<ChangePassword />} />
