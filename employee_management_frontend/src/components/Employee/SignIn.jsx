@@ -55,9 +55,14 @@ console.log("Login response:", response);
 
   return (
     <div className="all">
+
       <div className="signin-container">
+      {/* <img src="/logo/logo.png" alt="Logo" className="logo"/> */}
+
         <div className="form-section">
+
           <form className="form-details" onSubmit={handleLogin}>
+
             <h2 className="title">Welcome to our site</h2>
 
             {/* Email input */}

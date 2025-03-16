@@ -83,16 +83,16 @@ useEffect(() => {
         setSalaries(salaries.filter(salary => salary.id !== deleteSalaryId));
         setShowDeletePopUp(false);
         setShowSuccessAlert(true);
-        setShowSuccessAlert();
+        setStatusMessage('Salary deleted successfully!'); 
         setTimeout(() => {
-          setShowSuccessAlert(true);
-      }, 5000);
+          setShowSuccessAlert(false);
+        }, 5000);
       } catch (err) {
         setError('Error deleting salary.');
         setShowErrorAlert(true);
         setTimeout(() => {
-          setShowErrorAlert(true);
-        }, 5000);
+          setShowErrorAlert(false);
+        }, 5000); 
       }
     }
   };
@@ -102,7 +102,7 @@ useEffect(() => {
       setStatusMessage('Message cannot be empty.');
       setShowErrorAlert(true);
       setTimeout(() => {
-        setShowErrorAlert(true);
+        setShowErrorAlert(false);
       }, 5000);
       return;
     }
@@ -127,13 +127,13 @@ useEffect(() => {
       setShowSuccessAlert(true);
       setShowSuccessAlert();
       setTimeout(() => {
-        setShowSuccessAlert(true);
+        setShowSuccessAlert(false);
     }, 5000);
     } catch (error) {
       setStatusMessage('Failed to send message. Please try again.');
       setShowErrorAlert(true);
       setTimeout(() => {
-        setShowErrorAlert(true);
+        setShowErrorAlert(false);
       }, 5000);
       console.error('Error:', error.text);
     } finally {
