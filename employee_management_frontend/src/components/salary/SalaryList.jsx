@@ -354,22 +354,22 @@ useEffect(() => {
         </button>
         {activeMenu === salary.id && (
           <div className="dropdown-menu">
-            <div onClick={() => fetchSalaryDetails(salary.id)} className="viewlink">
+            <Link onClick={() => fetchSalaryDetails(salary.id)} className="viewlink">
               <img className="view-icon" src="/icons/view.png" alt="View" />
               <p>show</p>
-            </div>
+            </Link>
             <Link to={`/salary/${salary.id}`} className="viewlink">
               <img className="view-icon" src="/icons/print1.png" alt="" />
               <p>print</p>
             </Link>
-            <div
+            <Link
               onClick={() => handleShowMessageForm(salary.user)}
               className="viewlink"
             >
               <img src="icons/email.png" alt="" className="view-icon" />
               <p>msg</p>
-            </div>
-            <div
+            </Link>
+            <Link
               onClick={() => {
                 setDeleteSalaryId(salary.id);
                 setShowDeletePopUp(true);
@@ -378,7 +378,7 @@ useEffect(() => {
             >
               <img className="delete-icon" src="/icons/delete.png" alt="Delete" />
               <p>delete</p>
-            </div>
+            </Link>
           </div>
         )}
       </div>
