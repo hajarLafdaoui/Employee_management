@@ -6,6 +6,7 @@ import html2canvas from "html2canvas";
 import '../salary/SalaryDetail.scss';
 import { useTranslation } from 'react-i18next';
 import { t } from "i18next";
+import ErrorAlert from '../Alerts/ErrorAlert'; // Make sure you import the ErrorAlert
 
 const EmployeeSalary = () => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -60,7 +61,11 @@ const EmployeeSalary = () => {
 
     if (loading) return <div className="loading-spinner"><LoadingSpinner /></div>;
 
-    if (error) return <div className="error-message">{error}</div>;
+    if (error) return (
+        <div className="error-message">
+            <ErrorAlert message={error} onClose={() => setError(null)} />
+        </div>
+    );
 
     const handlePrint = () => {
         window.print();

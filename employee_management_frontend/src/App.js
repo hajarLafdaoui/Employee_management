@@ -13,8 +13,8 @@ import EmployeeList from "./components/EmployeeList";
 import UpdateUser from "./components/UpdateUser";
 
 import AdminLeaveRequests from "./components/Leave/AdminLeaveRequests";
-import AttendanceHeader from "./components/Attendance/AttendanceHeader";
-import EmployeeAttendance from "./components/Attendance/EmployeeAttendance";
+import AttendanceHeader from "./components/attendance/AttendanceHeader";
+import EmployeeAttendance from "./components/attendance/EmployeeAttendance";
 
 import LeaveRequestForm from "./components/Leave/LeaveRequestForm";
 
@@ -33,8 +33,8 @@ import SalaryCalculator from "./components/salary/SalaryCalculator";
 import SalaryList from "./components/salary/SalaryList";
 import HistoryPage from "./components/AttestatioRequest/HistoryPage";
 import ChangePassword from "./components/Employee/ChangePassword";
-import DeleteAttendance from "./components/Attendance/DeleteAttendance";
-import UpdateAttendance from "./components/Attendance/UpdateAttendance";
+import DeleteAttendance from "./components/attendance/DeleteAttendance";
+import UpdateAttendance from "./components/attendance/UpdateAttendance";
 import PrintAttestation from "./components/AttestatioRequest/PrintAttestation";
 import PrintSalary from "./components/salary/PrintSalary";
 import Dashboard from "./components/Admin/Dashboard";

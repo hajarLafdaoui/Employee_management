@@ -123,7 +123,7 @@ useEffect(() => {
 
       setStatusMessage('Message sent successfully!');
       setShowMessageForm(false); 
-      setMessage(''); 
+      setMessage('Message sent successfully!'); 
       setShowSuccessAlert(true);
       setShowSuccessAlert();
       setTimeout(() => {
@@ -132,6 +132,7 @@ useEffect(() => {
     } catch (error) {
       setStatusMessage('Failed to send message. Please try again.');
       setShowErrorAlert(true);
+      setError('Failed to send message. Please try again.')
       setTimeout(() => {
         setShowErrorAlert(false);
       }, 5000);

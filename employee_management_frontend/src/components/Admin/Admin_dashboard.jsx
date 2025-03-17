@@ -108,7 +108,7 @@ const AdminDashboard = ({ adminUser }) => {
         <nav className="Navbar">
           <div className="logoContainer">
             <Link className="navLink" to="/">
-              <img src="/logo/logo.png" alt="Logo" />
+              <img src="/logo/logo.png" alt="Logo" className="logo" />
             </Link>
           </div>
           <ul className="NavbarMenu">

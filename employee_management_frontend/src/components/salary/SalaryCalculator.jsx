@@ -145,7 +145,7 @@ const SalaryCalculator = () => {
         className="modal modal-content"
       >
         <div className="modal-header">
-          <h3>Détails du salaire pour {salaryData?.name}</h3>
+          <h3>Détails du salaire </h3>
           <span className="modal-close" onClick={() => setShowModal(false)}>
             <img className="close" src="icons/close.png" alt="Fermer" />
           </span>
