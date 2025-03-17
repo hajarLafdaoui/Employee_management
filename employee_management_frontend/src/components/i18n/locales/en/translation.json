@@ -149,5 +149,9 @@
     "leave_request_sent_success": "Leave request sent successfully",
     "leave_request_failed": "Failed to submit leave request. Please try again."
     
-  }
+  },
+
+
+  "number-of-days" : "Number of Days"
+
 }
