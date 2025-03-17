@@ -257,8 +257,8 @@ const CreateUser = () => {
             </select>
           </div>
 
-          <div className="select-empployee">
-            <CountrySelect className="select-empployee" onChange={handleCountryChange} />
+          <div className="select-empployee " >
+            <CountrySelect className="select-empployee " onChange={handleCountryChange} />
           </div>
 
           <button className="button-form vertical-button-form" type="submit" disabled={isSubmitting}>

@@ -48,7 +48,6 @@
     color: black;
     width: 100%;
     border-radius: 0;
-    border: 1px solid #ddd;
     text-align: left;
     box-sizing: border-box;
     transition: background-color 0.3s ease;
@@ -57,4 +56,9 @@
   .dropdown-content .langbtn:hover {
     background-color: #ddd;
   }
-  
+ .dark-mode  .langbtn{
+background-color: #2c2c2c;
+color: #fff;
+}
+
+

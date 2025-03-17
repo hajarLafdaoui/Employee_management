@@ -274,3 +274,8 @@ body {
 .logout{
   cursor: pointer;
 }
+
+.dark-mode .logout span{
+
+  color: white !important;
+}

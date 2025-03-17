@@ -11,7 +11,7 @@ import { PiCertificateFill } from "react-icons/pi";
 import { FaAddressBook } from "react-icons/fa6";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import LanguageSwitcher from '../LanguageSwitcher';
-import { useTranslation } from 'react-i18next'; // Import the translation hook
+import { useTranslation } from 'react-i18next'; 
 import "./Employee_dashboard.scss"
 import Confirmation from "../Confirmation";
 const Employee_dashboard = ({ employeeUser }) => {
@@ -21,7 +21,7 @@ const Employee_dashboard = ({ employeeUser }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [showConfirmPopUp, setShowConfirmPopUp] = useState(false);
-
+  const { i18n } = useTranslation();
   const navigate = useNavigate();
   employeeUser = JSON.parse(localStorage.getItem("employeeUser"));
   if (!employeeUser) {
@@ -37,6 +37,18 @@ const Employee_dashboard = ({ employeeUser }) => {
   const toggleDarkMode = () => {
     setIsDarkMode((prevMode) => !prevMode);
   };
+
+
+  //Translation function
+  useEffect(() => {
+    const currentLang = i18n.language; 
+    if (currentLang === 'ar') {
+      document.body.setAttribute('dir', 'rtl');
+    } else {
+      document.body.setAttribute('dir', 'ltr'); 
+    }
+  }, [i18n.language]);
+
 
   //handel logout
   const handleLogout = () => {

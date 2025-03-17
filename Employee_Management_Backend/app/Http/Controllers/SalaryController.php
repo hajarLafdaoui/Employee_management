@@ -28,8 +28,11 @@ class SalaryController extends Controller
     
         $dateDifference = (strtotime($endDate) - strtotime($startDate)) / (60 * 60 * 24);
     
-        if (!in_array($dateDifference, [28, 30, 31])) {
-            return response()->json(['message' => 'The date range must be exactly 28, 30, or 31 days long.'], 400);
+        // if (!in_array($dateDifference, [28, 30, 31])) {
+        //     return response()->json(['message' => 'The date range must be exactly 28, 30, or 31 days long.'], 400);
+        // }
+        if ($dateDifference > 31) {
+            return response()->json(['message' => 'The date range must be 31 days or less.'], 400);
         }
     
         $existingSalary = Salary::where('user_id', $userId)
