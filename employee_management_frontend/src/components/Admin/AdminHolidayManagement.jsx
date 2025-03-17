@@ -6,6 +6,7 @@ import DeleteModal from "../Cnfirm/DeleteModal";
 import LoadingSpinner from "../../LoadingSpinner";
 import SuccessAlert from "../Alerts/SuccessAlert";
 import ErrorAlert from "../Alerts/ErrorAlert";
+
 const AdminHolidayManagement = () => {
   const [holidays, setHolidays] = useState([]);
   const [newHoliday, setNewHoliday] = useState({ name: "", date: "" });
@@ -64,8 +65,8 @@ const AdminHolidayManagement = () => {
 
   const handleEditHoliday = (holiday) => {
     setEditHoliday(holiday);
-    setNewHoliday({ name: holiday.name, date: holiday.date });
-    setShowModal(true);
+    setNewHoliday({ name: holiday.name, date: holiday.date }); 
+    setShowModal(true); 
   };
 
   const updateHoliday = async () => {
@@ -94,6 +95,12 @@ const AdminHolidayManagement = () => {
     setHolidayToDelete(null);
   };
 
+  const handleCreateHoliday = () => {
+    setNewHoliday({ name: "", date: "" }); 
+    setEditHoliday(null); 
+    setShowModal(true); 
+  };
+
   if (loading) return <LoadingSpinner />;
 
   return (
@@ -113,19 +120,19 @@ const AdminHolidayManagement = () => {
 
       <div className="DepaHead">
         <h2>Manage Holidays</h2>
-        <div onClick={() => setShowModal(true)} className="buttonContainer">
-          <img className='plusIcon' src="/icons/plus.png" alt="Add" />
+        <div onClick={handleCreateHoliday} className="buttonContainer">
+          <img className='plusIcon' src="/icons/icons8-plus-50 (1).png" alt="Add" />
           <button>Add New</button>
         </div>
-      </div>
+      </div> 
 
       <Modal
         isOpen={showModal}
         onRequestClose={() => setShowModal(false)}
         contentLabel={editHoliday ? "Edit Holiday" : "Add New Holiday"}
         overlayClassName="Department Detail Modal"
-        className="modal modal-content"
-        >
+        className="modal-form" 
+      >
         <div className="modal-header">
           <h3>{editHoliday ? "Edit Holiday" : "Add New Holiday"}</h3>
           <span
@@ -136,86 +143,80 @@ const AdminHolidayManagement = () => {
           </span>
         </div>
         <form className="form form-vertical">
-  <div className="inputs inputs-vertical">
-    <div className="input-group">
-      <input
-        placeholder=" "
-        required
-        type="text"
-        name="name"
-        autoComplete="off"
-        value={newHoliday.name}
-        onChange={(e) => setNewHoliday({ ...newHoliday, name: e.target.value })}
-        className="input input-vertical"
-      />
-      <label className="user-label">Holiday Name</label>
-    </div>
+          <div className="inputs inputs-vertical">
+            <div className="input-group">
+              <input
+                placeholder=" "
+                required
+                type="text"
+                name="name"
+                autoComplete="off"
+                value={newHoliday.name}
+                onChange={(e) => setNewHoliday({ ...newHoliday, name: e.target.value })}
+                className="input input-vertical"
+              />
+              <label className="user-label">Holiday Name</label>
+            </div>
 
-    <div className="input-group">
-      <input
-        placeholder=" "
-        required
-        type="date"
-        name="date"
-        value={newHoliday.date}
-        onChange={(e) => setNewHoliday({ ...newHoliday, date: e.target.value })}
-        className="input input-vertical"
-      />
-      <label className="user-label">Holiday Date</label>
-    </div>
+            <div className="input-group">
+              <input
+                placeholder=" "
+                required
+                type="date"
+                name="date"
+                value={newHoliday.date}
+                onChange={(e) => setNewHoliday({ ...newHoliday, date: e.target.value })}
+                className="input input-vertical"
+              />
+              <label className="user-label">Holiday Date</label>
+            </div>
 
-    <div className="button-group">
-      <button
-        onClick={(e) => {
-          e.preventDefault(); 
-          if (editHoliday) {
-            updateHoliday(); 
-          } else {
-            addHoliday(); 
-          }
-        }}
-        className="vertical-button"
-      >
-        {editHoliday ? "Update Holiday" : "Add Holiday"}
-      </button>
-    </div>
-  </div>
-</form>
+            <div className="button-group">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (editHoliday) {
+                    updateHoliday(); 
+                  } else {
+                    addHoliday(); 
+                  }
+                }}
+                className="button-form vertical-button-form"
+              >
+                {editHoliday ? "Update Holiday" : "Add Holiday"}
+              </button>
+            </div>
+          </div>
+        </form>
       </Modal>
-<div  className=".dark-mode dep-con">
-      <table>
-        <thead>
-          <tr>
-            <th>Holiday Name</th>
-            <th>Holiday Date</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {holidays.map((holiday) => (
-            <tr key={holiday.id}>
-              <td>{holiday.name}</td>
-              <td>{holiday.date}</td>
-              <td>
-                <div className="action-icons">
-                  <img
-                    className="edit2-icon"
-                    src="/icons/edit2.png"
-                    alt="Edit"
-                    onClick={() => handleEditHoliday(holiday)} 
-                  />
-                  <img
-                    className="delete-icon"
-                    src="/icons/delete.png"
-                    alt="Delete"
-                    onClick={() => confirmDeleteHoliday(holiday.id)} 
-                  />
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+
+      <div className="table-wrapper">
+        <div className="table-header">
+          <div>Holiday Name</div>
+          <div>Holiday Date</div>
+          <div>Actions</div>
+        </div>
+        
+        {holidays.map((holiday) => (
+          <div key={holiday.id} className="table-row">
+            <div>{holiday.name}</div>
+            <div>{holiday.date}</div>
+            <div className="action-icons">
+              <img
+                className="edit2-icon"
+                src="/icons/edit2.png"
+                alt="Edit"
+                onClick={() => handleEditHoliday(holiday)} 
+              />
+              <img
+                className="delete-icon"
+                src="/icons/delete.png"
+                alt="Delete"
+                onClick={() => confirmDeleteHoliday(holiday.id)} 
+              />
+            </div>
+          </div>
+        ))}
       </div>
       <DeleteModal
         showDeletePopUp={showDeletePopUp}

@@ -1,0 +1,28 @@
+.updateAtt{
+    display: flex;
+    justify-content: center;
+    align-items: center !important;
+
+    gap: 15px;
+    background-color: #ffd60a ;
+    padding: 10px 20px  !important;
+    border-radius: 12px;
+    // margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.employeAttDetails{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    div{
+        display: flex;
+        gap: 8px;
+        align-items: center !important;
+        label{
+            font-size: 18px;
+            font-weight: 500;
+        }
+    }
+ 
+}

@@ -23,7 +23,7 @@ import { useTranslation } from "react-i18next"; // Import the translation hook
 
 const Employee_dashboard = ({ employeeUser }) => {
   const { t } = useTranslation(); // Get the translation function
-  const [dropdowns, setDropdowns] = useState({ profile: true });
+  const [dropdowns, setDropdowns] = useState({ profile: false, payroll: false });
   const [date, setDate] = useState(new Date());
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -33,6 +33,7 @@ const Employee_dashboard = ({ employeeUser }) => {
   if (!employeeUser) {
     navigate("/SignIn");
   }
+
   const toggleSidebar = () => {
     const container = document.querySelector(".Container");
     container.classList.toggle("sidebar-open");
@@ -48,8 +49,21 @@ const Employee_dashboard = ({ employeeUser }) => {
   }, [isDarkMode]);
 
   const toggleDropdown = (key) => {
-    setDropdowns((prev) => ({ ...prev, [key]: !prev[key] }));
+    setDropdowns((prev) => {
+      const newDropdowns = {};
+      Object.keys(prev).forEach((dropdownKey) => {
+        newDropdowns[dropdownKey] = dropdownKey === key ? !prev[dropdownKey] : false;
+      });
+      return newDropdowns;
+    });
   };
+
+  useEffect(() => {
+    const allClosed = Object.values(dropdowns).every((isOpen) => !isOpen);
+    if (allClosed) {
+      setDropdowns((prev) => ({ ...prev, profile: true }));
+    }
+  }, [dropdowns]);
 
   const renderDropdown = (title, icon, key, items) => (
     <li
@@ -137,9 +151,7 @@ const Employee_dashboard = ({ employeeUser }) => {
             ])} */}
             <li className="NavbarItem logout">
               <FaSignOutAlt className="logout-icon" />
-              <Link className="navLink" to="/SignOut">
-                {t("logout")}
-              </Link>
+              <Link className="navLink" to="/SignOut">{t('logout')}</Link>
             </li>
           </ul>
         </nav>
@@ -183,10 +195,7 @@ const Employee_dashboard = ({ employeeUser }) => {
               ? t("good_afternoon")
               : t("good_evening")}
           </p>
-          <p className="admin-name">
-            {employeeUser ? employeeUser.name : t("loading")}
-          </p>{" "}
-          {/* Add check for employeeUser*/}
+          <p className="admin-name">{employeeUser ? employeeUser.name : t('loading')}</p> {/* Add check for employeeUser*/}
         </div>
         <div className="icon-container">
           <LanguageSwitcher /> {/* Add the LanguageSwitcher component here */}

@@ -1,0 +1,25 @@
+.profile {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  border: 2px solid white;
+  flex-direction: column;
+}
+.profile .profile-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile .profile-header .img {
+  width: 100px;
+  height: 100px;
+  border: 2px solid white;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.profile .infos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid red;
+}/*# sourceMappingURL=profile.css.map */

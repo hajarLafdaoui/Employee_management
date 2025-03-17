@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../Config/axiosSetup';
 import { ResponsiveBar } from '@nivo/bar';
+import LoadingSpinner from '../../LoadingSpinner'; // Import the LoadingSpinner component
 
 const BarChart = () => {
   const [chartData, setChartData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axiosInstance.get('employee-count');
-        console.log("API Response:", response.data); 
+        console.log("API Response:", response.data);
         setChartData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false); // Disable loading after data is fetched
       }
     };
-    
+
     fetchData();
   }, []);
 
@@ -28,7 +32,9 @@ const BarChart = () => {
 
   return (
     <div className='bar'>
-      {data.length > 0 ? (
+      {isLoading ? (
+        <LoadingSpinner /> // Show the spinner while loading
+      ) : data.length > 0 ? (
         <ResponsiveBar
           data={data}
           keys={['employees']}
@@ -38,15 +44,15 @@ const BarChart = () => {
           padding={0.3}
           colors={(d) => {
             if (d.value <= 5 && d.value > 0) {
-              return '#973AA8';
+              return '#E9F7DF';
             } else if (d.value > 5 && d.value <= 10) {
-              return '#C05299';
+              return '#D1F1BB';
             } else if (d.value > 10 && d.value <= 15) {
-              return '#FF8BA0';
+              return '#AFDC8F';
             } else if (d.value > 15 && d.value <= 20) {
-              return '#BD68EE';
+              return '#87BB62';
             } else if (d.value > 20) {
-              return '#D55D92';
+              return '#63993D';
             } else {
               return 'transparent';
             }
@@ -72,7 +78,7 @@ const BarChart = () => {
           labelTextColor="white"
         />
       ) : (
-        <div>Loading...</div>
+        <div>No data available</div>
       )}
     </div>
   );

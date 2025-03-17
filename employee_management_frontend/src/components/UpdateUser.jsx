@@ -1,164 +1,277 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // Using useNavigate instead of useHistory
+import { useParams, useNavigate } from "react-router-dom";
 import axiosInstance from "./Config/axiosSetup";
+import CountrySelect from "./CountrySelect"; // Import the CountrySelect component
 
 const UpdateUser = () => {
-  const { id } = useParams(); // Get the user ID from the URL
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   const [user, setUser] = useState({
     name: "",
     email: "",
-    username: "",
     phone: "",
-    role: "",
+    country: "",
+    department_id: "",
     profile_picture: null,
-    base_salary: "",
-    // add other fields if needed
+    username: "", // Add username
+    gender: "", // Add gender
   });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate(); // Initialize useNavigate hook
 
-  // Fetch user details when the component mounts
+  const [departments, setDepartments] = useState([]);
+
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axiosInstance.get(`/users/${id}`);
-        console.log("Fetched user data:", response.data); // Log the fetched user data
-        setUser(response.data);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        setError("Failed to fetch user data.");
-      }
-    };
     fetchUser();
-  }, [id]);
+    fetchDepartments();
+  }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser((prevUser) => ({
-      ...prevUser,
-      [name]: value,
-    }));
+  // Fetch the user details
+  const fetchUser = async () => {
+    try {
+      const response = await axiosInstance.get(`/users/${id}`);
+      setUser({
+        name: response.data.name,
+        email: response.data.email,
+        phone: response.data.phone || "",
+        country: response.data.country || "", // Fetch the previous country
+        department_id: response.data.department_id,
+        profile_picture: null, // Reset profile picture to avoid sending old data
+        username: response.data.username || "", // Add username
+        gender: response.data.gender || "", // Add gender
+      });
+    } catch (error) {
+      console.error("Error fetching user:", error);
+    }
   };
 
+  // Fetch available departments
+  const fetchDepartments = async () => {
+    try {
+      const response = await axiosInstance.get("/departments");
+      setDepartments(response.data);
+    } catch (error) {
+      console.error("Error fetching departments:", error);
+    }
+  };
+
+  // Handle form input changes
+  const handleChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  // Handle file input changes
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    console.log("Selected file:", file); // Log the selected file
-    setUser((prevUser) => ({
-      ...prevUser,
-      profile_picture: file,
-    }));
+    if (file) {
+      // Validate file type (allow only images)
+      if (file.type.startsWith("image/")) {
+        setUser({ ...user, profile_picture: file });
+      } else {
+        alert("Please upload a valid image file.");
+        e.target.value = null; // Clear the file input
+      }
+    }
   };
 
+  // Handle country change
+  const handleCountryChange = (selectedCountry) => {
+    setUser({ ...user, country: selectedCountry.value });
+  };
+
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
-    // Prepare the FormData
-    const formData = new FormData();
-    formData.append("name", user.name);
-    formData.append("email", user.email);
-    formData.append("username", user.username);
-    formData.append("phone", user.phone);
-    formData.append("role", user.role);
-    formData.append("base_salary", user.base_salary);
+    // Convert the profile picture file to base64
+    let profilePictureBase64 = null;
     if (user.profile_picture) {
-      formData.append("profile_picture", user.profile_picture);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        profilePictureBase64 = reader.result; // Base64 string
+        sendFormData(profilePictureBase64); // Call the function to send data
+      };
+      reader.readAsDataURL(user.profile_picture); // Read the file as base64
+    } else {
+      sendFormData(profilePictureBase64); // Call the function without profile picture
     }
+  };
 
-    // Log the FormData before sending
-    formData.forEach((value, key) => {
-      console.log(key, value); // Log the data being sent
-    });
+  // Send form data to the backend
+  const sendFormData = async (profilePictureBase64) => {
+    const formData = {
+      name: user.name,
+      email: user.email,
+      phone: user.phone || "", // Optional field
+      country: user.country || "", // Optional field
+      department_id: user.department_id,
+      profile_picture: profilePictureBase64, // Base64 string or null
+      username: user.username, // Add username
+      gender: user.gender, // Add gender
+    };
+
+    console.log("Form Data:", formData); // Log form data for debugging
 
     try {
-      const response = await axiosInstance.put(`/users/${id}`, formData);
-      console.log("Response:", response); // Log the response from the server
+      const response = await axiosInstance.put(`/users/${id}`, formData, {
+        headers: {
+          "Content-Type": "application/json", // Send as JSON
+        },
+      });
 
-      // After successful update
-      setLoading(false);
-      navigate("/EmployeeList"); // Redirect to employee list page
+      alert("User updated successfully!");
+      navigate("/employee-list");
     } catch (error) {
       console.error("Error updating user:", error);
-      setLoading(false);
-      setError(error.response ? error.response.data.message : "An error occurred");
+
+      // Display validation errors to the user
+      if (error.response && error.response.data.errors) {
+        const errors = error.response.data.errors;
+        let errorMessage = "Validation errors:\n";
+        for (const [field, messages] of Object.entries(errors)) {
+          errorMessage += `${field}: ${messages.join(", ")}\n`;
+        }
+        alert(errorMessage);
+      } else {
+        alert("Failed to update user.");
+      }
     }
   };
 
   return (
-    <div>
-      <h2>Update User</h2>
+    <div className="create-user">
+      <h4 className="employeeTitle">Update User</h4>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <div className="form form-vertical small-form">
+        <form onSubmit={handleSubmit} className="small-form-inputs inputs inputs-vertical">
+          {/* Two Inputs in One Line */}
+          <div className="input-row">
+            <div className="input-group">
+              <input
+                type="text"
+                name="name"
+                placeholder=" "
+                value={user.name}
+                onChange={handleChange}
+                className="input input-vertical"
+                required
+              />
+              <label className="user-label">Name</label>
+            </div>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={user.name}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={user.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Username:</label>
-          <input
-            type="text"
-            name="username"
-            value={user.username}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Phone:</label>
-          <input
-            type="text"
-            name="phone"
-            value={user.phone}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Role:</label>
-          <select name="role" value={user.role} onChange={handleChange}>
-            <option value="employee">Employee</option>
-            <option value="sub-admin">Sub-admin</option>
-          </select>
-        </div>
-        <div>
-          <label>Profile Picture:</label>
-          <input
-            type="file"
-            onChange={handleFileChange}
-            accept="image/*"
-          />
-          {user.profile_picture && (
-            <p>Selected file: {user.profile_picture.name}</p>
-          )}
-        </div>
-        <div>
-          <label>Base Salary:</label>
-          <input
-            type="number"
-            name="base_salary"
-            value={user.base_salary}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit" disabled={loading}>
-          {loading ? "Updating..." : "Update User"}
-        </button>
-      </form>
+            <div className="input-group">
+              <input
+                type="email"
+                name="email"
+                placeholder=" "
+                value={user.email}
+                onChange={handleChange}
+                className="input input-vertical"
+                required
+              />
+              <label className="user-label">Email</label>
+            </div>
+          </div>
+
+          {/* Two Inputs in One Line */}
+          <div className="input-row">
+            <div className="input-group">
+              <input
+                type="text"
+                name="username"
+                placeholder=" "
+                value={user.username}
+                onChange={handleChange}
+                className="input input-vertical"
+                required
+              />
+              <label className="user-label">Username</label>
+            </div>
+
+            <div className="input-group">
+              <input
+                type="text"
+                name="phone"
+                placeholder=" "
+                value={user.phone}
+                onChange={handleChange}
+                className="input input-vertical"
+              />
+              <label className="user-label">Phone</label>
+            </div>
+          </div>
+          <div className="input-group">
+            <label className="custum-file-upload" htmlFor="file">
+              <div className="icon">📁</div>
+              <div className="text">
+                <span>Click to upload profile picture</span>
+              </div>
+              <input
+                type="file"
+                id="file"
+                name="profile_picture"
+                onChange={handleFileChange}
+              />
+            </label>
+          </div>
+
+          {/* Single Input */}
+          <div className="input-group">
+            <select
+              name="gender"
+              value={user.gender}
+              onChange={handleChange}
+              className="select-empployee"
+              required
+            >
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+            {/* <label className="user-label">Gender</label> */}
+          </div>
+            {/* Department Select */}
+            <div className="input-group">
+            <select
+              name="department_id"
+              value={user.department_id}
+              onChange={handleChange}
+              className="select-empployee"
+              required
+            >
+              <option value="">Select Department</option>
+              {departments.map((dept) => (
+                <option key={dept.id} value={dept.id}>
+                  {dept.name}
+                </option>
+              ))}
+            </select>
+            {/* <label className="user-label">Department</label> */}
+          </div>
+
+          {/* Single Input */}
+          <div  className="select-empployee" >
+            <CountrySelect
+              onChange={handleCountryChange}
+              defaultValue={user.country} // Pass the previous country as the default value
+              className="select-empployee"
+            />
+            {/* <label className="user-label">Country</label> */}
+          </div>
+
+          {/* File Upload */}
+          
+
+        
+
+          {/* Buttons */}
+          <div className="input-row">
+            <button className="button-form vertical-button-form" type="submit">
+              Update
+            </button>
+           
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
