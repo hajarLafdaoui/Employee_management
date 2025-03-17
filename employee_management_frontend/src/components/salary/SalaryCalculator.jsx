@@ -35,8 +35,8 @@ const SalaryCalculator = () => {
 
   const handleCalculate = async (e) => {
     e.preventDefault();
-    setError(''); 
-
+    setError(''); // Reset any previous errors
+  
     if (userId && startDate && endDate) {
       try {
         const response = await axiosInstance.post('/calculate-salary', {
@@ -45,31 +45,36 @@ const SalaryCalculator = () => {
           paid_on: paidOn,
           user_id: userId
         });
+  
         setUserId('');
         setPaidOn('');
         setStartDate('');
         setEndDate('');
-        
+  
         if (response.data.salary) {
           setSalaryData(response.data.salary);
           setBasesalary(response.data.basesalary);
           setShowModal(true);
         } else {
-          setMessage(response.data.message);
+          setMessage(response.data.message);  
         }
+  
         setShowSuccessAlert(true);
-
+        setShowErrorAlert(false); 
+  
       } catch (err) {
         if (err.response && err.response.data) {
           setError('Échec du calcul du salaire. Veuillez réessayer.');
         }
         console.error(err);
+        setShowErrorAlert(true); 
       }
     } else {
       setError('Veuillez remplir tous les champs.');
+      setShowErrorAlert(true); 
     }
-    setShowErrorAlert(true);
   };
+  
 
   return (
     <div className="salaryform">
@@ -140,7 +145,7 @@ const SalaryCalculator = () => {
         className="modal modal-content"
       >
         <div className="modal-header">
-          <h3>Détails du salaire pour {salaryData?.name}</h3>
+          <h3>Détails du salaire </h3>
           <span className="modal-close" onClick={() => setShowModal(false)}>
             <img className="close" src="icons/close.png" alt="Fermer" />
           </span>

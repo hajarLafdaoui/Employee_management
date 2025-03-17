@@ -259,7 +259,20 @@ const EmployeeList = () => {
               />
               {dropdownVisible === user.id && (
                 <div className="more-dropdown">
+{/* view action */}
+
+<div
+                    onClick={() => {
+                      navigate(`/Detailuser/${user.id}`);
+                    }}
+                    className="edit-container"
+                  >
+                    <img className="edit-icon" src="/icons/view.png" alt="Edit" />
+                    <p>View</p>
+                  </div>
+
                   {/* Edit action */}
+
                   <div
                     onClick={() => {
                       navigate(`/update-user/${user.id}`);

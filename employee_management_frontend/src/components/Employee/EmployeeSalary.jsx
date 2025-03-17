@@ -6,10 +6,10 @@ import html2canvas from "html2canvas";
 import '../salary/SalaryDetail.scss';
 import { useTranslation } from 'react-i18next';
 import { t } from "i18next";
+import ErrorAlert from '../Alerts/ErrorAlert'; // Make sure you import the ErrorAlert
 
 const EmployeeSalary = () => {
     const user = JSON.parse(localStorage.getItem('user'));
-
     const [salary, setSalary] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -39,9 +39,10 @@ const EmployeeSalary = () => {
                         setSalary(latestSalary);
                         setBaseSalary(latestSalary.total_salary || 0);
                         setJob(latestSalary.user.job || {}); 
-                        setDepartment(latestSalary.user.department || {}); 
+                        setDepartment(user.department || {}); 
+                        // console.log(department.job)
                     } else {
-                        setError(t('no_salary_data_found'));
+                        setSalary(null); 
                     }
                 } else {
                     setError(t('invalid_response_format'));
@@ -60,7 +61,19 @@ const EmployeeSalary = () => {
 
     if (loading) return <div className="loading-spinner"><LoadingSpinner /></div>;
 
-    if (error) return <div className="error-message">{error}</div>;
+    if (error) return (
+        <div className="error-message">
+            <ErrorAlert message={error} onClose={() => setError(null)} />
+        </div>
+    );
+
+    if (!salary) {
+        return (
+            <div className="no-salary">
+                <h3>{t('aucun_salaire')}</h3> 
+            </div>
+        );
+    }
 
     const handlePrint = () => {
         window.print();

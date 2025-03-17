@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import SignIn from "./components/Employee/SignIn";
 import Admin_dashboard from "./components/Admin/Admin_dashboard";
 import Employee_dashboard from "./components/Employee/Employee_dashboard";
 import CreateUser from "./components/CreateUser";
 import EmployeeList from "./components/EmployeeList";
 import UpdateUser from "./components/UpdateUser";
+import DetailUser from "./components/DetailUser";
 
 import AdminLeaveRequests from "./components/Leave/AdminLeaveRequests";
 import AttendanceHeader from "./components/Attendance/AttendanceHeader";
@@ -75,10 +71,12 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route path="Dashboard" element={<Dashboard />} />
+          <Route index element={<Dashboard />} />
+
           <Route path="CreateUser" element={<CreateUser />} />
           <Route path="update-user/:id" element={<UpdateUser />} />
           <Route path="EmployeeList" element={<EmployeeList />} />
+          <Route path="Detailuser/:id" element={<DetailUser />} />
 
           <Route path="AdminLeaveRequests" element={<AdminLeaveRequests />} />
 
@@ -112,7 +110,7 @@ function App() {
           }
         >
           <Route index element={<Profile />} />
-          <Route path="EmployeeAttendance" element={<EmployeeAttendance />} />
+          <Route path="EmployeeAttendance" element={<EmployeeAttendance userId={user?.id}/>} />
           <Route path="SignOut" element={<SignOut user={user} />} />
           <Route path="leave" element={<LeaveRequestForm />} />
           <Route path="ChangePassword" element={<ChangePassword />} />

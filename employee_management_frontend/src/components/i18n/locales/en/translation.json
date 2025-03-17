@@ -114,7 +114,9 @@
 "amount" : "Amount",
 "english": "English",
   "french": "French",
-  "arabic": "Arabic"
+  "arabic": "Arabic",
+  "aucun_salaire": "No salary"
+
 
     
   }

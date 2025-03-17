@@ -167,7 +167,8 @@
 
 .input-container {
   position: relative;
-  width: 25%;
+  width: 40%;
+  /* width: 25%; */
 }
 
 .date-input {
@@ -288,6 +289,7 @@
     border-radius: 0;
   }
   .search-sort {
+    /* margin-top: 20px; */
     margin-top: 30px;
   }
   .userprofile {

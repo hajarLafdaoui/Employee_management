@@ -196,10 +196,13 @@ body {
   width: 100px;
   height: 80px;
   text-align: center;
+<<<<<<< HEAD
+=======
 }
 
 .logout {
   cursor: pointer;
+>>>>>>> 57b95586fbcd7485586adfaba3c880cc8a0e167e
 }
 
 body.dark-mode {

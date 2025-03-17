@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axiosInstance from './Config/axiosSetup';
+import LoadingSpinner from '../LoadingSpinner';
 
 const DetailUser = () => {
-  const { userId } = useParams();
+  const { id } = useParams();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,7 +12,7 @@ const DetailUser = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axiosInstance.get(`/users/${userId}`);
+        const response = await axiosInstance.get(`/users/${id}`);
         setUser(response.data);
       } catch (err) {
         setError('Error fetching user details');
@@ -22,11 +23,10 @@ const DetailUser = () => {
     };
 
     fetchUser();
-  }, [userId]);
+  }, [id]);
 
-  if (loading) {
-    return <p>Loading user details...</p>;
-  }
+  if (loading) return <LoadingSpinner />;
+  
 
   if (error) {
     return <p>{error}</p>;
@@ -62,9 +62,9 @@ const DetailUser = () => {
             </button>
           </Link>
 
-          <Link to="/dashboard">
+          <Link to="/EmployeeList">
             <button style={{ backgroundColor: 'gray', color: 'white' }}>
-              Back to Dashboard
+              Back to EmployeeList
             </button>
           </Link>
         </div>

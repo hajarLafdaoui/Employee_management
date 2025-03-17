@@ -78,4 +78,22 @@ public function update(Request $request, $id)
             return response()->json(['message' => 'Error saving attendance'], 500);
         }
     }
+
+    //Employee Attendance Filtering
+    public function getUserAttendance($userId, Request $request)
+{
+    $startDate = $request->query('start_date', now()->subWeek()->toDateString()); 
+    $endDate = $request->query('end_date', now()->toDateString()); 
+
+    $attendance = Attendance::where('user_id', $userId)
+        ->whereBetween('attendance_date', [$startDate, $endDate])
+        ->get();
+
+    if ($attendance->isEmpty()) {
+        return response()->json(['message' => 'No attendance records found'], 404);
+    }
+
+    return response()->json($attendance);
+}
+
 }    

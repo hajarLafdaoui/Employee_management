@@ -70,7 +70,7 @@ const AdminDashboard = ({ adminUser }) => {
   }, []);
 
   const menuItems = [
-    { label: "Dashboard", icon: <FaTachometerAlt />, link: "/Dashboard" }, // Updated link to "/dashboard"
+    { label: "Dashboard", icon: <FaTachometerAlt />, link: "/" }, // Updated link to "/dashboard"
     {
       label: "Employees",
       icon: <FaUsers />,
@@ -108,7 +108,7 @@ const AdminDashboard = ({ adminUser }) => {
         <nav className="Navbar">
           <div className="logoContainer">
             <Link className="navLink" to="/">
-              <img src="/logo/logo.png" alt="Logo" />
+              <img src="/logo/logo.png" alt="Logo" className="logo" />
             </Link>
           </div>
           <ul className="NavbarMenu">

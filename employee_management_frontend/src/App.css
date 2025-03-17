@@ -2,21 +2,73 @@ html, body {
   margin: 0;
   padding: 0;
 }
-[dir='rtl'] {
-  text-align: right;  /* Align text to the right */
+body[dir='rtl'] {
+  text-align: right;  
+  background: linear-gradient(to left, #ffffff, #f6e9c9);
+
 }
-/* [dir='rtl'] .some-class {
-  text-align: right;
-} */
 
-/* Example: adjusting padding and margins for RTL */
-/* [dir='rtl'] .navbar {
-  padding-right: 20px;
-  padding-left: 0;
-} */
+body[dir='rtl'] .right{
+margin-right: 580px;
+}
+body[dir="rtl"] .AdminMenu {
+  display: flex;
+  justify-content: flex-end; 
+  position: fixed; 
+  width: 250px; 
+  top: 0; 
+  bottom: 0; 
+  height: 100%; 
+  padding-top: 20px; 
+}
 
-/* [dir='rtl'] .sidebar {
-  margin-right: 0;
-  margin-left: 20px;
-} */
+body[dir="rtl"] .Navbar {
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-end; 
+}
+
+body[dir="rtl"] .NavbarMenu {
+  display: flex;
+  flex-direction: column-reverse; 
+  align-items: flex-end; 
+}
+
+body[dir="rtl"] .NavbarItem {
+  text-align: right; 
+  padding-right: 20px; 
+}
+
+body[dir="rtl"] .hamburger {
+  margin-left: 20px; 
+}
+
+body[dir="rtl"] .logoContainer {
+  
+  width: 90%;
+  margin-right: 20px;
+  border: none;
+}
+
+body[dir="rtl"] .secondPart {
+  margin-right: 270px; 
+  flex-grow: 1; 
+  margin-left: 10px;
+}
+
+body[dir="rtl"] .salary-actions{
+  margin-left: 800px;
+}
+
+@media (max-width: 768px) {
+  body[dir="rtl"] .AdminMenu {
+    width: 200px; 
+  }
+
+  body[dir="rtl"] .secondPart {
+    margin-right: 0; 
+  }
+}
+
+
 @import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');

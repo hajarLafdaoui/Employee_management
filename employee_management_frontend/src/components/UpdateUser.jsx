@@ -151,7 +151,7 @@ const UpdateUser = () => {
       });
 
       alert("User updated successfully!");
-      navigate("/employee-list");
+      navigate("/EmployeeList");
     } catch (error) {
       console.error("Error updating user:", error);
 
