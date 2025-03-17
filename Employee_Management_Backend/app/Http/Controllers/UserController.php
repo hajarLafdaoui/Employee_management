@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Job;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -16,6 +17,7 @@ class UserController extends Controller
     {
         $employees = User::whereIn('role', ['employee', 'sub-admin'])
             ->where('is_deleted', false)
+            ->with('job') // Eager load the job relationship
             ->get();
 
         return response()->json($employees);
@@ -24,14 +26,17 @@ class UserController extends Controller
     // Get all employees
     public function fetchEmployees()
     {
-        $employees = User::where('role', 'employee')->get();
+        $employees = User::where('role', 'employee')
+            ->with('job') // Eager load the job relationship
+            ->get();
+
         return response()->json($employees);
     }
 
     // Get user by ID
     public function show($id)
     {
-        $user = User::find($id);
+        $user = User::with('job')->find($id); // Eager load the job relationship
 
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
@@ -51,13 +56,13 @@ class UserController extends Controller
             'password' => 'required|string|min:8',
             'role' => 'required|string|in:employee,sub-admin',
             'department_id' => 'required|exists:departments,id',
+            'job_id' => 'required|exists:jobs,id', // Ensure the job exists and belongs to the selected department
             'username' => 'required|string|max:255|unique:users',
             'phone' => 'nullable|string|max:255',
             'profile_picture' => 'nullable|string', // Expect base64 encoded image
-            // 'base_salary' => 'required|numeric|min:0',
             'gender' => 'required|in:male,female',
             'country' => 'nullable|string|max:255',
-            'is_active' => 'boolean', // Assuming 'status' is boolean for active/inactive
+            'is_active' => 'boolean',
         ]);
 
         if ($validator->fails()) {
@@ -79,10 +84,10 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
             'role' => $request->role,
             'department_id' => $request->department_id,
+            'job_id' => $request->job_id, // Assign the job_id
             'username' => $request->username,
             'phone' => $request->phone,
             'profile_picture' => $profilePicturePath,
-            // 'base_salary' => $request->base_salary,
             'gender' => $request->gender,
             'country' => $request->country,
             'is_active' => $isLoggedIn,  // Set to true only if the user is logged in
@@ -95,61 +100,56 @@ class UserController extends Controller
     }
 
     // Update an existing user
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'username' => 'required|string|max:255|unique:users,username,' . $id,
+            'gender' => 'required|in:male,female',
+            'phone' => 'nullable|string|max:255',
+            'country' => 'nullable|string|max:255',
+            'department_id' => 'required|exists:departments,id',
+            'job_id' => 'required|exists:jobs,id', // Ensure the job exists and belongs to the selected department
+            'profile_picture' => 'nullable|string', // Expect base64 encoded image
+        ]);
 
-    /**
-     * Handle base64 image upload.
-     *
-     * @param string $base64Image
-     * @param string|null $oldImagePath
-     * @return string|null
-     */
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
 
-     public function update(Request $request, $id)
-     {
-         $validator = Validator::make($request->all(), [
-             'name' => 'required|string|max:255',
-             'email' => 'required|email|unique:users,email,' . $id,
-             'username' => 'required|string|max:255|unique:users,username,' . $id,
-             'gender' => 'required|in:male,female',
-             'phone' => 'nullable|string|max:255',
-             'country' => 'nullable|string|max:255',
-             'department_id' => 'required|exists:departments,id',
-             'profile_picture' => 'nullable|string', // Expect base64 encoded image
-         ]);
-     
-         if ($validator->fails()) {
-             return response()->json([
-                 'message' => 'Validation failed',
-                 'errors' => $validator->errors(),
-             ], 422);
-         }
-     
-         $user = User::find($id);
-         if (!$user) {
-             return response()->json(['message' => 'User not found'], 404);
-         }
-     
-         $profilePicturePath = $user->profile_picture;
-         if ($request->has('profile_picture')) {
-             $profilePicturePath = $this->handleBase64Image($request->input('profile_picture'), $profilePicturePath);
-         }
-     
-         $user->update([
-             'name' => $request->name,
-             'email' => $request->email,
-             'username' => $request->username,
-             'gender' => $request->gender,
-             'phone' => $request->phone,
-             'country' => $request->country,
-             'department_id' => $request->department_id,
-             'profile_picture' => $profilePicturePath,
-         ]);
-     
-         return response()->json([
-             'message' => 'User updated successfully',
-             'user' => $user,
-         ]);
-     }
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        $profilePicturePath = $user->profile_picture;
+        if ($request->has('profile_picture')) {
+            $profilePicturePath = $this->handleBase64Image($request->input('profile_picture'), $profilePicturePath);
+        }
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'username' => $request->username,
+            'gender' => $request->gender,
+            'phone' => $request->phone,
+            'country' => $request->country,
+            'department_id' => $request->department_id,
+            'job_id' => $request->job_id, // Update the job_id
+            'profile_picture' => $profilePicturePath,
+        ]);
+
+        return response()->json([
+            'message' => 'User updated successfully',
+            'user' => $user,
+        ]);
+    }
+
+    // Handle base64 image upload
     private function handleBase64Image($base64Image, $oldImagePath = null)
     {
         if (!$base64Image) {

@@ -13,12 +13,15 @@ const UpdateUser = () => {
     phone: "",
     country: "",
     department_id: "",
+    job_id: "", // Add job_id
     profile_picture: null,
-    username: "", // Add username
-    gender: "", // Add gender
+    username: "",
+    gender: "",
   });
 
   const [departments, setDepartments] = useState([]);
+  const [jobs, setJobs] = useState([]); // State for jobs
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchUser();
@@ -33,12 +36,18 @@ const UpdateUser = () => {
         name: response.data.name,
         email: response.data.email,
         phone: response.data.phone || "",
-        country: response.data.country || "", // Fetch the previous country
+        country: response.data.country || "",
         department_id: response.data.department_id,
+        job_id: response.data.job_id || "", // Fetch job_id
         profile_picture: null, // Reset profile picture to avoid sending old data
-        username: response.data.username || "", // Add username
-        gender: response.data.gender || "", // Add gender
+        username: response.data.username || "",
+        gender: response.data.gender || "",
       });
+
+      // Fetch jobs for the user's department
+      if (response.data.department_id) {
+        fetchJobsByDepartment(response.data.department_id);
+      }
     } catch (error) {
       console.error("Error fetching user:", error);
     }
@@ -54,9 +63,31 @@ const UpdateUser = () => {
     }
   };
 
+  // Fetch jobs by department
+  const fetchJobsByDepartment = async (departmentId) => {
+    if (!departmentId) {
+      setJobs([]); // Clear jobs if no department is selected
+      return;
+    }
+
+    try {
+      const response = await axiosInstance.get(`/departments/${departmentId}/jobs`);
+      setJobs(response.data);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+    }
+  };
+
   // Handle form input changes
   const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+
+    // Fetch jobs when department changes
+    if (name === "department_id") {
+      fetchJobsByDepartment(value);
+      setUser((prevState) => ({ ...prevState, job_id: "" })); // Reset job_id when department changes
+    }
   };
 
   // Handle file input changes
@@ -104,9 +135,10 @@ const UpdateUser = () => {
       phone: user.phone || "", // Optional field
       country: user.country || "", // Optional field
       department_id: user.department_id,
+      job_id: user.job_id, // Include job_id
       profile_picture: profilePictureBase64, // Base64 string or null
-      username: user.username, // Add username
-      gender: user.gender, // Add gender
+      username: user.username,
+      gender: user.gender,
     };
 
     console.log("Form Data:", formData); // Log form data for debugging
@@ -199,6 +231,8 @@ const UpdateUser = () => {
               <label className="user-label">Phone</label>
             </div>
           </div>
+
+          {/* File Upload */}
           <div className="input-group">
             <label className="custum-file-upload" htmlFor="file">
               <div className="icon">📁</div>
@@ -214,7 +248,7 @@ const UpdateUser = () => {
             </label>
           </div>
 
-          {/* Single Input */}
+          {/* Gender Select */}
           <div className="input-group">
             <select
               name="gender"
@@ -227,10 +261,10 @@ const UpdateUser = () => {
               <option value="male">Male</option>
               <option value="female">Female</option>
             </select>
-            {/* <label className="user-label">Gender</label> */}
           </div>
-            {/* Department Select */}
-            <div className="input-group">
+
+          {/* Department Select */}
+          <div className="input-group">
             <select
               name="department_id"
               value={user.department_id}
@@ -245,30 +279,41 @@ const UpdateUser = () => {
                 </option>
               ))}
             </select>
-            {/* <label className="user-label">Department</label> */}
           </div>
 
-          {/* Single Input */}
-          <div  className="select-empployee" >
+          {/* Job Select */}
+          <div className="input-group">
+            <select
+              name="job_id"
+              value={user.job_id}
+              onChange={handleChange}
+              className="select-empployee"
+              disabled={!user.department_id} // Disable if no department is selected
+              required
+            >
+              <option value="">Select Job</option>
+              {jobs.map((job) => (
+                <option key={job.id} value={job.id}>
+                  {job.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Country Select */}
+          <div className="select-empployee">
             <CountrySelect
               onChange={handleCountryChange}
               defaultValue={user.country} // Pass the previous country as the default value
               className="select-empployee"
             />
-            {/* <label className="user-label">Country</label> */}
           </div>
-
-          {/* File Upload */}
-          
-
-        
 
           {/* Buttons */}
           <div className="input-row">
             <button className="button-form vertical-button-form" type="submit">
               Update
             </button>
-           
           </div>
         </form>
       </div>

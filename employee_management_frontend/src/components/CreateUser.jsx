@@ -14,6 +14,7 @@ const CreateUser = () => {
     phone: '',
     profilePicture: null,
     departmentId: '',
+    job_id: '', // Add job_id
     baseSalary: 0,
     gender: '',
     country: '',
@@ -21,10 +22,11 @@ const CreateUser = () => {
   });
 
   const [departments, setDepartments] = useState([]);
+  const [jobs, setJobs] = useState([]); // State for jobs
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false); // State to control SuccessAlert visibility
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,12 +44,36 @@ const CreateUser = () => {
     fetchDepartments();
   }, []);
 
+  const fetchJobsByDepartment = async (departmentId) => {
+    if (!departmentId) {
+      setJobs([]); // Clear jobs if no department is selected
+      return;
+    }
+
+    try {
+      const response = await axiosInstance.get(`/departments/${departmentId}/jobs`);
+      setJobs(response.data);
+    } catch (error) {
+      console.error('Error fetching jobs:', error);
+    }
+  };
+
+  const handleDepartmentChange = (e) => {
+    const departmentId = e.target.value;
+    setUserData((prevState) => ({
+      ...prevState,
+      departmentId,
+      job_id: '', // Reset job_id when department changes
+    }));
+    fetchJobsByDepartment(departmentId); // Fetch jobs for the selected department
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, email, password, username, role, phone, departmentId, baseSalary, gender, country, profilePicture } = userData;
+    const { name, email, password, username, role, phone, departmentId, job_id, baseSalary, gender, country, profilePicture } = userData;
 
     // Simple client-side validation for required fields
-    if (!name || !email || !password || !role || !username || !departmentId || !gender || !country) {
+    if (!name || !email || !password || !role || !username || !departmentId || !job_id || !gender || !country) {
       setMessage('Please fill in all required fields.');
       return;
     }
@@ -61,6 +87,7 @@ const CreateUser = () => {
     formData.append('role', role);
     formData.append('phone', phone);
     formData.append('department_id', departmentId);
+    formData.append('job_id', job_id); // Include job_id
     formData.append('base_salary', baseSalary);
     formData.append('gender', gender);
     formData.append('country', country);
@@ -88,14 +115,13 @@ const CreateUser = () => {
         phone: '',
         profilePicture: null,
         departmentId: '',
+        job_id: '', // Reset job_id
         baseSalary: 0,
         gender: '',
         country: '',
         is_active: true,
       });
-      setTimeout(() => {
         navigate("/EmployeeList"); // Navigate after showing the alert
-      }, 5000); // Wait for 5 seconds before navigating
     } catch (error) {
       console.error('Error creating user:', error);
       setMessage(error.response?.data?.message || 'Error creating user');
@@ -139,7 +165,7 @@ const CreateUser = () => {
 
       <div className="form form-vertical small-form">
         <form onSubmit={handleSubmit} className="small-form-inputs inputs inputs-vertical">
-          {message && <div className="error-message">{message}</div>}
+          {/* {message && <div className="error-message">{message}</div>} */}
 
           {/* Two Inputs in One Line */}
           <div className="input-row">
@@ -224,7 +250,7 @@ const CreateUser = () => {
             </label>
           </div>
 
-          {/* Dropdowns and Select elements remain unchanged */}
+          {/* Dropdowns and Select elements */}
           <div className="input-group">
             <select
               className="select-empployee"
@@ -255,7 +281,7 @@ const CreateUser = () => {
               className="select-empployee"
               name="departmentId"
               value={userData.departmentId}
-              onChange={handleInputChange}
+              onChange={handleDepartmentChange}
             >
               <option value="">Select Department</option>
               {isLoading ? (
@@ -267,6 +293,23 @@ const CreateUser = () => {
                   </option>
                 ))
               )}
+            </select>
+          </div>
+
+          <div className="input-group select-group">
+            <select
+              className="select-empployee"
+              name="job_id"
+              value={userData.job_id}
+              onChange={handleInputChange}
+              disabled={!userData.departmentId} // Disable if no department is selected
+            >
+              <option value="">Select Job</option>
+              {jobs.map((job) => (
+                <option key={job.id} value={job.id}>
+                  {job.name}
+                </option>
+              ))}
             </select>
           </div>
 
