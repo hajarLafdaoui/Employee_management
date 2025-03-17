@@ -404,6 +404,21 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
                         onRequestClose={() => setDetailModalOpen(false)}
                         contentLabel="Department Detail Modal"
                         className="modal modal-content"
+                        style={{
+                            content: {
+                                width: "90%",
+                                maxWidth: "900px",
+                                right: "80px",
+                                left: "auto",
+                                margin: "20px",
+                                padding: "20px",
+                                borderRadius: "8px",
+                                position: "fixed",
+                                top: "50%",
+                                transform: "translateY(-50%)",
+                            },
+                           
+                        }}
                     >
                         <div className="modal-header">
                             <h2>{selectedDepartment?.name}</h2>

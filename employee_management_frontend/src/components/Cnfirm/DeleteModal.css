@@ -6,8 +6,8 @@
   width: 100%;
   height: 100%;
   z-index: 1050 !important;
-  background-color: #ffffff;
-  opacity: 0.6 !important;
+  background-color: #ffffff !important;
+  opacity: 1 !important;
   display: flex;
   justify-content: center;
   align-items: center;

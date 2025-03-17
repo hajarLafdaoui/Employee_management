@@ -37,6 +37,7 @@ import DeleteAttendance from "./components/Attendance/DeleteAttendance";
 import UpdateAttendance from "./components/Attendance/UpdateAttendance";
 import PrintAttestation from "./components/AttestatioRequest/PrintAttestation";
 import PrintSalary from "./components/salary/PrintSalary";
+import Dashboard from "./components/Admin/Dashboard";
 
 const ProtectedRoute = ({ children, role }) => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -73,6 +74,7 @@ function App() {
             </ProtectedRoute>
           }
         >
+          <Route path="Dashboard" element={<Dashboard />} />
           <Route path="CreateUser" element={<CreateUser />} />
           <Route path="update-user/:id" element={<UpdateUser />} />
           <Route path="EmployeeList" element={<EmployeeList />} />

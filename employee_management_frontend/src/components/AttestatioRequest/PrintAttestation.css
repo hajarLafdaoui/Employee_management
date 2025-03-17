@@ -1,12 +1,8 @@
 @media print {
-  body {
-    margin: 0;
-    padding: 0;
-    font-size: 12px;
-  }
   .attestation-container {
     font-family: "Arial", sans-serif;
     width: 100%;
+    margin-right: -10px;
     max-width: 600px;
     padding: 20px;
     background-color: #fff;
@@ -46,7 +42,6 @@
     display: block;
     width: 100%;
     padding: 12px;
-    background-color: #3498db;
     color: white;
     font-size: 1rem;
     font-weight: bold;
@@ -54,8 +49,5 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-top: 20px;
-  }
-  .print-button:hover {
-    background-color: #2980b9;
   }
 }/*# sourceMappingURL=PrintAttestation.css.map */
