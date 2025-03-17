@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import {
+  FaMale,
+  FaFemale,
+  FaEnvelope,
+  FaPhoneAlt,
+  FaGlobeAmericas,
+  FaBuilding,
+  FaUser,
+  FaIdCard,
+  FaBriefcase,
+} from "react-icons/fa"; // Import React Icons
 import "./profile.scss";
 
 const Profile = ({ onLogout }) => {
@@ -27,40 +38,42 @@ const Profile = ({ onLogout }) => {
           <div className="img">
             <img src="profile.jpg" width="500" alt="profile" />
           </div>
-          <p>{user.name}</p>
-          <p>{user.gender ? "" : "male"}</p>
         </div>
         <div className="infos">
-          <div>
-            <p>
-              <strong>{t("username")}:</strong> {user.username}
-            </p>
-            <p>
-              <strong>{t("email")}:</strong> {user.email}
-            </p>
-            <p>
-              <strong>{t("phone")}:</strong> {user.phone}
-            </p>
-          </div>
-          <div>
-            <p>
-              <strong>{t("country")}:</strong> {user.country}
-              {user.flagUrl && (
-                <img
-                  src={user.flagUrl}
-                  alt={user.country}
-                  style={{ width: "20px", marginLeft: "10px" }}
-                />
-              )}
-            </p>
-            <p>
-              <strong>{t("department")}:</strong> {user.department.name}
-            </p>
+          <p>
+            <FaUser /> <strong>{t("name")}:</strong> {user.name}
+          </p>
+          <p>
+            {user.gender ? <FaFemale /> : <FaMale />}{" "}
+            <strong>{t("gender")}:</strong> {user.gender ? "female" : "male"}
+          </p>
+          <p>
+            <FaEnvelope /> <strong>{t("email")}:</strong> {user.email}
+          </p>
+          <p>
+            <FaPhoneAlt /> <strong>{t("phone")}:</strong> {user.phone}
+          </p>
 
-            <p>
-              <strong>{t("department")}:</strong> {user.department.name}
-            </p>
-          </div>
+          <p>
+            <FaIdCard /> <strong>{t("username")}:</strong> {user.username}
+          </p>
+          <p>
+            <FaGlobeAmericas /> <strong>{t("country")}:</strong> {user.country}
+            {user.flagUrl && (
+              <img
+                src={user.flagUrl}
+                alt={user.country}
+                style={{ width: "20px", marginLeft: "10px" }}
+              />
+            )}
+          </p>
+          <p>
+            <FaBuilding /> <strong>{t("department")}:</strong>{" "}
+            {user.department.name}
+          </p>
+          <p>
+            <FaBriefcase /> <strong>{t("job")}:</strong> {user.job}
+          </p>
         </div>
       </div>
     </div>

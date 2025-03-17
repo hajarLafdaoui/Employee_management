@@ -1,28 +1,191 @@
-.profile{
-    width: 70%;
-    display: flex;
-    justify-content: space-between;
-    border: 2px solid white;
-    flex-direction: column;
+/* Color Variables for Light and Dark Modes */
+:root {
+  --primary-color-light: #f4c542;
+  --secondary-color-light: #6c757d;
+  --background-color-light: #f8f9fa;
+  --text-color-light: #333;
+  --border-radius: 8px;
+  
+  --primary-color-dark: #f4c542;
+  --secondary-color-dark: #b3b3b3;
+  --background-color-dark: #1a1a1a; /* Slightly darker for dark mode */
+  --text-color-dark: #fff;
+}
 
-    .profile-header{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        
-        .img{
-            width: 100px;
-            height: 100px;
-            border: 2px solid white;
-            border-radius: 50%;
-            overflow: hidden;
-        }
+/* Light Mode Styles (default) */
+
+.profile {
+  background-color: var(--background-color-light);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 20px auto;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.3s ease;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  .img {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 120px;
+    height: 120px;
+    margin-right: 20px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
-    .infos{
-        display: flex;
-        justify-content: space-between;
-        align-items:center;
-        border: 2px solid red;
+  }
+
+  p {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--text-color-light);
+  }
+}
+
+.infos {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 20px;
+
+  p {
+    font-size: 16px;
+    color: var(--secondary-color-light);
+    margin-bottom: 10px;
+
+    strong {
+      font-weight: bold;
+      color: var(--primary-color-light);
     }
-    
+
+    svg {
+      margin-right: 10px;
+      color: var(--primary-color-light);
+    }
+
+    img {
+      margin-left: 10px;
+    }
+  }
+}
+
+/* Dark Mode Styles */
+
+.profile.dark-mode {
+  background-color: var(--background-color-dark);
+  color: var(--text-color-dark);
+}
+
+.profile-header.dark-mode {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile-header.dark-mode p {
+  color: var(--text-color-dark);
+}
+
+.profile-header.dark-mode .img {
+  border: 2px solid var(--primary-color-dark); /* Adds a light border around the image in dark mode */
+}
+
+.infos.dark-mode {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 20px;
+
+  p {
+    font-size: 16px;
+    color: var(--secondary-color-dark);
+    margin-bottom: 10px;
+
+    strong {
+      font-weight: bold;
+      color: var(--primary-color-dark);
+    }
+
+    svg {
+      margin-right: 10px;
+      color: var(--primary-color-dark);
+    }
+
+    img {
+      margin-left: 10px;
+    }
+  }
+}
+
+.profile-header,
+.infos {
+  transition: all 0.3s ease;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .profile {
+    padding: 15px;
+    margin: 20px auto;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: center;
+
+    .img {
+      width: 100px;
+      height: 100px;
+    }
+
+    p {
+      font-size: 18px;
+      text-align: center;
+    }
+  }
+
+  .infos {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 20px;
+
+    p {
+      font-size: 14px;
+      text-align: left;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .profile {
+    padding: 10px;
+    margin: 20px auto;
+  }
+
+  .profile-header {
+    .img {
+      width: 80px;
+      height: 80px;
+    }
+
+    p {
+      font-size: 16px;
+    }
+  }
+
+  .infos {
+    p {
+      font-size: 12px;
+    }
+  }
 }
