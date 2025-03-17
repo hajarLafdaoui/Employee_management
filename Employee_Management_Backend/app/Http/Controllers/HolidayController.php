@@ -18,7 +18,8 @@ class HolidayController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required',
-            'date' => 'required|date'
+            'date' => 'required|date',
+            'number_of_days' => 'nullable|integer'
         ]);
 
         $holiday = Holiday::create($validatedData);
@@ -33,7 +34,8 @@ class HolidayController extends Controller
 
         $validatedData = $request->validate([
             'name' => 'required',
-            'date' => 'required|date'
+            'date' => 'required|date',
+            'number_of_days' => 'nullable|integer'
         ]);
 
         $holiday->update($validatedData);

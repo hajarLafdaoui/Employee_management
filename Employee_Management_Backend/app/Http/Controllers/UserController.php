@@ -23,6 +23,16 @@ class UserController extends Controller
         return response()->json($employees);
     }
 
+
+    public function getall()
+    {
+        $employees = User::whereIn('role', ['employee', 'sub-admin'])
+            ->with('job') 
+            ->get();
+
+        return response()->json($employees);
+    }
+
     // Get all employees
     public function fetchEmployees()
     {

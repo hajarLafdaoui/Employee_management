@@ -65,7 +65,7 @@ const AdminHolidayManagement = () => {
 
   const handleEditHoliday = (holiday) => {
     setEditHoliday(holiday);
-    setNewHoliday({ name: holiday.name, date: holiday.date }); 
+    setNewHoliday({ name: holiday.name, date: holiday.date,number_of_days:holiday.number_of_days }); 
     setShowModal(true); 
   };
 
@@ -170,6 +170,19 @@ const AdminHolidayManagement = () => {
               />
               <label className="user-label">Holiday Date</label>
             </div>
+            
+            <div className="input-group">
+              <input
+                placeholder=" "
+                required
+                type="text"
+                name="date"
+                value={newHoliday.number_of_days}
+                onChange={(e) => setNewHoliday({ ...newHoliday, number_of_days: e.target.value })}
+                className="input input-vertical"
+              />
+              <label className="user-label">Holiday Number</label>
+            </div>
 
             <div className="button-group">
               <button
@@ -194,6 +207,8 @@ const AdminHolidayManagement = () => {
         <div className="table-header">
           <div>Holiday Name</div>
           <div>Holiday Date</div>
+          <div>Number of Days</div>
+
           <div>Actions</div>
         </div>
         
@@ -201,6 +216,8 @@ const AdminHolidayManagement = () => {
           <div key={holiday.id} className="table-row">
             <div>{holiday.name}</div>
             <div>{holiday.date}</div>
+            <div>{holiday.number_of_days}</div>
+
             <div className="action-icons">
               <img
                 className="edit2-icon"

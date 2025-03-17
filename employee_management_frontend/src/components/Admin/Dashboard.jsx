@@ -16,6 +16,8 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [employees, setEmployees] = useState([]);
+    const [allemployees, setAllEmployees] = useState([]);
+
     const [employeeCountData, setEmployeeCountData] = useState([]); 
     const [totalEmployees, setTotalEmployees] = useState(0);
     const [newEmployees, setNewEmployees] = useState(0);
@@ -24,7 +26,24 @@ const Dashboard = () => {
     const [genderStats, setGenderStats] = useState({ male: 0, female: 0, other: 0 });
     const [departmentStats, setDepartmentStats] = useState([]);
   
+// Fetch all employees from the API
+useEffect(() => {
+    const fetchAllEmployees = async () => {
+        try {
+            const response = await axiosInstance.get("/getall"); 
+            console.log("Employees Data:", response.data); 
+            setAllEmployees(response.data); 
+      
+        } catch (error) {
+            console.error("Error fetching employees:", error);
+            setError("Failed to fetch employees.");
+        } finally {
+            setLoading(false);
+        }
+    };
 
+    fetchAllEmployees();
+}, []);
     // Fetch statistics data
     useEffect(() => {
         const fetchEmployees = async () => {
@@ -32,7 +51,6 @@ const Dashboard = () => {
                 const response = await axiosInstance.get("/users");
                 console.log("Employees Data:", response.data); // Log the data
                 setEmployees(response.data);
-
                 // Calculate statistics
                 calculateStatistics(response.data);
             } catch (error) {
@@ -60,9 +78,8 @@ const Dashboard = () => {
             return createdAt >= twoDaysAgo; // Only include employees created in the last two days
         }).length;
 
-        const employeesToDelete = employees.filter((employee) => {
-            const createdAt = new Date(employee.created_at);
-            return createdAt >= twoDaysAgo && employee.is_deleted === 0; 
+        const employeesToDelete =allemployees.filter((employee) => {
+            return employee.is_deleted === 1; 
         }).length;
        
 
@@ -279,7 +296,7 @@ const Dashboard = () => {
     {/* Total Employees */}
     <div className="total-employees">
 
-        <img src="/icons/personnes.png" alt=""  className="icontotal"/>
+        <img src="/icons/employes.png" alt=""  className="icontotal"/>
          <div className="textemploye">
          <p className="titleemplo">Total Employees:</p>
         <p>{totalEmployees}</p>
@@ -287,7 +304,7 @@ const Dashboard = () => {
     </div>
     {/* New Employees (Last 2 Days) */}
     <div className="new-employees">
-    <img src="/icons/addemployees.png" alt=""  className="icontotal"/>
+    <img src="/icons/employeesadd.png" alt=""  className="icontotal"/>
     <div className="textemploye">
         <p className="titleemplo">New  (Last 2 Days)         <img src="/icons/augmenter.png" alt=""  className="iconaug"/>
         </p>
@@ -297,10 +314,10 @@ const Dashboard = () => {
 
     </div>
     <div className="delete-employees">
-    <img src="/icons/supprimer-un-ami (1).png" alt=""  className="icontotal"/>
+    <img src="/icons/supprimer.png" alt=""  className="icontotal"/>
 
          <div className="textemploye">
-         <p className="titleemplo">delete (Last 2 Days)    <img src="/icons/diminuer.png" alt=""  className="iconaug"/>
+         <p className="titleemplo">delete employee   <img src="/icons/diminuer.png" alt=""  className="iconaug"/>
          </p>
 
         <p>{deleteEmployees}</p>
@@ -310,7 +327,7 @@ const Dashboard = () => {
     </div>
     {/* By Gender */}
     <div className="by-gender">
-    <img src="/icons/le-genre.png" alt=""  className="icontotal"/>
+    <img src="/icons/gender.png" alt=""  className="icontotal"/>
 
     <div className="textemploye">
         <p className="titleemplo">By Gender:</p>
