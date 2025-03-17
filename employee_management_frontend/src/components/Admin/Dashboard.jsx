@@ -3,8 +3,9 @@ import { Line } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend } from "chart.js";
 import axiosInstance from "../Config/axiosSetup";
 import LoadingSpinner from "../../LoadingSpinner"; // Assuming you have a loading spinner component
-import "./Dashboard.css"; // Import the CSS file for styling
+import "./Dashboard.scss"; // Import the CSS file for styling
 import { ResponsiveBar } from "@nivo/bar"; // Import ResponsiveBar from @nivo/bar
+import { FaUserPlus, FaUsers } from "react-icons/fa";
 
 // Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
@@ -18,6 +19,8 @@ const Dashboard = () => {
     const [employeeCountData, setEmployeeCountData] = useState([]); 
     const [totalEmployees, setTotalEmployees] = useState(0);
     const [newEmployees, setNewEmployees] = useState(0);
+    const [deleteEmployees, setDeleteEmployees] = useState(0);
+
     const [genderStats, setGenderStats] = useState({ male: 0, female: 0, other: 0 });
     const [departmentStats, setDepartmentStats] = useState([]);
   
@@ -57,8 +60,14 @@ const Dashboard = () => {
             return createdAt >= twoDaysAgo; // Only include employees created in the last two days
         }).length;
 
-        setNewEmployees(newEmployeesCount);
+        const employeesToDelete = employees.filter((employee) => {
+            const createdAt = new Date(employee.created_at);
+            return createdAt >= twoDaysAgo && employee.is_deleted === 0; 
+        }).length;
+       
 
+        setNewEmployees(newEmployeesCount);
+        setDeleteEmployees(employeesToDelete)
         // Gender statistics
         const genderCounts = employees.reduce(
             (acc, employee) => {
@@ -269,20 +278,44 @@ const Dashboard = () => {
                <div className="statics">
     {/* Total Employees */}
     <div className="total-employees">
-        <p>Total Employees:</p>
+
+        <img src="/icons/personnes.png" alt=""  className="icontotal"/>
+         <div className="textemploye">
+         <p className="titleemplo">Total Employees:</p>
         <p>{totalEmployees}</p>
     </div>
-
+    </div>
     {/* New Employees (Last 2 Days) */}
     <div className="new-employees">
-        <p>New Employees (Last 2 Days):</p>
+    <img src="/icons/addemployees.png" alt=""  className="icontotal"/>
+    <div className="textemploye">
+        <p className="titleemplo">New  (Last 2 Days)         <img src="/icons/augmenter.png" alt=""  className="iconaug"/>
+        </p>
+        
         <p>{newEmployees}</p>
+        </div>
+
+    </div>
+    <div className="delete-employees">
+    <img src="/icons/supprimer-un-ami (1).png" alt=""  className="icontotal"/>
+
+         <div className="textemploye">
+         <p className="titleemplo">delete (Last 2 Days)    <img src="/icons/diminuer.png" alt=""  className="iconaug"/>
+         </p>
+
+        <p>{deleteEmployees}</p>
+
     </div>
 
+    </div>
     {/* By Gender */}
     <div className="by-gender">
-        <p>By Gender:</p>
+    <img src="/icons/le-genre.png" alt=""  className="icontotal"/>
+
+    <div className="textemploye">
+        <p className="titleemplo">By Gender:</p>
         <p>{genderStats.male}M, {genderStats.female}F</p>
+        </div>
     </div>
 
                 {/* By Department */}

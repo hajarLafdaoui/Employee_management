@@ -115,9 +115,39 @@
 "english": "English",
   "french": "French",
   "arabic": "Arabic",
-  "aucun_salaire": "No salary"
+  "aucun_salaire": "No salary",
 
 
+  "attendance1": "Employee Attendance",
+  "filter_by": "Filter by:",
+  "week": "Week",
+  "month": "Month",
+  "current_week": "Current Week",
+  "previous_week": "Previous Week",
+  "two_weeks_ago": "Two Weeks Ago",
+  "no_attendance_records": "No attendance records found for the selected date range.",
+  "status1": "Status",
+  "date1": "Date",
+  "unknown": "Unknown",
+  "sort_by_date": "Sort by Date",
+
+ "My attendance": "My attendance",
+ "leave_request_form": {
+    "leave_type": "Leave Type",
+    "select_leave_type": "Select leave type",
+    "vacation": "Vacation",
+    "sick_leave": "Sick Leave",
+    "personal_leave": "Personal Leave",
+    "maternity_leave": "Maternity Leave",
+    "other": "Other",
+    "start_date": "Start Date",
+    "end_date": "End Date",
+    "reason": "Reason",
+    "submit_request": "Submit Request",
+    "submitting": "Submitting...",
+    "user_not_found": "User not found. Please log in again.",
+    "leave_request_sent_success": "Leave request sent successfully",
+    "leave_request_failed": "Failed to submit leave request. Please try again."
     
   }
-  
+}
