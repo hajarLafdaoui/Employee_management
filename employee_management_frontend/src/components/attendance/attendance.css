@@ -3,10 +3,25 @@
   justify-content: center;
   align-items: center !important;
   gap: 15px;
-  background-color: #6247AA;
+  background-color: #ffd60a;
   padding: 10px 20px !important;
   border-radius: 12px;
   margin-bottom: 20px;
+}
+
+.employeAttDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.employeAttDetails div {
+  display: flex;
+  gap: 8px;
+  align-items: center !important;
+}
+.employeAttDetails div label {
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .headAtt {
@@ -25,6 +40,7 @@
   justify-content: start;
   align-items: center !important;
   gap: 30px;
+  align-self: start;
 }
 .headAtt .attFirstPart .attFirstPartHeader .dateNav {
   display: flex;
@@ -36,6 +52,7 @@
 .headAtt .attFirstPart .attFirstPartHeader .dateNav .lessGreaterIcon {
   width: 28px !important;
   background-color: #fff;
+  cursor: pointer;
   padding: 3px;
   border-radius: 3px;
 }
@@ -44,7 +61,7 @@
   justify-content: center;
   align-items: center !important;
   gap: 15px;
-  background-color: #6247AA;
+  background-color: #ffd60a;
   padding: 10px 20px !important;
   border-radius: 12px;
   margin-bottom: 20px;
@@ -60,13 +77,14 @@
 .headAtt .attSecondPart {
   display: flex;
   justify-content: space-between;
-  align-items: center !important;
+  align-items: flex-start !important;
+  gap: 20px;
 }
 .headAtt .attSecondPart .attendanceSummary {
-  display: FLEX;
+  display: flex;
   flex-direction: column;
-  gap: 28px;
-  height: 300px;
+  gap: 30px;
+  height: 280px;
 }
 .headAtt .attSecondPart .attendanceSummary .ps {
   background-color: #FFF;
@@ -83,19 +101,79 @@
   font-size: 18px;
   font-weight: 600;
 }
-.headAtt .attSecondPart .line {
-  width: 700px;
+.headAtt .attSecondPart .lineGraph {
+  flex: 1;
+}
+.headAtt .attSecondPart .lineGraph .line {
+  width: 100%;
   height: 260px;
 }
 
-.saveMarkingAtt {
-  background-color: #6247AA;
-  padding: 10px 20px !important;
-  border-radius: 12px;
+.selects {
+  display: flex;
+  gap: 10px;
 }
 
-@media only screen and (max-width: 767px), only screen and (min-width: 601px) and (max-width: 1024px) {
+.search-sort {
+  display: flex;
+}
+
+@media only screen and (max-width: 1024px) {
   .headAtt {
-    flex-direction: column !important;
+    gap: 35px !important;
   }
+  .headAtt .attSecondPart {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .headAtt .attSecondPart .attendanceSummary {
+    width: 100%;
+    height: auto;
+  }
+  .headAtt .attSecondPart .lineGraph {
+    width: 100%;
+  }
+  .headAtt .attSecondPart .lineGraph .line {
+    width: 100%;
+    height: 200px;
+  }
+  .attFirstPart {
+    flex-direction: column;
+    justify-content: start !important;
+    align-items: start !important;
+    gap: 0;
+  }
+  .attFirstPart .toggleAttButton {
+    align-self: start !important;
+  }
+  .attFirstPart .toggleAttButton {
+    margin: 0 !important;
+  }
+  .attendanceSummary {
+    gap: 5px !important;
+  }
+  .title-search-sort {
+    align-items: start !important;
+    justify-content: start !important;
+  }
+  .title-search-sort h5 {
+    align-self: start;
+  }
+  .selects {
+    display: flex;
+    gap: 10px;
+  }
+  .selects select {
+    display: flex;
+    flex-direction: column;
+  }
+  .search-sortAttendance {
+    flex-direction: column;
+    align-self: start;
+  }
+}
+.saveMarkingAtt {
+  background-color: #ffd60a;
+  padding: 10px 20px !important;
+  border-radius: 12px;
 }/*# sourceMappingURL=attendance.css.map */

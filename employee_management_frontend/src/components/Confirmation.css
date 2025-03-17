@@ -1,5 +1,4 @@
-@charset "UTF-8";
-.🛑 {
+.dialog-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -14,27 +13,27 @@
   pointer-events: all;
 }
 
-.🗑️ {
+.dialog-box {
   overflow: hidden;
   position: relative;
   text-align: left;
   border-radius: 0.5rem;
   max-width: 290px;
-  background-color: #fff;
+  background-color: #fcf6da;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   pointer-events: auto;
 }
 
-.📌 {
+.dialog-header {
   padding: 1.25rem 1rem 1rem 1rem;
   background-color: #ffffff;
 }
 
-.⚠️ {
+.icon-container {
   display: flex;
   margin-left: auto;
   margin-right: auto;
-  background-color: #fee2e2;
+  background-color: #fcf6da;
   flex-shrink: 0;
   justify-content: center;
   align-items: center;
@@ -43,40 +42,34 @@
   border-radius: 9999px;
 }
 
-.⚠️ svg {
-  color: #dc2626;
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.📝 {
+.dialog-body {
   margin-top: 0.75rem;
   text-align: center;
 }
 
-.🔤 {
+.dialog-title {
   color: #111827;
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.5rem;
 }
 
-.📄 {
+.dialog-message {
   margin-top: 0.5rem;
   color: #6b7280;
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
 
-.🎯 {
+.dialog-footer {
   margin: 0.75rem 1rem;
   background-color: #f9fafb;
 }
 
-.❌ {
+.confirm-button {
   display: inline-flex;
   padding: 0.5rem 1rem;
-  background-color: #dc2626;
+  background-color: #ffd60a;
   color: #ffffff;
   font-size: 1rem;
   line-height: 1.5rem;
@@ -89,7 +82,7 @@
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-.🔙 {
+.cancel-button {
   display: inline-flex;
   margin-top: 0.75rem;
   padding: 0.5rem 1rem;
@@ -105,14 +98,18 @@
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-.❌,
-.🔙 {
+.confirm-button,
+.cancel-button {
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
-.❌:hover,
-.🔙:hover {
+.confirm-button:hover,
+.cancel-button:hover {
   background-color: inherit !important;
   color: black !important;
   border-color: inherit !important;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}/*# sourceMappingURL=DeleteModal.css.map */
+}
+
+.dark-mode .cancel-button {
+  color: black;
+}/*# sourceMappingURL=Confirmation.css.map */

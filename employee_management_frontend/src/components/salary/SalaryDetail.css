@@ -76,18 +76,30 @@ th {
 
 button {
   padding: 5px 8px;
-  background-color: #808a96;
+  background-color: transparent;
   color: white;
   border: none;
   cursor: pointer;
   font-size: 16px;
 }
 
+.btnslary {
+  display: flex;
+  gap: 10px;
+  color: black;
+}
+
+.btnslary:hover {
+  border: 1 solid #ffd60a;
+  border-radius: 6px;
+  background-color: #ffd60a;
+}
+
 @media print {
-  body {
-    margin: 0;
-    padding: 0;
-    font-size: 12px;
+  * {
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
   }
   .AdminMenu,
   .secondPart .head,
@@ -102,19 +114,63 @@ button {
     display: none !important;
   }
   .salary-container {
-    display: block;
-    padding: 20px;
-    border: 1px solid #ddd;
-    background-color: rgb(202, 42, 42) !important;
-    margin: 0 auto;
-    width: 100%;
-    max-width: 600px;
+    width: 900px;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none;
   }
-  .salary-container .salary-header h1,
-  .salary-container .salary-details p {
-    font-size: 16px;
+  .salary-header {
+    margin-bottom: 20px !important;
   }
-  .salary-container p {
-    margin: 5px 0;
+  .salary-info {
+    margin-bottom: 50px !important;
   }
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin: 10px 0 !important;
+  }
+  th, td {
+    padding: 8px !important;
+    text-align: left !important;
+    border: 1px solid #ddd !important;
+  }
+  table tr:hover {
+    background-color: #fcf6da !important;
+  }
+  th {
+    background-color: #f4f4f4 !important;
+  }
+  .net-salary {
+    text-align: right !important;
+    font-size: 18px !important;
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+  }
+}
+.logo1 {
+  width: 150px;
+  height: 120px;
+  text-align: center;
+}
+
+.dark-mode .salary-container {
+  background-color: #2c2c2c;
+  border: none;
+}
+
+.dark-mode tr {
+  background-color: #2c2c2c;
+}
+
+.dark-mode th {
+  background-color: rgba(78, 76, 76, 0);
+}
+
+.dark-mode tr:hover {
+  background-color: #444 !important;
+}
+
+.dark-mode button {
+  border: none;
 }/*# sourceMappingURL=SalaryDetail.css.map */

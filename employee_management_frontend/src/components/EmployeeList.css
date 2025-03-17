@@ -50,15 +50,18 @@
   background-color: #fff;
   border-radius: 6px;
   display: table-row;
+  height: 50px;
 }
 
 .actions {
   position: relative;
+  width: 110px;
+  border: none;
 }
 
 .action-button {
   background-color: transparent;
-  border: none;
+  border: none !important;
   font-size: 24px;
   cursor: pointer;
 }
@@ -66,20 +69,32 @@
 .dropdown-menu {
   position: absolute;
   right: 0;
-  top: 30px;
+  top: 40px;
   background-color: #fff;
   border: 1px solid #ddd;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 10px;
   display: flex;
+  justify-content: start;
   flex-direction: column;
   gap: 10px;
   z-index: 1;
 }
 
-.dropdown-menu .button {
+.viewlink {
   width: 100%;
+  text-decoration: none;
+  color: black;
   text-align: left;
+  display: flex !important;
+  gap: 10px;
+  cursor: pointer;
+}
+.viewlink p {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-bottom: 0;
 }
 
 .button {
@@ -94,20 +109,7 @@
 }
 
 .button.create {
-  background-color: #ffd60a;
   border-radius: 10px;
-}
-
-.button.view {
-  background-color: purple;
-}
-
-.button.update {
-  background-color: blue;
-}
-
-.button.delete {
-  background-color: red;
 }
 
 .profile-container {
@@ -162,21 +164,35 @@
   margin-left: auto;
 }
 
-@media (max-width: 768px) {
+@media only screen and (max-width: 767px), only screen and (min-width: 601px) and (max-width: 1024px) {
+  .filter-bar {
+    flex-direction: column;
+    justify-content: start !important;
+    align-items: start !important;
+    gap: 10px !important;
+  }
+  .otherFiltering {
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
   .container {
-    padding: 10px;
+    padding: 6px;
   }
   .table-wrapper {
-    border-spacing: 10px 0;
+    width: 100%;
+    margin-top: 20px;
+    display: table;
+    border-spacing: 0 10px;
+    text-align: 6px;
   }
   .table-header {
     display: none;
   }
   .table-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    text-align: center;
+    line-height: 40px;
+    margin-bottom: 20px;
+    padding: 20px 0;
   }
   .table-header div,
   .table-row div {
@@ -218,11 +234,35 @@
   .head a {
     margin-left: 0;
   }
+  .userprofile {
+    width: 80px !important;
+    height: 80px !important;
+    border-radius: 50%;
+  }
+  .dropdown-menu {
+    display: flex;
+    justify-content: start;
+    flex-direction: row !important;
+    gap: 10px;
+    margin: 0;
+  }
+  .table-row div::before {
+    content: attr(data-label);
+    font-weight: bold;
+    margin-right: 10px;
+    color: #333;
+  }
 }
 @media (max-width: 480px) {
   .table-header div,
   .table-row div {
     font-size: 14px;
+  }
+  .dropdown-menu {
+    display: flex;
+    justify-content: start;
+    flex-direction: row !important;
+    gap: 10px;
   }
   .button {
     padding: 8px 15px;
@@ -231,4 +271,100 @@
     width: 35px;
     height: 35px;
   }
+}
+.filter-bar {
+  display: flex;
+  justify-content: space-between !important;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.btnTitle {
+  display: flex;
+  justify-content: space-between !important;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.otherFiltering {
+  display: flex;
+}
+
+.dark-mode .table-row {
+  background-color: #2c2c2c;
+}
+
+.dark-mode .page {
+  background-color: #2c2c2c;
+}
+
+.dark-mode .material-icons img {
+  filter: invert(1) brightness(1000%) contrast(100%);
+}
+
+.dark-mode .table-row:hover {
+  background-color: #444 !important;
+  cursor: pointer;
+}
+
+.dark-mode .input-container {
+  background: none !important;
+  border-radius: 8px;
+}
+
+.dark-mode .date-input {
+  background: #2c2c2c !important;
+}
+
+.dark-mode .input-search-container {
+  background: #2c2c2c;
+  border-radius: 8px;
+  border: solid 1px black !important;
+}
+
+.dark-mode .input-search-container img {
+  filter: invert(1) brightness(1000%) contrast(100%);
+}
+
+.dark-mode .action-icons img {
+  filter: invert(1) brightness(1000%) contrast(100%);
+}
+
+.dark-mode .dropdown-menu img {
+  filter: invert(1) brightness(1000%) contrast(100%);
+}
+
+.dark-mode .dropdown-menu p {
+  color: white;
+}
+
+.dark-mode .dropdown-menu {
+  background-color: #2c2c2c;
+  border: black solid 1px;
+}
+
+.dark-mode .page__numbers {
+  color: #fff;
+}
+
+.dark-mode .sortingConatiner {
+  background-color: #2c2c2c;
+  border: solid 1px #000000 !important;
+}
+
+.dark-mode .sortingConatiner img {
+  filter: invert(1) brightness(1000%) contrast(100%);
+}
+
+.dark-mode .sortingConatiner p {
+  background-color: transparent;
+  color: #fff;
+}
+
+.dark-mode .no-salaries-message {
+  background-color: #2c2c2c;
+  color: white;
 }/*# sourceMappingURL=EmployeeList.css.map */

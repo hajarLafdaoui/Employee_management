@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axiosInstance from './Config/axiosSetup';
 import { Link, useNavigate } from 'react-router-dom';
 import CountrySelect from './CountrySelect';
+import SuccessAlert from './Alerts/SuccessAlert';
 
 const CreateUser = () => {
   const [userData, setUserData] = useState({
@@ -23,6 +24,7 @@ const CreateUser = () => {
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false); // State to control SuccessAlert visibility
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,10 +44,10 @@ const CreateUser = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, email, password, username, role, phone, departmentId, baseSalary, gender, country } = userData;
+    const { name, email, password, username, role, phone, departmentId, baseSalary, gender, country, profilePicture } = userData;
 
     // Simple client-side validation for required fields
-    if (!name || !email || !password || !role || !username || !departmentId  || !gender || !country) {
+    if (!name || !email || !password || !role || !username || !departmentId || !gender || !country) {
       setMessage('Please fill in all required fields.');
       return;
     }
@@ -61,11 +63,12 @@ const CreateUser = () => {
     formData.append('department_id', departmentId);
     formData.append('base_salary', baseSalary);
     formData.append('gender', gender);
-    formData.append('country', country); // Add country to the form data
-    formData.append('is_active', userData.is_active ? '1' : '0'); // Set is_active based on login status
+    formData.append('country', country);
+    formData.append('is_active', userData.is_active ? '1' : '0');
 
-    if (userData.profilePicture) {
-      formData.append('profile_picture', userData.profilePicture);
+    // Append profile_picture as a base64 string
+    if (profilePicture) {
+      formData.append('profile_picture', profilePicture);
     }
 
     try {
@@ -75,6 +78,7 @@ const CreateUser = () => {
         },
       });
       setMessage(response.data.message);
+      setShowSuccessAlert(true); // Show the success alert
       setUserData({
         name: '',
         email: '',
@@ -89,7 +93,9 @@ const CreateUser = () => {
         country: '',
         is_active: true,
       });
-      navigate("/EmployeeList");
+      setTimeout(() => {
+        navigate("/EmployeeList"); // Navigate after showing the alert
+      }, 5000); // Wait for 5 seconds before navigating
     } catch (error) {
       console.error('Error creating user:', error);
       setMessage(error.response?.data?.message || 'Error creating user');
@@ -107,10 +113,17 @@ const CreateUser = () => {
   };
 
   const handleFileChange = (e) => {
-    setUserData((prevState) => ({
-      ...prevState,
-      profilePicture: e.target.files[0],
-    }));
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUserData((prevState) => ({
+          ...prevState,
+          profilePicture: reader.result, // Store the base64 string
+        }));
+      };
+      reader.readAsDataURL(file); // Convert file to base64
+    }
   };
 
   const handleCountryChange = (selectedCountry) => {
@@ -128,59 +141,59 @@ const CreateUser = () => {
         <form onSubmit={handleSubmit} className="small-form-inputs inputs inputs-vertical">
           {message && <div className="error-message">{message}</div>}
 
-   {/* Two Inputs in One Line */}
-<div className="input-row">
-  <div className="input-group">
-    <input
-      type="text"
-      name="name"
-      placeholder=" "
-      value={userData.name}
-      onChange={handleInputChange}
-      className="input input-vertical"
-    />
-    <label className="user-label">Name</label>
-  </div>
+          {/* Two Inputs in One Line */}
+          <div className="input-row">
+            <div className="input-group">
+              <input
+                type="text"
+                name="name"
+                placeholder=" "
+                value={userData.name}
+                onChange={handleInputChange}
+                className="input input-vertical"
+              />
+              <label className="user-label">Name</label>
+            </div>
 
-  <div className="input-group">
-    <input
-      type="email"
-      name="email"
-      placeholder=" "
-      value={userData.email}
-      onChange={handleInputChange}
-      className="input input-vertical"
-    />
-    <label className="user-label">Email</label>
-  </div>
-</div>
+            <div className="input-group">
+              <input
+                type="email"
+                name="email"
+                placeholder=" "
+                value={userData.email}
+                onChange={handleInputChange}
+                className="input input-vertical"
+              />
+              <label className="user-label">Email</label>
+            </div>
+          </div>
 
-{/* Two Inputs in One Line */}
-<div className="input-row">
-  <div className="input-group">
-    <input
-      type="password"
-      name="password"
-      placeholder=" "
-      value={userData.password}
-      onChange={handleInputChange}
-      className="input input-vertical"
-    />
-    <label className="user-label">Password</label>
-  </div>
+          {/* Two Inputs in One Line */}
+          <div className="input-row">
+            <div className="input-group">
+              <input
+                type="password"
+                name="password"
+                placeholder=" "
+                value={userData.password}
+                onChange={handleInputChange}
+                className="input input-vertical"
+              />
+              <label className="user-label">Password</label>
+            </div>
 
-  <div className="input-group">
-    <input
-      type="text"
-      name="username"
-      placeholder=" "
-      value={userData.username}
-      onChange={handleInputChange}
-      className="input input-vertical"
-    />
-    <label className="user-label">Username</label>
-  </div>
-</div>
+            <div className="input-group">
+              <input
+                type="text"
+                name="username"
+                placeholder=" "
+                value={userData.username}
+                onChange={handleInputChange}
+                className="input input-vertical"
+              />
+              <label className="user-label">Username</label>
+            </div>
+          </div>
 
           {/* Single Input */}
           <div className="input-group">
@@ -266,6 +279,14 @@ const CreateUser = () => {
           </button>
         </form>
       </div>
+
+      {/* Render SuccessAlert if showSuccessAlert is true */}
+      {showSuccessAlert && (
+        <SuccessAlert
+          message="User created successfully!"
+          onClose={() => setShowSuccessAlert(false)}
+        />
+      )}
     </div>
   );
 };

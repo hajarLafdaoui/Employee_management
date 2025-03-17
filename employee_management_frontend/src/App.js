@@ -13,8 +13,8 @@ import EmployeeList from "./components/EmployeeList";
 import UpdateUser from "./components/UpdateUser";
 
 import AdminLeaveRequests from "./components/Leave/AdminLeaveRequests";
-import AttendanceHeader from "./components/attendance/AttendanceHeader";
-import EmployeeAttendance from "./components/attendance/EmployeeAttendance";
+import AttendanceHeader from "./components/Attendance/AttendanceHeader";
+import EmployeeAttendance from "./components/Attendance/EmployeeAttendance";
 
 import LeaveRequestForm from "./components/Leave/LeaveRequestForm";
 
@@ -33,10 +33,11 @@ import SalaryCalculator from "./components/salary/SalaryCalculator";
 import SalaryList from "./components/salary/SalaryList";
 import HistoryPage from "./components/AttestatioRequest/HistoryPage";
 import ChangePassword from "./components/Employee/ChangePassword";
-import DeleteAttendance from "./components/attendance/DeleteAttendance";
-import UpdateAttendance from "./components/attendance/UpdateAttendance";
+import DeleteAttendance from "./components/Attendance/DeleteAttendance";
+import UpdateAttendance from "./components/Attendance/UpdateAttendance";
 import PrintAttestation from "./components/AttestatioRequest/PrintAttestation";
 import PrintSalary from "./components/salary/PrintSalary";
+import Dashboard from "./components/Admin/Dashboard";
 import EmployeeSalary from "./components/Employee/EmployeeSalary";
 
 const ProtectedRoute = ({ children, role }) => {
@@ -74,6 +75,7 @@ function App() {
             </ProtectedRoute>
           }
         >
+          <Route path="Dashboard" element={<Dashboard />} />
           <Route path="CreateUser" element={<CreateUser />} />
           <Route path="update-user/:id" element={<UpdateUser />} />
           <Route path="EmployeeList" element={<EmployeeList />} />
