@@ -58,6 +58,7 @@ Route::get('/departments/{id}/employees', [DepartmentController::class, 'getEmpl
 Route::get('/employee-count', [DepartmentController::class, 'getEmployeeCountByDepartment']);
 
 
+Route::get('/departments/{departmentId}/jobs', [DepartmentController::class, 'getJobsByDepartment']);
 
 
 // Attendance

@@ -8,16 +8,16 @@ const EmployeeList = () => {
   const [users, setUsers] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [dropdownVisible, setDropdownVisible] = useState(null); // State for dropdown visibility
-  const [currentPage, setCurrentPage] = useState(1); // Current page for pagination
-  const [rowsPerPage, setRowsPerPage] = useState(5); // Number of rows per page
-  const [loading, setLoading] = useState(true); // Loading state
+  const [dropdownVisible, setDropdownVisible] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [loading, setLoading] = useState(true);
 
   // Filter states
   const [selectedGender, setSelectedGender] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
-  const [searchQuery, setSearchQuery] = useState(""); // State for search input
+  const [searchQuery, setSearchQuery] = useState("");
 
   const navigate = useNavigate();
 
@@ -50,7 +50,7 @@ const EmployeeList = () => {
       console.error("Error fetching users:", error.response ? error.response.data : error.message);
       setErrorMessage("Failed to load users.");
     } finally {
-      setLoading(false); // Set loading to false after fetching data
+      setLoading(false);
     }
   };
 
@@ -215,6 +215,7 @@ const EmployeeList = () => {
           <div>Gender</div>
           <div>Country</div>
           <div>Department</div>
+          <div>Job</div> {/* Add Job column */}
           <div>Contact</div>
           <div>Actions</div>
         </div>
@@ -242,6 +243,7 @@ const EmployeeList = () => {
               )}
             </div>
             <div>{getDepartmentName(user.department_id)}</div>
+            <div>{user.job_id ? (user.job ? user.job.name : "No Job") : "No Job"}</div> {/* Display job name */}
             <div>
               <span className="contact">{user.email}</span>
               <br className="spacer" />
@@ -273,7 +275,6 @@ const EmployeeList = () => {
 
                   <div
                     onClick={() => {
-                      // Navigate to the update-user/:id route
                       navigate(`/update-user/${user.id}`);
                     }}
                     className="edit-container"

@@ -139,4 +139,13 @@ class DepartmentController extends Controller
     {
         return $department->load('jobs');
     }
+
+    public function getJobsByDepartment($departmentId)
+{
+    // Fetch jobs for the selected department
+    $jobs = Job::where('department_id', $departmentId)->get();
+
+    // Return the jobs as a JSON response
+    return response()->json($jobs);
+}
 }
