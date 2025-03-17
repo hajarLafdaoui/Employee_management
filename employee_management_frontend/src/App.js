@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import SignIn from "./components/Employee/SignIn";
 import Admin_dashboard from "./components/Admin/Admin_dashboard";
 import Employee_dashboard from "./components/Employee/Employee_dashboard";
@@ -112,7 +107,7 @@ function App() {
           }
         >
           <Route index element={<Profile />} />
-          <Route path="EmployeeAttendance" element={<EmployeeAttendance />} />
+          <Route path="EmployeeAttendance" element={<EmployeeAttendance userId={user?.id}/>} />
           <Route path="SignOut" element={<SignOut user={user} />} />
           <Route path="leave" element={<LeaveRequestForm />} />
           <Route path="ChangePassword" element={<ChangePassword />} />

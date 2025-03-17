@@ -167,7 +167,11 @@
 
 .input-container {
   position: relative;
+<<<<<<< HEAD
+  width: 40%;
+=======
   width: 25%;
+>>>>>>> 57b95586fbcd7485586adfaba3c880cc8a0e167e
 }
 
 .date-input {
@@ -288,7 +292,11 @@
     border-radius: 0;
   }
   .search-sort {
+<<<<<<< HEAD
+    margin-top: 20px;
+=======
     margin-top: 30px;
+>>>>>>> 57b95586fbcd7485586adfaba3c880cc8a0e167e
   }
   .userprofile {
     width: 30px;
@@ -357,9 +365,12 @@
     right: 0;
     border-radius: 0;
   }
+<<<<<<< HEAD
+=======
   .search-sort {
     margin-top: 20px;
   }
+>>>>>>> 57b95586fbcd7485586adfaba3c880cc8a0e167e
   .no-salaries-message {
     font-size: 18px;
     padding: 15px;

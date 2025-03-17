@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from "react";
 import {
-  FaSignOutAlt, FaSearch, FaSun, FaMoon, FaBell, FaBars, FaChevronLeft,
-  FaChevronDown, FaChevronUp, FaTachometerAlt, 
-  FaMoneyBillWave, FaBuilding, FaCalendarAlt
+  FaSignOutAlt,
+  FaSearch,
+  FaSun,
+  FaMoon,
+  FaBell,
+  FaBars,
+  FaChevronLeft,
+  FaChevronDown,
+  FaChevronUp,
+  FaTachometerAlt,
+  FaCalendarAlt,
+  FaFileAlt,
+  FaLock,
+  FaUserCircle,
+  FaThList,
+  FaCalendarCheck,
 } from "react-icons/fa";
-import { MdLibraryAddCheck } from "react-icons/md";
-import { FaRectangleList } from "react-icons/fa6";
-import { RiLockPasswordFill } from "react-icons/ri";
-import { PiCertificateFill } from "react-icons/pi";
-import { FaAddressBook } from "react-icons/fa6";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import LanguageSwitcher from '../LanguageSwitcher';
 import { useTranslation } from 'react-i18next'; 
@@ -90,7 +98,11 @@ const Employee_dashboard = ({ employeeUser }) => {
   }, [dropdowns]);
 
   const renderDropdown = (title, icon, key, items) => (
-    <li className={`dropdown-item dropdown-${key} ${dropdowns[key] ? "expanded" : ""}`}>
+    <li
+      className={`dropdown-item dropdown-${key} ${
+        dropdowns[key] ? "expanded" : ""
+      }`}
+    >
       <div className="dropdown-title" onClick={() => toggleDropdown(key)}>
         {icon}
         <span>{title}</span>
@@ -125,15 +137,40 @@ const Employee_dashboard = ({ employeeUser }) => {
           <ul className="NavbarMenu">
             <li className="NavbarItem">
               <FaTachometerAlt className="darkIcon" />
-              <Link className="navLink" to="/Employee_dashboard">{t('dashboard')}</Link> {/* Translated */}
+              <Link className="navLink" to="/Employee_dashboard">
+                {t("dashboard")}
+              </Link>{" "}
+              {/* Translated */}
             </li>
-            {renderDropdown(t('Profile'), <FaAddressBook />, "profile", [
-              { icon: <PiCertificateFill />, label: t('Attestation'), link: "attestations" },
-              { icon: <MdLibraryAddCheck />, label: t('Leave_request'), link: "leave" },
-              { icon: <RiLockPasswordFill />, label: t('Change_password'), link: "ChangePassword" },
-              { icon: <FaRectangleList />, label: t('Holidays_of_year'), link: "HolidayList" },
+            {renderDropdown(t("Profile"), <FaUserCircle />, "profile", [
+              {
+                icon: <FaCalendarAlt />,
+                label: t("My attendance"),
+                link: "EmployeeAttendance",
+              },
+
+              {
+                icon: <FaFileAlt />,
+                label: t("Attestation"),
+                link: "attestations",
+              },
+              {
+                icon: <FaCalendarCheck />,
+                label: t("Leave_request"),
+                link: "leave",
+              },
+              {
+                icon: <FaLock />,
+                label: t("Change_password"),
+                link: "ChangePassword",
+              },
+              {
+                icon: <FaThList />,
+                label: t("Holidays_of_year"),
+                link: "HolidayList",
+              },
             ])}
-            <li className="NavbarItem">
+            {/* <li className="NavbarItem">
               <FaBuilding />
               <Link className="navLink" to="/Departments">{t('departments')}</Link>
             </li>
@@ -172,15 +209,25 @@ const Employee_dashboard = ({ employeeUser }) => {
         <div className="head">
           <div className="input-container input-container-desktop">
             <FaSearch className="searchIcon" />
-            <input className="input" type="text" placeholder={t('search')} />
+            <input className="input" type="text" placeholder={t("search")} />
           </div>
 
           <div className="right">
-            <div className="icon-container dark-mode-toggle" onClick={toggleDarkMode}>
-              {isDarkMode ? <FaSun className="dark-icon" /> : <FaMoon className="dark-icon" />}
+            <div
+              className="icon-container dark-mode-toggle"
+              onClick={toggleDarkMode}
+            >
+              {isDarkMode ? (
+                <FaSun className="dark-icon" />
+              ) : (
+                <FaMoon className="dark-icon" />
+              )}
             </div>
             <div className="icon-container">
-              <FaBell className="notification-icon" aria-label={t('notification')} />
+              <FaBell
+                className="notification-icon"
+                aria-label={t("notification")}
+              />
             </div>
             <div className="admin-image-container">
               <img className="admin-image" src="/admin/admin.png" alt="Admin" />
@@ -190,7 +237,11 @@ const Employee_dashboard = ({ employeeUser }) => {
 
         <div className="greeting-container">
           <p className="greeting">
-            {date.getHours() < 12 ? t('good_morning') : date.getHours() < 16 ? t('good_afternoon') : t('good_evening')}
+            {date.getHours() < 12
+              ? t("good_morning")
+              : date.getHours() < 16
+              ? t("good_afternoon")
+              : t("good_evening")}
           </p>
           <p className="admin-name">{employeeUser ? employeeUser.name : t('loading')}</p> {/* Add check for employeeUser*/}
         </div>

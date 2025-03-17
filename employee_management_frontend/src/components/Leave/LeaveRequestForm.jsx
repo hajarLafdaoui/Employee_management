@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../Config/axiosSetup';
+import './leaveRequestForm.scss';
 
 const LeaveRequestForm = () => {
     const [leaveType, setLeaveType] = useState('');
@@ -53,11 +54,9 @@ const LeaveRequestForm = () => {
         }
     };
 
-
-
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
+        <form className="leave-request-form" onSubmit={handleSubmit}>
+            <div className="input-group">
                 <label>Leave Type:</label>
                 <select
                     value={leaveType}
@@ -72,7 +71,7 @@ const LeaveRequestForm = () => {
                     <option value="other">Other</option>
                 </select>
             </div>
-            <div>
+            <div className="input-group">
                 <label>Start Date:</label>
                 <input
                     type="date"
@@ -81,7 +80,7 @@ const LeaveRequestForm = () => {
                     required
                 />
             </div>
-            <div>
+            <div className="input-group">
                 <label>End Date:</label>
                 <input
                     type="date"
@@ -90,7 +89,7 @@ const LeaveRequestForm = () => {
                     required
                 />
             </div>
-            <div>
+            <div className="input-group">
                 <label>Reason:</label>
                 <textarea
                     value={reason}
@@ -99,7 +98,7 @@ const LeaveRequestForm = () => {
                 />
             </div>
             {error && <p style={{ color: 'red' }}>{error}</p>}
-            <button type="submit" disabled={loading}>
+            <button className="button-form" type="submit" disabled={loading}>
                 {loading ? 'Submitting...' : 'Submit Request'}
             </button>
         </form>
