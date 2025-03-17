@@ -6,6 +6,7 @@ import Employee_dashboard from "./components/Employee/Employee_dashboard";
 import CreateUser from "./components/CreateUser";
 import EmployeeList from "./components/EmployeeList";
 import UpdateUser from "./components/UpdateUser";
+import DetailUser from "./components/DetailUser";
 
 import AdminLeaveRequests from "./components/Leave/AdminLeaveRequests";
 import AttendanceHeader from "./components/attendance/AttendanceHeader";
@@ -70,10 +71,12 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route path="Dashboard" element={<Dashboard />} />
+          <Route index element={<Dashboard />} />
+
           <Route path="CreateUser" element={<CreateUser />} />
           <Route path="update-user/:id" element={<UpdateUser />} />
           <Route path="EmployeeList" element={<EmployeeList />} />
+          <Route path="Detailuser/:id" element={<DetailUser />} />
 
           <Route path="AdminLeaveRequests" element={<AdminLeaveRequests />} />
 

@@ -12,14 +12,10 @@
     "@nivo/core": "^0.88.0",
     "@nivo/line": "^0.88.0",
     "@nivo/pie": "^0.88.0",
-<<<<<<< HEAD
     "@nivo/radial-bar": "^0.88.0",
     "@react-spring/web": "^9.7.5",
     "axios": "^1.8.3",
-=======
-    "axios": "^1.7.9",
     "bcryptjs": "^3.0.2",
->>>>>>> 57b95586fbcd7485586adfaba3c880cc8a0e167e
     "bootstrap": "^5.3.3",
     "browserify-zlib": "^0.2.0",
     "chart.js": "^4.4.8",

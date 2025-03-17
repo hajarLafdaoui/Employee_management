@@ -16,6 +16,7 @@ import {
   FaUserCircle,
   FaThList,
   FaCalendarCheck,
+  FaMoneyBillWave,
 } from "react-icons/fa";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import LanguageSwitcher from '../LanguageSwitcher';
@@ -116,6 +117,7 @@ const Employee_dashboard = ({ employeeUser }) => {
               {label}
             </Link>
           </li>
+          
         ))}
       </ul>
     </li>
@@ -178,15 +180,15 @@ const Employee_dashboard = ({ employeeUser }) => {
               <FaCalendarAlt />
               <Link className="navLink" to="EmployeeAttendance">{t('attendance')}</Link>
             </li>
-            {renderDropdown(t('payroll'), <FaMoneyBillWave />, "payroll", [
-              { icon: <FaMoneyBillWave />, label: t('view_payroll'), link: "view" },
-            ])}
+           
             {/* <li className="NavbarItem logout">
               <FaSignOutAlt className="logout-icon" />
               <Link className="navLink" to="/SignOut">{t('logout')}</Link>
             </li> */}
 
-
+<li className="NavbarItem"> {renderDropdown(t('payroll'), <FaMoneyBillWave />, "payroll", [
+              { icon: <FaMoneyBillWave />, label: t('view_payroll'), link: "view" },
+            ])}</li>
                  <li className="NavbarItem logout" onClick={() => setShowConfirmPopUp(true)}>
                     <FaSignOutAlt className="logout-icon" />
                     <span className="navLink">{t('logout')}</span>
@@ -207,12 +209,12 @@ const Employee_dashboard = ({ employeeUser }) => {
 
       <div className="secondPart">
         <div className="head">
-          <div className="input-container input-container-desktop">
+          {/* <div className="input-container input-container-desktop">
             <FaSearch className="searchIcon" />
             <input className="input" type="text" placeholder={t("search")} />
-          </div>
+          </div> */}
 
-          <div className="right">
+          <div className="right ">
             <div
               className="icon-container dark-mode-toggle"
               onClick={toggleDarkMode}

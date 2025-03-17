@@ -70,7 +70,7 @@ const AdminDashboard = ({ adminUser }) => {
   }, []);
 
   const menuItems = [
-    { label: "Dashboard", icon: <FaTachometerAlt />, link: "/Dashboard" }, // Updated link to "/dashboard"
+    { label: "Dashboard", icon: <FaTachometerAlt />, link: "/" }, // Updated link to "/dashboard"
     {
       label: "Employees",
       icon: <FaUsers />,
