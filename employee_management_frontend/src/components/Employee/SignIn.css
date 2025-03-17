@@ -2,6 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #ffffff;
+  height: 100vh;
 }
 
 .signin-container {
@@ -70,6 +72,10 @@
   align-items: flex-end;
   justify-content: center;
   position: relative;
+}
+
+.form-details .logo {
+  margin: 0 auto;
 }
 
 .overlay-content {

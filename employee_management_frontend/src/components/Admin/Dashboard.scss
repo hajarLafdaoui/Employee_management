@@ -1,0 +1,87 @@
+/* Dashboard.css */
+.dashboardGraphs {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 20px; /* Space between graphs */
+    margin-bottom: 20px;
+}
+
+.attGraph,
+.DepGraph {
+    flex: 1; /* Each graph takes equal space */
+    min-width: 200px !important; /* Minimum width for each graph */
+    min-height: 200px !important; /* Minimum width for each graph */
+}
+.dashboard-bar{
+    width: 465px  ;
+    // height: 265px  ;
+}
+
+/* Media query for mobile and tablet screens */
+
+@media only screen and (max-width: 767px), 
+     only screen and (min-width: 601px) and (max-width: 1024px) {    .dashboardGraphs {
+        flex-direction: column; /* Stack graphs vertically */
+    }
+    .dashboard-bar{
+        width: 100%  ;
+        // height: 265px  ;
+    }
+    
+
+    .attGraph,
+    .DepGraph {
+        width: 100%; /* Full width on smaller screens */
+    }
+    .statics{
+        flex-direction: column;
+        gap: 1px !important;
+    
+    }
+}
+.statics{
+    display: flex;
+    gap: 20px;
+
+}
+.total-employees, .new-employees, .by-gender{
+display: flex;
+align-items: center !important;
+justify-content: center;
+gap: 10px;
+border-radius: 10px;
+border: 1px solid black;
+padding: 3px 20px;
+margin: 10px 0;
+}
+/* Dashboard.css */
+
+/* Existing styles... */
+
+/* Add hover effect to the statics divs */
+.total-employees:hover,
+.new-employees:hover,
+.by-gender:hover {
+    background-color: #f0f0f0; /* Change this to your desired hover color */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Make the values bold */
+.total-employees p:last-child,
+.new-employees p:last-child,
+.by-gender p:last-child {
+    font-weight: bold;
+}
+
+/* Add some spacing and alignment for the gender stats */
+.total-employees p, .new-employees p, .by-gender p {
+    margin: 0 5px; /* Adjust spacing between gender stats */
+}
+
+
+
+
+.dark-mode .total-employees, .dark-mode .new-employees, .dark-mode .by-gender {
+    border: solid 1px white !important;
+}

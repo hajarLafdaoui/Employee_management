@@ -126,7 +126,7 @@
   border: none !important;
   padding: 0px 15px 15px !important;
   margin: 0 !important;
-  width: 950px;
+  width: 200px !important;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -156,6 +156,8 @@
 .modal {
   padding: 0 30px;
   overflow-y: scroll !important;
+  z-index: 929290222222832 !important;
+  width: 50% !important;
 }
 
 .modal-header {
@@ -221,6 +223,7 @@
 @media only screen and (max-width: 767px), only screen and (min-width: 601px) and (max-width: 1024px) {
   .modal {
     width: 90% !important;
+    right: 0 !important;
   }
   .modal-header {
     display: flex;
@@ -803,7 +806,7 @@ input:valid ~ label {
   width: -moz-fit-content !important;
   width: fit-content !important;
   border-radius: 10px;
-  padding: 2px !important;
+  padding: 24px 5px !important;
   gap: 5px;
   background-color: #fff;
 }
@@ -828,7 +831,7 @@ input:valid ~ label {
   width: -moz-fit-content !important;
   width: fit-content !important;
   border-radius: 10px;
-  padding: 2px !important;
+  padding: 0 !important;
   gap: 5px;
 }
 .sortingConatiner img {

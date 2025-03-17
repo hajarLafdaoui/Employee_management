@@ -83,16 +83,16 @@ useEffect(() => {
         setSalaries(salaries.filter(salary => salary.id !== deleteSalaryId));
         setShowDeletePopUp(false);
         setShowSuccessAlert(true);
-        setShowSuccessAlert();
+        setStatusMessage('Salary deleted successfully!'); 
         setTimeout(() => {
-          setShowSuccessAlert(true);
-      }, 5000);
+          setShowSuccessAlert(false);
+        }, 5000);
       } catch (err) {
         setError('Error deleting salary.');
         setShowErrorAlert(true);
         setTimeout(() => {
-          setShowErrorAlert(true);
-        }, 5000);
+          setShowErrorAlert(false);
+        }, 5000); 
       }
     }
   };
@@ -102,7 +102,7 @@ useEffect(() => {
       setStatusMessage('Message cannot be empty.');
       setShowErrorAlert(true);
       setTimeout(() => {
-        setShowErrorAlert(true);
+        setShowErrorAlert(false);
       }, 5000);
       return;
     }
@@ -123,17 +123,18 @@ useEffect(() => {
 
       setStatusMessage('Message sent successfully!');
       setShowMessageForm(false); 
-      setMessage(''); 
+      setMessage('Message sent successfully!'); 
       setShowSuccessAlert(true);
       setShowSuccessAlert();
       setTimeout(() => {
-        setShowSuccessAlert(true);
+        setShowSuccessAlert(false);
     }, 5000);
     } catch (error) {
       setStatusMessage('Failed to send message. Please try again.');
       setShowErrorAlert(true);
+      setError('Failed to send message. Please try again.')
       setTimeout(() => {
-        setShowErrorAlert(true);
+        setShowErrorAlert(false);
       }, 5000);
       console.error('Error:', error.text);
     } finally {
@@ -354,22 +355,22 @@ useEffect(() => {
         </button>
         {activeMenu === salary.id && (
           <div className="dropdown-menu">
-            <div onClick={() => fetchSalaryDetails(salary.id)} className="viewlink">
+            <Link onClick={() => fetchSalaryDetails(salary.id)} className="viewlink">
               <img className="view-icon" src="/icons/view.png" alt="View" />
               <p>show</p>
-            </div>
+            </Link>
             <Link to={`/salary/${salary.id}`} className="viewlink">
               <img className="view-icon" src="/icons/print1.png" alt="" />
               <p>print</p>
             </Link>
-            <div
+            <Link
               onClick={() => handleShowMessageForm(salary.user)}
               className="viewlink"
             >
               <img src="icons/email.png" alt="" className="view-icon" />
               <p>msg</p>
-            </div>
-            <div
+            </Link>
+            <Link
               onClick={() => {
                 setDeleteSalaryId(salary.id);
                 setShowDeletePopUp(true);
@@ -378,7 +379,7 @@ useEffect(() => {
             >
               <img className="delete-icon" src="/icons/delete.png" alt="Delete" />
               <p>delete</p>
-            </div>
+            </Link>
           </div>
         )}
       </div>

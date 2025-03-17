@@ -31,7 +31,7 @@ const BarChart = () => {
     .sort((a, b) => a.employees - b.employees);
 
   return (
-    <div className='bar'>
+    <div className='bar barDashboard'>
       {isLoading ? (
         <LoadingSpinner /> // Show the spinner while loading
       ) : data.length > 0 ? (
@@ -39,8 +39,8 @@ const BarChart = () => {
           data={data}
           keys={['employees']}
           indexBy="department"
-          layout="horizontal"
-          margin={{ top: 10, right: 30, bottom: 50, left: 100 }}
+          layout="vertical" // Change layout to vertical
+          margin={{ top: 50, right: 30, bottom: 100, left: 80 }} // Adjust margins for vertical layout
           padding={0.3}
           colors={(d) => {
             if (d.value <= 5 && d.value > 0) {
@@ -58,20 +58,22 @@ const BarChart = () => {
             }
           }}
           axisBottom={{
-            tickValues: [5, 10, 15, 20, 25],
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: -45, // Rotate department names for better readability
+            legend: 'Departments',
+            legendPosition: 'middle',
+            legendOffset: 60, // Adjust legend offset for vertical layout
+          }}
+          axisLeft={{
+            tickValues: [0, 5, 10, 15, 20, 25], // Number of employees starting from 0, 5, 10, ...
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
             legend: 'Number of Employees',
             legendPosition: 'middle',
-            legendOffset: 32,
+            legendOffset: -60, // Adjust legend offset for vertical layout
             format: (value) => (value === 0 ? '' : value),
-          }}
-          axisLeft={{
-            legend: 'Departments',
-            legendPosition: 'middle',
-            legendOffset: -80,
-            format: (value) => `${value}`,
           }}
           labelSkipWidth={12}
           labelSkipHeight={12}

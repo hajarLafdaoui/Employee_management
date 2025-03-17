@@ -18,16 +18,18 @@ import {
   FaCalendarCheck,
 } from "react-icons/fa";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import LanguageSwitcher from "../LanguageSwitcher";
-import { useTranslation } from "react-i18next"; // Import the translation hook
-
+import LanguageSwitcher from '../LanguageSwitcher';
+import { useTranslation } from 'react-i18next'; 
+import "./Employee_dashboard.scss"
+import Confirmation from "../Confirmation";
 const Employee_dashboard = ({ employeeUser }) => {
   const { t } = useTranslation(); // Get the translation function
   const [dropdowns, setDropdowns] = useState({ profile: false, payroll: false });
   const [date, setDate] = useState(new Date());
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
+  const [showConfirmPopUp, setShowConfirmPopUp] = useState(false);
+  const { i18n } = useTranslation();
   const navigate = useNavigate();
   employeeUser = JSON.parse(localStorage.getItem("employeeUser"));
   if (!employeeUser) {
@@ -43,6 +45,36 @@ const Employee_dashboard = ({ employeeUser }) => {
   const toggleDarkMode = () => {
     setIsDarkMode((prevMode) => !prevMode);
   };
+
+
+  //Translation function
+  useEffect(() => {
+    const currentLang = i18n.language; 
+    if (currentLang === 'ar') {
+      document.body.setAttribute('dir', 'rtl');
+    } else {
+      document.body.setAttribute('dir', 'ltr'); 
+    }
+  }, [i18n.language]);
+
+
+  //handel logout
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("employeeUser");
+    localStorage.removeItem("adminUser");
+
+    navigate("/SignIn");
+  };
+//handel confirm logout
+
+  const handleConfirmLogout = () => {
+    handleLogout(); 
+    setShowConfirmPopUp(false); 
+  };
+
+
 
   useEffect(() => {
     document.body.classList.toggle("dark-mode", isDarkMode);
@@ -99,7 +131,7 @@ const Employee_dashboard = ({ employeeUser }) => {
         <nav className="Navbar">
           <div className="logoContainer">
             <Link className="navLink" to="/Employee_dashboard">
-              <img src="/logo/logo.png" alt="Logo" />
+            <img src="/logo/logo.png" alt="Logo" className="logo"/>
             </Link>
           </div>
           <ul className="NavbarMenu">
@@ -141,18 +173,34 @@ const Employee_dashboard = ({ employeeUser }) => {
             {/* <li className="NavbarItem">
               <FaBuilding />
               <Link className="navLink" to="/Departments">{t('departments')}</Link>
-            </li> */}
-            {/* <li className="NavbarItem">
-            <FaCalendarAlt />
-              <Link className="navLink" to="EmployeeAttendance">{t('My attendance')}</Link>
-            </li> */}
-            {/* {renderDropdown(t('payroll'), <FaMoneyBillWave />, "payroll", [
-              { icon: <FaMoneyBillWave />, label: t('view_payroll'), link: "/payroll/view" },
-            ])} */}
-            <li className="NavbarItem logout">
+            </li>
+            <li className="NavbarItem">
+              <FaCalendarAlt />
+              <Link className="navLink" to="EmployeeAttendance">{t('attendance')}</Link>
+            </li>
+            {renderDropdown(t('payroll'), <FaMoneyBillWave />, "payroll", [
+              { icon: <FaMoneyBillWave />, label: t('view_payroll'), link: "view" },
+            ])}
+            {/* <li className="NavbarItem logout">
               <FaSignOutAlt className="logout-icon" />
               <Link className="navLink" to="/SignOut">{t('logout')}</Link>
-            </li>
+            </li> */}
+
+
+                 <li className="NavbarItem logout" onClick={() => setShowConfirmPopUp(true)}>
+                    <FaSignOutAlt className="logout-icon" />
+                    <span className="navLink">{t('logout')}</span>
+                  </li>
+                  <Confirmation
+        showConfirmPopUp={showConfirmPopUp}
+        setShowConfirmPopUp={setShowConfirmPopUp}
+        handleConfirm={handleConfirmLogout} 
+        itemType="Logout" 
+      />
+
+
+
+
           </ul>
         </nav>
       </div>
@@ -197,8 +245,8 @@ const Employee_dashboard = ({ employeeUser }) => {
           </p>
           <p className="admin-name">{employeeUser ? employeeUser.name : t('loading')}</p> {/* Add check for employeeUser*/}
         </div>
-        <div className="icon-container">
-          <LanguageSwitcher /> {/* Add the LanguageSwitcher component here */}
+        <div className="language-container">
+          <LanguageSwitcher /> 
         </div>
         <Outlet />
       </div>

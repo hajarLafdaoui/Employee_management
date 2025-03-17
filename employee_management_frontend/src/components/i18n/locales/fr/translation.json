@@ -17,8 +17,11 @@
       "employee_list": "Liste des employés",
       "employee_leave": "Congé des employés",
       "employee_payroll": "Paie des employés",
-      "holidays_of_year": "Jours fériés de cette année",
-      "departments": "Départements",
+"Holidays_of_year": "Jours fériés ",
+  "Change_password": " mot de passe",
+  "Leave_request": "Demande de congé",
+  "Attestation": "Attestation",
+        "departments": "Départements",
       "attendance": "Présence",
       "payroll": "Paie",
       "view_payroll": "Voir la paie",
@@ -29,20 +32,24 @@
       "good_afternoon": "Bon après-midi,",
       "good_evening": "Bonsoir,",
 
+      "holidayListTitle": "Liste des vacances",
 
 
-      "holidays": {
-        "Jour de l'An": "Jour de l'An",
-        "Fête du Travail": "Fête du Travail",
-        "Fête du Trône": "Fête du Trône",
-        "Fête de la Révolution": "Fête de la Révolution",
-        "Fête de la Jeunesse": "Fête de la Jeunesse",
-        "Aïd el-Fitr": "Aïd el-Fitr",
-        "Aïd el-Adha": "Aïd el-Adha",
-        "Anniversaire du Roi": "Anniversaire du Roi",
-        "Fête de l'Indépendance": "Fête de l'Indépendance",
-        "Ras as-Sanah al-Hijriyah": "Ras as-Sanah al-Hijriyah",
-        "Mouloud": "Mouloud"
+      
+          "holidays": {
+            "New Year's Day": "Jour de l'An",
+            "Labor Day": "Fête du Travail",
+            "King and People's Revolution Day": "Fête du Trône",
+            "Independence Day": "Fête de l'Indépendance",
+            "Eid al-Fitr": "Aïd el-Fitr",
+            "Eid al-Adha": "Aïd el-Adha",
+            "Islamic New Year": "Ras as-Sanah al-Hijriyah",
+            "Mawlid al-Nabi (Prophet Muhammad's Birthday)": "Mouloud",
+            "Throne Day": "Fête du Trône",
+            "Amazigh Day": "Jour Amazigh"
+          
+        
+        
   },
   
     "attestation_requests": "Demandes d'attestation",
@@ -56,13 +63,53 @@
       "Approved": "Approuvée",
       "Pending": "En attente"
     
-  }
+  },
   
       
   
     
     
+  "change_password": "Changer le mot de passe",
+  "old_password": "Ancien mot de passe",
+  "new_password": "Nouveau mot de passe",
+  "confirm_new_password": "Confirmer le nouveau mot de passe",
+  "password_updated_successfully": "Mot de passe mis à jour avec succès",
+  "password_update_failed": "Échec de la mise à jour du mot de passe",
+  "please_fill_all_fields": "Veuillez remplir tous les champs",
+  "passwords_do_not_match": "Les mots de passe ne correspondent pas",
+  "loading": "Chargement...",
 
+
+
+  
+    "salary_for_the_month": "Salaire du mois",
+    "user_name": "Nom de l'utilisateur",
+    "department": "Département",
+    "job_title": "Poste",
+    "start_date": "Date de début",
+    "end_date": "Date de fin",
+    "enterprise_name": "Nom de l'entreprise",
+    "enterprise_address": "Adresse de l'entreprise",
+    "base_salary": "Salaire de base",
+    "leave_deductions": "Déductions de congé",
+    "attendance_deductions": "Déductions de présence",
+    "tva": "TVA",
+    "net_salary": "Salaire net",
+    "not_available": "Non disponible",
+    "error_fetching_salary": "Erreur lors de la récupération des informations de salaire",
+    "no_salary_data_found": "Aucune donnée de salaire trouvée",
+    "invalid_response_format": "Format de réponse invalide",
+    "user_not_found": "Utilisateur non trouvé",
+    "adress":"123 Rue Principale, Ville",
+  "work":"WORKIO",
+  
+"pdf":"Pdf",
+"print":"Print",
+"description" : "Description",
+"amount" : "Montant",
+"english": "Anglais",
+  "french": "Français",
+  "arabic": "Arabe"
 
 
 

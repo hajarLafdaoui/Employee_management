@@ -2,16 +2,20 @@ import React, { useEffect, useState, useMemo } from "react";
 import {
   FaSignOutAlt, FaSearch, FaSun, FaMoon, FaBell, FaBars, FaChevronLeft,
   FaChevronDown, FaChevronUp, FaTachometerAlt, FaUserPlus, FaUsers,
-  FaCalendarCheck, FaMoneyBillWave, FaBuilding, FaCalendarAlt
+  FaCalendarCheck, FaMoneyBillWave, FaBuilding, FaCalendarAlt,
+  FaGift,
+  FaClipboardList,
+  FaHistory
 } from "react-icons/fa";
 
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import Confirmation from "../Confirmation";
 
 const AdminDashboard = ({ adminUser }) => {
   const [dropdowns, setDropdowns] = useState({ employees: false, payroll: false });
   const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem("darkMode") === "true");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
+  const [showConfirmPopUp, setShowConfirmPopUp] = useState(false);
   const navigate = useNavigate()
   adminUser = JSON.parse(localStorage.getItem("adminUser"));
   if (!adminUser) {
@@ -22,6 +26,26 @@ const AdminDashboard = ({ adminUser }) => {
     localStorage.setItem("darkMode", isDarkMode);
   }, [isDarkMode]);
 
+
+  //handel logout
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("employeeUser");
+    localStorage.removeItem("adminUser");
+
+    navigate("/SignIn");
+  };
+//handel confirm logout
+
+  const handleConfirmLogout = () => {
+    handleLogout(); 
+    setShowConfirmPopUp(false); 
+  };
+
+
+
+
   const toggleDropdown = (key) => {
     setDropdowns((prev) => {
       const newDropdowns = {};
@@ -31,13 +55,6 @@ const AdminDashboard = ({ adminUser }) => {
       return newDropdowns;
     });
   };
-
-  useEffect(() => {
-    const allClosed = Object.values(dropdowns).every((isOpen) => !isOpen);
-    if (allClosed) {
-      setDropdowns((prev) => ({ ...prev, employees: true }));
-    }
-  }, [dropdowns]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
@@ -53,7 +70,7 @@ const AdminDashboard = ({ adminUser }) => {
   }, []);
 
   const menuItems = [
-    { label: "Dashboard", icon: <FaTachometerAlt />, link: "/" },
+    { label: "Dashboard", icon: <FaTachometerAlt />, link: "/Dashboard" }, // Updated link to "/dashboard"
     {
       label: "Employees",
       icon: <FaUsers />,
@@ -62,9 +79,9 @@ const AdminDashboard = ({ adminUser }) => {
         { label: "Add Employee", icon: <FaUserPlus />, link: "/CreateUser" },
         { label: "Employee List", icon: <FaUsers />, link: "/EmployeeList" },
         { label: "Employee Leave", icon: <FaCalendarCheck />, link: "/AdminLeaveRequests" },
-        { label: "Employee Holiday", icon: <FaUsers />, link: "/HolidayCrud" },
-        { label: "Attestation Requests", icon: <FaUsers />, link: "/Attestation" },
-        { label: "Attestation history", icon: <FaUsers />, link: "/historyattest" },
+        { label: "Employee Holiday", icon: <FaCalendarAlt />, link: "/HolidayCrud" },
+        { label: "Attestation Requests", icon: <FaClipboardList />, link: "/Attestation" },
+        { label: "Attestation history", icon: <FaHistory />, link: "/historyattest" },
       ],
     },
     { label: "Departments", icon: <FaBuilding />, link: "/Departments" },
@@ -91,7 +108,7 @@ const AdminDashboard = ({ adminUser }) => {
         <nav className="Navbar">
           <div className="logoContainer">
             <Link className="navLink" to="/">
-              <img src="/logo/logo.png" alt="Logo" className="logo"/>
+              <img src="/logo/logo.png" alt="Logo" className="logo" />
             </Link>
           </div>
           <ul className="NavbarMenu">
@@ -119,10 +136,24 @@ const AdminDashboard = ({ adminUser }) => {
                 </li>
               )
             )}
-            <li className="NavbarItem logout">
-              <FaSignOutAlt className="logout-icon" />
-              <Link className="navLink" to="/SignOut">Logout</Link>
-            </li>
+         
+
+
+            <li className="NavbarItem logout" onClick={() => setShowConfirmPopUp(true)}>
+        <FaSignOutAlt className="logout-icon" />
+        <span className="navLink">Logout</span>
+      </li>
+
+      <Confirmation
+        showConfirmPopUp={showConfirmPopUp}
+        setShowConfirmPopUp={setShowConfirmPopUp}
+        handleConfirm={handleConfirmLogout} 
+        itemType="Logout" 
+      />
+
+
+
+
           </ul>
         </nav>
       </div>
@@ -155,5 +186,7 @@ const AdminDashboard = ({ adminUser }) => {
     </div>
   );
 };
+
+
 
 export default AdminDashboard;
