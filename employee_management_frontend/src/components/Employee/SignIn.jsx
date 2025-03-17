@@ -55,9 +55,14 @@ console.log("Login response:", response);
 
   return (
     <div className="all">
+
       <div className="signin-container">
+      {/* <img src="/logo/logo.png" alt="Logo" className="logo"/> */}
+
         <div className="form-section">
+
           <form className="form-details" onSubmit={handleLogin}>
+
             <h2 className="title">Welcome to our site</h2>
 
             {/* Email input */}
@@ -85,7 +90,7 @@ console.log("Login response:", response);
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <span className="toggle-password" onClick={togglePassword}>👁️</span>
+                <span className="toggle-password" onClick={togglePassword}><img src="/icons/view.png" className='view-icon' alt="" /></span>
               </div>
             </div>
 

@@ -1,26 +1,24 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+// import React from "react";
+// import { useNavigate } from "react-router-dom";
 
-const SignOut = () => {
-  const navigate = useNavigate();
+// const SignOut = () => {
+//   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    // Remove the current user's data from localStorage
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    localStorage.removeItem("employeeUser"); // If you're storing specific user info
-    localStorage.removeItem("adminUser"); // If you're storing admin user info
+//   const handleLogout = () => {
+//     localStorage.removeItem("user");
+//     localStorage.removeItem("token");
+//     localStorage.removeItem("employeeUser");
+//     localStorage.removeItem("adminUser"); 
     
-    // Redirect to the login page after logging out
-    navigate("/SignIn");
-  };
+//     navigate("/SignIn");
+//   };
 
-  return (
-    <div>
-      <h2>Are you sure you want to log out?</h2>
-      <button onClick={handleLogout}>Logout</button>
-    </div>
-  );
-};
+//   return (
+//     <div>
+//       <h2>Are you sure you want to log out?</h2>
+//       <button onClick={handleLogout}>Logout</button>
+//     </div>
+//   );
+// };
 
-export default SignOut;
+// export default SignOut;

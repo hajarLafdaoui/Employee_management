@@ -11,7 +11,6 @@ class UserSeeder extends Seeder
 {
     public function run()
     {
-        // Default profile picture path (for example purposes)
         $adminProfilePicture = 'storage/profile_pictures/gRKQT7kjtcgVYFvDyJ9NY3llObvmUbfZ6xKeSXC7.png'; // Ensure this path is correct
 
         // Data for users

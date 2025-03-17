@@ -2,6 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #ffffff;
+  height: 100vh;
 }
 
 .signin-container {
@@ -74,7 +76,9 @@
   justify-content: center;
   position: relative;
 }
-
+.form-details .logo{
+  margin: 0 auto;
+}
 .overlay-content {
   background: rgba(255, 255, 255, 0.7);
   padding: 20px;

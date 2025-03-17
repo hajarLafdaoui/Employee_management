@@ -68,7 +68,8 @@ const PrintSalary = () => {
                     />Pdf</button>
                     </div>
             <div className="salary-container"ref={pdfRef}>
-                <div className="salary-header">
+            <img src="/logo/logo.png" alt="Logo" className="logo1"/>
+            <div className="salary-header">
                     <h1>Pays for the Month</h1>
                     <p>{new Date(salary.paid_on).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
                 </div>
@@ -83,7 +84,7 @@ const PrintSalary = () => {
                     </div>
 
                     <div className="enterprise-info">
-                        <p>Enterprise Name: XYZ Corporation</p>
+                        <p>Enterprise Name: WORKIO </p>
                         <p>Enterprise Address: 123 Main Street, City</p>
                     </div>
                 </div>
@@ -110,9 +111,10 @@ const PrintSalary = () => {
                                 <td>{salary.attendance_bonus}</td>
                             </tr>
                             <tr>
-                                <td>Total Salary</td>
-                                <td>{salary.total_salary}</td>
+                                <td>Tva</td>
+                                <td>{salary.tva_rate*100}%</td>
                             </tr>
+                         
                         </tbody>
                     </table>
                 </div>

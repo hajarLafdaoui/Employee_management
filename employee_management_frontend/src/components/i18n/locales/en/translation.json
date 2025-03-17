@@ -18,7 +18,12 @@
       "employee_list": "Employee List",
       "employee_leave": "Employee Leave",
       "employee_payroll": "Employee Payroll",
-      "holidays_of_year": "Holidays of this year",
+      "Holidays_of_year": "Holidays of the Year",
+      "Change_password": "Change Password",
+      "Leave_request": "Leave Request",
+      "Attestation": "Attestation",
+
+
       "departments": "Departments",
       "attendance": "Attendance",
       "payroll": "Payroll",
@@ -30,20 +35,27 @@
       "good_afternoon": "Good Afternoon,",
       "good_evening": "Good Evening,",
 
+      "holidayListTitle": "Holiday List",
+
       "holidays": {
-    "Jour de l'An": "New Year's Day",
-    "Fête du Travail ": "Labor Day",
-    "Fête du Trône": "Throne Day",
-    "Fête de la Révolution": "Revolution Day",
-    "Fête de la Jeunesse": "Youth Day",
-    "Aïd el-Fitr": "Eid al-Fitr",
-    "Aïd el-Adha": "Eid al-Adha",
-    ".Anniversaire du Roi ": "King's Birthday",
-    "Fête de l'Indépendance ": "Independence Day",
-    "Ras as-Sanah al-Hijriyah": "Islamic New Year",
-    "Mouloud": "Mouloud"
-  }
+        "New Year's Day": "New Year's Day",
+        "Labor Day": "Labor Day",
+        "King and People's Revolution Day": "King and People's Revolution Day",
+        "Independence Day": "Independence Day",
+        "Eid al-Fitr": "Eid al-Fitr",
+        "Eid al-Adha": "Eid al-Adha",
+        "Islamic New Year": "Islamic New Year",
+        "Mawlid al-Nabi (Prophet Muhammad's Birthday)": "Mawlid al-Nabi",
+        "Throne Day": "Throne Day",
+        "Amazigh Day": "Amazigh Day"
+      }
   ,
+
+
+
+
+
+  
     "attestation_requests": "Attestation Requests",
     "last_attestation_requests": "Last Attestation Requests",
     "status": "Status",
@@ -57,8 +69,53 @@
       "Approved": "Approved",
       "Pending": "Pending"
     
-    }
+    },
   
   
+
+
+    
+    "change_password": "Change Password",
+    "old_password": "Old Password",
+    "new_password": "New Password",
+    "confirm_new_password": "Confirm New Password",
+    "password_updated_successfully": "Password updated successfully",
+    "password_update_failed": "Password update failed",
+    "please_fill_all_fields": "Please fill in all fields",
+    "passwords_do_not_match": "Passwords do not match",
+    "loading": "Loading...",
+
+
+
+    "salary_for_the_month": "Salary for the Month",
+    "user_name": "User Name",
+    "department": "Department",
+    "job_title": "Job Title",
+    "start_date": "Start Date",
+    "end_date": "End Date",
+    "enterprise_name": "Enterprise Name",
+    "enterprise_address": "Enterprise Address",
+    "base_salary": "Base Salary",
+    "leave_deductions": "Leave Deductions",
+    "attendance_deductions": "Attendance Deductions",
+    "tva": "TVA",
+    "net_salary": "Net Salary",
+    "not_available": "Not Available",
+    "error_fetching_salary": "Error fetching salary details",
+    "no_salary_data_found": "No salary data found",
+    "invalid_response_format": "Invalid response format",
+    "user_not_found": "User not found",
+    "adress":"123 Main Street, City",
+    "work":"WORKIO",
+    "pdf":"Pdf",
+"print":"Print",
+
+"description" : "Description",
+"amount" : "Amount",
+"english": "English",
+  "french": "French",
+  "arabic": "Arabic"
+
+    
   }
   

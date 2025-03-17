@@ -193,9 +193,13 @@ body {
 }
 
 .logo {
-  width: 90px;
-  height: 100px;
+  width: 100px;
+  height: 80px;
   text-align: center;
+}
+
+.logout {
+  cursor: pointer;
 }
 
 body.dark-mode {

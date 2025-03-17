@@ -20,8 +20,11 @@
       "employee_list": "قائمة الموظفين",
       "employee_leave": "إجازة الموظفين",
       "employee_payroll": "رواتب الموظفين",
-      "holidays_of_year": "عطلات هذا العام",
-      "departments": "الأقسام",
+"Holidays_of_year": "عطلات السنة",
+  "Change_password": "تغيير كلمة المرور",
+  "Leave_request": "طلب إجازة",
+  "Attestation": "شهادة",
+        "departments": "الأقسام",
       "attendance": "الحضور",
       "payroll": "الرواتب",
       "view_payroll": "عرض الرواتب",
@@ -32,19 +35,21 @@
       "good_afternoon": "مساء الخير،",
       "good_evening": "مساء النور،",
 
+
+      "holidayListTitle": "قائمة العطلات",
+
       
      "holidays": {
-    "Jour de l'An": "رأس السنة الميلادية",
-    "Fête du Travail": "يوم العمال",
-    "Fête du Trône": "يوم العرش",
-    "Fête de la Révolution": "يوم الثورة",
-    "Fête de la Jeunesse": "يوم الشباب",
-    "Aïd el-Fitr": "عيد الفطر",
-    "Aïd el-Adha": "عيد الأضحى",
-    "Anniversaire du Roi": "عيد ميلاد الملك",
-    "Fête de l'Indépendance": "يوم الاستقلال",
-    "Ras as-Sanah al-Hijriyah": "رأس السنة الهجرية",
-    "Mouloud": "المولد"
+    "New Year's Day": "رأس السنة الميلادية",
+    "Labor Day": "يوم العمال",
+    "King and People's Revolution Day": "يوم العرش",
+    "Independence Day": "يوم الاستقلال",
+    "Eid al-Fitr": "عيد الفطر",
+    "Eid al-Adha": "عيد الأضحى",
+    "Islamic New Year": "رأس السنة الهجرية",
+    "Mawlid al-Nabi (Prophet Muhammad's Birthday)": "المولد النبوي",
+    "Throne Day": "يوم العرش",
+    "Amazigh Day": "يوم الأمازيغ"
   },
   "attestation_requests": "طلبات الشهادة",
   "last_attestation_requests": "آخر طلبات الشهادة",
@@ -58,6 +63,52 @@
     "Pending": "قيد الانتظار"
     
 
-  }
+  },
+  "change_password": "تغيير كلمة المرور",
+  "old_password": "كلمة المرور القديمة",
+  "new_password": "كلمة المرور الجديدة",
+  "confirm_new_password": "تأكيد كلمة المرور الجديدة",
+  "password_updated_successfully": "تم تحديث كلمة المرور بنجاح",
+  "password_update_failed": "فشل تحديث كلمة المرور",
+  "please_fill_all_fields": "يرجى ملء جميع الحقول",
+  "passwords_do_not_match": "كلمات المرور غير متطابقة",
+  "loading": "جاري التحميل...",
+
+
+
+  "salary_for_the_month": "الراتب الشهري",
+  "user_name": "اسم المستخدم",
+  "department": "القسم",
+  "job_title": "المسمى الوظيفي",
+  "start_date": "تاريخ البدء",
+  "end_date": "تاريخ الانتهاء",
+  "enterprise_name": "اسم المؤسسة",
+  "enterprise_address": "عنوان المؤسسة",
+  "base_salary": "الراتب الأساسي",
+  "leave_deductions": "خصم الإجازات",
+  "attendance_deductions": "خصم الحضور",
+  "tva": "ضريبة القيمة المضافة",
+  "net_salary": "الراتب الصافي",
+  "not_available": "غير متوفر",
+  "error_fetching_salary": "خطأ في جلب تفاصيل الراتب",
+  "no_salary_data_found": "لم يتم العثور على بيانات الراتب",
+  "invalid_response_format": "تنسيق الاستجابة غير صالح",
+  "user_not_found": "المستخدم غير موجود",
+"address": "الشارع الرئيسي، المدينة 123",
+
+"work":"وركيو",
+"pdf":"تحميل",
+"print":"طباعة",
+"description" :"الوصف",
+"amount" :"المبلغ",
+"english": "الإنجليزية",
+"french": "الفرنسية",
+"arabic": "العربية"
+
+
+
+
+
+
   }
   

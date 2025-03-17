@@ -112,18 +112,6 @@
   border-radius: 10px;
 }
 
-.button.view {
-  background-color: purple;
-}
-
-.button.update {
-  background-color: blue;
-}
-
-.button.delete {
-  background-color: red;
-}
-
 .profile-container {
   display: flex;
   align-items: center;
@@ -257,6 +245,12 @@
     flex-direction: row !important;
     gap: 10px;
     margin: 0;
+  }
+  .table-row div::before {
+    content: attr(data-label);
+    font-weight: bold;
+    margin-right: 10px;
+    color: #333;
   }
 }
 @media (max-width: 480px) {

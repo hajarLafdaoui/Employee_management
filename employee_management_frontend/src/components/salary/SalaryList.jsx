@@ -83,16 +83,16 @@ useEffect(() => {
         setSalaries(salaries.filter(salary => salary.id !== deleteSalaryId));
         setShowDeletePopUp(false);
         setShowSuccessAlert(true);
-        setShowSuccessAlert();
+        setStatusMessage('Salary deleted successfully!'); 
         setTimeout(() => {
-          setShowSuccessAlert(true);
-      }, 5000);
+          setShowSuccessAlert(false);
+        }, 5000);
       } catch (err) {
         setError('Error deleting salary.');
         setShowErrorAlert(true);
         setTimeout(() => {
-          setShowErrorAlert(true);
-        }, 5000);
+          setShowErrorAlert(false);
+        }, 5000); 
       }
     }
   };
@@ -102,7 +102,7 @@ useEffect(() => {
       setStatusMessage('Message cannot be empty.');
       setShowErrorAlert(true);
       setTimeout(() => {
-        setShowErrorAlert(true);
+        setShowErrorAlert(false);
       }, 5000);
       return;
     }
@@ -127,13 +127,13 @@ useEffect(() => {
       setShowSuccessAlert(true);
       setShowSuccessAlert();
       setTimeout(() => {
-        setShowSuccessAlert(true);
+        setShowSuccessAlert(false);
     }, 5000);
     } catch (error) {
       setStatusMessage('Failed to send message. Please try again.');
       setShowErrorAlert(true);
       setTimeout(() => {
-        setShowErrorAlert(true);
+        setShowErrorAlert(false);
       }, 5000);
       console.error('Error:', error.text);
     } finally {
@@ -324,71 +324,68 @@ useEffect(() => {
           <p className="no-salaries-message">No salaries found.</p>
         ) : (
           <div className="table-wrapper">
-            <div className="table-header">
-            <div>img</div>
-              <div>Name</div>
-              <div>Day Paid</div>
-              <div>Start Date</div>
-              <div>End Date</div>
-              {/* <div>Attendances</div>
-              <div>Leaves</div> */}
-              <div>Total Salary</div>
-              <div>Actions</div>
-            </div>
-            {getPaginatedSalaries().map((salary) => (
-              <div key={salary.id} className="table-row">
-                
-                {/* <div><img src="{salary.user.profile_picture}" className="userprofile" alt="" /></div> */}
-                <div> <img src="img/images.jpg" alt="#"className="userprofile" /></div>
-                <div>{salary.user.name}</div>
-                <div>{salary.paid_on}</div>
-                <div>{salary.start_date}</div>
-                <div>{salary.end_date}</div>
-                {/* <div>{salary.attendances}</div>
-                <div>{salary.leaves}</div> */}
-                <div>{salary.total_salary}</div>
-                <div className="actions">
-                  <button
-                    className="button action-button"
-                    onClick={() => toggleMenu(salary.id)}
-                  >
-                    &#x22EE;
-                  </button>
-                  {activeMenu === salary.id && (
-                  <div className="dropdown-menu">
-
-                    
-                                    <div
-      onClick={() => fetchSalaryDetails(salary.id)} 
-      className="viewlink"
-    >
-      <img className="view-icon" src="/icons/view.png" alt="View" /><p>show</p>
-    </div>
-                      <Link to={`/salary/${salary.id}`}  className="viewlink">
-                        <img className="view-icon" src="/icons/print1.png" alt="" /><p>print</p> 
-                      </Link>
-                   
-                      <div
-                        onClick={() => handleShowMessageForm(salary.user)}
-                        className="viewlink"
-                      >
-                       <img src="icons/email.png" alt=""  className="view-icon"/><p>msg</p>
-                      </div>
-                      <div
-                        onClick={() => {
-                          setDeleteSalaryId(salary.id);
-                          setShowDeletePopUp(true);
-                        }}
-                        className="viewlink"
-                      >
-                        <img className="delete-icon" src="/icons/delete.png" alt="Delete" /><p>delete</p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
+  <div className="table-header">
+    <div>Img</div>
+    <div>Name</div>
+    <div>Day Paid</div>
+    <div>Start Date</div>
+    <div>End Date</div>
+    <div>Total Salary</div>
+    <div>Actions</div>
+  </div>
+  
+  {getPaginatedSalaries().map((salary) => (
+    <div key={salary.id} className="table-row">
+      <div >
+        <img src={`http://localhost:8000/storage/${salary.user.profile_picture}`}
+ alt="#" className="userprofile" />
+      </div>
+      <div data-label="Name">{salary.user.name}</div>
+      <div data-label="Day Paid">{salary.paid_on}</div>
+      <div data-label="Start Date">{salary.start_date}</div>
+      <div data-label="End Date">{salary.end_date}</div>
+      <div data-label="Total Salary">{salary.total_salary}</div>
+      <div className="actions" >
+        <button
+          className="button action-button"
+          onClick={() => toggleMenu(salary.id)}
+        >
+          &#x22EE;
+        </button>
+        {activeMenu === salary.id && (
+          <div className="dropdown-menu">
+            <Link onClick={() => fetchSalaryDetails(salary.id)} className="viewlink">
+              <img className="view-icon" src="/icons/view.png" alt="View" />
+              <p>show</p>
+            </Link>
+            <Link to={`/salary/${salary.id}`} className="viewlink">
+              <img className="view-icon" src="/icons/print1.png" alt="" />
+              <p>print</p>
+            </Link>
+            <Link
+              onClick={() => handleShowMessageForm(salary.user)}
+              className="viewlink"
+            >
+              <img src="icons/email.png" alt="" className="view-icon" />
+              <p>msg</p>
+            </Link>
+            <Link
+              onClick={() => {
+                setDeleteSalaryId(salary.id);
+                setShowDeletePopUp(true);
+              }}
+              className="viewlink"
+            >
+              <img className="delete-icon" src="/icons/delete.png" alt="Delete" />
+              <p>delete</p>
+            </Link>
           </div>
+        )}
+      </div>
+    </div>
+  ))}
+</div>
+
         )}
 
         <div className="page">

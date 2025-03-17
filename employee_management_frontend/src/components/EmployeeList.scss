@@ -65,7 +65,7 @@ height: 50px;  }
     font-size: 24px;
     cursor: pointer;
   }
-  
+ 
   .dropdown-menu {
     position: absolute;
     right: 0;
@@ -118,17 +118,7 @@ height: 50px;  }
     // top: 150px; 
   }
   
-  .button.view {
-    background-color: purple;
-  }
-  
-  .button.update {
-    background-color: blue;
-  }
-  
-  .button.delete {
-    background-color: red;
-  }
+
   
   .profile-container {
     display: flex;
@@ -283,7 +273,12 @@ padding: 6px;
       margin: 0;
     
   }
-  
+  .table-row div::before {
+    content: attr(data-label); 
+    font-weight: bold;
+    margin-right: 10px;
+    color: #333;
+  }
 
   }
   
