@@ -140,3 +140,21 @@
   text-align: center;
   margin-bottom: 20px;
 }
+
+.dark-mode  .modal{
+  background-color: #2c2c2c;
+}
+.dark-mode  .modal-form{
+  background-color: #2c2c2c;
+}
+
+.dark-mode .modal-header{
+  background-color: #2c2c2c !important;
+
+}
+
+.dark-mode .close{
+
+  filter: invert(1) brightness(1000%) contrast(100%);
+ 
+}

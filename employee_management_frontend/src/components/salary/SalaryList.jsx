@@ -125,7 +125,6 @@ useEffect(() => {
       setShowMessageForm(false); 
       setMessage('Message sent successfully!'); 
       setShowSuccessAlert(true);
-      setShowSuccessAlert();
       setTimeout(() => {
         setShowSuccessAlert(false);
     }, 5000);
