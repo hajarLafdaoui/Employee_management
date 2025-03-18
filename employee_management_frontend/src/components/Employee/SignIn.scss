@@ -5,7 +5,12 @@
   background-color: #ffffff;
   height: 100vh;
 }
-
+.dark-mode .all{
+color: black;
+}
+.dark-mode .all .input{
+  color: rgba(0, 0, 0, 0.897) !important;
+  }
 .signin-container {
   display: flex;
   margin: 20px;

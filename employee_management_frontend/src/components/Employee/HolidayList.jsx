@@ -39,13 +39,18 @@ const HolidayList = () => {
           <tr>
             <th>{t('name')}</th>
             <th>{t('date')}</th>
+            <th>{t('number-of-days')}</th>
+
           </tr>
         </thead>
         <tbody>
           {holidays.map((holiday) => (
             <tr key={holiday.id}>
               <td>{t(`holidays.${holiday.name}`)}</td>
+
               <td>{new Date(holiday.date).toLocaleDateString()}</td>
+              <td>{holiday.number_of_days}</td>
+
             </tr>
           ))}
         </tbody>

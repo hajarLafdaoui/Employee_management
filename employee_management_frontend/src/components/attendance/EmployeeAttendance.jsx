@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../Config/axiosSetup";
 import LoadingSpinner from "../../LoadingSpinner";
 import "./EmployeeAttendance.scss";
-
+import { useTranslation } from "react-i18next";
 const EmployeeAttendance = ({ userId }) => {
+  const { t } = useTranslation();
   const [attendanceData, setAttendanceData] = useState([]);
   const [timeRange, setTimeRange] = useState("week"); // "week" or "month"
   const [selectedWeek, setSelectedWeek] = useState(0);
@@ -58,11 +59,11 @@ const EmployeeAttendance = ({ userId }) => {
       setAttendanceData(sortedData);
 
       if (response.data.length === 0) {
-        setError("No attendance records found for the selected date range.");
+        setError(t("no_attendance_records"));
       }
     } catch (error) {
       console.error("Failed to fetch user attendance:", error);
-      setError("Failed to fetch attendance data.");
+      setError(t("failed_fetching_data"));
     } finally {
       setLoading(false);
     }
@@ -140,13 +141,13 @@ const EmployeeAttendance = ({ userId }) => {
 
   return (
     <div className="employee-attendance">
-    <h2>My Attendance</h2>
+    <h2>{t("attendance1")}</h2>
 
     <div className="title-search-sort">
-        <label>Filter by:</label>
+        <label>{t("filter_by")}:</label>
         <select value={timeRange} onChange={(e) => setTimeRange(e.target.value)}>
-            <option value="week">Week</option>
-            <option value="month">Month</option>
+            <option value="week">{t("week")}</option>
+            <option value="month">{t("month")}</option>
         </select>
 
         {timeRange === "week" && (
@@ -154,9 +155,9 @@ const EmployeeAttendance = ({ userId }) => {
                 value={selectedWeek}
                 onChange={(e) => setSelectedWeek(parseInt(e.target.value))}
             >
-                <option value={0}>Current Week</option>
-                <option value={-1}>Previous Week</option>
-                <option value={-2}>Two Weeks Ago</option>
+                <option value={0}>{t("current_week")}</option>
+                <option value={-1}>{t("previous_week")}</option>
+                <option value={-2}>{t("two_weeks_ago")}</option>
             </select>
         )}
 
@@ -221,8 +222,8 @@ const EmployeeAttendance = ({ userId }) => {
 
             <div className="attendance-wrapper">
   <div className="attendance-header">
-    <div>Date</div>
-    <div>Status</div>
+    <div>{t("date1")}</div>
+    <div>{t("status1")}</div>
   </div>
   {attendanceData.length > 0 ? (
     attendanceData.map((entry) => (
@@ -233,7 +234,7 @@ const EmployeeAttendance = ({ userId }) => {
     ))
   ) : (
     <div className="attendance-row">
-      <div colSpan="2">No attendance records found.</div>
+      <div colSpan="2">{t("no_attendance_records")}.</div>
     </div>
   )}
 </div>

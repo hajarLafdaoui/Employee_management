@@ -28,6 +28,8 @@ action:
 
 // CRUD operations for users
 Route::get('/users', [UserController::class, 'index']);
+Route::get('/getall', [UserController::class, 'getall']);
+
 Route::get('/employees', [UserController::class, 'fetchEmployees']);
 Route::get('/users/{id}', [UserController::class, 'show']);
 Route::post('/users', [UserController::class, 'store']);

@@ -12,7 +12,9 @@
   align-items: center;
   pointer-events: all;
 }
-
+.dark-mode .🛑{
+  background-color: #2c2c2c;
+}
 .🗑️ {
   overflow: hidden;
   position: relative;
@@ -23,12 +25,16 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   pointer-events: auto;
 }
-
+.dark-mode .🗑️{
+  background-color: #2c2c2c;
+}
 .📌 {
   padding: 1.25rem 1rem 1rem 1rem;
   background-color: #ffffff;
 }
-
+.dark-mode .📌{
+background-color: #2c2c2c;
+}
 .⚠️ {
   display: flex;
   margin-left: auto;
@@ -41,6 +47,10 @@
   height: 3rem;
   border-radius: 9999px;
 }
+
+.dark-mode .⚠️{
+  background-color: #2c2c2c;
+  }
 
 .⚠️ svg {
   color: #dc2626;
@@ -60,6 +70,10 @@
   line-height: 1.5rem;
 }
 
+.dark-mode .🔤{
+  color: white;
+}
+
 .📄 {
   margin-top: 0.5rem;
   color: #6b7280;
@@ -71,7 +85,9 @@
   margin: 0.75rem 1rem;
   background-color: #f9fafb;
 }
-
+.dark-mode .🎯{
+  background-color: #2c2c2c;
+  }
 .❌ {
   display: inline-flex;
   padding: 0.5rem 1rem;
@@ -103,6 +119,22 @@
   border: 1px solid #d1d5db;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
+.dark-mode .🔙{
+  background-color: #2c2c2c;
+  border: 1px solid white;
+  
+  }
+  .dark-mode .🔙:hover,
+  .dark-mode .❌:hover {
+    color: white !important;            
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);  
+    background-color:#2c2c2c !important;          
+    cursor: pointer; 
+    
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+
+  }
+
 
 .❌,
 .🔙 {

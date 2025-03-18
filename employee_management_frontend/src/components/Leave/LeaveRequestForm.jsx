@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../Config/axiosSetup';
 import './leaveRequestForm.scss';
-
+import { useTranslation } from 'react-i18next';
 const LeaveRequestForm = () => {
     const [leaveType, setLeaveType] = useState('');
     const [startDate, setStartDate] = useState('');
@@ -10,7 +10,7 @@ const LeaveRequestForm = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [user, setUser] = useState(null);
-
+    const { t } = useTranslation();
     // Fetch user data on mount
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -27,7 +27,7 @@ const LeaveRequestForm = () => {
         setError(null);
 
         if (!user || !user.id) {
-            setError('User not found. Please log in again.');
+            setError(t('leave_request_form.user_not_found'));
             setLoading(false);
             return;
         }
@@ -41,14 +41,14 @@ const LeaveRequestForm = () => {
                 reason: reason,
             });
 
-            alert('Leave request sent successfully');
+            alert(t('leave_request_form.leave_request_sent_success'));
             setLeaveType('');
             setStartDate('');
             setEndDate('');
             setReason('');
         } catch (error) {
             console.error('Error submitting the request:', error.response?.data || error);
-            setError(error.response?.data?.message || 'Failed to submit leave request. Please try again.');
+            setError(error.response?.data?.message ||  t('leave_request_form.leave_request_failed'));
         } finally {
             setLoading(false);
         }
@@ -57,22 +57,22 @@ const LeaveRequestForm = () => {
     return (
         <form className="leave-request-form" onSubmit={handleSubmit}>
             <div className="input-group">
-                <label>Leave Type:</label>
+                <label>{t('leave_request_form.leave_type')}:</label>
                 <select
                     value={leaveType}
                     onChange={(e) => setLeaveType(e.target.value)}
                     required
                 >
-                    <option value="">Select leave type</option>
-                    <option value="vacation">Vacation</option>
-                    <option value="sick_leave">Sick Leave</option>
-                    <option value="personal_leave">Personal Leave</option>
-                    <option value="maternity_leave">Maternity Leave</option>
-                    <option value="other">Other</option>
+                    <option value="">{t('leave_request_form.select_leave_type')}</option>
+                    <option value="vacation">{t('leave_request_form.vacation')}</option>
+                    <option value="sick_leave">{t('leave_request_form.sick_leave')}</option>
+                    <option value="personal_leave">{t('leave_request_form.personal_leave')}</option>
+                    <option value="maternity_leave">{t('leave_request_form.maternity_leave')}</option>
+                    <option value="other">{t('leave_request_form.other')}</option>
                 </select>
             </div>
             <div className="input-group">
-                <label>Start Date:</label>
+                <label>{t('leave_request_form.start_date')}:</label>
                 <input
                     type="date"
                     value={startDate}
@@ -81,7 +81,7 @@ const LeaveRequestForm = () => {
                 />
             </div>
             <div className="input-group">
-                <label>End Date:</label>
+                <label>{t('leave_request_form.end_date')}:</label>
                 <input
                     type="date"
                     value={endDate}
@@ -90,7 +90,7 @@ const LeaveRequestForm = () => {
                 />
             </div>
             <div className="input-group">
-                <label>Reason:</label>
+                <label>{t('leave_request_form.reason')}:</label>
                 <textarea
                     value={reason}
                     onChange={(e) => setReason(e.target.value)}
@@ -99,7 +99,7 @@ const LeaveRequestForm = () => {
             </div>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <button className="button-form" type="submit" disabled={loading}>
-                {loading ? 'Submitting...' : 'Submit Request'}
+                {loading ? t('leave_request_form.submitting') : t('leave_request_form.submit_request')}
             </button>
         </form>
     );

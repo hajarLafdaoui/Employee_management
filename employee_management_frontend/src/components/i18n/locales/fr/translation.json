@@ -110,7 +110,41 @@
 "english": "Anglais",
   "french": "Français",
   "arabic": "Arabe",
-  "aucun_salaire": "Aucun salaire"
+  "aucun_salaire": "Aucun salaire",
+  "attendance1": "Ma Présence",
+  "My attendance": "Ma présence",
+      "filter_by": "Filtrer par :",
+      "week": "Semaine",
+      "month": "Mois",
+      "current_week": "Semaine en cours",
+      "previous_week": "Semaine précédente",
+      "two_weeks_ago": "Il y a deux semaines",
+      "no_attendance_records": "Aucun enregistrement de présence trouvé.",
+      "status1": "Statut",
+      "date1": "Date",
+      "unknown": "Inconnu",
+      "sort_by_date": "Trier par date",
+
+      "leave_request_form": {
+    "leave_type": "Type de congé",
+    "select_leave_type": "Sélectionnez le type de congé",
+    "vacation": "Vacances",
+    "sick_leave": "Congé maladie",
+    "personal_leave": "Congé personnel",
+    "maternity_leave": "Congé maternité",
+    "other": "Autre",
+    "start_date": "Date de début",
+    "end_date": "Date de fin",
+    "reason": "Raison",
+    "submit_request": "Soumettre la demande",
+    "submitting": "Soumission en cours...",
+    "user_not_found": "Utilisateur non trouvé. Veuillez vous reconnecter.",
+    "leave_request_sent_success": "Demande de congé envoyée avec succès",
+    "leave_request_failed": "Échec de l'envoi de la demande de congé. Veuillez réessayer."
+  }
+
+  ,    "number-of-days": "Nombre de Jours"
+
 
 
 

@@ -104,8 +104,39 @@
 "english": "الإنجليزية",
 "french": "الفرنسية",
 "arabic": "العربية",
-"aucun_salaire": "لا يوجد راتب"
+"aucun_salaire": "لا يوجد راتب",
+"attendance1": "حضور الموظف",
 
+"My attendance": "حضور الموظف",
+      "filter_by": "تصفية حسب:",
+      "week": "الأسبوع",
+      "month": "الشهر",
+      "current_week": "الأسبوع الحالي",
+      "previous_week": "الأسبوع الماضي",
+      "two_weeks_ago": "منذ أسبوعين",
+      "no_attendance_records": "لا توجد سجلات حضور للمدى الزمني المحدد.",
+      "status1": "الحالة",
+      "date1": "التاريخ",
+      "unknown": "غير معروف",
+      "sort_by_date": "ترتيب حسب التاريخ",
+      "leave_request_form": {
+    "leave_type": "نوع الإجازة",
+    "select_leave_type": "حدد نوع الإجازة",
+    "vacation": "إجازة سنوية",
+    "sick_leave": "إجازة مرضية",
+    "personal_leave": "إجازة شخصية",
+    "maternity_leave": "إجازة أمومة",
+    "other": "أخرى",
+    "start_date": "تاريخ البداية",
+    "end_date": "تاريخ الانتهاء",
+    "reason": "السبب",
+    "submit_request": "إرسال الطلب",
+    "submitting": "جاري الإرسال...",
+    "user_not_found": "لم يتم العثور على المستخدم. يرجى تسجيل الدخول مرة أخرى.",
+    "leave_request_sent_success": "تم إرسال طلب الإجازة بنجاح",
+    "leave_request_failed": "فشل في إرسال طلب الإجازة. يرجى المحاولة مرة أخرى."
+  }
+,"number-of-days": "عدد الأيام"
 
 
 
