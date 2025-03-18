@@ -125,6 +125,7 @@ const AdminHolidayManagement = () => {
       )}
 
       <div className="DepaHead">
+        
         <h4>Manage Holidays</h4>
         <div onClick={handleCreateHoliday} className="buttonContainer">
           <img className='plusIcon' src="/icons/icons8-plus-50 (1).png" alt="Add" />
