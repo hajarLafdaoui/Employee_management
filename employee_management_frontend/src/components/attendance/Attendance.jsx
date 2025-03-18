@@ -36,6 +36,8 @@ const Attendance = ({ attendance, currentDate, refreshAttendance }) => {
     const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
     const [deleteId, setDeleteId] = useState(null);
 
+    
+
     const fetchDepartments = async () => {
         try {
             const resp = await axiosInstance.get("/departments");

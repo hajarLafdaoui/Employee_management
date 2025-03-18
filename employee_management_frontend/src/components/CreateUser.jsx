@@ -3,6 +3,7 @@ import axiosInstance from './Config/axiosSetup';
 import { Link, useNavigate } from 'react-router-dom';
 import CountrySelect from './CountrySelect';
 import SuccessAlert from './Alerts/SuccessAlert';
+import ErrorAlert from './Alerts/ErrorAlert';
 
 const CreateUser = () => {
   const [userData, setUserData] = useState({
@@ -27,6 +28,7 @@ const CreateUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -70,13 +72,18 @@ const CreateUser = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Submitting gender:", userData.gender); // Add this line
+
     const { name, email, password, username, role, phone, departmentId, job_id, baseSalary, gender, country, profilePicture } = userData;
 
     // Simple client-side validation for required fields
     if (!name || !email || !password || !role || !username || !departmentId || !job_id || !gender || !country) {
       setMessage('Please fill in all required fields.');
+      setShowErrorAlert(true); // Show error alert
       return;
     }
+    console.log("Submitting gender:", userData.gender); // Add this line
+
 
     setIsSubmitting(true); // Disable submit button during submission
     const formData = new FormData();
@@ -99,13 +106,17 @@ const CreateUser = () => {
     }
 
     try {
+        console.log("Submitting gender:", userData.gender); // Add this line
+
       const response = await axiosInstance.post('/users', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      setMessage(response.data.message);
-      setShowSuccessAlert(true); // Show the success alert
+      setMessage('Failed to add employee');
+      setShowSuccessAlert(true); // Show alert immediately
+
+
       setUserData({
         name: '',
         email: '',
@@ -116,17 +127,17 @@ const CreateUser = () => {
         profilePicture: null,
         departmentId: '',
         job_id: '', // Reset job_id
-        baseSalary: 0,
         gender: '',
         country: '',
         is_active: true,
       });
-        navigate("/EmployeeList"); // Navigate after showing the alert
+      setTimeout(() => {
+        navigate("/EmployeeList"); // Navigate after 5 seconds
+      }, 5000);
     } catch (error) {
       console.error('Error creating user:', error);
       setMessage(error.response?.data?.message || 'Error creating user');
-    } finally {
-      setIsSubmitting(false); // Enable submit button again
+      setShowErrorAlert(true); // Show error alert
     }
   };
 
@@ -263,12 +274,14 @@ const CreateUser = () => {
             </select>
           </div>
 
+          {/* Gender Dropdown */}
           <div className="input-group">
             <select
               className="select-empployee"
-              name="gender"
+              name="gender" // Ensure this matches state key
               value={userData.gender}
               onChange={handleInputChange}
+              required
             >
               <option value="">Select Gender</option>
               <option value="male">Male</option>
@@ -315,8 +328,8 @@ const CreateUser = () => {
 
           <div className="select-empployee">
             <CountrySelect className="select-empployee" onChange={handleCountryChange} />
-            </div>
-         
+          </div>
+
 
           <button className="button-form vertical-button-form" type="submit" disabled={isSubmitting}>
             {isSubmitting ? 'Creating...' : 'Create User'}
@@ -329,6 +342,12 @@ const CreateUser = () => {
         <SuccessAlert
           message="User created successfully!"
           onClose={() => setShowSuccessAlert(false)}
+        />
+      )}
+      {showErrorAlert && (
+        <ErrorAlert
+          message={message}
+          onClose={() => setShowErrorAlert(false)}
         />
       )}
     </div>

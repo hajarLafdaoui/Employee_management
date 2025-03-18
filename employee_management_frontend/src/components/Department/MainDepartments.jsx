@@ -44,7 +44,7 @@ const MainDepartments = () => {
   return (
     <div>
       <div className="DepaHead">
-        <h3>Department</h3>
+        <h4>Department</h4>
         <div onClick={() => openModal()} className="buttonContainer">
           <img className='plusIcon' src="/icons/icons8-plus-50 (1).png" alt="Add" />
           <button>Add New</button>
@@ -62,9 +62,9 @@ const MainDepartments = () => {
         contentLabel="Department Modal"
         className="modal-form"
       >
-        <div className="modal-header">
-          <h2>{selectedDepartment ? "Edit Department" : "Add a Department"}</h2>
-          <img src="/icons/close.png" className='close' alt="Close" onClick={closeModal} />
+        <div className="modal-header" style={{marginTop:'20px'}}>
+          <h4>{selectedDepartment ? "Edit Department" : "Add a Department"}</h4>
+          <img src="/icons/close1.png" className='closee' alt="Close" onClick={closeModal} />
         </div>
 
         <DepartmentForm

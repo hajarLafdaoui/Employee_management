@@ -84,7 +84,7 @@ const SalaryCalculator = () => {
       {showErrorAlert && (
         <ErrorAlert message={error} onClose={() => setShowErrorAlert(false)} />
       )}
-      <h2>Calculateur de Salaire</h2>
+      <h4>Calculateur de Salaire</h4>
       <form onSubmit={handleCalculate} className="form form-vertical">
         <div className="inputs inputs-vertical">
           <div className="select-input-container">
@@ -143,9 +143,24 @@ const SalaryCalculator = () => {
         contentLabel="Détails du Salaire"
            overlayClassName="Department Detail Modal"
         className="modal modal-content"
+        style={{
+          content: {
+              width: "90%",
+              maxWidth: "900px",
+              right: "80px",
+              left: "auto",
+              margin: "20px",
+              padding: "20px",
+              borderRadius: "8px",
+              position: "fixed",
+              top: "50%",
+              transform: "translateY(-50%)",
+          },
+
+      }}
       >
         <div className="modal-header">
-          <h3>Détails du salaire </h3>
+          <h4>Détails du salaire </h4>
           <span className="modal-close" onClick={() => setShowModal(false)}>
             <img className="close" src="icons/close.png" alt="Fermer" />
           </span>

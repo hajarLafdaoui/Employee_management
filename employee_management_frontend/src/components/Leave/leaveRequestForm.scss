@@ -13,7 +13,7 @@
     font-family: 'Arial', sans-serif;
     transition: background-color 0.3s ease, color 0.3s ease;
   
-    h2 {
+    h4 {
       text-align: center;
       color: #333;
       margin-bottom: 20px;
@@ -162,6 +162,7 @@
   
   .hideShow{
     color: black  !important;
+    text-decoration: underline;
   }
   .hideShow:hover{
     color: rgb(69, 68, 68)  !important;

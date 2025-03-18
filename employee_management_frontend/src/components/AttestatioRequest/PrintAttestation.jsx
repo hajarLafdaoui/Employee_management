@@ -22,7 +22,7 @@ const PrintAttestation = () => {
 
       <img src="/logo/logo.png" alt="Logo" className="logo1" />
 
-      <h1 className="title">Employment Certificate</h1>
+      <h4 className="title">Employment Certificate</h4>
       <div className="content">
         <p>We, the undersigned, certify that:</p>
         <p><strong>Name:</strong> {user.name}</p>

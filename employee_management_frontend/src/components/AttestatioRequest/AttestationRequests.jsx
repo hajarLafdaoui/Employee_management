@@ -159,7 +159,7 @@ const AttestationRequests = () => {
                 />
             )}
 
-            <h2>Attestation Requests</h2>
+            <h4>Attestation Requests</h4>
 
             {attestations.length === 0 ? (
                 <p className="no-salaries-message">No attestations Requests data available.</p>  
@@ -201,7 +201,7 @@ const AttestationRequests = () => {
                                 {activeMenu === attestation.id && (
                                     <div className="dropdown-menu">
                                         <div
-                                            onClick={() => handleStatusChange(attestation.id, 'Approved')}
+                                            onClick={() => handleStatusChange(attestation.id, 'Approved')} 
                                             className="viewlink"
                                         >
                                             <img src="icons/mark.png" alt="" className="view-icon" />

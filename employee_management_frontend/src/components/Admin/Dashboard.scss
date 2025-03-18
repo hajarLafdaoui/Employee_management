@@ -87,11 +87,19 @@ background-color: #8CACD3 ;
 /* Existing styles... */
 
 /* Add hover effect to the statics divs */
+.dark-mode .total-employees:hover,
+.dark-mode .new-employees:hover,
+.dark-mode .by-gender:hover ,
+.dark-mode .delete-employees:hover{
+    background-color: #2c2c2c; /* Change this to your desired hover color */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 .total-employees:hover,
 .new-employees:hover,
 .by-gender:hover ,
 .delete-employees:hover{
-    background-color: #f0f0f0; /* Change this to your desired hover color */
+    background-color: #fff; /* Change this to your desired hover color */
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -111,8 +119,8 @@ background-color: #8CACD3 ;
 
 
 .icontotal{
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
 }
 
 .iconaug{
@@ -126,4 +134,8 @@ background-color: #8CACD3 ;
 .dark-mode .attGraph,
 .dark-mode .DepGraph{
     background-color: #2c2c2c ;
+}
+.dark-mode .moreIconWhite{
+    color:  #fff !important;
+    color:  #fff !important;
 }

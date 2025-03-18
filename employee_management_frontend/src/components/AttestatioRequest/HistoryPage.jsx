@@ -52,7 +52,7 @@ const HistoryPage = () => {
                 />
             )}
 
-<h2>Historique</h2>
+<h4>Historique</h4>
 
 {history.length === 0 ? (
                 <p className="no-salaries-message">No historical data available.</p>  

@@ -70,7 +70,7 @@ const PrintSalary = () => {
             <div className="salary-container"ref={pdfRef}>
             <img src="/logo/logo.png" alt="Logo" className="logo1"/>
             <div className="salary-header">
-                    <h1>Pays for the Month</h1>
+                    <h4>Pays for the Month</h4>
                     <p>{new Date(salary.paid_on).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
                 </div>
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '../Config/axiosSetup';
 import './leaveRequestForm.scss';
 import { useTranslation } from 'react-i18next';
+import SuccessAlert from '../Alerts/SuccessAlert';
 const LeaveRequestForm = () => {
     const [leaveType, setLeaveType] = useState('');
     const [startDate, setStartDate] = useState('');
@@ -11,6 +12,8 @@ const LeaveRequestForm = () => {
     const [error, setError] = useState(null);
     const [user, setUser] = useState(null);
     const { t } = useTranslation();
+    const [showSuccessAlert, setShowSuccessAlert] = useState(false); // Add this state
+
     // Fetch user data on mount
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -41,7 +44,7 @@ const LeaveRequestForm = () => {
                 reason: reason,
             });
 
-            alert(t('leave_request_form.leave_request_sent_success'));
+            setShowSuccessAlert(true);
             setLeaveType('');
             setStartDate('');
             setEndDate('');
@@ -101,6 +104,13 @@ const LeaveRequestForm = () => {
             <button className="button-form" type="submit" disabled={loading}>
                 {loading ? t('leave_request_form.submitting') : t('leave_request_form.submit_request')}
             </button>
+
+            {showSuccessAlert && (
+                <SuccessAlert
+                    message={t('leave_request_form.leave_request_sent_success')}
+                    onClose={() => setShowSuccessAlert(false)}
+                />
+            )}
         </form>
     );
 };

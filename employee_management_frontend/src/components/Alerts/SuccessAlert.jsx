@@ -15,16 +15,24 @@ const SuccessAlert = ({ message, onClose }) => {
       <div className="success-alert">
         <div className="alert-content">
           <div className="icon">
-            <img src="icons/success.png" className="success" alt="Success" />
+            <img
+              src={`${process.env.PUBLIC_URL}/icons/success.png`}
+              className="success"
+              alt="Success"
+            />
           </div>
+
           <div className="text-content-alert">
             <p className="MSG ">Done successfully :)</p>
             <p className="msg2">{message}</p>
           </div>
         </div>
         <button className="close-btn" onClick={onClose}>
-          <img src="icons/close.png" className="close" alt="Close" />
-        </button>
+          <img
+            src={`${process.env.PUBLIC_URL}/icons/close1.png`}
+            className="closee"
+            alt="Close"
+          />        </button>
       </div>
     </div>
   );

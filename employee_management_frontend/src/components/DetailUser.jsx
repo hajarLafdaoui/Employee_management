@@ -20,7 +20,6 @@ const DetailUser = () => {
         console.log(user)
       } catch (err) {
         setError('Error fetching user details');
-        console.error(err);
       } finally {
         setLoading(false);
       }
