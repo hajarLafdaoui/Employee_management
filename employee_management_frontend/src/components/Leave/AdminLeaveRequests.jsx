@@ -155,8 +155,8 @@ const AdminLeaveRequests = () => {
           ))}
         </tbody>
       </table>
-      <button onClick={() => setShowApproved(!showApproved)}>
-        {showApproved ? "Hide Approved Users" : "Show Approved Users"}
+      <button  onClick={() => setShowApproved(!showApproved)}>
+       <span className="hideShow">{showApproved ? "Hide Approved Users" : "Show Approved Users"}</span> 
       </button>
       {showApproved && (
         <div>
@@ -168,7 +168,7 @@ const AdminLeaveRequests = () => {
               onChange={(e) => setSearchDate(e.target.value)}
               style={{ marginRight: "10px" }}
             />
-            <button onClick={handleSearch}>Search by date</button>
+            <button onClick={handleSearch}> <span className="hideShow">Search by date</span></button>
           </div>
           <table border="1">
             <thead>

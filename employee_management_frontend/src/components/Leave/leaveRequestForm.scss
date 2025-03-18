@@ -98,6 +98,7 @@
       font-size: 0.9rem;
       color: #666;
     }
+    
   }
   
   // Dark Mode Styles
@@ -159,3 +160,12 @@
     }
   }
   
+  .hideShow{
+    color: black  !important;
+  }
+  .hideShow:hover{
+    color: rgb(69, 68, 68)  !important;
+  }
+  .dark-mode  .hideShow{
+    color: white  !important;
+  }
