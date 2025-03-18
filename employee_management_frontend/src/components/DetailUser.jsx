@@ -30,10 +30,7 @@ const DetailUser = () => {
   if (error) return <p className="error-message">{error}</p>;
 
   return (
-    <div className="dashboard-container">
-     
-
-      <main className="main-content">
+      <div className="main-content">
         <div className="employee-card">
           <h2>Employee Details</h2>
           {user && (
@@ -47,15 +44,11 @@ const DetailUser = () => {
                 <h3>{user.name}</h3>
                 <span className="position">{user.job_id || 'N/A'}</span>
                 <span className="department">{user.department?.name || 'N/A'}</span>
+                <p><strong>ID:</strong> {user.id}</p>
+                <p><strong>Created At:</strong> {new Date(user.created_at).toLocaleDateString()}</p>
               </div>
-
-              <div className="data-section">
-                <nav className="tabs">
-                  <button className="active">Personal Data</button>
-                  <button>Documents</button>
-                  <button>Work Data</button>
-                  <button>Additional Info</button>
-                </nav>
+<div className="sidebarright">
+              <div className="info">
                 <div className="data-grid">
                   <p><strong>Email:</strong> {user.email}</p>
                   <p><strong>Phone:</strong> {user.phone}</p>
@@ -63,6 +56,13 @@ const DetailUser = () => {
                   <p><strong>Country:</strong> {user.country}</p>
                   <p><strong>Role:</strong> {user.role}</p>
                   <p><strong>Active:</strong> <span className={user.is_active ? "active" : "inactive"}>{user.is_active ? 'Yes' : 'No'}</span></p>
+                </div>
+
+                <div className="contact-info">
+                  <p><strong>Contact:</strong></p>
+                  <p><strong>Email:</strong> {user.email}</p>
+                  <p><strong>Phone:</strong> {user.phone}</p>
+                </div>
                 </div>
                 <div className="buttons">
                   <Link to={`/update-user/${user.id}`} className="btn update">
@@ -74,8 +74,7 @@ const DetailUser = () => {
             </div>
           )}
         </div>
-      </main>
-    </div>
+      </div>
   );
 };
 
