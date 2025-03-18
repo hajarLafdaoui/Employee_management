@@ -72,6 +72,8 @@ const CreateUser = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Submitting gender:", userData.gender); // Add this line
+
     const { name, email, password, username, role, phone, departmentId, job_id, baseSalary, gender, country, profilePicture } = userData;
 
     // Simple client-side validation for required fields
@@ -80,6 +82,8 @@ const CreateUser = () => {
       setShowErrorAlert(true); // Show error alert
       return;
     }
+    console.log("Submitting gender:", userData.gender); // Add this line
+
 
     setIsSubmitting(true); // Disable submit button during submission
     const formData = new FormData();
@@ -102,15 +106,17 @@ const CreateUser = () => {
     }
 
     try {
-      const response = await axiosInstance.post('/uers', formData, {
+        console.log("Submitting gender:", userData.gender); // Add this line
+
+      const response = await axiosInstance.post('/users', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      setMessage(response.data.message);
-    setShowSuccessAlert(true); // Show alert immediately
+      setMessage('Failed to add employee');
+      setShowSuccessAlert(true); // Show alert immediately
 
-      
+
       setUserData({
         name: '',
         email: '',
@@ -121,7 +127,6 @@ const CreateUser = () => {
         profilePicture: null,
         departmentId: '',
         job_id: '', // Reset job_id
-        baseSalary: 0,
         gender: '',
         country: '',
         is_active: true,
@@ -269,12 +274,14 @@ const CreateUser = () => {
             </select>
           </div>
 
+          {/* Gender Dropdown */}
           <div className="input-group">
             <select
               className="select-empployee"
-              name="gender"
+              name="gender" // Ensure this matches state key
               value={userData.gender}
               onChange={handleInputChange}
+              required
             >
               <option value="">Select Gender</option>
               <option value="male">Male</option>
@@ -321,8 +328,8 @@ const CreateUser = () => {
 
           <div className="select-empployee">
             <CountrySelect className="select-empployee" onChange={handleCountryChange} />
-            </div>
-         
+          </div>
+
 
           <button className="button-form vertical-button-form" type="submit" disabled={isSubmitting}>
             {isSubmitting ? 'Creating...' : 'Create User'}
@@ -338,11 +345,11 @@ const CreateUser = () => {
         />
       )}
       {showErrorAlert && (
-  <ErrorAlert
-    message={message}
-    onClose={() => setShowErrorAlert(false)}
-  />
-)}
+        <ErrorAlert
+          message={message}
+          onClose={() => setShowErrorAlert(false)}
+        />
+      )}
     </div>
   );
 };

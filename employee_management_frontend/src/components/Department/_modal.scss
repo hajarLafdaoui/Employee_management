@@ -85,14 +85,14 @@
   display: flex;
   gap: 20px;
 
-  .active {
+  .activee {
     position: relative;
     font-weight: bold !important;
     text-decoration: none !important;
   }
 }
 
-.modal-links .active::after {
+.modal-links .activee::after {
   content: "";
   position: absolute;
   left: 0;

@@ -201,7 +201,7 @@ const AttestationRequests = () => {
                                 {activeMenu === attestation.id && (
                                     <div className="dropdown-menu">
                                         <div
-                                            onClick={() => handleStatusChange(attestation.id, 'Approved')}
+                                            onClick={() => handleStatusChange(attestation.id, 'Approved')} 
                                             className="viewlink"
                                         >
                                             <img src="icons/mark.png" alt="" className="view-icon" />

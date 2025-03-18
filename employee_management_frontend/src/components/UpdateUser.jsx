@@ -148,7 +148,7 @@ const UpdateUser = () => {
 
 
     try {
-      const response = await axiosInstance.put(`/usrs/${id}`, formData, {
+      const response = await axiosInstance.put(`/users/${id}`, formData, {
         headers: {
           "Content-Type": "application/json", // Send as JSON
         },

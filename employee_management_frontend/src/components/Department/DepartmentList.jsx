@@ -433,18 +433,19 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
                     >
                         <div className="modal-header">
                             <h4>{selectedDepartment?.name}</h4>
-                            <img className="close" src="icons/close.png" alt="" onClick={() => setDetailModalOpen(false)} />
+                            <img className="closee" src="icons/close1
+                            .png" alt="" onClick={() => setDetailModalOpen(false)} />
                         </div>
                         <div className="modal-links">
                             <p
                                 onClick={() => setDetailActiveTab("employees")}
-                                className={detailActiveTab === "employees" ? "active" : "nonActive"}
+                                className={detailActiveTab === "employees" ? "activee" : "nonActive"}
                             >
                                 Employees
                             </p>
                             <p
                                 onClick={() => setDetailActiveTab("jobs")}
-                                className={detailActiveTab === "jobs" ? "active" : "nonActive"}
+                                className={detailActiveTab === "jobs" ? "activee" : "nonActive"}
                             >
                                 Jobs
                             </p>

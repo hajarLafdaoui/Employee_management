@@ -229,11 +229,14 @@ const AdminHolidayManagement = () => {
                 src={dropdownVisible === holiday.id ? "/icons/more2.png" : "/icons/more.png"}
                 alt="More"
                 onClick={() => toggleDropdown(holiday.id)}
+                className="moreIconWhite"
+
                 style={{ width: "24px", cursor: "pointer" }}
               />
               {dropdownVisible === holiday.id && (
-                                    <div style={{display:"flex", flexDirection:'column', gap: '0'}} className="more-dropdown">
+                <div style={{ display: "flex", flexDirection: 'column', gap: '0' }} className="more-dropdown">
                   <div
+                  style={{background:"#fff", color:"#000"}}
                     onClick={() => {
                       handleEditHoliday(holiday);
                       setDropdownVisible(null);
@@ -244,12 +247,17 @@ const AdminHolidayManagement = () => {
                     <span>Edit</span>
                   </div>
                   <div
+                  style={{background:"#fff", color:"#000"}}
+                  
+                  
                     onClick={() => {
                       confirmDeleteHoliday(holiday.id);
                       setDropdownVisible(null);
                     }}
                     className="dropdown-item"
+
                   >
+
                     <img className="delete-icon" src="/icons/delete.png" alt="Delete" />
                     <span>Delete</span>
                   </div>
