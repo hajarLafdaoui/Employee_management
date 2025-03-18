@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axiosInstance from "./Config/axiosSetup";
 import CountrySelect from "./CountrySelect"; // Import the CountrySelect component
+import SuccessAlert from "./Alerts/SuccessAlert";
+// import SuccessAlert from "./SuccessAlert"; // Import the SuccessAlert component
 
 const UpdateUser = () => {
   const { id } = useParams();
@@ -22,6 +24,7 @@ const UpdateUser = () => {
   const [departments, setDepartments] = useState([]);
   const [jobs, setJobs] = useState([]); // State for jobs
   const [isLoading, setIsLoading] = useState(false);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false); // State for success alert
 
   useEffect(() => {
     fetchUser();
@@ -150,8 +153,13 @@ const UpdateUser = () => {
         },
       });
 
-      alert("User updated successfully!");
-      navigate("/EmployeeList");
+      // Show success alert
+      setShowSuccessAlert(true);
+
+      // Navigate to EmployeeList after 5 seconds
+      setTimeout(() => {
+        navigate("/EmployeeList");
+      }, 5000);
     } catch (error) {
       console.error("Error updating user:", error);
 
@@ -172,6 +180,14 @@ const UpdateUser = () => {
   return (
     <div className="create-user">
       <h4 className="employeeTitle">Update User</h4>
+
+      {/* Success Alert */}
+      {showSuccessAlert && (
+        <SuccessAlert
+          message="User updated successfully!"
+          onClose={() => setShowSuccessAlert(false)}
+        />
+      )}
 
       <div className="form form-vertical small-form">
         <form onSubmit={handleSubmit} className="small-form-inputs inputs inputs-vertical">

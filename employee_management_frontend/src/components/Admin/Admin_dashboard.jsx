@@ -7,45 +7,50 @@ import {
   FaClipboardList,
   FaHistory
 } from "react-icons/fa";
-
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import Confirmation from "../Confirmation";
 
 const AdminDashboard = ({ adminUser }) => {
-  const [dropdowns, setDropdowns] = useState({ employees: false, payroll: false });
+  const [dropdowns, setDropdowns] = useState({ employees: true, payroll: false });
   const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem("darkMode") === "true");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [showConfirmPopUp, setShowConfirmPopUp] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  
+  // Ensure first dropdown stays open if none are open
+  useEffect(() => {
+    if (!Object.values(dropdowns).some(v => v)) {
+      setDropdowns(prev => ({ ...prev, employees: true }));
+    }
+  }, [dropdowns]);
+
+  // Initialize admin user
   adminUser = JSON.parse(localStorage.getItem("adminUser"));
   if (!adminUser) {
-    navigate("/SignIn")
+    navigate("/SignIn");
   }
+
+  // Dark mode handling
   useEffect(() => {
     document.body.classList.toggle("dark-mode", isDarkMode);
     localStorage.setItem("darkMode", isDarkMode);
   }, [isDarkMode]);
 
-
-  //handel logout
+  // Logout functionality
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     localStorage.removeItem("employeeUser");
     localStorage.removeItem("adminUser");
-
     navigate("/SignIn");
   };
-//handel confirm logout
 
   const handleConfirmLogout = () => {
     handleLogout(); 
     setShowConfirmPopUp(false); 
   };
 
-
-
-
+  // Dropdown toggle logic
   const toggleDropdown = (key) => {
     setDropdowns((prev) => {
       const newDropdowns = {};
@@ -56,21 +61,19 @@ const AdminDashboard = ({ adminUser }) => {
     });
   };
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen((prev) => !prev);
-  };
+  // Other state handlers
+  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
+  const toggleDarkMode = () => setIsDarkMode((prev) => !prev);
 
-  const toggleDarkMode = () => {
-    setIsDarkMode((prev) => !prev);
-  };
-
+  // Time-based greeting
   const greeting = useMemo(() => {
     const hour = new Date().getHours();
     return hour < 12 ? "Good Morning," : hour < 16 ? "Good Afternoon," : "Good Evening,";
   }, []);
 
+  // Menu configuration
   const menuItems = [
-    { label: "Dashboard", icon: <FaTachometerAlt />, link: "/" }, // Updated link to "/dashboard"
+    { label: "Dashboard", icon: <FaTachometerAlt />, link: "/" },
     {
       label: "Employees",
       icon: <FaUsers />,
@@ -136,24 +139,11 @@ const AdminDashboard = ({ adminUser }) => {
                 </li>
               )
             )}
-         
-
-
+            
             <li className="NavbarItem logout" onClick={() => setShowConfirmPopUp(true)}>
-        <FaSignOutAlt className="logout-icon" />
-        <span className="navLink">Logout</span>
-      </li>
-
-      <Confirmation
-        showConfirmPopUp={showConfirmPopUp}
-        setShowConfirmPopUp={setShowConfirmPopUp}
-        handleConfirm={handleConfirmLogout} 
-        itemType="Logout" 
-      />
-
-
-
-
+              <FaSignOutAlt className="logout-icon" />
+              <span className="navLink">Logout</span>
+            </li>
           </ul>
         </nav>
       </div>
@@ -161,18 +151,14 @@ const AdminDashboard = ({ adminUser }) => {
       {/* Main Content */}
       <div className="secondPart">
         <div className="head">
-          {/* Greeting */}
           <div className="greeting-container">
             <p className="greeting">{greeting}</p>
-            <p className="admin-name">{adminUser ? adminUser.name : "Guest"}</p>
+            <p className="admin-name">{adminUser?.name || "Guest"}</p>
           </div>
 
           <div className="right">
             <div className="icon-container dark-mode-toggle" onClick={toggleDarkMode}>
               {isDarkMode ? <FaSun className="dark-icon" /> : <FaMoon className="dark-icon" />}
-            </div>
-            <div className="icon-container">
-              <FaBell className="notification-icon" aria-label="Notification" />
             </div>
             <div className="admin-image-container">
               <img className="admin-image" src="/admin/admin.png" alt="Admin" />
@@ -180,13 +166,17 @@ const AdminDashboard = ({ adminUser }) => {
           </div>
         </div>
 
-        {/* Render page content */}
+        <Confirmation
+          showConfirmPopUp={showConfirmPopUp}
+          setShowConfirmPopUp={setShowConfirmPopUp}
+          handleConfirm={handleConfirmLogout}
+          itemType="Logout"
+        />
+
         <Outlet />
       </div>
     </div>
   );
 };
-
-
 
 export default AdminDashboard;

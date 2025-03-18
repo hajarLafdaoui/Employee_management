@@ -71,4 +71,8 @@
 /* Add some spacing and alignment for the gender stats */
 .total-employees p, .new-employees p, .by-gender p {
   margin: 0 5px; /* Adjust spacing between gender stats */
+}
+
+.dark-mode .total-employees, .dark-mode .new-employees, .dark-mode .by-gender {
+  border: solid 1px white !important;
 }/*# sourceMappingURL=Dashboard.css.map */

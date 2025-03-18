@@ -1,11 +1,12 @@
 @charset "UTF-8";
+/* Updated CSS with dark mode inversion */
 .graphs {
   display: flex;
   align-items: center;
   justify-content: start;
   gap: 27px;
   margin-top: 10px;
-  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+  flex-wrap: wrap;
 }
 
 .pie, .bar {
@@ -13,58 +14,87 @@
   height: 300px;
   border: 1px solid #ccc;
   border-radius: 12px;
+  background: white;
+  color: black;
 }
 
 .pie {
   width: 40%;
-  padding: 0 !important;
+  padding: 0;
 }
 
 .bar {
   width: 57%;
   display: flex;
   justify-content: center;
-  gap: 0 !important;
-  padding: 0 !important;
+  padding: 0;
 }
 
-.barGraph {
-  background-color: blanchedalmond !important;
-  width: 100%;
+/* Dark mode overrides */
+.dark-mode .graphs {
+  background-color: #1a1a1a;
 }
 
-.meaning {
-  margin-top: 49px;
-  font-size: 14px;
-  position: absolute;
-  right: 450px;
-  font-family: "Montserrat", sans-serif;
+.dark-mode .pie,
+.dark-mode .bar {
+  background-color: black;
+  color: white;
+  border-color: #444;
 }
 
-/* Media Queries for Mobile and Tablet Screens */
-@media only screen and (max-width: 767px) {
+.dark-mode .pie .nivo-pie-labels text,
+.dark-mode .bar text {
+  fill: white !important;
+}
+
+.dark-mode .meaning {
+  color: white !important;
+  background-color: #333 !important;
+}
+
+/* Chart text colors */
+.nivo-pie-labels text {
+  fill: black !important;
+}
+
+.dark-mode .nivo-pie-labels text {
+  fill: white !important;
+}
+
+/* Tooltip styling */
+.tooltip {
+  background: white;
+  color: black;
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .tooltip {
+  background: #333;
+  color: white;
+}
+
+/* Responsive styles */
+@media (max-width: 767px) {
   .pie, .bar {
-    width: 100%; /* Take full width on mobile and tablet */
-    height: 200px !important; /* Ensure full width on very small screens */
+    width: 100%;
+    height: 200px;
   }
   .graphs {
-    flex-direction: column; /* Stack the charts vertically */
-    gap: 10px; /* Reduce gap between graphs on smaller screens */
+    flex-direction: column;
+    gap: 10px;
   }
 }
 @media (min-width: 601px) and (max-width: 1024px) {
   .pie, .bar {
-    width: 100% !important; /* Ensure full width on very small screens */
-    height: 200px !important; /* Ensure full width on very small screens */
+    width: 100%;
+    height: 200px;
   }
   .graphs {
-    gap: 5px; /* Reduce gap further on very small screens */
+    gap: 5px;
   }
 }
-.dark-mode {
-  background-color: black;
-}
-
 .cards-Container {
   font-family: "Montserrat", sans-serif;
   display: flex;
@@ -391,7 +421,7 @@ table tr:hover {
 .action-icons {
   display: flex;
   gap: 10px;
-  justify-content: start;
+  justify-content: center !important;
   align-items: center;
 }
 
@@ -787,7 +817,7 @@ input:valid ~ label {
 .title-search-sort {
   display: flex;
   align-items: center !important;
-  justify-content: space-between;
+  justify-content: space-between !important;
   margin: 0;
   padding: 0;
 }

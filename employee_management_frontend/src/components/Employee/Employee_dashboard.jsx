@@ -20,11 +20,12 @@ import {
 } from "react-icons/fa";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import LanguageSwitcher from '../LanguageSwitcher';
-import { useTranslation } from 'react-i18next'; 
-import "./Employee_dashboard.scss"
+import { useTranslation } from 'react-i18next';
+import "./Employee_dashboard.scss";
 import Confirmation from "../Confirmation";
+
 const Employee_dashboard = ({ employeeUser }) => {
-  const { t } = useTranslation(); // Get the translation function
+  const { t } = useTranslation();
   const [dropdowns, setDropdowns] = useState({ profile: false, payroll: false });
   const [date, setDate] = useState(new Date());
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -47,35 +48,27 @@ const Employee_dashboard = ({ employeeUser }) => {
     setIsDarkMode((prevMode) => !prevMode);
   };
 
-
-  //Translation function
   useEffect(() => {
-    const currentLang = i18n.language; 
+    const currentLang = i18n.language;
     if (currentLang === 'ar') {
       document.body.setAttribute('dir', 'rtl');
     } else {
-      document.body.setAttribute('dir', 'ltr'); 
+      document.body.setAttribute('dir', 'ltr');
     }
   }, [i18n.language]);
 
-
-  //handel logout
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     localStorage.removeItem("employeeUser");
     localStorage.removeItem("adminUser");
-
     navigate("/SignIn");
   };
-//handel confirm logout
 
   const handleConfirmLogout = () => {
-    handleLogout(); 
-    setShowConfirmPopUp(false); 
+    handleLogout();
+    setShowConfirmPopUp(false);
   };
-
-
 
   useEffect(() => {
     document.body.classList.toggle("dark-mode", isDarkMode);
@@ -100,9 +93,7 @@ const Employee_dashboard = ({ employeeUser }) => {
 
   const renderDropdown = (title, icon, key, items) => (
     <li
-      className={`dropdown-item dropdown-${key} ${
-        dropdowns[key] ? "expanded" : ""
-      }`}
+      className={`dropdown-item dropdown-${key} ${dropdowns[key] ? "expanded" : ""}`}
     >
       <div className="dropdown-title" onClick={() => toggleDropdown(key)}>
         {icon}
@@ -117,7 +108,6 @@ const Employee_dashboard = ({ employeeUser }) => {
               {label}
             </Link>
           </li>
-          
         ))}
       </ul>
     </li>
@@ -133,7 +123,7 @@ const Employee_dashboard = ({ employeeUser }) => {
         <nav className="Navbar">
           <div className="logoContainer">
             <Link className="navLink" to="/Employee_dashboard">
-            <img src="/logo/logo.png" alt="Logo" className="logo"/>
+              <img src="/logo/logo.png" alt="Logo" className="logo" />
             </Link>
           </div>
           <ul className="NavbarMenu">
@@ -141,8 +131,7 @@ const Employee_dashboard = ({ employeeUser }) => {
               <FaTachometerAlt className="darkIcon" />
               <Link className="navLink" to="/Employee_dashboard">
                 {t("dashboard")}
-              </Link>{" "}
-              {/* Translated */}
+              </Link>
             </li>
             {renderDropdown(t("Profile"), <FaUserCircle />, "profile", [
               {
@@ -150,7 +139,6 @@ const Employee_dashboard = ({ employeeUser }) => {
                 label: t("My attendance"),
                 link: "EmployeeAttendance",
               },
-
               {
                 icon: <FaFileAlt />,
                 label: t("Attestation"),
@@ -172,47 +160,35 @@ const Employee_dashboard = ({ employeeUser }) => {
                 link: "HolidayList",
               },
             ])}
-            {/* <li className="NavbarItem">
-              <FaBuilding />
-              <Link className="navLink" to="/Departments">{t('departments')}</Link>
-            </li>
-            <li className="NavbarItem">
-              <FaCalendarAlt />
-              <Link className="navLink" to="EmployeeAttendance">{t('attendance')}</Link>
-            </li>
-           
-            {/* <li className="NavbarItem logout">
-              <FaSignOutAlt className="logout-icon" />
-              <Link className="navLink" to="/SignOut">{t('logout')}</Link>
-            </li> */}
-
-<li className="NavbarItem"> {renderDropdown(t('payroll'), <FaMoneyBillWave />, "payroll", [
+            {renderDropdown(t('payroll'), <FaMoneyBillWave />, "payroll", [
               { icon: <FaMoneyBillWave />, label: t('view_payroll'), link: "view" },
-            ])}</li>
-                 <li className="NavbarItem logout" onClick={() => setShowConfirmPopUp(true)}>
-                    <FaSignOutAlt className="logout-icon" />
-                    <span className="navLink">{t('logout')}</span>
-                  </li>
-                  <Confirmation
-        showConfirmPopUp={showConfirmPopUp}
-        setShowConfirmPopUp={setShowConfirmPopUp}
-        handleConfirm={handleConfirmLogout} 
-        itemType="Logout" 
-      />
-
-
-
-
+            ])}
+            <li className="NavbarItem logout" onClick={() => setShowConfirmPopUp(true)}>
+              <FaSignOutAlt className="logout-icon" />
+              <span className="navLink">{t('logout')}</span>
+            </li>
+            <Confirmation
+              showConfirmPopUp={showConfirmPopUp}
+              setShowConfirmPopUp={setShowConfirmPopUp}
+              handleConfirm={handleConfirmLogout}
+              itemType="Logout"
+            />
           </ul>
         </nav>
       </div>
 
       <div className="secondPart">
         <div className="head">
-          {/* <div className="input-container input-container-desktop">
-            <FaSearch className="searchIcon" />
-            <input className="input" type="text" placeholder={t("search")} />
-          </div> */}
+          <div className="greeting-container">
+            <p className="greeting">
+              {date.getHours() < 12
+                ? t("good_morning")
+                : date.getHours() < 16
+                  ? t("good_afternoon")
+                  : t("good_evening")}
+            </p>
+            <p className="admin-name">{employeeUser ? employeeUser.name : t('loading')}</p>
+          </div>
 
           <div className="right ">
             <div
@@ -225,11 +201,9 @@ const Employee_dashboard = ({ employeeUser }) => {
                 <FaMoon className="dark-icon" />
               )}
             </div>
-            <div className="icon-container">
-              <FaBell
-                className="notification-icon"
-                aria-label={t("notification")}
-              />
+
+            <div className="language-container">
+              <LanguageSwitcher />
             </div>
             <div className="admin-image-container">
               <img className="admin-image" src="/admin/admin.png" alt="Admin" />
@@ -237,19 +211,6 @@ const Employee_dashboard = ({ employeeUser }) => {
           </div>
         </div>
 
-        <div className="greeting-container">
-          <p className="greeting">
-            {date.getHours() < 12
-              ? t("good_morning")
-              : date.getHours() < 16
-              ? t("good_afternoon")
-              : t("good_evening")}
-          </p>
-          <p className="admin-name">{employeeUser ? employeeUser.name : t('loading')}</p> {/* Add check for employeeUser*/}
-        </div>
-        <div className="language-container">
-          <LanguageSwitcher /> 
-        </div>
         <Outlet />
       </div>
     </div>

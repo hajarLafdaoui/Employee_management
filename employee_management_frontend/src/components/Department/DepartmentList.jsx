@@ -136,46 +136,51 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
         }
     };
 
+    // delete department function
     const deleteDepartment = async (id) => {
+        console.log('hh')
+        console.log(id)
+
+
         setItemToDelete({ type: 'Department', id });
         setShowDeletePopUp(true);
     };
-
+    // delete job function
     const deleteJob = async (id) => {
+        console.log('gg')
+
         setItemToDelete({ type: 'Job', id });
         setShowDeletePopUp(true);
     };
-
+    // 
     const handleDelete = async () => {
         const { type, id } = itemToDelete;
+        console.log(type, id)
         try {
             let endpoint = '';
             if (type === 'Department') {
+                console.log(type, id)
+
                 endpoint = `/departments/${id}`;
             } else if (type === 'Job') {
+                console.log(type, id)
+
                 endpoint = `/jobs/${id}`;
             }
 
             const response = await axiosInstance.delete(endpoint);
-            if (response.status === 200) {
+            // Check if the status code is in the 2xx range
+            if (response.status >= 200 && response.status < 300) {
                 if (type === 'Department') {
                     setDepartments((prevDepartments) => prevDepartments.filter((dept) => dept.id !== id));
-                    setDetailModalOpen(false);
-                    navigate('/departments');
                 } else if (type === 'Job') {
                     setJobs((prevJobs) => prevJobs.filter((job) => job.id !== id));
-                    setDetailModalOpen(false);
-                    navigate('/departments');
                 }
-
                 setShowDeletePopUp(false);
                 setSuccessMessage(`${type} deleted successfully!`);
                 setShowSuccessAlert(true);
-                setTimeout(() => {
-                    setShowSuccessAlert(false);
-                }, 5000);
             } else {
-                console.error(`Failed to delete ${type}: ${response.data.message}`);
+                console.error(`Failed to delete ${type}:`, response);
                 setErrorMessage(`Failed to delete ${type}.`);
                 setShowErrorAlert(true);
             }
@@ -271,6 +276,12 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
                 <LoadingSpinner /> // Show the spinner while loading
             ) : (
                 <>
+                    <DeleteModal
+                        showDeletePopUp={showDeletePopUp}
+                        setShowDeletePopUp={setShowDeletePopUp}
+                        handleDelete={handleDelete}
+                        itemType={itemToDelete?.type} // Pass the type (Department/Job)
+                    />
                     {showSuccessAlert && (
                         <SuccessAlert
                             message={successMessage}
@@ -323,15 +334,15 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
                                     getPaginatedDepartments()?.map((department) => (
                                         <tr key={department.id} {...department}>
                                             <td>
-                                                {department?.full_logo_path ? (
-                                                    <img
-                                                        src={department.full_logo_path}
-                                                        width="50"
-                                                        alt="Logo"
-                                                    />
-                                                ) : (
-                                                    <p>No logo available</p>
-                                                )}
+                                                <img
+                                                    src={department.full_logo_path || "/icons/default-logo.png"}
+                                                    width="50"
+                                                    alt={department.full_logo_path ? "Department Logo" : "Default Logo"}
+                                                    onError={(e) => {
+                                                        e.target.onerror = null; // Prevent infinite loop
+                                                        e.target.src = "/icons/default-logo.png";
+                                                    }}
+                                                />
                                             </td>
                                             <td>{department?.name || 'No Name Available'}</td>
                                             <td>{department?.description || 'No Description Available'}</td>
@@ -417,7 +428,7 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
                                 top: "50%",
                                 transform: "translateY(-50%)",
                             },
-                           
+
                         }}
                     >
                         <div className="modal-header">

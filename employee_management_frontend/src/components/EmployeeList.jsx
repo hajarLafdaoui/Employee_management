@@ -3,6 +3,8 @@ import axiosInstance from "./Config/axiosSetup";
 import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LoadingSpinner from "../LoadingSpinner";
+import SuccessAlert from "./Alerts/SuccessAlert";
+import DeleteModal from "./Cnfirm/DeleteModal";
 
 const EmployeeList = () => {
   const [users, setUsers] = useState([]);
@@ -20,6 +22,10 @@ const EmployeeList = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const navigate = useNavigate();
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
   useEffect(() => {
     fetchUsers();
@@ -77,20 +83,20 @@ const EmployeeList = () => {
   };
 
   // Handle delete action
-  const handleDelete = async (e, userId) => {
-    e.preventDefault();
-    const isConfirmed = window.confirm("Are you sure you want to delete this user?");
-    if (!isConfirmed) return;
+  // const handleDelete = async (e, userId) => {
+  //   e.preventDefault();
+  //   const isConfirmed = window.confirm("Are you sure you want to delete this user?");
+  //   if (!isConfirmed) return;
 
-    try {
-      await axiosInstance.put(`/users/${userId}/toggle`);
-      setUsers(users.filter((user) => user.id !== userId));
-      console.log("User soft deleted successfully");
-    } catch (error) {
-      console.error("Error deleting user:", error.response ? error.response.data : error.message);
-      setErrorMessage("Error deleting user.");
-    }
-  };
+  //   try {
+  //     await axiosInstance.put(`/users/${userId}/toggle`);
+  //     setUsers(users.filter((user) => user.id !== userId));
+  //     console.log("User soft deleted successfully");
+  //   } catch (error) {
+  //     console.error("Error deleting user:", error.response ? error.response.data : error.message);
+  //     setErrorMessage("Error deleting user.");
+  //   }
+  // };
 
   // Filter users based on selected criteria and search query
   const filteredUsers = users.filter((user) => {
@@ -142,8 +148,36 @@ const EmployeeList = () => {
   // Display loading spinner while data is being fetched
   if (loading) return <LoadingSpinner />;
 
+  const handleDelete = async (userId) => {
+    try {
+      await axiosInstance.put(`/users/${userId}/toggle`);
+      setUsers(users.filter((user) => user.id !== userId));
+      setShowSuccessAlert(true); // Show success alert
+      setTimeout(() => setShowSuccessAlert(false), 5000); // Hide after 5 seconds
+    } catch (error) {
+      console.error("Error deleting user:", error.response ? error.response.data : error.message);
+      setErrorMessage("Error deleting user.");
+    } finally {
+      setShowDeleteModal(false); // Close modal
+    }
+  };
+
   return (
     <div className="">
+      {showSuccessAlert && (
+        <SuccessAlert
+          message="Employee deleted successfully!"
+          onClose={() => setShowSuccessAlert(false)}
+        />
+      )}
+
+      {/* Delete Confirmation Modal */}
+      <DeleteModal
+        showDeletePopUp={showDeleteModal}
+        setShowDeletePopUp={setShowDeleteModal}
+        handleDelete={() => handleDelete(selectedUserId)}
+        itemType="employee"
+      />
       <div className="btnTitle">
         <h4>Employee List</h4>
         <div className="buttonContainer" onClick={() => navigate("/CreateUser")}>
@@ -223,15 +257,23 @@ const EmployeeList = () => {
           <div key={user.id} className="table-row">
             <div>{user.id}</div>
             <div>
-              {user?.profile_picture ? (
-                <img
-                  src={`http://localhost:8000/storage/${user.profile_picture}`}
-                  alt="Profile"
-                  style={{ width: "38px", height: "38px", borderRadius: "50%", marginRight: "10px" }}
-                />
-              ) : (
-                "No Picture"
-              )}
+              <img
+                src={user?.profile_picture
+                  ? `http://localhost:8000/storage/${user.profile_picture}`
+                  : "/icons/default-profile.jpg"}
+                alt="Profile"
+                style={{
+                  width: "36px",
+                  height: "36px",
+                  borderRadius: "50%",
+                  marginRight: "10px",
+                  marginTop: "5px",
+                  objectFit: "cover"
+                }}
+                onError={(e) => {
+                  e.target.src = "/icons/default-profile.jpeg";
+                }}
+              />
               {user.username}
               <p>{user.name}</p>
             </div>
@@ -249,54 +291,46 @@ const EmployeeList = () => {
               <br className="spacer" />
               <span className="contact marginPhone">{user.phone}</span>
             </div>
-            <div className="actions">
-              {/* Dropdown for actions */}
+            {/* <div className="actions"> */}
+            {/* Dropdown for actions */}
+            <div className="action-icons" style={{
+              display: 'flex',
+              gap: '10px',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: '20px'
+              //  background: 'red',
+            }}>
+              {/* View action */}
               <img
-                src={dropdownVisible === user.id ? "/icons/more2.png" : "/icons/more.png"}
-                alt="More"
-                onClick={() => toggleDropdown(user.id)}
-                style={{ width: "30px", cursor: "pointer" }}
+                className="view-icon"
+                src="/icons/view.png"
+                alt="View"
+                onClick={() => navigate(`/Detailuser/${user.id}`)}
               />
-              {dropdownVisible === user.id && (
-                <div className="more-dropdown">
-{/* view action */}
 
-<div
-                    onClick={() => {
-                      navigate(`/Detailuser/${user.id}`);
-                    }}
-                    className="edit-container"
-                  >
-                    <img className="edit-icon" src="/icons/view.png" alt="Edit" />
-                    <p>View</p>
-                  </div>
+              {/* Edit action */}
+              <img
+                className="edit2-icon"
+                src="/icons/edit2.png"
+                alt="Edit"
+                onClick={() => navigate(`/update-user/${user.id}`)}
+              />
 
-                  {/* Edit action */}
-
-                  <div
-                    onClick={() => {
-                      navigate(`/update-user/${user.id}`);
-                    }}
-                    className="edit-container"
-                  >
-                    <img className="edit-icon" src="/icons/edit.png" alt="Edit" />
-                    <p>Edit</p>
-                  </div>
-                  {/* Delete action */}
-                  <div
-                    className="edit-container"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDelete(e, user.id);
-                    }}
-                  >
-                    <img className="delete-icon" src="/icons/delete.png" alt="Delete" />
-                    <p>Delete</p>
-                  </div>
-                </div>
-              )}
+              {/* Delete action */}
+              <img
+                className="delete-icon"
+                src="/icons/delete.png"
+                alt="Delete"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedUserId(user.id);
+                  setShowDeleteModal(true);
+                }}
+              />
             </div>
           </div>
+          // </div>
         ))}
       </div>
 

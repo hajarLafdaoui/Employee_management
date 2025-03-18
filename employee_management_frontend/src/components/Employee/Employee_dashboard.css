@@ -1,9 +1,8 @@
 .language-container {
   display: flex;
-  align-items: end;
-  justify-content: end;
+  align-items: center;
+  justify-content: center;
   color: black !important;
-  margin-bottom: 20px;
 }
 
 .dropdown {
@@ -15,13 +14,12 @@
   background-color: white;
   color: black;
   border: none;
-  padding: 12px;
   font-size: 16px;
-  border-radius: 50%;
   cursor: pointer;
   text-align: center;
-  width: 50px;
-  height: 50px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,7 +47,6 @@
   color: black;
   width: 100%;
   border-radius: 0;
-  border: 1px solid #ddd;
   text-align: left;
   box-sizing: border-box;
   transition: background-color 0.3s ease;
@@ -57,4 +54,26 @@
 
 .dropdown-content .langbtn:hover {
   background-color: #ddd;
+}
+
+.dark-mode .langbtn {
+  background-color: #2c2c2c;
+  color: #fff;
+}
+
+.no-salary {
+  background-color: #fff;
+  padding: 20px;
+  width: 300px;
+  border-radius: 10px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.dark-mode .no-salary {
+  background-color: #2c2c2c;
+}
+
+.dropdown-item {
+  margin-bottom: 10px;
 }/*# sourceMappingURL=Employee_dashboard.css.map */

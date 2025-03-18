@@ -51,10 +51,11 @@ const PieChart = () => {
     fetchData();
   }, []);
 
-  return (
+  
+return (
     <div className='pie'>
       {isLoading ? (
-        <LoadingSpinner /> // Show the spinner while loading
+        <LoadingSpinner />
       ) : chartData.length > 0 ? (
         <ResponsivePie
           data={chartData}
@@ -64,28 +65,29 @@ const PieChart = () => {
           cornerRadius={2}
           colors={d => d.data.color}
           borderWidth={0}
-          borderColor="#fff"
           enableArcLinkLabels={true}
           arcLinkLabelsSkipAngle={20}
-          arcLinkLabelsTextColor="#000"
           arcLinkLabelsDiagonalLength={10}
           arcLinkLabelsStraightLength={10}
           arcLinkLabelsColor={{ from: 'color' }}
-          arcLabelsTextColor="#fff"
           sliceLabel={(e) => `${e.id}: ${Math.round(e.value)}%`}
+         
           tooltip={({ datum }) => (
             <a style={{ color: 'black', background: 'white', padding: '5px', borderRadius: '2px' }}>
               {datum.id}: {Math.round(datum.value)}%
             </a>
           )}
           theme={{
+            labels: {
+              text: {
+                fontSize: 12
+              }
+            },
             tooltip: {
               container: {
-                background: 'rgba(0, 0, 0, 0.7)',
-                color: 'white',
-                padding: '8px',
-                borderRadius: '4px',
-                boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+                padding: 0,
+                background: 'transparent',
+                boxShadow: 'none'
               }
             }
           }}
@@ -96,5 +98,4 @@ const PieChart = () => {
     </div>
   );
 };
-
 export default PieChart;

@@ -154,7 +154,7 @@ table tr:hover {
 .action-icons {
   display: flex;
   gap: 10px;
-  justify-content: start;
+  justify-content: center !important;
   align-items: center;
 }
 
