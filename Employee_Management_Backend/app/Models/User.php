@@ -33,7 +33,9 @@ class User extends Authenticatable implements JWTSubject
         'country',        // Added country field
         'is_active' , 
         'nationality',
-        'is_deleted' 
+        'is_deleted' ,
+        'job',
+        'created_at'
     ];
 
     /**

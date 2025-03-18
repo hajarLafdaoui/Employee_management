@@ -38,6 +38,7 @@ class AuthController extends Controller
                 'phone' => $user->phone,
                 'profile_picture' => $user->profile_picture,
                 'job_title' => $user->job_title,
+                'job'=>$user->job,
                 'company' => $user->company,
                 'department' => $user->department,
                 'status' => $user->status,
@@ -45,6 +46,7 @@ class AuthController extends Controller
                 'nationality' => $user->nationality,
                 'country' => $user->country,
                 'is_active' => $user->is_active,
+                'created_at'=>$user->created_at
             ]
         ]);
     }

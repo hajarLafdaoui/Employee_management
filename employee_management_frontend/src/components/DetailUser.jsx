@@ -26,7 +26,6 @@ const DetailUser = () => {
     };
     fetchUser();
   }, [id]);
-
   if (loading) return <LoadingSpinner />;
   if (error) return <p className="error-message">{error}</p>;
 
@@ -65,19 +64,8 @@ const DetailUser = () => {
               <div className='groupinfo'>
                <p> ID</p> <span>{user.id}</span></div></div>
 
-               <div className='groupinfoall' >
-               <FaEnvelope/>
-              <div className='groupinfo'>
-  <p>Email</p>
-  <span>{user.email}</span>
-</div></div>
 
-<div className='groupinfoall' >
-<FaPhone />
-<div className='groupinfo'>
-  <p>Phone</p>
-  <span>{user.phone}</span>
-</div></div>
+
 <div className='groupinfoall' >
 <FaVenusMars/>
 <div className='groupinfo'>
@@ -91,7 +79,7 @@ const DetailUser = () => {
   <span>{user.country} </span>
 </div>
 </div>
-<div className='groupinfoall' > <FaCalendarAlt /><div className='groupinfo'><p>Create at</p> <span>{user.id}</span></div></div>
+<div className='groupinfoall' > <FaCalendarAlt /><div className='groupinfo'><p>Create at</p> <span>  {new Date(user.created_at).toISOString().split('T')[0]}</span></div></div>
 <div className='groupinfoall' ><FaUser />  <div className='groupinfo'><p>User Name</p> <span>{user.username}</span></div></div>
 
             </div>
@@ -110,8 +98,11 @@ const DetailUser = () => {
 
                 <div className="data-grid">
                  
-
-           
+                {/* <div className='groupp'>
+  <span>Department</span>
+  <span>{user.department || 'N/A'} </span>
+</div>
+           <hr /> */}
       
 <div className='groupp'>
   <span>Job</span>
@@ -126,14 +117,7 @@ const DetailUser = () => {
   <span>Role</span>
   <span>{user.role}</span>
 </div>
-<hr />
-<div className='groupp'>
-  <span>Active</span>
-  <span className={user.is_active ? "active" : "inactive"}>
-    {user.is_active ? 'Yes' : 'No'}
-  </span>
 
-                </div>
                 </div></div>
                 <div className='radius'> 
                 <div className='titleinfo'>

@@ -96,4 +96,41 @@ public function update(Request $request, $id)
     return response()->json($attendance);
 }
 
+
+
+
+
+
+
+
+
+
+public function getMonthlyAttendanceSummary($userId)
+{
+    $currentMonth = now()->month;
+    $currentYear = now()->year;
+
+    $attendance = Attendance::where('user_id', $userId)
+        ->whereMonth('attendance_date', $currentMonth)
+        ->whereYear('attendance_date', $currentYear)
+        ->get();
+
+    $totalPresent = 0;
+    $totalAbsent = 0;
+
+    foreach ($attendance as $record) {
+        if ($record->status === 'present') {
+            $totalPresent++;
+        } elseif ($record->status === 'absent') {
+            $totalAbsent++;
+        }
+    }
+
+    return response()->json([
+        'total_present' => $totalPresent,
+        'total_absent' => $totalAbsent,
+    ]);
+}
+
+
 }    
