@@ -1,0 +1,144 @@
+.dashboard-container {
+    display: flex;
+    justify-content: flex-start;
+    padding: 2rem;
+    background-color: #f4f7fa;
+    min-height: 100vh;
+  }
+  
+  .main-content {
+    width: 100%;
+    max-width: 1200px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-top: 2rem;
+    display: flex;
+  }
+  
+  .profile-section {
+    width: 300px;  
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .position, .department {
+    font-size: 1rem;
+    color: #777;
+  }
+  
+  .profile-details {
+    font-size: 1rem;
+    color: #555;
+    text-align: center;
+  }
+  
+  .info {
+    flex-grow: 1;
+    width: 100%;
+    margin-left: 2rem; 
+  }
+  
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+  
+  .data-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    text-align: left;
+  }
+  
+  .data-grid p {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .contact-info {
+    margin-top: 2rem;
+    text-align: left;
+  }
+  
+  .contact-info p {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .update {
+    background-color: #4CAF50;
+    color: #fff;
+  }
+  
+  .update:hover {
+    background-color: #45a049;
+  }
+  
+  .back {
+    background-color: #f1f1f1;
+    color: #333;
+  }
+  
+  .back:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .error-message {
+    color: #d9534f;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-top: 2rem;
+  }
+  
+  .active {
+    color: #28a745;
+    font-weight: bold;
+  }
+  
+  .inactive {
+    color: #dc3545;
+    font-weight: bold;
+  }
+  .employee-details{
+    display: flex;  }

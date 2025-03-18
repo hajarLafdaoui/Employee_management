@@ -98,6 +98,12 @@ function App() {
           {/* <Route path="addDepartment" element={<AddDepartment />} /> */}
         </Route>
 
+
+
+
+
+
+
         {/* Employee Routes */}
         <Route
           path="/Employee_dashboard"

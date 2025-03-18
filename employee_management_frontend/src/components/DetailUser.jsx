@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axiosInstance from './Config/axiosSetup';
 import LoadingSpinner from '../LoadingSpinner';
+import { FaUserEdit, FaHome, FaSuitcase, FaFileInvoice, FaGift, FaCog } from 'react-icons/fa';
+import './DetailUser.scss';
 
 const DetailUser = () => {
   const { id } = useParams();
@@ -21,57 +23,58 @@ const DetailUser = () => {
         setLoading(false);
       }
     };
-
     fetchUser();
   }, [id]);
 
   if (loading) return <LoadingSpinner />;
-  
+  if (error) return <p className="error-message">{error}</p>;
 
-  if (error) {
-    return <p>{error}</p>;
-  }
-  const profilePictureUrl = user.profile_picture
-    ? `http://localhost:8000/storage/${user.profile_picture}`
-    : null;
   return (
-    <div>
-      <h2>User Details</h2>
-      {user ? (
-        <div>
-          {user.profile_picture && (
-            <p><strong>Profile Picture:</strong>
-              {profilePictureUrl ? (
-                <img src={profilePictureUrl} alt="Profile" style={{ width: '100px', height: '100px' }} />
-              ) : (
-                <p>No profile picture</p>
-              )}
-            </p>
+      <div className="main-content">
+        <div className="employee-card">
+          <h2>Employee Details</h2>
+          {user && (
+            <div className="employee-details">
+              <div className="profile-section">
+                <img 
+                  src={user.profile_picture ? `http://localhost:8000/storage/${user.profile_picture}` : 'https://via.placeholder.com/150'}
+                  alt="Profile"
+                  className="profile-img"
+                />
+                <h3>{user.name}</h3>
+                <span className="position">{user.job_id || 'N/A'}</span>
+                <span className="department">{user.department?.name || 'N/A'}</span>
+                <p><strong>ID:</strong> {user.id}</p>
+                <p><strong>Created At:</strong> {new Date(user.created_at).toLocaleDateString()}</p>
+              </div>
+<div className="sidebarright">
+              <div className="info">
+                <div className="data-grid">
+                  <p><strong>Email:</strong> {user.email}</p>
+                  <p><strong>Phone:</strong> {user.phone}</p>
+                  <p><strong>Gender:</strong> {user.gender}</p>
+                  <p><strong>Country:</strong> {user.country}</p>
+                  <p><strong>Role:</strong> {user.role}</p>
+                  <p><strong>Active:</strong> <span className={user.is_active ? "active" : "inactive"}>{user.is_active ? 'Yes' : 'No'}</span></p>
+                </div>
+
+                <div className="contact-info">
+                  <p><strong>Contact:</strong></p>
+                  <p><strong>Email:</strong> {user.email}</p>
+                  <p><strong>Phone:</strong> {user.phone}</p>
+                </div>
+                </div>
+                <div className="buttons">
+                  <Link to={`/update-user/${user.id}`} className="btn update">
+                    <FaUserEdit /> Update
+                  </Link>
+                  <Link to="/EmployeeList" className="btn back">Back to List</Link>
+                </div>
+              </div>
+            </div>
           )}
-          <p><strong>Name:</strong> {user.name}</p>
-          <p><strong>Username:</strong> {user.username}</p> {/* Add Username */}
-          <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>Phone:</strong> {user.phone}</p> {/* Add Phone */}
-
-          <p><strong>Role:</strong> {user.role}</p>
-          <p><strong>Department:</strong> {user.department?.name || 'N/A'}</p>
-
-          <Link to={`/update-user/${user.id}`}>
-            <button style={{ backgroundColor: 'blue', color: 'white', marginRight: '10px' }}>
-              Update
-            </button>
-          </Link>
-
-          <Link to="/EmployeeList">
-            <button style={{ backgroundColor: 'gray', color: 'white' }}>
-              Back to EmployeeList
-            </button>
-          </Link>
         </div>
-      ) : (
-        <p>No user details found</p>
-      )}
-    </div>
+      </div>
   );
 };
 

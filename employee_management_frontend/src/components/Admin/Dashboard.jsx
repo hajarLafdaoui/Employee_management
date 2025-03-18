@@ -44,6 +44,25 @@ const Dashboard = () => {
 
         fetchAllEmployees();
     }, []);
+  
+// Fetch all employees from the API
+useEffect(() => {
+    const fetchAllEmployees = async () => {
+        try {
+            const response = await axiosInstance.get("/getall"); 
+            console.log("Employees all:", response.data); 
+            setAllEmployees(response.data); 
+        } catch (error) {
+            console.error("Error fetching employees:", error);
+            setError("Failed to fetch employees.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    fetchAllEmployees();
+}, []);
+
     // Fetch statistics data
     useEffect(() => {
         const fetchEmployees = async () => {
@@ -82,9 +101,7 @@ const Dashboard = () => {
             return employee.is_deleted === 1;
         }).length;
 
-
         setNewEmployees(newEmployeesCount);
-        setDeleteEmployees(employeesToDelete)
         // Gender statistics
         const genderCounts = employees.reduce(
             (acc, employee) => {
@@ -97,7 +114,15 @@ const Dashboard = () => {
         setGenderStats(genderCounts);
     };
 
-    // State for employee count data
+
+
+    useEffect(() => {
+        const employeesToDelete = allemployees.filter((employee) => employee.is_deleted === 1).length;
+        setDeleteEmployees(employeesToDelete);
+    }, [allemployees])
+
+
+
 
     // Pagination state for employee table
     const [currentPage, setCurrentPage] = useState(1);
