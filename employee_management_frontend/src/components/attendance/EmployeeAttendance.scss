@@ -54,13 +54,14 @@
 }
 
 .attendance-day.present {
-    background-color: rgba(54, 162, 235);
-    border-color: #36a2eb;
+    background-color:#5cb85c	;
+    border-color: #5cb85c	;
 }
 
 .attendance-day.absent {
-    background-color: rgba(255, 99, 132);
-    border-color: #ff6384;
+    background-color:#FC100D;
+    border-color: #FC100D
+    ;
 }
 
 .attendance-day.unknown {
