@@ -31,8 +31,17 @@
     background-color: #2c2c2c;
  }
  .dark-mode .MSG{
-    color: white !important;
-}
+    color: #fff !important;
+ }
+ .dark-mode .close{
+    background-color: #2c2c2c !important;
+    color: #2c2c2c !important;
+ }
+ .dark-mode .close-btn{
+    background-color: #2c2c2c !important;
+    color: #2c2c2c !important;
+ }
+ 
 .alert-content {
     display: flex;
     justify-content: center;
@@ -52,7 +61,7 @@
 
         .MSG {
             margin-bottom: 0; // Remove bottom margin
-            color: black !important;
+            color: black ;
         }
         
         .msg2 {
@@ -66,14 +75,26 @@
 .close-btn {
     background: none;
     border: none;
-    color: #000;
-    margin-top: 30px;
+    // color: #000;
+    // margin-top: 30px;
     // padding: 5px;
     cursor: pointer;
 }
+.dark-mode .close-btn {
+    // background-color: #2c2c2c !important;
+}
+
 
 .success,
 .close,
+.closee,
 .error {
     width: 30px;
+}
+.dark-mode .closee{
+    // background-color: #2c2c2c !important;
+    // color: #2c2c2c !important;
+}
+.closee{
+    width: 25px;
 }

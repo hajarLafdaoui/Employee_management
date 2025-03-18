@@ -3,6 +3,7 @@ import axiosInstance from './Config/axiosSetup';
 import { Link, useNavigate } from 'react-router-dom';
 import CountrySelect from './CountrySelect';
 import SuccessAlert from './Alerts/SuccessAlert';
+import ErrorAlert from './Alerts/ErrorAlert';
 
 const CreateUser = () => {
   const [userData, setUserData] = useState({
@@ -27,6 +28,7 @@ const CreateUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -75,6 +77,7 @@ const CreateUser = () => {
     // Simple client-side validation for required fields
     if (!name || !email || !password || !role || !username || !departmentId || !job_id || !gender || !country) {
       setMessage('Please fill in all required fields.');
+      setShowErrorAlert(true); // Show error alert
       return;
     }
 
@@ -99,13 +102,15 @@ const CreateUser = () => {
     }
 
     try {
-      const response = await axiosInstance.post('/users', formData, {
+      const response = await axiosInstance.post('/uers', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
       setMessage(response.data.message);
-      setShowSuccessAlert(true); // Show the success alert
+    setShowSuccessAlert(true); // Show alert immediately
+
+      
       setUserData({
         name: '',
         email: '',
@@ -121,12 +126,13 @@ const CreateUser = () => {
         country: '',
         is_active: true,
       });
-        navigate("/EmployeeList"); // Navigate after showing the alert
+      setTimeout(() => {
+        navigate("/EmployeeList"); // Navigate after 5 seconds
+      }, 5000);
     } catch (error) {
       console.error('Error creating user:', error);
       setMessage(error.response?.data?.message || 'Error creating user');
-    } finally {
-      setIsSubmitting(false); // Enable submit button again
+      setShowErrorAlert(true); // Show error alert
     }
   };
 
@@ -331,6 +337,12 @@ const CreateUser = () => {
           onClose={() => setShowSuccessAlert(false)}
         />
       )}
+      {showErrorAlert && (
+  <ErrorAlert
+    message={message}
+    onClose={() => setShowErrorAlert(false)}
+  />
+)}
     </div>
   );
 };

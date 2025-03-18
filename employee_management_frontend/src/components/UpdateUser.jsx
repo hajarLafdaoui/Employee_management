@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import axiosInstance from "./Config/axiosSetup";
 import CountrySelect from "./CountrySelect"; // Import the CountrySelect component
 import SuccessAlert from "./Alerts/SuccessAlert";
+import ErrorAlert from "./Alerts/ErrorAlert";
+
 // import SuccessAlert from "./SuccessAlert"; // Import the SuccessAlert component
 
 const UpdateUser = () => {
@@ -25,6 +27,9 @@ const UpdateUser = () => {
   const [jobs, setJobs] = useState([]); // State for jobs
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false); // State for success alert
+
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     fetchUser();
@@ -52,7 +57,6 @@ const UpdateUser = () => {
         fetchJobsByDepartment(response.data.department_id);
       }
     } catch (error) {
-      console.error("Error fetching user:", error);
     }
   };
 
@@ -62,7 +66,6 @@ const UpdateUser = () => {
       const response = await axiosInstance.get("/departments");
       setDepartments(response.data);
     } catch (error) {
-      console.error("Error fetching departments:", error);
     }
   };
 
@@ -77,7 +80,6 @@ const UpdateUser = () => {
       const response = await axiosInstance.get(`/departments/${departmentId}/jobs`);
       setJobs(response.data);
     } catch (error) {
-      console.error("Error fetching jobs:", error);
     }
   };
 
@@ -144,10 +146,9 @@ const UpdateUser = () => {
       gender: user.gender,
     };
 
-    console.log("Form Data:", formData); // Log form data for debugging
 
     try {
-      const response = await axiosInstance.put(`/users/${id}`, formData, {
+      const response = await axiosInstance.put(`/usrs/${id}`, formData, {
         headers: {
           "Content-Type": "application/json", // Send as JSON
         },
@@ -160,20 +161,24 @@ const UpdateUser = () => {
       setTimeout(() => {
         navigate("/EmployeeList");
       }, 5000);
-    } catch (error) {
-      console.error("Error updating user:", error);
 
-      // Display validation errors to the user
-      if (error.response && error.response.data.errors) {
-        const errors = error.response.data.errors;
-        let errorMessage = "Validation errors:\n";
-        for (const [field, messages] of Object.entries(errors)) {
-          errorMessage += `${field}: ${messages.join(", ")}\n`;
+    } catch (error) {
+
+            setShowErrorAlert(true); // Show error alert
+      
+      let errorMessage = "Failed to update user."; // Default message
+      if (error.response) {
+        if (error.response.data.errors) {
+          const errors = error.response.data.errors;
+          errorMessage = "Validation errors:\n";
+          for (const [field, messages] of Object.entries(errors)) {
+            errorMessage += `${field}: ${messages.join(", ")}\n`;
+          }
+        } else if (error.response.data.message) {
+          errorMessage = error.response.data.message;
         }
-        alert(errorMessage);
-      } else {
-        alert("Failed to update user.");
       }
+      setErrorMessage(errorMessage);
     }
   };
 
@@ -186,6 +191,13 @@ const UpdateUser = () => {
         <SuccessAlert
           message="User updated successfully!"
           onClose={() => setShowSuccessAlert(false)}
+        />
+      )}
+       {/* Error Alert */}
+       {showErrorAlert && (
+        <ErrorAlert
+          message={errorMessage}
+          onClose={() => setShowErrorAlert(false)}
         />
       )}
 

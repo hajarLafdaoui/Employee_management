@@ -16,7 +16,7 @@ const JobsList = () => {
 
     return (
         <div>
-            <h2>Jobs</h2>
+            <h4>Jobs</h4>
             <ul>
                 {jobs.map(job => (
                     <li key={job.id}>

@@ -46,14 +46,12 @@ const EmployeeList = () => {
             const flagUrl = countryData[0]?.flags?.png || "";
             return { ...user, flagUrl };
           } catch (error) {
-            console.error(`Error fetching flag for ${user.country}:`, error);
             return { ...user, flagUrl: "" };
           }
         })
       );
       setUsers(usersWithFlags);
     } catch (error) {
-      console.error("Error fetching users:", error.response ? error.response.data : error.message);
       setErrorMessage("Failed to load users.");
     } finally {
       setLoading(false);
@@ -66,7 +64,6 @@ const EmployeeList = () => {
       const response = await axiosInstance.get("/departments");
       setDepartments(response.data);
     } catch (error) {
-      console.error("Error fetching departments:", error.response ? error.response.data : error.message);
       setErrorMessage("Failed to load departments.");
     }
   };
@@ -155,7 +152,6 @@ const EmployeeList = () => {
       setShowSuccessAlert(true); // Show success alert
       setTimeout(() => setShowSuccessAlert(false), 5000); // Hide after 5 seconds
     } catch (error) {
-      console.error("Error deleting user:", error.response ? error.response.data : error.message);
       setErrorMessage("Error deleting user.");
     } finally {
       setShowDeleteModal(false); // Close modal

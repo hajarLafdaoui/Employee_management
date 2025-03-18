@@ -14,12 +14,18 @@ const AdminHolidayManagement = () => {
   const [showModal, setShowModal] = useState(false);
   const [showDeletePopUp, setShowDeletePopUp] = useState(false);
   const [holidayToDelete, setHolidayToDelete] = useState(null);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+  const [dropdownVisible, setDropdownVisible] = useState(null);
+
+
+  const toggleDropdown = (holidayId) => {
+    setDropdownVisible(dropdownVisible === holidayId ? null : holidayId);
+  };
   useEffect(() => {
     fetchHolidays();
   }, []);
@@ -28,9 +34,9 @@ const AdminHolidayManagement = () => {
     try {
       const response = await axiosInstance.get("/holidays");
       setHolidays(response.data);
-      setLoading(false); 
+      setLoading(false);
     } catch (error) {
-      setLoading(false); 
+      setLoading(false);
       setErrorMessage("Failed to fetch holidays.");
       setShowErrorAlert(true);
     }
@@ -65,8 +71,8 @@ const AdminHolidayManagement = () => {
 
   const handleEditHoliday = (holiday) => {
     setEditHoliday(holiday);
-    setNewHoliday({ name: holiday.name, date: holiday.date,number_of_days:holiday.number_of_days }); 
-    setShowModal(true); 
+    setNewHoliday({ name: holiday.name, date: holiday.date, number_of_days: holiday.number_of_days });
+    setShowModal(true);
   };
 
   const updateHoliday = async () => {
@@ -96,9 +102,9 @@ const AdminHolidayManagement = () => {
   };
 
   const handleCreateHoliday = () => {
-    setNewHoliday({ name: "", date: "" }); 
-    setEditHoliday(null); 
-    setShowModal(true); 
+    setNewHoliday({ name: "", date: "" });
+    setEditHoliday(null);
+    setShowModal(true);
   };
 
   if (loading) return <LoadingSpinner />;
@@ -107,31 +113,31 @@ const AdminHolidayManagement = () => {
     <div>
       {showSuccessAlert && (
         <SuccessAlert
-          message={successMessage} 
-          onClose={() => setShowSuccessAlert(false)} 
+          message={successMessage}
+          onClose={() => setShowSuccessAlert(false)}
         />
       )}
       {showErrorAlert && (
-        <ErrorAlert 
-          message={errorMessage} 
-          onClose={() => setShowErrorAlert(false)} 
+        <ErrorAlert
+          message={errorMessage}
+          onClose={() => setShowErrorAlert(false)}
         />
       )}
 
       <div className="DepaHead">
-        <h2>Manage Holidays</h2>
+        <h4>Manage Holidays</h4>
         <div onClick={handleCreateHoliday} className="buttonContainer">
           <img className='plusIcon' src="/icons/icons8-plus-50 (1).png" alt="Add" />
           <button>Add New</button>
         </div>
-      </div> 
+      </div>
 
       <Modal
         isOpen={showModal}
         onRequestClose={() => setShowModal(false)}
         contentLabel={editHoliday ? "Edit Holiday" : "Add New Holiday"}
         overlayClassName="Department Detail Modal"
-        className="modal-form" 
+        className="modal-form"
       >
         <div className="modal-header">
           <h3>{editHoliday ? "Edit Holiday" : "Add New Holiday"}</h3>
@@ -170,7 +176,7 @@ const AdminHolidayManagement = () => {
               />
               <label className="user-label">Holiday Date</label>
             </div>
-            
+
             <div className="input-group">
               <input
                 placeholder=" "
@@ -189,9 +195,9 @@ const AdminHolidayManagement = () => {
                 onClick={(e) => {
                   e.preventDefault();
                   if (editHoliday) {
-                    updateHoliday(); 
+                    updateHoliday();
                   } else {
-                    addHoliday(); 
+                    addHoliday();
                   }
                 }}
                 className="button-form vertical-button-form"
@@ -211,26 +217,44 @@ const AdminHolidayManagement = () => {
 
           <div>Actions</div>
         </div>
-        
+
         {holidays.map((holiday) => (
           <div key={holiday.id} className="table-row">
             <div>{holiday.name}</div>
             <div>{holiday.date}</div>
             <div>{holiday.number_of_days}</div>
 
-            <div className="action-icons">
+            <div >
               <img
-                className="edit2-icon"
-                src="/icons/edit2.png"
-                alt="Edit"
-                onClick={() => handleEditHoliday(holiday)} 
+                src={dropdownVisible === holiday.id ? "/icons/more2.png" : "/icons/more.png"}
+                alt="More"
+                onClick={() => toggleDropdown(holiday.id)}
+                style={{ width: "24px", cursor: "pointer" }}
               />
-              <img
-                className="delete-icon"
-                src="/icons/delete.png"
-                alt="Delete"
-                onClick={() => confirmDeleteHoliday(holiday.id)} 
-              />
+              {dropdownVisible === holiday.id && (
+                                    <div style={{display:"flex", flexDirection:'column', gap: '0'}} className="more-dropdown">
+                  <div
+                    onClick={() => {
+                      handleEditHoliday(holiday);
+                      setDropdownVisible(null);
+                    }}
+                    className="dropdown-item"
+                  >
+                    <img className="edit-icon" src="/icons/edit.png" alt="Edit" />
+                    <span>Edit</span>
+                  </div>
+                  <div
+                    onClick={() => {
+                      confirmDeleteHoliday(holiday.id);
+                      setDropdownVisible(null);
+                    }}
+                    className="dropdown-item"
+                  >
+                    <img className="delete-icon" src="/icons/delete.png" alt="Delete" />
+                    <span>Delete</span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         ))}

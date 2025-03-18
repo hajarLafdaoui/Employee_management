@@ -4,26 +4,34 @@ import "./alerts.scss";
 const ErrorAlert = ({ message, onClose }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
-      onClose(); // Automatically close the alert after 5 seconds
+      onClose();
     }, 5000);
 
-    return () => clearTimeout(timer); // Cleanup the timer on component unmount
+    return () => clearTimeout(timer);
   }, [onClose]);
 
   return (
     <div className="alert-container">
-      <div className="success-alert"> {/* Keeping same styling for consistency */}
+      <div className="success-alert"> {/* Class name kept for consistency */}
         <div className="alert-content">
           <div className="icon">
-            <img src="icons/fail.png" className="error" alt="Error" />
+            <img
+              src={`${process.env.PUBLIC_URL}/icons/fail.png`}
+              className="error"
+              alt="Error"
+            />
           </div>
           <div className="text-content-alert">
-            <p className="MSG ">Operation Failed</p>
+            <p className="MSG">Operation Failed</p>
             <p className="msg2">{message}</p>
           </div>
         </div>
         <button className="close-btn" onClick={onClose}>
-          <img src="icons/close.png" className="close" alt="Close" />
+          <img
+            src={`${process.env.PUBLIC_URL}/icons/close1.png`}
+            className="closee"
+            alt="Close"
+          />
         </button>
       </div>
     </div>

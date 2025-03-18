@@ -6,14 +6,13 @@ const CountrySelect = ({ onChange }) => {
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
-    // Fetch list of countries
     const fetchCountries = async () => {
       const response = await fetch('https://restcountries.com/v3.1/all');
       const data = await response.json();
       const countriesList = data.map((country) => ({
-        label: country.name.common,  // Full country name
-        value: country.name.common,  // Use the full country name as value
-        flag: country.cca2, // 2-letter country code for the flag
+        label: country.name.common,
+        value: country.name.common,
+        flag: country.cca2,
       }));
       setCountries(countriesList);
     };
@@ -21,15 +20,13 @@ const CountrySelect = ({ onChange }) => {
     fetchCountries();
   }, []);
 
-  // Handle country selection
   const handleSelectChange = (selectedOption) => {
-    onChange(selectedOption); // Pass selected option (full country name) to parent
+    onChange(selectedOption);
   };
 
-  // Option format with flag
   const customSingleValue = ({ data }) => (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
-      <Flag code={data.flag} style={{ width: 20, height: 15, marginRight: 10 }} />
+    <div className="selected-value" style={{ display: 'flex', alignItems: 'center' }}>
+      <Flag code={data.flag} className="country-flag" />
       {data.label}
     </div>
   );
@@ -37,8 +34,8 @@ const CountrySelect = ({ onChange }) => {
   const customOption = (props) => {
     const { data, innerRef, innerProps } = props;
     return (
-      <div ref={innerRef} {...innerProps} style={{ display: 'flex', alignItems: 'center' }} className='flag'>
-        <Flag code={data.flag} style={{ width: 20, height: 15, marginRight: 10 }} />
+      <div ref={innerRef} {...innerProps} className="custom-option">
+        <Flag code={data.flag} className="option-flag" />
         {data.label}
       </div>
     );
@@ -46,15 +43,17 @@ const CountrySelect = ({ onChange }) => {
 
   return (
     <Select
+      className="country-select"
+      classNamePrefix="custom-select"
       options={countries}
       onChange={handleSelectChange}
+      components={{ SingleValue: customSingleValue, Option: customOption }}
       getOptionLabel={(e) => (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Flag code={e.flag} style={{ width: 20, height: 15, marginRight: 10 }} />
+        <div className="option-label">
+          <Flag code={e.flag} className="option-flag" />
           {e.label}
         </div>
       )}
-      components={{ SingleValue: customSingleValue, Option: customOption }}
     />
   );
 };

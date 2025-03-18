@@ -159,7 +159,7 @@ const AttestationRequests = () => {
                 />
             )}
 
-            <h2>Attestation Requests</h2>
+            <h4>Attestation Requests</h4>
 
             {attestations.length === 0 ? (
                 <p className="no-salaries-message">No attestations Requests data available.</p>  

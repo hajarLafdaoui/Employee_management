@@ -107,7 +107,7 @@ const AdminLeaveRequests = () => {
 
   return (
     <div>
-      <h1>Leave Requests</h1>
+      <h4>Leave Requests</h4>
       {successMessage && <SuccessAlert message={successMessage} />}
       {errorMessage && <ErrorAlert message={errorMessage} />}
       <table border="1" style={{ marginTop: "20px" }}>
@@ -160,7 +160,7 @@ const AdminLeaveRequests = () => {
       </button>
       {showApproved && (
         <div>
-          <h2>Approved Users</h2>
+          <h4>Approved Users</h4>
           <div>
             <input
               type="date"

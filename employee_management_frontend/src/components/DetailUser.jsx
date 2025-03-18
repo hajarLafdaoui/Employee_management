@@ -18,7 +18,6 @@ const DetailUser = () => {
         setUser(response.data);
       } catch (err) {
         setError('Error fetching user details');
-        console.error(err);
       } finally {
         setLoading(false);
       }
