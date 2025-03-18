@@ -141,7 +141,7 @@ const DetailUser = () => {
                 <FaEnvelope />
 <h3>Contact</h3>
 </div>
-                <div className="contact-info">
+     <div className="contact-info">
                 
 
   <div className='groupp'>
