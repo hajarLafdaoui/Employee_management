@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import axiosInstance from './Config/axiosSetup';
 import LoadingSpinner from '../LoadingSpinner';
-import { FaUserEdit, FaHome, FaSuitcase, FaFileInvoice, FaGift, FaCog, FaIdCard, FaVenusMars, FaGlobe, FaCalendarAlt, FaUser, FaPhone, FaEnvelope } from 'react-icons/fa';
+import { FaUserEdit, FaHome, FaSuitcase, FaFileInvoice, FaGift, FaCog, FaIdCard, FaVenusMars, FaGlobe, FaCalendarAlt, FaUser, FaPhone, FaEnvelope, FaBriefcase } from 'react-icons/fa';
 import './DetailUser.scss';
 
 const DetailUser = () => {
@@ -101,10 +101,16 @@ const DetailUser = () => {
 
    
 
+<div className='radius'> 
+  <div className='titleinfo'>
 
+<FaBriefcase />
+<h3>Professionnal Information </h3>
+</div>
 
                 <div className="data-grid">
-<h3>Professionnal Information </h3>
+                 
+
            
       
 <div className='groupp'>
@@ -128,10 +134,16 @@ const DetailUser = () => {
   </span>
 
                 </div>
-                </div>
+                </div></div>
+                <div className='radius'> 
+                <div className='titleinfo'>
+
+                <FaEnvelope />
+<h3>Contact</h3>
+</div>
                 <div className="contact-info">
-                <div>
- <h3>Contact</h3>
+                
+
   <div className='groupp'>
     <span>Email</span>
     <span>{user.email}</span>
@@ -141,13 +153,15 @@ const DetailUser = () => {
     <span>{user.phone}</span>
   </div>
 </div>
-                </div>
+               
               </div>
             
             </div>
           </div>
+          </div>
         )}
       </div>
+      
     </div>
   );
 };
