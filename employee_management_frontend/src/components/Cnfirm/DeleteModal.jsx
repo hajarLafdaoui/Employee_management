@@ -13,6 +13,7 @@ const DeleteModal = ({
   const deleteMessage = `Are you sure you want to delete this ${itemType}? This action cannot be undone.`;
 
   return (
+    
     <div className="🛑">
       <div className="🗑️">
         <div className="📌">

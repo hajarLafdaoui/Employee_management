@@ -18,7 +18,9 @@ const HistoryPage = () => {
         const fetchHistorique = async () => {
             try {
                 const resp = await axiosInstance.get('/attestations');
-                setHistory(resp.data);
+                const filteredAttestations = resp.data.filter(attestation => attestation.status !== 'Pending');
+
+                setHistory(filteredAttestations);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching historique', error);

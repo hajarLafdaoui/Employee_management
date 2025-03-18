@@ -37,7 +37,7 @@ const CountrySelect = ({ onChange }) => {
   const customOption = (props) => {
     const { data, innerRef, innerProps } = props;
     return (
-      <div ref={innerRef} {...innerProps} style={{ display: 'flex', alignItems: 'center' }}>
+      <div ref={innerRef} {...innerProps} style={{ display: 'flex', alignItems: 'center' }} className='flag'>
         <Flag code={data.flag} style={{ width: 20, height: 15, marginRight: 10 }} />
         {data.label}
       </div>

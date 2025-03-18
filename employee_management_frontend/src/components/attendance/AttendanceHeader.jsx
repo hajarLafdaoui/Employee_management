@@ -78,7 +78,7 @@ const AttendanceHeader = () => {
                     </div>
 
                     <div className='toggleAttButton' onClick={HandleAttendanceButton}>
-                        <img src="icons/check.png" alt="Toggle Button" />
+                        <img src="/icons/icons8-plus-50 (1).png" alt="Toggle Button" />
                         <p>{text}</p>
                     </div>
                 </div>

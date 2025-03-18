@@ -19,7 +19,9 @@
     // height: 265px  ;
     border: none;
 }
-
+.dark-mode .dashboard-bar{
+    background-color: #2c2c2c;
+}
 /* Media query for mobile and tablet screens */
 
 @media only screen and (max-width: 767px), 
@@ -123,5 +125,5 @@ background-color: #8CACD3 ;
 
 .dark-mode .attGraph,
 .dark-mode .DepGraph{
-    background-color: #2c2c2c;
+    background-color: #2c2c2c ;
 }
