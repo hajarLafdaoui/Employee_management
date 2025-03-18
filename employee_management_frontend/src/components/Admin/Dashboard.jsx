@@ -18,32 +18,32 @@ const Dashboard = () => {
     const [employees, setEmployees] = useState([]);
     const [allemployees, setAllEmployees] = useState([]);
 
-    const [employeeCountData, setEmployeeCountData] = useState([]); 
+    const [employeeCountData, setEmployeeCountData] = useState([]);
     const [totalEmployees, setTotalEmployees] = useState(0);
     const [newEmployees, setNewEmployees] = useState(0);
     const [deleteEmployees, setDeleteEmployees] = useState(0);
 
     const [genderStats, setGenderStats] = useState({ male: 0, female: 0, other: 0 });
     const [departmentStats, setDepartmentStats] = useState([]);
-  
-// Fetch all employees from the API
-useEffect(() => {
-    const fetchAllEmployees = async () => {
-        try {
-            const response = await axiosInstance.get("/getall"); 
-            console.log("Employees Data:", response.data); 
-            setAllEmployees(response.data); 
-      
-        } catch (error) {
-            console.error("Error fetching employees:", error);
-            setError("Failed to fetch employees.");
-        } finally {
-            setLoading(false);
-        }
-    };
 
-    fetchAllEmployees();
-}, []);
+    // Fetch all employees from the API
+    useEffect(() => {
+        const fetchAllEmployees = async () => {
+            try {
+                const response = await axiosInstance.get("/getall");
+                console.log("Employees Data:", response.data);
+                setAllEmployees(response.data);
+
+            } catch (error) {
+                console.error("Error fetching employees:", error);
+                setError("Failed to fetch employees.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchAllEmployees();
+    }, []);
     // Fetch statistics data
     useEffect(() => {
         const fetchEmployees = async () => {
@@ -78,10 +78,10 @@ useEffect(() => {
             return createdAt >= twoDaysAgo; // Only include employees created in the last two days
         }).length;
 
-        const employeesToDelete =allemployees.filter((employee) => {
-            return employee.is_deleted === 1; 
+        const employeesToDelete = allemployees.filter((employee) => {
+            return employee.is_deleted === 1;
         }).length;
-       
+
 
         setNewEmployees(newEmployeesCount);
         setDeleteEmployees(employeesToDelete)
@@ -292,48 +292,48 @@ useEffect(() => {
 
     return (
         <div>
-               <div className="statics">
-    {/* Total Employees */}
-    <div className="total-employees">
+            <div className="statics">
+                {/* Total Employees */}
+                <div className="total-employees">
 
-        <img src="/icons/employes.png" alt=""  className="icontotal"/>
-         <div className="textemploye">
-         <p className="titleemplo">Total Employees:</p>
-        <p>{totalEmployees}</p>
-    </div>
-    </div>
-    {/* New Employees (Last 2 Days) */}
-    <div className="new-employees">
-    <img src="/icons/employeesadd.png" alt=""  className="icontotal"/>
-    <div className="textemploye">
-        <p className="titleemplo">New  (Last 2 Days)         <img src="/icons/augmenter.png" alt=""  className="iconaug"/>
-        </p>
-        
-        <p>{newEmployees}</p>
-        </div>
+                    <img src="/icons/employes.png" alt="" className="icontotal" />
+                    <div className="textemploye">
+                        <p className="titleemplo">Total Employees:</p>
+                        <p>{totalEmployees}</p>
+                    </div>
+                </div>
+                {/* New Employees (Last 2 Days) */}
+                <div className="new-employees">
+                    <img src="/icons/employeesadd.png" alt="" className="icontotal" />
+                    <div className="textemploye">
+                        <p className="titleemplo">New  (Last 2 Days)         <img src="/icons/augmenter.png" alt="" className="iconaug" />
+                        </p>
 
-    </div>
-    <div className="delete-employees">
-    <img src="/icons/supprimer.png" alt=""  className="icontotal"/>
+                        <p>{newEmployees}</p>
+                    </div>
 
-         <div className="textemploye">
-         <p className="titleemplo">delete employee   <img src="/icons/diminuer.png" alt=""  className="iconaug"/>
-         </p>
+                </div>
+                <div className="delete-employees">
+                    <img src="/icons/supprimer.png" alt="" className="icontotal" />
 
-        <p>{deleteEmployees}</p>
+                    <div className="textemploye">
+                        <p className="titleemplo">delete employee   <img src="/icons/diminuer.png" alt="" className="iconaug" />
+                        </p>
 
-    </div>
+                        <p>{deleteEmployees}</p>
 
-    </div>
-    {/* By Gender */}
-    <div className="by-gender">
-    <img src="/icons/gender.png" alt=""  className="icontotal"/>
+                    </div>
 
-    <div className="textemploye">
-        <p className="titleemplo">By Gender:</p>
-        <p>{genderStats.male}M, {genderStats.female}F</p>
-        </div>
-    </div>
+                </div>
+                {/* By Gender */}
+                <div className="by-gender">
+                    <img src="/icons/gender.png" alt="" className="icontotal" />
+
+                    <div className="textemploye">
+                        <p className="titleemplo">By Gender:</p>
+                        <p>{genderStats.male}M, {genderStats.female}F</p>
+                    </div>
+                </div>
 
                 {/* By Department */}
                 {/* <div className="by-department">
@@ -353,46 +353,35 @@ useEffect(() => {
                     <Line data={chartData} options={chartOptions} />
                 </div>
                 <div className="DepGraph">
-                    {/* Render the bar chart manually */}
                     <div className="bar dashboard-bar">
                         {barChartData.length > 0 ? (
                             <ResponsiveBar
                                 data={barChartData}
                                 keys={["employees"]}
                                 indexBy="department"
-                                layout="horizontal"
-                                margin={{ top: 10, right: 30, bottom: 50, left: 100 }}
+                                layout="vertical" // Changed from horizontal to vertical
+                                margin={{ top: 50, right: 30, bottom: 100, left: 80 }} // Adjusted margins
                                 padding={0.3}
                                 colors={(d) => {
-                                    if (d.value <= 5 && d.value > 0) {
-                                        return "#E9F7DF";
-                                    } else if (d.value > 5 && d.value <= 10) {
-                                        return "#D1F1BB";
-                                    } else if (d.value > 10 && d.value <= 15) {
-                                        return "#AFDC8F";
-                                    } else if (d.value > 15 && d.value <= 20) {
-                                        return "#87BB62";
-                                    } else if (d.value > 20) {
-                                        return "#63993D";
-                                    } else {
-                                        return "transparent";
-                                    }
+                                    if (d.value <= 5 && d.value > 0) return "#E9F7DF";
+                                    if (d.value > 5 && d.value <= 10) return "#D1F1BB";
+                                    if (d.value > 10 && d.value <= 15) return "#AFDC8F";
+                                    if (d.value > 15 && d.value <= 20) return "#87BB62";
+                                    if (d.value > 20) return "#63993D";
+                                    return "transparent";
                                 }}
                                 axisBottom={{
-                                    tickValues: [5, 10, 15, 20, 25],
-                                    tickSize: 5,
-                                    tickPadding: 5,
-                                    tickRotation: 0,
-                                    legend: "Number of Employees",
-                                    legendPosition: "middle",
-                                    legendOffset: 32,
-                                    format: (value) => (value === 0 ? "" : value),
-                                }}
-                                axisLeft={{
+                                    tickRotation: -45, // Rotate department labels
                                     legend: "Departments",
                                     legendPosition: "middle",
-                                    legendOffset: -80,
-                                    format: (value) => `${value}`,
+                                    legendOffset: 60,
+                                }}
+                                axisLeft={{
+                                    tickValues: [0, 5, 10, 15, 20, 25],
+                                    legend: "Number of Employees",
+                                    legendPosition: "middle",
+                                    legendOffset: -60,
+                                    format: (value) => (value === 0 ? "" : value),
                                 }}
                                 labelSkipWidth={12}
                                 labelSkipHeight={12}
@@ -407,7 +396,7 @@ useEffect(() => {
 
             {/* Employee table rendering */}
             <div className="tableContainer">
-                <div className="title-search-sortt title-search-sort-dashboard"> 
+                <div className="title-search-sortt title-search-sort-dashboard">
                     <p>All Employees</p>
                     <div className="search-sortt">
                         <div className="input-search-container">
