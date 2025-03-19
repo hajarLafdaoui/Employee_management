@@ -19,7 +19,7 @@ const SalaryList = () => {
   const [statusMessage, setStatusMessage] = useState('');
   const [showMessageForm, setShowMessageForm] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState('The salary has been credited to your bank account ([Bank Name, Account Ending XXXX])  Please review the details or view in your account and let us know if you have any questions or concerns Thank you for your hard work and dedication');
   const [sending, setSending] = useState(false);
   const [showDeletePopUp, setShowDeletePopUp] = useState(false);
   const [deleteSalaryId, setDeleteSalaryId] = useState(null);
@@ -225,7 +225,7 @@ const SalaryList = () => {
 
             </div>
             <div className="total">
-              <div className="totalatten"><p className="numbertitle">attendances</p><p className="number">{salaryDetails.attendances}days</p> </div>
+              <div className="totalatten"><p className="numbertitle">Absence</p><p className="number">{salaryDetails.attendances}days</p> </div>
               <div className="totalleave"><p className="numbertitle">leaves</p><p className="number">{salaryDetails.leaves}days</p> </div>
 
             </div>

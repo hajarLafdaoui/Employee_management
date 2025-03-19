@@ -107,13 +107,17 @@ const PrintSalary = () => {
                                 <td>{salary.leave_deduction}</td>
                             </tr>
                             <tr>
-                                <td>Attendance Deductions</td>
+                                <td>Absent Deductions</td>
                                 <td>{salary.attendance_bonus}</td>
                             </tr>
                             <tr>
                                 <td>Tva</td>
                                 <td>{salary.tva_rate*100}%</td>
                             </tr>
+                            <tr>
+                <td>Montant TVA</td>
+                <td>{salary?.tva_amount}</td>
+              </tr>
                          
                         </tbody>
                     </table>

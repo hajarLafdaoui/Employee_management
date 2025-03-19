@@ -175,27 +175,27 @@ const SalaryCalculator = () => {
             </thead>
             <tbody>
               <tr>
-                <td>Salaire payé le</td>
+                <td>Salay paid on</td>
                 <td>{salaryData?.paid_on}</td>
               </tr>
               <tr>
-                <td>Salaire de base</td>
+                <td> base salary</td>
                 <td>{basesalary}</td>
               </tr>
               <tr>
-                <td>Présences</td>
+                <td>Absence</td>
                 <td>{salaryData?.attendances}</td>
               </tr>
               <tr>
-                <td>Congés</td>
+                <td>Leave </td>
                 <td>{salaryData?.leaves}</td>
               </tr>
               <tr>
-                <td>Prime de présence</td>
+                <td>Absent Deduction</td>
                 <td>{salaryData?.attendance_bonus}</td>
               </tr>
               <tr>
-                <td>Déduction de congés</td>
+                <td>Leave Deductions</td>
                 <td>{salaryData?.leave_deduction}</td>
               </tr>
               <tr>
@@ -207,7 +207,7 @@ const SalaryCalculator = () => {
                 <td>{salaryData?.tva_amount}</td>
               </tr>
               <tr>
-                <td>Salaire total</td>
+                <td>Total Salary</td>
                 <td>{salaryData?.total_salary}</td>
               </tr>
             </tbody>
