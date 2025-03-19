@@ -203,10 +203,13 @@ only screen and (min-width: 601px) and (max-width: 1024px)  {
   .main-content {
     display: flex;
     flex-direction: column !important;
+    
   }
 .employee-details{
   display: flex;
     flex-direction: column !important;
+    justify-content: center;
+    align-items: center;
 }
 
 .titleinfo{
@@ -214,6 +217,10 @@ only screen and (min-width: 601px) and (max-width: 1024px)  {
   h3{
     font-size: 16px;
   }
+}
+.totalemploye{
+  display: flex;
+  flex-wrap: wrap;
 }
 }
 
@@ -227,22 +234,24 @@ only screen and (min-width: 601px) and (max-width: 1024px)  {
   align-items: center;
   justify-content: center;
   gap: 30px;
+  margin-top: 15px;
 }
 .static1{
   padding: 10px;
   border-radius: 8px;
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 10px;
 }
 .static1.day{
-background-color: #93441A !important;
+background-color: #AFA4CE!important;
 }
 .static1.abst{
-background-color: #B67332;
+background-color: #8CACD3 ;
 }
 .static1.prst{
-background-color: #DAAB3A;
+background-color: #F0A1BF;
 }
 //dark mode
 

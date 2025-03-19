@@ -1,31 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import '../DetailUser.scss';
+import "../DetailUser.scss";
 import axiosInstance from "../Config/axiosSetup";
-
 import {
-  FaUserEdit,
-  FaHome,
-  FaSuitcase,
-  FaFileInvoice,
-  FaGift,
-  FaCog,
   FaIdCard,
   FaVenusMars,
   FaGlobe,
   FaCalendarAlt,
   FaUser,
-  FaPhone,
-  FaEnvelope,
   FaBriefcase,
-} from "react-icons/fa"; 
-import "../DetailUser.scss"; 
+  FaEnvelope,
+  FaCalendarDay,
+  FaCheckCircle,
+  FaTimesCircle,
+} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../../LoadingSpinner";
 
 const Profile = () => {
   const { t } = useTranslation();
   const [user, setUser] = useState(null);
-  const [attendanceSummary, setAttendanceSummary] = useState({ total_present: 0, total_absent: 0 });
+  const [attendanceSummary, setAttendanceSummary] = useState({
+    total_present: 0,
+    total_absent: 0,
+  });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -33,6 +32,7 @@ const Profile = () => {
     if (storedUser) {
       const userData = JSON.parse(storedUser);
       setUser(userData);
+      setLoading(false);
     }
   }, []);
 
@@ -40,42 +40,63 @@ const Profile = () => {
     if (user && user.id) {
       fetchAttendanceSummary(user.id);
     }
-  }, [user]); 
+  }, [user]);
 
   const fetchAttendanceSummary = async (userId) => {
     try {
-      const response = await axiosInstance.get(`/attendance/monthly-summary/${userId}`);
+      const response = await axiosInstance.get(
+        `/attendance/monthly-summary/${userId}`
+      );
       setAttendanceSummary(response.data);
     } catch (error) {
       console.error("Error fetching attendance summary:", error);
     }
   };
 
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
   if (!user) {
-    return <p>{t("loading_profile")}</p>;
+    return <div>{t("noUserData")}</div>;
   }
 
   return (
     <div className="main-content">
       <div className="employee-card">
-        <h2>Employee Details</h2>
+        {/* <h2>{t("employeeDetails")}</h2> */}
 
         <div className="totalemploye">
-          <div className="static1 day">
-            <span>Number Of Days</span>
-            <span style={{ fontWeight: 'bold' }}>
-              {Math.floor((new Date() - new Date(user.created_at)) / (1000 * 60 * 60 * 24))}
-            </span>
-          </div>
-          <div className="static1 prst">
-            <span>Total Present (This Month)</span>
-            <span style={{ fontWeight: 'bold' }}>{attendanceSummary.total_present}</span>
-          </div>
-          <div className="static1 abst">
-            <span>Total Absent (This Month)</span>
-            <span style={{ fontWeight: 'bold' }}>{attendanceSummary.total_absent}</span>
-          </div>
-        </div>
+  <div className="static1 day">
+    
+      <FaCalendarDay className="icon" /> 
+      <span>{t("numberOfDays")}</span>
+    
+    <span style={{ fontWeight: "bold" }}>
+      {Math.floor(
+        (new Date() - new Date(user.created_at)) / (1000 * 60 * 60 * 24)
+      )}
+    </span>
+  </div>
+  <div className="static1 prst">
+    
+      <FaCheckCircle className="icon" /> 
+      <span>{t("totalPresentThisMonth")}</span>
+    
+    <span style={{ fontWeight: "bold" }}>
+      {attendanceSummary.total_present}
+    </span>
+  </div>
+  <div className="static1 abst">
+    
+      <FaTimesCircle className="icon" /> 
+      <span>{t("totalAbsentThisMonth")}</span>
+    
+    <span style={{ fontWeight: "bold" }}>
+      {attendanceSummary.total_absent}
+    </span>
+  </div>
+</div>
 
         {user && (
           <div className="employee-details">
@@ -99,39 +120,41 @@ const Profile = () => {
                 </div>
               </div>
               <div className="infoside">
-                <h3>Basic information</h3>
+                <h3>{t("basicInformation")}</h3>
                 <div className="groupinfoall">
                   <FaIdCard />
                   <div className="groupinfo">
-                    <p>ID</p>
+                    <p>{t("id")}</p>
                     <span>{user.id}</span>
                   </div>
                 </div>
                 <div className="groupinfoall">
                   <FaVenusMars />
                   <div className="groupinfo">
-                    <p>Gender</p>
-                    <span>{user.gender ? "Female" : "Male"}</span>
+                    <p>{t("gender")}</p>
+                    <span>{user.gender ? t("female") : t("male")}</span>
                   </div>
                 </div>
                 <div className="groupinfoall">
                   <FaGlobe />
                   <div className="groupinfo">
-                    <p>Country</p>
+                    <p>{t("country")}</p>
                     <span>{user.country}</span>
                   </div>
                 </div>
                 <div className="groupinfoall">
                   <FaCalendarAlt />
                   <div className="groupinfo">
-                    <p>Create at</p>
-                    <span> {new Date(user.created_at).toISOString().split('T')[0]}</span>
+                    <p>{t("createdAt")}</p>
+                    <span>
+                      {new Date(user.created_at).toISOString().split("T")[0]}
+                    </span>
                   </div>
                 </div>
                 <div className="groupinfoall">
                   <FaUser />
                   <div className="groupinfo">
-                    <p>User Name</p>
+                    <p>{t("userName")}</p>
                     <span>{user.username}</span>
                   </div>
                 </div>
@@ -142,26 +165,26 @@ const Profile = () => {
                 <div className="radius">
                   <div className="titleinfo">
                     <FaBriefcase />
-                    <h3>Professional Information</h3>
+                    <h3>{t("professionalInformation")}</h3>
                   </div>
                   <div className="data-grid">
                     <div className="groupp">
-                      <span>Department</span>
+                      <span>{t("departmentt")}</span>
                       {user.department.name}
                     </div>
                     <hr />
                     <div className="groupp">
-                      <span>Job</span>
+                      <span>{t("job")}</span>
                       <span>{user.job.name || "N/A"}</span>
                     </div>
                     <hr />
                     <div className="groupp">
-                      <span>Base Salary</span>
+                      <span>{t("baseSalary")}</span>
                       <span>{user.job.salary || "N/A"}</span>
                     </div>
                     <hr />
                     <div className="groupp">
-                      <span>Role</span>
+                      <span>{t("role")}</span>
                       <span>{user.role}</span>
                     </div>
                   </div>
@@ -169,16 +192,16 @@ const Profile = () => {
                 <div className="radius">
                   <div className="titleinfo">
                     <FaEnvelope />
-                    <h3>Contact</h3>
+                    <h3>{t("contact")}</h3>
                   </div>
                   <div className="contact-info">
                     <div className="groupp">
-                      <span>Email</span>
+                      <span>{t("emaill")}</span>
                       <span>{user.email}</span>
                     </div>
                     <hr />
                     <div className="groupp">
-                      <span>Phone</span>
+                      <span>{t("phonee")}</span>
                       <span>{user.phone}</span>
                     </div>
                   </div>

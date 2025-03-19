@@ -59,7 +59,9 @@ body[dir="rtl"] .secondPart {
 body[dir="rtl"] .salary-actions{
   margin-left: 800px;
 }
-
+body[dir="rtl"] .profile-section{
+margin-left: 17px;
+}
 @media (max-width: 768px) {
   body[dir="rtl"] .AdminMenu {
     width: 200px; 

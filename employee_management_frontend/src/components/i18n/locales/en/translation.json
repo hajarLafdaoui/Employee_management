@@ -152,6 +152,28 @@
   },
 
 
-  "number-of-days" : "Number of Days"
+  "number-of-days" : "Number of Days",
+
+  "employeeDetails": "Employee Details",
+  "numberOfDays": "Number of Days",
+  "totalPresentThisMonth": "Total Present This Month",
+  "totalAbsentThisMonth": "Total Absent This Month",
+  "basicInformation": "Basic Information",
+  "id": "ID",
+  "gender": "Gender",
+  "female": "Female",
+  "male": "Male",
+  "country": "Country",
+  "createdAt": "Created At",
+  "userName": "Username",
+  "professionalInformation": "Professional Information",
+  "departmentt": "Department",
+  "job": "Job",
+  "baseSalary": "Base Salary",
+  "role": "Role",
+  "contact": "Contact",
+  "emaill": "Email",
+  "phonee": "Phone",
+  "noUserData": "No user data available"
 
 }
