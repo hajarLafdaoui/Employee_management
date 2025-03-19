@@ -2,20 +2,20 @@ import React, { useState } from 'react';
 import axiosInstance from '../Config/axiosSetup';
 import { useNavigate } from 'react-router-dom';
 import "./SignIn.scss";
+import SuccessAlert from '../Alerts/SuccessAlert'; 
 
 const SignIn = () => {
   const [email, setEmail] = useState('jane.smith@example.com');
   const [password, setPassword] = useState('password');
   const [error, setError] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false); 
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false); 
   const navigate = useNavigate();
 
-  // Toggle password visibility
   const togglePassword = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  // Handle login
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -23,7 +23,7 @@ const SignIn = () => {
       console.log("Making login request with:", { email, password });
 
       const response = await axiosInstance.post("/login", { email, password });
-console.log("Login response:", response); 
+      console.log("Login response:", response); 
 
       const { user, token } = response.data;
 
@@ -36,13 +36,18 @@ console.log("Login response:", response);
 
       await axiosInstance.put(`/users/${user.id}/status`, { is_active: 1 });
 
-      if (user.role === "employee") {
-        localStorage.setItem("employeeUser", JSON.stringify(user));
-        navigate("/Employee_dashboard");
-      } else if (user.role === "admin") {
-        localStorage.setItem("adminUser", JSON.stringify(user));
-        navigate("/");
-      }
+      setShowSuccessAlert(true);
+
+      setTimeout(() => {
+        if (user.role === "employee") {
+          localStorage.setItem("employeeUser", JSON.stringify(user));
+          navigate("/Employee_dashboard");
+        } else if (user.role === "admin") {
+          localStorage.setItem("adminUser", JSON.stringify(user));
+          navigate("/");
+        }
+      }, 2000); 
+
     } catch (error) {
       setError("Invalid login credentials.");
       console.error("Login error:", error);
@@ -55,14 +60,9 @@ console.log("Login response:", response);
 
   return (
     <div className="all">
-
       <div className="signin-container">
-      {/* <img src="/logo/logo.png" alt="Logo" className="logo"/> */}
-
         <div className="form-section">
-
           <form className="form-details" onSubmit={handleLogin}>
-
             <h2 className="title">Welcome to our site</h2>
 
             {/* Email input */}
@@ -90,7 +90,9 @@ console.log("Login response:", response);
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <span className="toggle-password" onClick={togglePassword}><img src="/icons/view.png" className='view-icon' alt="" /></span>
+                <span className="toggle-password" onClick={togglePassword}>
+                  <img src="/icons/view.png" className='view-icon' alt="" />
+                </span>
               </div>
             </div>
 
@@ -109,6 +111,14 @@ console.log("Login response:", response);
           </div>
         </div>
       </div>
+
+      {/* Success Alert */}
+      {showSuccessAlert && (
+        <SuccessAlert
+          message="Login successful! Redirecting..."
+          onClose={() => setShowSuccessAlert(false)}
+        />
+      )}
     </div>
   );
 };

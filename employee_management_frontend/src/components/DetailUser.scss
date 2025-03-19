@@ -159,7 +159,7 @@ gap: 5px;
   
  
   .titleinfo{
-    background-color:#eddbb2;
+    background-color:#ffd60a;
     width: 650px !important;
     display: flex;
     align-items: center;
@@ -203,10 +203,13 @@ only screen and (min-width: 601px) and (max-width: 1024px)  {
   .main-content {
     display: flex;
     flex-direction: column !important;
+    
   }
 .employee-details{
   display: flex;
     flex-direction: column !important;
+    justify-content: center;
+    align-items: center;
 }
 
 .titleinfo{
@@ -215,8 +218,41 @@ only screen and (min-width: 601px) and (max-width: 1024px)  {
     font-size: 16px;
   }
 }
+.totalemploye{
+  display: flex;
+  flex-wrap: wrap;
+}
 }
 
+.totalemploye{
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.totalemploye{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 15px;
+}
+.static1{
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.static1.day{
+background-color: #AFA4CE!important;
+}
+.static1.abst{
+background-color: #8CACD3 ;
+}
+.static1.prst{
+background-color: #F0A1BF;
+}
 //dark mode
 
 .dark-mode .profile-section{

@@ -136,7 +136,29 @@
     "leave_request_sent_success": "تم إرسال طلب الإجازة بنجاح",
     "leave_request_failed": "فشل في إرسال طلب الإجازة. يرجى المحاولة مرة أخرى."
   }
-,"number-of-days": "عدد الأيام"
+,"number-of-days": "عدد الأيام",
+
+"employeeDetails": "تفاصيل الموظف",
+"numberOfDays": "عدد الأيام",
+"totalPresentThisMonth": "إجمالي الحضور هذا الشهر",
+"totalAbsentThisMonth": "إجمالي الغياب هذا الشهر",
+"basicInformation": "المعلومات الأساسية",
+"id": "الهوية",
+"gender": "الجنس",
+"female": "أنثى",
+"male": "ذكر",
+"country": "البلد",
+"createdAt": "تم الإنشاء في",
+"userName": "اسم المستخدم",
+"professionalInformation": "المعلومات المهنية",
+"departmentt": "القسم",
+"job": "الوظيفة",
+"baseSalary": "الراتب الأساسي",
+"role": "الدور",
+"contact": "الاتصال",
+"emaill": "البريد الإلكتروني",
+"phonee": "الهاتف",
+"noUserData": "لا توجد بيانات مستخدم متاحة"
 
 
 

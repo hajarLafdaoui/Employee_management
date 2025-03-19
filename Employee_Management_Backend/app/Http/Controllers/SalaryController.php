@@ -70,7 +70,7 @@ class SalaryController extends Controller
     
         $attendances = Attendance::where('user_id', $userId)
             ->whereBetween('attendance_date', [$startDate, $endDate])
-            ->where('status', 'present')
+            ->where('status', 'absent')
             ->count();
     
         $leaves = LeaveRequest::where('user_id', $userId)

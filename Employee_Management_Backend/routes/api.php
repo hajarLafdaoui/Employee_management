@@ -71,7 +71,7 @@ Route::put('/attendance/{id}', [AttendanceController::class, 'update']);
 Route::delete('/attendance/{id}', [AttendanceController::class, 'destroy']);
 //Employee Attendance Filtering
 Route::get('/attendance/user/{userId}', [AttendanceController::class, 'getUserAttendance']);
-
+Route::get('/attendance/monthly-summary/{userId}', [AttendanceController::class, 'getMonthlyAttendanceSummary']);
 
 // Routes pour les demandes de congé
 

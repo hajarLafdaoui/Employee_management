@@ -143,7 +143,29 @@
     "leave_request_failed": "Échec de l'envoi de la demande de congé. Veuillez réessayer."
   }
 
-  ,    "number-of-days": "Nombre de Jours"
+  ,    "number-of-days": "Nombre de Jours",
+  "employeeDetails": "Détails de l'employé",
+  "numberOfDays": "Nombre de jours",
+  "totalPresentThisMonth": "Total présent ce mois",
+  "totalAbsentThisMonth": "Total absent ce mois",
+  "basicInformation": "Informations de base",
+  "id": "ID",
+  "gender": "Genre",
+  "female": "Femme",
+  "male": "Homme",
+  "country": "Pays",
+  "createdAt": "Créé à",
+  "userName": "Nom d'utilisateur",
+  "professionalInformation": "Informations professionnelles",
+  "departmentt": "Département",
+  "job": "Emploi",
+  "baseSalary": "Salaire de base",
+  "role": "Rôle",
+  "contact": "Contact",
+  "emaill": "Email",
+  "phonee": "Téléphone",
+  "noUserData": "Aucune donnée utilisateur disponible"
+  
 
 
 
