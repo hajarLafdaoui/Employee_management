@@ -33,30 +33,37 @@ const EmployeeList = () => {
   }, []);
 
   // Fetch users
-  const fetchUsers = async () => {
-    try {
-      const response = await axiosInstance.get("/users");
-      const usersWithFlags = await Promise.all(
-        response.data.map(async (user) => {
-          try {
-            const countryResponse = await fetch(
-              `https://restcountries.com/v3.1/name/${user.country}?fullText=true`
-            );
-            const countryData = await countryResponse.json();
-            const flagUrl = countryData[0]?.flags?.png || "";
-            return { ...user, flagUrl };
-          } catch (error) {
-            return { ...user, flagUrl: "" };
-          }
-        })
-      );
-      setUsers(usersWithFlags);
-    } catch (error) {
-      setErrorMessage("Failed to load users.");
-    } finally {
-      setLoading(false);
-    }
-  };
+ // Fetch users (fixed version)
+const fetchUsers = async () => {
+  try {
+    const response = await axiosInstance.get("/users");
+    const usersWithFlags = await Promise.all(
+      response.data.map(async (user) => {
+        try {
+          const countryResponse = await fetch(
+            `https://restcountries.com/v3.1/name/${user.country}?fullText=true`
+          );
+          const countryData = await countryResponse.json();
+          const flagUrl = countryData[0]?.flags?.png || "";
+          return { ...user, flagUrl };
+        } catch (error) {
+          return { ...user, flagUrl: "" };
+        }
+      })
+    );
+
+    // Sort AFTER all flags are added
+    const sortedUsers = usersWithFlags.sort(
+      (a, b) => new Date(b.created_at) - new Date(a.created_at)
+    );
+    
+    setUsers(sortedUsers);
+  } catch (error) {
+    setErrorMessage("Failed to load users.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   // Fetch departments
   const fetchDepartments = async () => {
@@ -270,7 +277,7 @@ const EmployeeList = () => {
                   e.target.src = "/icons/default-profile.jpeg";
                 }}
               />
-              {user.username}
+              {/* {user.username} */}
               <p>{user.name}</p>
             </div>
             <div>{user.gender}</div>

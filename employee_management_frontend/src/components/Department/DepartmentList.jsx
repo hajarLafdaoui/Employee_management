@@ -433,8 +433,7 @@ const DepartmentsList = ({ onEdit, departments, setDepartments }) => {
                     >
                         <div className="modal-header">
                             <h4>{selectedDepartment?.name}</h4>
-                            <img className="closee" src="icons/close1
-                            .png" alt="" onClick={() => setDetailModalOpen(false)} />
+                            <img className="closee" src="icons/close1.png" alt="" onClick={() => setDetailModalOpen(false)} />
                         </div>
                         <div className="modal-links">
                             <p
