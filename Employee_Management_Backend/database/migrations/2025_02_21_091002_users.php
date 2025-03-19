@@ -10,8 +10,8 @@ return new class extends Migration {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->enum('role', ['employee', 'admin', 'sub-admin'])->default('employee'); 
-            $table->foreignId('department_id')->constrained()->onDelete('cascade'); 
-            $table->string('name'); 
+            $table->foreignId('department_id')->nullable()->constrained()->onDelete('cascade');  // Made nullable
+            $table->foreignId('job_id')->nullable()->constrained()->onDelete('cascade');  // Added job_id            $table->string('name'); 
             $table->string('email')->unique(); 
             $table->enum('gender', ['male', 'female'])->nullable(); // FIXED: Removed 'after email'
             $table->string('password'); 
