@@ -215,7 +215,7 @@ const SalaryList = () => {
           <div className="salary-details-content">
             <div className="head-user">
               <div className="imguser">
-                <img src="img/images.jpg" alt="" />
+                <img src={`http://localhost:8000/storage/${salaryDetails.user.profile_picture}`} alt="" />
               </div>
 
 
