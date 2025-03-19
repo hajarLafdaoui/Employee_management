@@ -36,7 +36,7 @@ const Attendance = ({ attendance, currentDate, refreshAttendance }) => {
     const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
     const [deleteId, setDeleteId] = useState(null);
 
-    
+
 
     const fetchDepartments = async () => {
         try {
@@ -186,7 +186,8 @@ const Attendance = ({ attendance, currentDate, refreshAttendance }) => {
                                         alt="Profile"
                                         style={{ width: '38px', height: '38px', borderRadius: '50%', marginRight: '10px' }}
                                     />
-                                ) : ('No Picture')}
+                                ) : <img style={{ width: '38px', height: '38px', borderRadius: '50%', marginRight: '10px' }}
+                                    src='icons/default-profile.jpeg' />}
                                 {entry.user.name}
                             </td>
                             <td>{entry.user?.country}</td>
@@ -263,55 +264,55 @@ const Attendance = ({ attendance, currentDate, refreshAttendance }) => {
                 </li>
             </div>
 
-                {/* Update Attendance Modal */}
-<Modal
-    isOpen={isModalOpen}
-    onRequestClose={closeModal}
-    contentLabel="Edit Attendance"
-    className="modal-form"
->
-    <div className="modal-header">
-        <h2>Edit Attendance</h2>
-        <img src="/icons/close.png" className='close' alt="Close" onClick={closeModal} />
-    </div>
+            {/* Update Attendance Modal */}
+            <Modal
+                isOpen={isModalOpen}
+                onRequestClose={closeModal}
+                contentLabel="Edit Attendance"
+                className="modal-form"
+            >
+                <div className="modal-header">
+                    <h2>Edit Attendance</h2>
+                    <img src="/icons/close.png" className='close' alt="Close" onClick={closeModal} />
+                </div>
 
-    {selectedAttendance ? (
-        <UpdateAttendance
-            id={selectedAttendance}
-            onClose={closeModal} // Pass the closeModal function
-            onSuccess={handleSuccess} // Pass the handleSuccess function
-            onError={handleError} // Pass the handleError function
-        />
-    ) : (
-        <p>Loading...</p>
-    )}
-</Modal>
-                {/* Delete Confirmation Modal */}
-                {/* Delete Confirmation Modal */}
-                <DeleteModal
-                    showDeletePopUp={confirmDeleteModal}
-                    setShowDeletePopUp={setConfirmDeleteModal}
-                    handleDelete={deleteAttendance}
-                    itemType="attendance"
+                {selectedAttendance ? (
+                    <UpdateAttendance
+                        id={selectedAttendance}
+                        onClose={closeModal} // Pass the closeModal function
+                        onSuccess={handleSuccess} // Pass the handleSuccess function
+                        onError={handleError} // Pass the handleError function
+                    />
+                ) : (
+                    <p>Loading...</p>
+                )}
+            </Modal>
+            {/* Delete Confirmation Modal */}
+            {/* Delete Confirmation Modal */}
+            <DeleteModal
+                showDeletePopUp={confirmDeleteModal}
+                setShowDeletePopUp={setConfirmDeleteModal}
+                handleDelete={deleteAttendance}
+                itemType="attendance"
+            />
+
+            {/* Success and Error Alerts */}
+            {showSuccessAlert && (
+                <SuccessAlert
+                    message={successMessage}
+                    onClose={() => setShowSuccessAlert(false)}
                 />
+            )}
 
-                {/* Success and Error Alerts */}
-                {showSuccessAlert && (
-                    <SuccessAlert
-                        message={successMessage}
-                        onClose={() => setShowSuccessAlert(false)}
-                    />
-                )}
+            {showErrorAlert && (
+                <ErrorAlert
+                    message={errorMessage}
+                    onClose={() => setShowErrorAlert(false)}
+                />
+            )}
+        </div>
 
-                {showErrorAlert && (
-                    <ErrorAlert
-                        message={errorMessage}
-                        onClose={() => setShowErrorAlert(false)}
-                    />
-                )}
-            </div>
-
-            );
+    );
 };
 
-            export default Attendance;
+export default Attendance;

@@ -255,13 +255,7 @@ const AdminDashboard = () => {
                     <span>{adminUser.username}</span>
                   </div>
                 </div>
-                <div className='groupinfoall'>
-                  <FaVenusMars />
-                  <div className='groupinfo'>
-                    <p>Gender</p>
-                    <span>{adminUser.gender}</span>
-                  </div>
-                </div>
+              
                 <div className='groupinfoall'>
                   <FaGlobe />
                   <div className='groupinfo'>

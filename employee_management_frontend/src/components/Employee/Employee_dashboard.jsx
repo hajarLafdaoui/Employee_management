@@ -205,9 +205,9 @@ const Employee_dashboard = ({ employeeUser }) => {
             <div className="language-container">
               <LanguageSwitcher />
             </div>
-            <div className="admin-image-container">
+            {/* <div className="admin-image-container">
               <img className="admin-image" src="/admin/admin.png" alt="Admin" />
-            </div>
+            </div> */}
           </div>
         </div>
 

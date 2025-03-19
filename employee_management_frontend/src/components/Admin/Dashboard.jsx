@@ -457,7 +457,8 @@ useEffect(() => {
                                             style={{ width: "38px", height: "38px", borderRadius: "50%", marginRight: "10px" }}
                                         />
                                     ) : (
-                                        "No Picture"
+                                        <img style={{ width: '38px', height: '38px', borderRadius: '50%', marginRight: '10px' }}
+                                    src='icons/default-profile.jpeg' />
                                     )}
                                     {user.username}
                                     <p>{user.name}</p>

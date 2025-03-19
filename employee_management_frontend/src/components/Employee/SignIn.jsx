@@ -5,8 +5,8 @@ import "./SignIn.scss";
 import SuccessAlert from '../Alerts/SuccessAlert'; 
 
 const SignIn = () => {
-  const [email, setEmail] = useState('jane.smith@example.com');
-  const [password, setPassword] = useState('password');
+  const [email, setEmail] = useState('Olivia@gmail.com');
+  const [password, setPassword] = useState('password123');
   const [error, setError] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false); 
   const [showSuccessAlert, setShowSuccessAlert] = useState(false); 
