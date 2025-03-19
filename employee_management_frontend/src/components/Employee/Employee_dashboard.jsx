@@ -133,7 +133,7 @@ const Employee_dashboard = ({ employeeUser }) => {
                 {t("dashboard")}
               </Link>
             </li>
-            {renderDropdown(t("Profile"), <FaUserCircle />, "profile", [
+            {renderDropdown(t("profile"), <FaUserCircle />, "profile", [
               {
                 icon: <FaCalendarAlt />,
                 label: t("My attendance"),
