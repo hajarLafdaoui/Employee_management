@@ -52,7 +52,6 @@ const fetchUsers = async () => {
       })
     );
 
-    // Sort AFTER all flags are added
     const sortedUsers = usersWithFlags.sort(
       (a, b) => new Date(b.created_at) - new Date(a.created_at)
     );
